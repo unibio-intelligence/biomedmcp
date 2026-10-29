@@ -48,7 +48,7 @@ before outbound access.
 
 For a source assessment, inspect `capabilities` and use `query_source` with
 `source="opentargets"`, `operation="analyze_advanced"` and
-`params={"analysis_type":"validate","entity_ids":["ENSG00000157764"]}`.
+`params={"analysis_type":"validate","entity_ids":["ENSG00000169174"]}`.
 The assessment retains clinical candidate records and reports annotation counts
 with methods and input pointers. It computes no aggregate validation score,
 safety score or efficacy recommendation. Its generation timestamp is distinct

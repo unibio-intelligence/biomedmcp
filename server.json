@@ -3,11 +3,67 @@
   "name": "io.github.unibio-intelligence/biomedmcp",
   "title": "biomedmcp",
   "description": "Integrated public biomedical research with cited, bounded evidence.",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "remotes": [
     {
       "type": "streamable-http",
       "url": "https://biomedmcp.unibiointelligence.com/mcp"
+    }
+  ],
+  "repository": {
+    "url": "https://github.com/unibio-intelligence/biomedmcp",
+    "source": "github"
+  },
+  "packages": [
+    {
+      "registryType": "pypi",
+      "identifier": "biomedmcp",
+      "version": "0.2.3",
+      "runtimeHint": "uvx",
+      "transport": {
+        "type": "stdio"
+      },
+      "packageArguments": [
+        {
+          "type": "positional",
+          "value": "mcp"
+        },
+        {
+          "type": "named",
+          "name": "--transport",
+          "value": "stdio"
+        }
+      ],
+      "environmentVariables": [
+        {
+          "name": "UBI_PROFILE",
+          "value": "local"
+        }
+      ]
+    },
+    {
+      "registryType": "oci",
+      "identifier": "ghcr.io/unibio-intelligence/biomedmcp:0.2.3",
+      "transport": {
+        "type": "stdio"
+      },
+      "packageArguments": [
+        {
+          "type": "positional",
+          "value": "biomedmcp-server"
+        },
+        {
+          "type": "named",
+          "name": "--transport",
+          "value": "stdio"
+        }
+      ],
+      "environmentVariables": [
+        {
+          "name": "UBI_PROFILE",
+          "value": "local"
+        }
+      ]
     }
   ]
 }

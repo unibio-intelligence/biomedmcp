@@ -1,5 +1,13 @@
 # Release notes
 
+## 0.2.3
+
+- Add Python package, container and MCP Registry installation routes.
+- Start a local MCP server with `biomedmcp mcp --transport stdio`.
+- Use linked LDLR and PCSK9 evidence-notebook examples.
+- Limit Python source distributions to build, runtime and license inputs.
+- Require patched Authlib and dnspython dependencies.
+
 ## 0.2.1
 
 - Install one wheel with all biomedical adapters included.

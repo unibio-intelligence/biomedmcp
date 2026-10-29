@@ -36,11 +36,11 @@ class CanaryHTTP(ExampleHTTP):
             self.requests.append(request)
             if path.endswith("/reference/gene"):
                 assert params["gencodeVersion"] == "v39"
-                assert params["geneId"] == "BRAF"
-                data = page([gene()])
+                assert params["geneId"] == "PCSK9"
+                data = page([gene("PCSK9", "ENSG00000169174.14")])
             else:
                 assert params["datasetId"] == "gtex_v10"
-                assert params["gencodeId"] == "ENSG00000157764.14"
+                assert params["gencodeId"] == "ENSG00000169174.14"
                 assert path.endswith(
                     (
                         "/expression/medianGeneExpression",
@@ -53,7 +53,7 @@ class CanaryHTTP(ExampleHTTP):
                 data = page(
                     []
                     if path.endswith("singleTissueSqtl")
-                    else [association() if path.endswith("singleTissueEqtl") else expression()]
+                    else [association("PCSK9", "ENSG00000169174.14") if path.endswith("singleTissueEqtl") else expression("PCSK9", "ENSG00000169174.14")]
                 )
             data = page(
                 data["data"], size=int(params.get("itemsPerPage", 25)), index=int(params.get("page", 0))
@@ -64,8 +64,8 @@ class CanaryHTTP(ExampleHTTP):
 
             self.requests.append(request)
             body = json.loads(request.content)
-            assert body["variables"]["ensemblId"] == "ENSG00000157764"
-            fixture = profile(rows=[target_association()])
+            assert body["variables"]["ensemblId"] == "ENSG00000169174"
+            fixture = profile("ENSG00000169174", "PCSK9", rows=[target_association()])
             data = project(
                 {
                     "data": {
@@ -76,11 +76,12 @@ class CanaryHTTP(ExampleHTTP):
             )
         elif host == "www.ebi.ac.uk" and "interpro" in path:
             self.requests.append(request)
-            assert path == "/interpro/api/entry/interpro/protein/uniprot/P15056/"
+            assert path == "/interpro/api/entry/interpro/protein/uniprot/Q8NBP7/"
             from interpro_helpers import body, entry
 
             row = entry()
-            row["proteins"][0]["protein_length"] = 700
+            row["proteins"][0]["accession"] = "q8nbp7"
+            row["proteins"][0]["protein_length"] = 692
             data = body([row])
             row["proteins"][0]["entry_protein_locations"][0]["fragments"][0]["end"] = 650
             data = body([row])
@@ -167,9 +168,9 @@ async def test_mygene_http_boundary_sanitizes_malformed_json_and_provider_body(m
     with pytest.raises(ToolError) as caught:
         client = MyGeneClient()
         if method == "get":
-            await client.get("query", params={"q": "BRAF"})
+            await client.get("query", params={"q": "PCSK9"})
         else:
-            await client.post("query", {"q": ["BRAF"]})
+            await client.post("query", {"q": ["PCSK9"]})
     assert caught.value.__cause__ is None
     assert SENTINEL not in str(caught.value)
     assert json.loads(str(caught.value))["code"] == (
@@ -228,11 +229,11 @@ async def test_invalid_probe_or_missing_coverage_fails_without_io(canary_service
     service, router = canary_service
     cases = list(canary.CASES)
     if mutation == "legacy":
-        cases[5] = replace(cases[5], operation="search", arguments={"entity": "article", "query": "BRAF"})
+        cases[5] = replace(cases[5], operation="search", arguments={"entity": "article", "query": "PCSK9"})
     elif mutation == "wrong_sources":
         cases[4] = replace(cases[4], sources=("opentargets",))
     elif mutation == "missing_tissue":
-        cases[2] = replace(cases[2], arguments={"entity": "gene", "id": "BRAF", "sections": ["eqtl"]})
+        cases[2] = replace(cases[2], arguments={"entity": "gene", "id": "PCSK9", "sections": ["eqtl"]})
     elif mutation == "duplicate":
         cases.append(cases[0])
     else:

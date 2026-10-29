@@ -10,7 +10,7 @@ NCBI ID. Nonhuman, ambiguous or missing identity mappings stop acquisition.
 
 For an explicit GRCh38 single-nucleotide variant, request only `population`
 with `sources: ["gnomad"]`, for example
-`variant_evidence(id="chr7:140753336:A:T", assembly="grch38", sections=["population"], sources=["gnomad"])`.
+`variant_evidence(id="chr1:55039974:G:T", assembly="grch38", sections=["population"], sources=["gnomad"])`.
 The provider confirms the supplied coordinates and alleles; no MyVariant
 annotation is acquired. rsIDs, indels and other assemblies still need their
 separately qualified identity/normalization dependencies.

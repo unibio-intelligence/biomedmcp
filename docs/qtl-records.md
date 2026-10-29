@@ -3,7 +3,7 @@
 Inspect `capabilities({"source":"gtex"})` for `record_schemas.qtl`. Five assertions cover the existing public `get` gene sections: single-tissue eQTL/sQTL associations, eQTL MetaSoft and dynamic eQTL/sQTL calculations. Use explicit tissue and dataset selectors; MetaSoft and dynamic modes require a qualified variant, and dynamic sQTL additionally requires a provider splicing phenotype. No additional public alias or gene-list operation is introduced.
 
 ```json
-{"entity":"gene","id":"ENSG00000157764.14","sections":["sqtl"],"sources":["gtex"],"source_versions":{"gtex":"gtex_v10"},"section_parameters":{"sqtl":{"tissue_id":"Thyroid","analysis_mode":"gene_associations"}}}
+{"entity":"gene","id":"ENSG00000169174.14","sections":["sqtl"],"sources":["gtex"],"source_versions":{"gtex":"gtex_v10"},"section_parameters":{"sqtl":{"tissue_id":"Thyroid","analysis_mode":"gene_associations"}}}
 ```
 
 Records retain a versioned GENCODE identity, supported dataset/reference annotation, human dataset scope and explicit GRCh38 GTEx allele. Allele validation checks identifier/reference-row consistency; it does not independently check FASTA, normalize an allele or establish an effect allele. A splicing phenotype remains in its own namespace, with no inferred transcript. Reported gene symbols and ontology codes remain source metadata. In dynamic responses that omit `datasetId`, `source_release_basis` explicitly labels the dataset as acquisition scope rather than a reported row version. Receipts remain time-dependent; a dataset selector does not prove immutable HTTP replay.

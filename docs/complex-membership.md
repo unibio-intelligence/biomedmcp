@@ -3,7 +3,7 @@
 Use the existing `get` tool with a canonical UniProt accession, an explicit species and the `complexes` section:
 
 ```json
-{"entity":"protein","id":"P15056","species":9606,"sections":["complexes"],"sources":["complexportal","uniprot"],"section_parameters":{"complexes":{"limit":25}}}
+{"entity":"protein","id":"Q8NBP7","species":9606,"sections":["complexes"],"sources":["complexportal","uniprot"],"section_parameters":{"complexes":{"limit":25}}}
 ```
 
 Complex Portal is an eligible CC0 source in the [source license inventory](source-licenses.md). The UniProt dependency independently checks one exact accession, taxon, sequence and length before interpreting source matches. Name and isoform requests fail before acquisition; resolve an exact canonical identity first. Nonhuman requests retain the supplied species throughout the request and returned actions.

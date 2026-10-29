@@ -39,18 +39,18 @@ EXAMPLES = (
     ),
     example(
         "drug-search",
-        "Imatinib compound discovery",
+        "Ezetimibe compound discovery",
         "search",
-        {"entity": "drug", "query": "imatinib", "filters": {"source": "mychem"}},
+        {"entity": "drug", "query": "ezetimibe", "filters": {"source": "mychem"}},
     ),
     example(
-        "gene-record", "Human BRAF gene record", "get", {"entity": "gene", "id": "BRAF", "species": 9606}
+        "gene-record", "Human PCSK9 gene record", "get", {"entity": "gene", "id": "PCSK9", "species": 9606}
     ),
     example(
         "gene-expression",
-        "Human ERBB2 median expression by tissue",
+        "Human LDLR median expression by tissue",
         "get",
-        {"entity": "gene", "id": "ERBB2", "species": 9606, "sections": ["expression"]},
+        {"entity": "gene", "id": "LDLR", "species": 9606, "sections": ["expression"]},
     ),
     example(
         "article-fulltext",
@@ -60,60 +60,60 @@ EXAMPLES = (
     ),
     example(
         "gene-tissue",
-        "Human ERBB2 expression in breast tissue",
+        "Human LDLR expression in liver tissue",
         "get",
         {
             "entity": "gene",
-            "id": "ERBB2",
+            "id": "LDLR",
             "species": 9606,
             "sections": ["expression"],
             "section_parameters": {
-                "expression": {"query_type": "gene_tissue", "tissue_id": "Breast_Mammary_Tissue"}
+                "expression": {"query_type": "gene_tissue", "tissue_id": "Liver"}
             },
         },
     ),
     example(
         "gene-eqtl",
-        "Human ERBB2 eQTL associations in breast tissue",
+        "Human LDLR eQTL associations in liver tissue",
         "get",
         {
             "entity": "gene",
-            "id": "ERBB2",
+            "id": "LDLR",
             "species": 9606,
             "sections": ["eqtl"],
-            "section_parameters": {"eqtl": {"tissue_id": "Breast_Mammary_Tissue"}},
+            "section_parameters": {"eqtl": {"tissue_id": "Liver"}},
         },
     ),
     example(
         "drug-record",
-        "Imatinib record by provider-stable identifier",
+        "Ezetimibe record by provider-stable identifier",
         "get",
-        {"entity": "drug", "id": "KTUFNOKKBVMGRW-UHFFFAOYSA-N"},
+        {"entity": "drug", "id": "OLNTVTPDXPETLC-XPWALMASSA-N"},
     ),
     example(
         "disease-record",
         "Melanoma record by MONDO identifier",
         "get",
-        {"entity": "disease", "id": "MONDO:0005105"},
+        {"entity": "disease", "id": "MONDO:0007750"},
     ),
-    example("literature-kras", "KRAS resistance papers", "literature_search", {"query": "KRAS resistance"}),
+    example("literature-lipids", "PCSK9 LDL cholesterol papers", "literature_search", {"query": "PCSK9 LDL cholesterol"}),
     example(
         "literature-date",
-        "BRAF papers since 2024",
+        "PCSK9 papers since 2024",
         "literature_search",
-        {"query": "BRAF", "filters": {"source": "pubmed", "date_from": "2024-01-01"}},
+        {"query": "PCSK9", "filters": {"source": "pubmed", "date_from": "2024-01-01"}},
     ),
     example(
         "literature-open",
-        "Open-access melanoma papers from Europe PMC",
+        "Open-access familial hypercholesterolemia papers from Europe PMC",
         "literature_search",
-        {"query": "melanoma", "filters": {"source": "europepmc", "open_access": True}},
+        {"query": "familial hypercholesterolemia", "filters": {"source": "europepmc", "open_access": True}},
     ),
     example(
         "trial-recruiting",
-        "Recruiting melanoma trials",
+        "Recruiting familial hypercholesterolemia trials",
         "trial_search",
-        {"query": "melanoma", "filters": {"status": "RECRUITING"}},
+        {"query": "familial hypercholesterolemia", "filters": {"status": "RECRUITING"}},
     ),
     example(
         "trial-phase",
@@ -121,26 +121,26 @@ EXAMPLES = (
         "trial_search",
         {"query": "breast cancer", "filters": {"phase": "PHASE3"}},
     ),
-    example("trial-imatinib", "Imatinib trial discovery", "trial_search", {"query": "imatinib"}),
-    example("variant-protein", "BRAF V600E variant evidence", "variant_evidence", {"id": "BRAF V600E"}),
+    example("trial-ezetimibe", "Ezetimibe trial discovery", "trial_search", {"query": "ezetimibe"}),
+    example("variant-protein", "PCSK9 R46L variant evidence", "variant_evidence", {"id": "PCSK9 R46L"}),
     example(
         "variant-coordinate",
-        "GRCh38 BRAF variant coordinate evidence",
+        "GRCh38 PCSK9 variant coordinate evidence",
         "variant_evidence",
-        {"id": "chr7:140753336:A:T", "assembly": "grch38", "sections": ["clinvar", "population"]},
+        {"id": "chr1:55039974:G:T", "assembly": "grch38", "sections": ["clinvar", "population"]},
     ),
     example(
         "variant-rsid",
-        "Variant evidence for rs113488022",
+        "Variant evidence for rs11591147",
         "variant_evidence",
-        {"id": "rs113488022", "sections": ["clinvar", "population"]},
+        {"id": "rs11591147", "sections": ["clinvar", "population"]},
     ),
     example(
         "variant-cohort",
         "Variant evidence in an explicit cBioPortal cohort",
         "variant_evidence",
         {
-            "id": "BRAF V600E",
+            "id": "PCSK9 R46L",
             "sections": ["cbioportal"],
             "section_parameters": {
                 "cbioportal": {"molecular_profile_id": "study_mutations", "sample_list_id": "study_all"}
@@ -166,16 +166,16 @@ EXAMPLES = (
         {"analysis": "co_occurrence", "study": "ubi_synthetic", "genes": ["TP53", "KRAS"]},
     ),
     example(
-        "resolve-her2",
-        "Resolve the human HER2 gene alias",
+        "resolve-ldl-receptor",
+        "Resolve the human LDL receptor gene alias",
         "resolve",
-        {"entity": "gene", "query": "HER2", "species": 9606},
+        {"entity": "gene", "query": "LDL receptor", "species": 9606},
     ),
     example(
         "resolve-variant",
-        "Resolve rs113488022 before joining evidence",
+        "Resolve rs11591147 before joining evidence",
         "resolve",
-        {"entity": "variant", "query": "rs113488022"},
+        {"entity": "variant", "query": "rs11591147"},
     ),
     example(
         "resolve-mouse",
@@ -191,37 +191,37 @@ EXAMPLES = (
     ),
     example(
         "variant-structure",
-        "BRAF V600E structural coverage",
+        "PCSK9 R46L structural coverage",
         "relate",
-        {"entity": "variant", "id": "BRAF V600E", "relation": "structure"},
+        {"entity": "variant", "id": "PCSK9 R46L", "relation": "structure"},
     ),
     example(
         "gene-articles",
-        "Human BRAF article discovery with qualified identity",
+        "Human PCSK9 article discovery with qualified identity",
         "relate",
-        {"entity": "gene", "id": "BRAF", "relation": "articles", "species": 9606},
+        {"entity": "gene", "id": "PCSK9", "relation": "articles", "species": 9606},
     ),
     example(
         "target-dossier",
-        "Bounded human ERBB2 target dossier",
+        "Bounded human LDLR target dossier",
         "research",
         {
             "workflow": "target_dossier",
-            "focus": "ERBB2",
+            "focus": "LDLR",
             "species": 9606,
         },
     ),
     example(
         "drug-dossier",
-        "Bounded imatinib drug review",
+        "Bounded ezetimibe drug review",
         "research",
-        {"workflow": "drug_review", "focus": "imatinib"},
+        {"workflow": "drug_review", "focus": "ezetimibe"},
     ),
     example(
         "disease-dossier",
-        "Bounded melanoma disease landscape",
+        "Bounded familial hypercholesterolemia disease landscape",
         "research",
-        {"workflow": "disease_landscape", "focus": "MONDO:0005105"},
+        {"workflow": "disease_landscape", "focus": "MONDO:0007750"},
     ),
     example(
         "gtex-tissues",
@@ -240,7 +240,7 @@ EXAMPLES = (
         {
             "source": "enrichment",
             "operation": "gene_set",
-            "params": {"genes": ["BRAF", "KRAS", "TP53"], "organism": "hsapiens"},
+            "params": {"genes": ["PCSK9", "KRAS", "TP53"], "organism": "hsapiens"},
         },
     ),
     example(
@@ -252,7 +252,7 @@ EXAMPLES = (
             "operation": "get",
             "params": {
                 "database": "genbank",
-                "accession": "NM_004333.6",
+                "accession": "NM_174936.4",
                 "sequence": True,
                 "start": 1,
                 "stop": 100,
@@ -263,13 +263,13 @@ EXAMPLES = (
         "batch-gene",
         "Batch a human gene record read",
         "batch",
-        {"calls": [{"operation": "get", "arguments": {"entity": "gene", "id": "BRAF", "species": 9606}}]},
+        {"calls": [{"operation": "get", "arguments": {"entity": "gene", "id": "PCSK9", "species": 9606}}]},
     ),
     example(
         "batch-trial",
         "Batch trial discovery",
         "batch",
-        {"calls": [{"operation": "trial_search", "arguments": {"query": "melanoma"}}]},
+        {"calls": [{"operation": "trial_search", "arguments": {"query": "familial hypercholesterolemia"}}]},
     ),
     example(
         "batch-resolve",
@@ -277,7 +277,7 @@ EXAMPLES = (
         "batch",
         {
             "calls": [
-                {"operation": "resolve", "arguments": {"query": "HER2", "entity": "gene", "species": 9606}}
+                {"operation": "resolve", "arguments": {"query": "LDL receptor", "entity": "gene", "species": 9606}}
             ]
         },
     ),
@@ -498,18 +498,18 @@ EXAMPLES = (
 EXAMPLES += (
     example(
         "gene-sqtl",
-        "Human ERBB2 sQTL associations in breast tissue",
+        "Human LDLR sQTL associations in liver tissue",
         "get",
         {
             "entity": "gene",
-            "id": "ERBB2",
+            "id": "LDLR",
             "species": 9606,
             "sections": ["sqtl"],
             "sources": ["gtex"],
             "source_versions": {"gtex": "gtex_v10"},
             "section_parameters": {
                 "sqtl": {
-                    "tissue_id": "Breast_Mammary_Tissue",
+                    "tissue_id": "Liver",
                     "p_value_threshold": 0.05,
                     "limit": 10,
                     "page": 0,
@@ -549,7 +549,7 @@ EXAMPLES += (
         "get",
         {
             "entity": "gene",
-            "id": "ERBB2",
+            "id": "LDLR",
             "species": 9606,
             "sections": ["transcripts"],
             "sources": ["gtex"],
@@ -563,7 +563,7 @@ EXAMPLES += (
         "get",
         {
             "entity": "gene",
-            "id": "ERBB2",
+            "id": "LDLR",
             "species": 9606,
             "sections": ["exons"],
             "sources": ["gtex"],
@@ -590,7 +590,7 @@ EXAMPLES += (
         "trial-location",
         "Melanoma trials listing a Boston site",
         "trial_search",
-        {"query": "melanoma AND AREA[LocationCity]Boston", "filters": {"status": "RECRUITING"}},
+        {"query": "familial hypercholesterolemia AND AREA[LocationCity]Boston", "filters": {"status": "RECRUITING"}},
     ),
     example(
         "trial-completed",
@@ -637,20 +637,20 @@ EXAMPLES += (
         {
             "source": "mygene",
             "operation": "map_gene_ids",
-            "params": {"gene_ids": ["BRAF", "ERBB2"], "input_namespace": "symbol", "species": 9606},
+            "params": {"gene_ids": ["PCSK9", "LDLR"], "input_namespace": "symbol", "species": 9606},
         },
     ),
     example(
         "disease-search",
         "Melanoma disease identity discovery",
         "search",
-        {"entity": "disease", "query": "melanoma"},
+        {"entity": "disease", "query": "familial hypercholesterolemia"},
     ),
     example(
         "protein-record",
-        "Human BRAF protein by UniProt accession",
+        "Human PCSK9 protein by UniProt accession",
         "get",
-        {"entity": "protein", "id": "P15056"},
+        {"entity": "protein", "id": "Q8NBP7"},
     ),
     example(
         "pathway-search",
@@ -666,50 +666,50 @@ EXAMPLES += (
     ),
     example(
         "gene-pathways",
-        "Pathway membership for a qualified human BRAF gene",
+        "Pathway membership for a qualified human PCSK9 gene",
         "get",
-        {"entity": "gene", "id": "BRAF", "species": 9606, "sections": ["pathways"]},
+        {"entity": "gene", "id": "PCSK9", "species": 9606, "sections": ["pathways"]},
     ),
     example(
         "gene-target-evidence",
-        "Human ERBB2 target evidence and source disease associations",
+        "Human LDLR target evidence and source disease associations",
         "get",
         {
             "entity": "gene",
-            "id": "ERBB2",
+            "id": "LDLR",
             "species": 9606,
             "sections": ["target_evidence", "diseases", "druggability"],
         },
     ),
     example(
         "gene-hpa",
-        "Human Protein Atlas source annotations for qualified ERBB2",
+        "Human Protein Atlas source annotations for qualified LDLR",
         "get",
-        {"entity": "gene", "id": "ERBB2", "species": 9606, "sections": ["hpa"]},
+        {"entity": "gene", "id": "LDLR", "species": 9606, "sections": ["hpa"]},
     ),
     example(
         "drug-label",
-        "Submitted imatinib labeling records",
+        "Submitted ezetimibe labeling records",
         "get",
-        {"entity": "drug", "id": "imatinib", "sections": ["label"]},
+        {"entity": "drug", "id": "ezetimibe", "sections": ["label"]},
     ),
     example(
         "drug-safety",
-        "Reported imatinib adverse-event records",
+        "Reported ezetimibe adverse-event records",
         "get",
-        {"entity": "drug", "id": "imatinib", "sections": ["safety"]},
+        {"entity": "drug", "id": "ezetimibe", "sections": ["safety"]},
     ),
     example(
         "adverse-event-search",
-        "Imatinib reported adverse-event discovery",
+        "Ezetimibe reported adverse-event discovery",
         "search",
-        {"entity": "adverse-event", "query": "imatinib"},
+        {"entity": "adverse-event", "query": "ezetimibe"},
     ),
     example(
         "patent-search",
-        "SureChEMBL patent chemistry discovery for imatinib",
+        "SureChEMBL patent chemistry discovery for ezetimibe",
         "search",
-        {"entity": "patent", "query": "imatinib"},
+        {"entity": "patent", "query": "ezetimibe"},
     ),
     example(
         "ensembl-assembly",
@@ -755,7 +755,7 @@ ADAPTER_READMES = {
         (
             "trial-recruiting",
             "trial-phase",
-            "trial-imatinib",
+            "trial-ezetimibe",
             "trial-record",
             "trial-contacts",
             "trial-location",
@@ -807,7 +807,7 @@ ADAPTER_READMES = {
             "ncbi-sample",
         ),
     ),
-    "mygene": ("mygene", ("gene-search", "gene-record", "resolve-her2", "resolve-mouse", "gene-map")),
+    "mygene": ("mygene", ("gene-search", "gene-record", "resolve-ldl-receptor", "resolve-mouse", "gene-map")),
     "mychem": ("mychem", ("drug-search", "drug-record")),
     "mydisease": ("mydisease", ("disease-search", "disease-record")),
     "uniprot-mcp": ("uniprot", ("protein-search", "protein-record")),
@@ -994,7 +994,7 @@ def guide_examples():
 def readme_examples():
     names = {"literature-date", "gene-expression", "variant-protein"}
     return "\n".join(
-        "UBI_PROFILE=local uv run biomedmcp " + item.operation + " '" + item.arguments_json + "'"
+        "UBI_PROFILE=local biomedmcp " + item.operation + " '" + item.arguments_json + "'"
         for item in EXAMPLES
         if item.id in names
     )
@@ -1008,7 +1008,7 @@ def adapter_readme(package):
     lines = [
         "# " + name + " retained adapter",
         "",
-        "Generated from biomedmcp.examples. From the public runtime root, refresh with uv run --frozen python scripts/catalog.py.",
+        "Examples use the public BioMedMCP tools and their typed JSON arguments.",
         "",
         "Use the biomedmcp server and its canonical tools. Retained adapters are implementation packages; their internal tools are not separate public MCP mounts.",
         "",

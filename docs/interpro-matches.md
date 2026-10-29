@@ -3,7 +3,7 @@
 Use a canonical UniProt accession with `get`:
 
 ```json
-{"entity":"protein","id":"P15056","sections":["domains"],"sources":["interpro","uniprot"],"section_parameters":{"domains":{"limit":25}}}
+{"entity":"protein","id":"Q8NBP7","sections":["domains"],"sources":["interpro","uniprot"],"section_parameters":{"domains":{"limit":25}}}
 ```
 
 The historically named `domains` section contains **typed InterPro entries**, including families, sites, repeats and homologous superfamilies. Preserve `metadata.type`; an entry family is not automatically a domain. The service verifies one exact UniProt accession, species and sequence length before interpreting InterPro's protein matches. Isoform coordinates are not inferred. Nonhuman requests must explicitly preserve their taxonomy ID in `species`.
@@ -15,7 +15,7 @@ HTTP204 is ambiguous without identity: the observed provider returns it for both
 For a human variant, use the owned relation:
 
 ```json
-{"entity":"variant","id":"BRAF V600E","relation":"structure"}
+{"entity":"variant","id":"PCSK9 R46L","relation":"structure"}
 ```
 
 The relation verifies the reference amino acid on the selected reviewed UniProt sequence and acquires up to four InterPro pages (100 entries). It preserves UniProt/PDB evidence if InterPro fails. `interpro_matches` retains all entry types overlapping the requested residue; `domains` includes only entries of type `domain`. Fragment intervals are one-based and inclusive. A residue in a discontinuous gap is not an overlap. The optional `representative` value is preserved without inferring representative-domain selection from an integrated entry's type. Further pages remain reachable through generated ordinary protein actions; those return source windows, which must be evaluated against the original residue with the same coordinate rules.

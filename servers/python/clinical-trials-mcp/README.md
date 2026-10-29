@@ -1,6 +1,6 @@
 # ClinicalTrials.gov retained adapter
 
-Generated from biomedmcp.examples. From the public runtime root, refresh with uv run --frozen python scripts/catalog.py.
+Examples use the public BioMedMCP tools and their typed JSON arguments.
 
 Use the biomedmcp server and its canonical tools. Retained adapters are implementation packages; their internal tools are not separate public MCP mounts.
 
@@ -14,13 +14,13 @@ These examples pass schemas and preflight and execute through MCP against mocked
 
 Follow advertised provider continuation for further acquisition. If the result advertises an evidence recovery URI, use its bounded ranges to read acquired data omitted from the preview; see [evidence recovery](../../../docs/evidence-resources.md). Snapshot scope, expiry and source rights still apply.
 
-## Recruiting melanoma trials
+## Recruiting familial hypercholesterolemia trials
 
 ```json
 {
   "tool": "trial_search",
   "arguments": {
-    "query": "melanoma",
+    "query": "familial hypercholesterolemia",
     "filters": {
       "status": "RECRUITING"
     }
@@ -42,13 +42,13 @@ Follow advertised provider continuation for further acquisition. If the result a
 }
 ```
 
-## Imatinib trial discovery
+## Ezetimibe trial discovery
 
 ```json
 {
   "tool": "trial_search",
   "arguments": {
-    "query": "imatinib"
+    "query": "ezetimibe"
   }
 }
 ```
@@ -87,7 +87,7 @@ Follow advertised provider continuation for further acquisition. If the result a
 {
   "tool": "trial_search",
   "arguments": {
-    "query": "melanoma AND AREA[LocationCity]Boston",
+    "query": "familial hypercholesterolemia AND AREA[LocationCity]Boston",
     "filters": {
       "status": "RECRUITING"
     }

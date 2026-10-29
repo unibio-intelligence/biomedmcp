@@ -309,12 +309,12 @@ def create_server(*, service=None, settings=None, ledger=None, boundary=None, cr
     return server
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument("--transport", choices=["stdio", "http"], default=os.getenv("MCP_TRANSPORT", "stdio"))
     parser.add_argument("--host", default=os.getenv("FASTMCP_SERVER_HOST", "127.0.0.1"))
     parser.add_argument("--port", type=int, default=int(os.getenv("FASTMCP_SERVER_PORT", "8000")))
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     if (
         os.getenv("UBI_PROFILE") == "local"
         and args.transport == "http"
