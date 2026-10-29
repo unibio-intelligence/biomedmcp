@@ -39,7 +39,7 @@ async def test_complete_documented_investigations_preserve_evidence_and_scientif
             assert value["query"]["species"] == 9606
             section = value["sections"]["expression" if identifier == "gene-tissue" else "eqtl"]
             assert all(
-                row["geneSymbol"] == "ERBB2" and row["gencodeId"] == "ENSG00000141736.13"
+                row["geneSymbol"] == "LDLR" and row["gencodeId"] == "ENSG00000130164.13"
                 for row in section["data"]["data"]
             )
         assert {"expression", "target_evidence", "diseases", "druggability"} <= set(
@@ -48,7 +48,7 @@ async def test_complete_documented_investigations_preserve_evidence_and_scientif
         assert any(request.url.host == "gtexportal.org" for request in router.requests)
     elif investigation["id"] == "variant":
         identity = results["gene-articles"]["query"]["qualified_identity"]
-        assert identity["symbol"] == "BRAF" and identity["species"] == 9606
+        assert identity["symbol"] == "PCSK9" and identity["species"] == 9606
         assert any(request.url.host == "rest.uniprot.org" for request in router.requests)
     else:
         assert router.requests == []

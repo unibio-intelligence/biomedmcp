@@ -46,7 +46,7 @@ async def artifacts(root):
         "docs/mcp-catalog-budget.json": json.dumps(report, indent=2) + "\n",
         "docs/operation-ownership.json": json.dumps(operation_map(), indent=2) + "\n",
         "docs/examples.md": (
-            "# Public call examples\n\nGenerated from biomedmcp.examples; run scripts/catalog.py to refresh. Examples demonstrate synthetic adapter contracts. Check [source release eligibility](source-licenses.md) before execution; unreleased integrations cannot be enabled by adding keys.\n\n"
+            "# Public call examples\n\nUse these typed calls to inspect records or extend an evidence notebook. Calls are tested with synthetic provider responses; live results vary. Check [source release eligibility](source-licenses.md) before execution; unreleased integrations cannot be enabled by adding keys.\n\n"
             + guide_examples()
         ),
     }

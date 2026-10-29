@@ -11,31 +11,31 @@ from biomedmcp.contracts import BatchCall
 from biomedmcp.public_catalog import ADAPTERS, schema
 
 TASKS = [
-    {"id": "gene-record", "question": "Retrieve the BRAF gene record.", "routes": ["get"]},
+    {"id": "gene-record", "question": "Retrieve the PCSK9 gene record.", "routes": ["get"]},
     {
         "id": "ambiguous-alias",
-        "question": "Resolve HER2 before combining gene evidence.",
+        "question": "Resolve LDL receptor before combining gene evidence.",
         "routes": ["resolve"],
     },
-    {"id": "gtex-only", "question": "Retrieve ERBB2 expression using only GTEx.", "routes": ["get"]},
+    {"id": "gtex-only", "question": "Retrieve LDLR expression using only GTEx.", "routes": ["get"]},
     {
         "id": "literature-dates",
-        "question": "Find PubMed BRAF papers published since 2024-01-01.",
+        "question": "Find PubMed PCSK9 papers published since 2024-01-01.",
         "routes": ["literature_search"],
     },
     {"id": "article-direct", "question": "Read the full text for PMC123.", "routes": ["get"]},
-    {"id": "trial-status", "question": "Find recruiting melanoma trials.", "routes": ["trial_search"]},
+    {"id": "trial-status", "question": "Find recruiting familial hypercholesterolemia trials.", "routes": ["trial_search"]},
     {
         "id": "exact-variant",
-        "question": "Retrieve ClinVar evidence for GRCh38 chr7:140753336:A:T.",
+        "question": "Retrieve ClinVar evidence for GRCh38 chr1:55039974:G:T.",
         "routes": ["variant_evidence"],
     },
     {
         "id": "ambiguous-variant",
-        "question": "Retrieve evidence for BRAF V600E; preserve allele ambiguity.",
+        "question": "Retrieve evidence for PCSK9 R46L; preserve allele ambiguity.",
         "routes": ["variant_evidence"],
     },
-    {"id": "target-dossier", "question": "Assemble a target dossier for ERBB2.", "routes": ["research"]},
+    {"id": "target-dossier", "question": "Assemble a target dossier for LDLR.", "routes": ["research"]},
     {
         "id": "study-frequency",
         "question": "Calculate TP53 mutation frequency in ubi_synthetic, using assay coverage.",
@@ -48,7 +48,7 @@ TASKS = [
     },
     {
         "id": "source-failure",
-        "question": "Find BRAF PubMed papers when the provider is unavailable; preserve the failure.",
+        "question": "Find PCSK9 PubMed papers when the provider is unavailable; preserve the failure.",
         "routes": ["literature_search"],
     },
     {"id": "advanced-source", "question": "Retrieve GTEx tissue metadata.", "routes": ["query_source"]},

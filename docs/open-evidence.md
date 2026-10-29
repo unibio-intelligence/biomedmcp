@@ -9,7 +9,7 @@ oncogenicity classifications. NIH does not independently verify submitted
 assertions; missing classifications are unknown.
 
 ```json
-{"tool":"variant_evidence","arguments":{"id":"BRAF V600E","sections":["clinvar"]}}
+{"tool":"variant_evidence","arguments":{"id":"PCSK9 R46L","sections":["clinvar"]}}
 ```
 
 An explicit allele is preferable when an rsID or protein change maps to multiple
@@ -22,7 +22,7 @@ transcript HGVS or an allele in the qualified assembly. Indels require qualified
 unnormalized coordinates.
 
 ```json
-{"tool":"variant_evidence","arguments":{"id":"chr7:140753336:A:T","assembly":"grch38","sections":["clinvar","population","civic"]}}
+{"tool":"variant_evidence","arguments":{"id":"chr1:55039974:G:T","assembly":"grch38","sections":["clinvar","population","civic"]}}
 ```
 
 Population and CIViC remain separate sources with their own identity and
@@ -88,8 +88,8 @@ or patient-risk estimates. Non-missense or unavailable predictions stay explicit
 Restricted mixed aggregator bundles and other algorithms remain outside this route.
 
 ```json
-{"tool":"variant_evidence","arguments":{"id":"BRAF V600E","sections":["predictions"]}}
-{"tool":"variant_evidence","arguments":{"id":"chr7:140753336:A:T","assembly":"grch38","sections":["predictions"]}}
+{"tool":"variant_evidence","arguments":{"id":"PCSK9 R46L","sections":["predictions"]}}
+{"tool":"variant_evidence","arguments":{"id":"chr1:55039974:G:T","assembly":"grch38","sections":["predictions"]}}
 ```
 
 Semantic Scholar acquisition, TLDR sections, source discovery and credentials have
@@ -98,6 +98,6 @@ See `capabilities` for coverage and [connection instructions](connect.md).
 
 ## Additional predictor scores
 
-Request `variant_evidence` with `sections: ["eve"]` and a gene/protein substitution such as `BRAF V600E` for original EVE ASM scores. The [EVE publisher licenses all site data under MIT](https://evemodel.org/download/bulk); returned evidence includes its full copyright/permission notice, uncertainty, source 75%-retained classification, canonical protein identity and artifact hash. Coverage depends on EVE's supplied proteins and positions; genomic mapping is not inferred. AlphaMissense remains available through `sections: ["predictions"]`. Scores from these distinct models are not combined.
+Request `variant_evidence` with `sections: ["eve"]` and a gene/protein substitution such as `PCSK9 R46L` for original EVE ASM scores. The [EVE publisher licenses all site data under MIT](https://evemodel.org/download/bulk); returned evidence includes its full copyright/permission notice, uncertainty, source 75%-retained classification, canonical protein identity and artifact hash. Coverage depends on EVE's supplied proteins and positions; genomic mapping is not inferred. AlphaMissense remains available through `sections: ["predictions"]`. Scores from these distinct models are not combined.
 
 Credential-free public predictor results can be reused across anonymous requests to the same server resource for one day. Personal-key results, signed-in/private data, saved-evidence grants and other operations keep their own scopes. Explicit `fresh` acquisition bypasses the result cache; upstream latency can vary.

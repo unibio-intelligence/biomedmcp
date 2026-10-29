@@ -5,7 +5,7 @@ Call `capabilities` with `{"source":"gtex"}` to inspect the discriminated
 tool, for example:
 
 ```json
-{"entity":"gene","id":"ENSG00000157764.14","sections":["expression"],"sources":["gtex"],"source_versions":{"gtex":"gtex_v10"}}
+{"entity":"gene","id":"ENSG00000169174.14","sections":["expression"],"sources":["gtex"],"source_versions":{"gtex":"gtex_v10"}}
 ```
 
 `gene_median` returns `provider_median_expression` assertions. These are

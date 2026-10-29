@@ -1,6 +1,6 @@
 {
   "as_of": "2026-10-13",
-  "implementation": "biomedmcp/0.2.1",
+  "implementation": "biomedmcp/0.2.3",
   "scope": "Public implementation and bounded offline fixture qualification. Configuration/importability are distinct from response contract evidence, live health and client/model task readiness. No current provider-wide live readiness claim.",
   "source_schemas": "adapter-catalog.json",
   "live_observations": "live-qualification.md",

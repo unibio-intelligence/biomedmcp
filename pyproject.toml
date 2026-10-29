@@ -1,6 +1,6 @@
 [project]
 name = "biomedmcp"
-version = "0.2.1"
+version = "0.2.3"
 description = "biomedmcp biomedical research MCP and CLI"
 readme = "README.md"
 authors = [{name = "UniBio Intelligence"}]
@@ -9,6 +9,8 @@ license-files = ["LICENSE", "NOTICE.md", "servers/python/**/LICENSE*"]
 requires-python = ">=3.13"
 dependencies = [
     "fastmcp==4.1.2",
+    "authlib>=1.9.1,<2",
+    "dnspython>=2.9.0,<3",
     "opentelemetry-api==1.45.1",
     "httpx==0.28.1",
     "aiohttp==3.14.5",
@@ -86,3 +88,55 @@ markers = ["redis: required real-Redis distributed runtime qualification (explic
 [tool.ruff]
 target-version = "py313"
 line-length = 110
+
+[tool.hatch.build.targets.sdist]
+only-include = [
+    "LICENSE",
+    "NOTICE.md",
+    "README.md",
+    "pyproject.toml",
+    "servers/python/antibody-registry/LICENSE",
+    "servers/python/antibody-registry/antibody_registry",
+    "servers/python/bio-ontology-mcp/LICENSE",
+    "servers/python/bio-ontology-mcp/src/bio_ontology_mcp",
+    "servers/python/chembl-mcp/LICENSE",
+    "servers/python/chembl-mcp/chembl_mcp",
+    "servers/python/clinical-trials-mcp/LICENSE",
+    "servers/python/clinical-trials-mcp/clinical_trials_mcp",
+    "servers/python/dailymed-mcp/LICENSE",
+    "servers/python/dailymed-mcp/dailymed_mcp",
+    "servers/python/depmap-mcp/LICENSE",
+    "servers/python/depmap-mcp/depmap_mcp",
+    "servers/python/ensembl-mcp/LICENSE",
+    "servers/python/ensembl-mcp/ensembl_mcp",
+    "servers/python/gtex/LICENSE",
+    "servers/python/gtex/src/gtex_mcp",
+    "servers/python/mychem/LICENSE",
+    "servers/python/mychem/src/mychem_mcp",
+    "servers/python/mydisease/LICENSE",
+    "servers/python/mydisease/src/mydisease_mcp",
+    "servers/python/mygene/LICENSE",
+    "servers/python/mygene/src/mygene_mcp",
+    "servers/python/ncbi-mcp/LICENSE",
+    "servers/python/ncbi-mcp/ncbi_mcp",
+    "servers/python/omnipath-mcp/LICENSE",
+    "servers/python/omnipath-mcp/omnipath_mcp",
+    "servers/python/openfda-mcp/LICENSE",
+    "servers/python/openfda-mcp/openfda_mcp",
+    "servers/python/opentargets/LICENSE",
+    "servers/python/opentargets/src/opentargets_mcp",
+    "servers/python/orange-book-mcp/LICENSE",
+    "servers/python/orange-book-mcp/orange_book_mcp",
+    "servers/python/pdb-mcp/LICENSE",
+    "servers/python/pdb-mcp/pdb_mcp",
+    "servers/python/protein-atlas-mcp/LICENSE",
+    "servers/python/protein-atlas-mcp/protein_atlas_mcp",
+    "servers/python/reactome-mcp/LICENSE",
+    "servers/python/reactome-mcp/reactome_mcp",
+    "servers/python/surechembl-mcp/LICENSE",
+    "servers/python/surechembl-mcp/surechembl_mcp",
+    "servers/python/uniprot-mcp/LICENSE",
+    "servers/python/uniprot-mcp/uniprot_mcp",
+    "src/biomedmcp",
+    "uv.lock",
+]

@@ -160,7 +160,12 @@ class JSONArgumentParser(argparse.ArgumentParser):
 
 
 def main():
-    parser = JSONArgumentParser(description="biomedmcp biomedical research")
+    if sys.argv[1:2] == ["mcp"]:
+        from .mcp.server import main as server_main
+
+        return server_main(sys.argv[2:])
+    parser = JSONArgumentParser(description="biomedmcp biomedical research",
+                                epilog="Start the MCP server: biomedmcp mcp --transport stdio")
     parser.add_argument(
         "operation",
         choices=[

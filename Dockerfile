@@ -24,6 +24,9 @@ RUN uv sync --frozen --group dev
 CMD ["uv", "run", "--frozen", "--no-sync", "pytest", "tests", "-q"]
 
 FROM base AS runtime
+LABEL org.opencontainers.image.source="https://github.com/unibio-intelligence/biomedmcp" \
+      org.opencontainers.image.licenses="Apache-2.0" \
+      io.modelcontextprotocol.server.name="io.github.unibio-intelligence/biomedmcp"
 RUN adduser -D -u 10001 ubi
 USER ubi
 ENV UBI_PROFILE=local UBI_LOCAL_CONTAINER=1 MCP_TRANSPORT=http FASTMCP_SERVER_HOST=0.0.0.0 FASTMCP_SERVER_PORT=8000

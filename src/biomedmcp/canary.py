@@ -38,13 +38,13 @@ class CanaryCase:
 
 
 CASES = (
-    CanaryCase("gene", "get", {"entity": "gene", "id": "BRAF"}, ("mygene",)),
+    CanaryCase("gene", "get", {"entity": "gene", "id": "PCSK9"}, ("mygene",)),
     CanaryCase(
         "gtex-expression",
         "get",
         {
             "entity": "gene",
-            "id": "BRAF",
+            "id": "PCSK9",
             "sections": ["expression"],
             "source_versions": {"gtex": "gtex_v10"},
         },
@@ -55,7 +55,7 @@ CASES = (
         "get",
         {
             "entity": "gene",
-            "id": "BRAF",
+            "id": "PCSK9",
             "sections": ["eqtl"],
             "source_versions": {"gtex": "gtex_v10"},
             "section_parameters": {"eqtl": {"tissue_id": "Thyroid"}},
@@ -68,7 +68,7 @@ CASES = (
         "get",
         {
             "entity": "gene",
-            "id": "BRAF",
+            "id": "PCSK9",
             "sections": ["sqtl"],
             "source_versions": {"gtex": "gtex_v10"},
             "section_parameters": {"sqtl": {"tissue_id": "Thyroid"}},
@@ -81,7 +81,7 @@ CASES = (
         "get",
         {
             "entity": "gene",
-            "id": "BRAF",
+            "id": "PCSK9",
             "sections": ["target_evidence"],
         },
         ("mygene", "opentargets"),
@@ -90,7 +90,7 @@ CASES = (
         "literature",
         "literature_search",
         {
-            "query": "BRAF melanoma",
+            "query": "PCSK9 familial hypercholesterolemia",
             "filters": {"source": "pubmed"},
             "limit": 3,
         },
@@ -101,7 +101,7 @@ CASES = (
         "trials",
         "trial_search",
         {
-            "query": "melanoma",
+            "query": "familial hypercholesterolemia",
             "filters": {"source": "clinical-trials", "status": "RECRUITING"},
             "limit": 3,
         },
@@ -114,7 +114,7 @@ CASES = (
         {
             "source": "ncbi-records",
             "operation": "get",
-            "params": {"database": "genbank", "accession": "NM_004333.6"},
+            "params": {"database": "genbank", "accession": "NM_174936.4"},
         },
         ("ncbi-records",),
     ),
@@ -123,7 +123,7 @@ CASES = (
         "get",
         {
             "entity": "protein",
-            "id": "P15056",
+            "id": "Q8NBP7",
             "sections": ["domains"],
         },
         ("interpro", "uniprot"),
@@ -132,7 +132,7 @@ CASES = (
         "variant",
         "variant_evidence",
         {
-            "id": "chr7:140753336:A:T",
+            "id": "chr1:55039974:G:T",
             "assembly": "grch38",
             "sections": ["clinvar", "population"],
         },

@@ -7,7 +7,7 @@ The plan is a JSON list of at most 16 objects, each with a distinct bounded `id`
 ```json
 [
   {"id":"mutation","operation":"query","params":{"study":"ubi_synthetic","gene":"TP53"},"expected":"success"},
-  {"id":"cna","operation":"query","params":{"study":"ubi_synthetic","gene":"ERBB2","type":"cna"},"expected":"success"}
+  {"id":"cna","operation":"query","params":{"study":"ubi_synthetic","gene":"LDLR","type":"cna"},"expected":"success"}
 ]
 ```
 

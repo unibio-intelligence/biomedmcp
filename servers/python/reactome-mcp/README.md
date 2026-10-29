@@ -1,6 +1,6 @@
 # Reactome retained adapter
 
-Generated from biomedmcp.examples. From the public runtime root, refresh with uv run --frozen python scripts/catalog.py.
+Examples use the public BioMedMCP tools and their typed JSON arguments.
 
 Use the biomedmcp server and its canonical tools. Retained adapters are implementation packages; their internal tools are not separate public MCP mounts.
 
@@ -38,14 +38,14 @@ Follow advertised provider continuation for further acquisition. If the result a
 }
 ```
 
-## Pathway membership for a qualified human BRAF gene
+## Pathway membership for a qualified human PCSK9 gene
 
 ```json
 {
   "tool": "get",
   "arguments": {
     "entity": "gene",
-    "id": "BRAF",
+    "id": "PCSK9",
     "species": 9606,
     "sections": [
       "pathways"

@@ -64,7 +64,7 @@ EXPECTED_HOSTS = {
     "gene-transcripts": {"gtexportal.org"},
     "gene-exons": {"gtexportal.org"},
     "article-fulltext": {"www.ebi.ac.uk"},
-    "literature-kras": {
+    "literature-lipids": {
         "eutils.ncbi.nlm.nih.gov",
         "www.ebi.ac.uk",
         "www.ncbi.nlm.nih.gov",
@@ -73,12 +73,12 @@ EXPECTED_HOSTS = {
     "literature-open": {"www.ebi.ac.uk"},
     "trial-recruiting": {"clinicaltrials.gov"},
     "trial-phase": {"clinicaltrials.gov"},
-    "trial-imatinib": {"clinicaltrials.gov"},
+    "trial-ezetimibe": {"clinicaltrials.gov"},
     "variant-protein": {"eutils.ncbi.nlm.nih.gov", "myvariant.info", "gnomad.broadinstitute.org", "civicdb.org"},
     "variant-coordinate": {"eutils.ncbi.nlm.nih.gov", "gnomad.broadinstitute.org"},
     "variant-rsid": {"eutils.ncbi.nlm.nih.gov", "myvariant.info", "gnomad.broadinstitute.org"},
     "variant-cohort": {"myvariant.info", "mygene.info", "www.cbioportal.org"},
-    "resolve-her2": {"mygene.info"},
+    "resolve-ldl-receptor": {"mygene.info"},
     "resolve-variant": {"myvariant.info"},
     "resolve-mouse": {"mygene.info"},
     "article-references": {"www.ebi.ac.uk"},
@@ -188,13 +188,13 @@ async def test_each_public_example_passes_schema_preflight_and_actual_mcp_execut
             assert EXPECTED_HOSTS[item.id] <= {request.url.host for request in router.requests}
         if item.id == "gene-map":
             mappings = result["sections"]["mygene"]["data"]["mappings"]
-            assert [row["query"] for row in mappings] == ["BRAF", "ERBB2"]
+            assert [row["query"] for row in mappings] == ["PCSK9", "LDLR"]
             assert all(
                 row["status"] == "resolved" and row["candidates"][0]["species"] == 9606 for row in mappings
             )
         if item.id == "gene-hpa":
-            assert result["query"]["qualified_identity"]["ensembl_ids"] == ["ENSG00000141736"]
-            assert "ENSG00000141736" in result["sections"]["hpa"]["data"]["data"]
+            assert result["query"]["qualified_identity"]["ensembl_ids"] == ["ENSG00000130164"]
+            assert "ENSG00000130164" in result["sections"]["hpa"]["data"]["data"]
         if item.id == "antibody-record":
             data = result["sections"]["antibody-registry"]["data"]
             assert data["identity_status"] == "exact" and data["items"][0]["abId"] == 3753073
@@ -274,8 +274,8 @@ def test_descriptions_and_generated_docs_share_the_complete_registry():
     import re
 
     registered = [(item.operation, item.arguments) for item in EXAMPLES]
-    calls = re.findall(r"UBI_PROFILE=local uv run biomedmcp ([a-z_]+) '([^']+)'", readme)
-    assert len(calls) == 3 and all((name, json.loads(arguments)) in registered for name, arguments in calls)
+    calls = re.findall(r"UBI_PROFILE=local biomedmcp ([a-z_]+) '([^']+)'", readme)
+    assert len(calls) == 4 and all((name, json.loads(arguments)) in registered for name, arguments in calls)
     documented = [
         json.loads(block)
         for block in re.findall(r"```json\n(.*?)\n```", (root / "docs/examples.md").read_text(), re.DOTALL)
@@ -287,7 +287,7 @@ def test_descriptions_and_generated_docs_share_the_complete_registry():
         for block in re.findall(r"```json\n(.*?)\n```", text, re.DOTALL):
             item = json.loads(block)
             assert (item["tool"], item["arguments"]) in registered
-    assert "open-access melanoma papers from PubMed" not in str(DESCRIPTIONS)
+    assert "open-access familial hypercholesterolemia papers from PubMed" not in str(DESCRIPTIONS)
     for item in EXAMPLES:
         arguments = item.arguments
         arguments["tampered"] = True
@@ -308,7 +308,7 @@ async def test_target_prompt_uses_shared_arguments_and_executes_them(example_ser
 
     service, _ = example_service
     async with Client(create_server(service=service)) as client:
-        prompt = await client.get_prompt("target_research", {"gene": "ERBB2"})
+        prompt = await client.get_prompt("target_research", {"gene": "LDLR"})
         text = prompt.messages[0].content.text
         arguments, _ = json.JSONDecoder().raw_decode(text.split("arguments ", 1)[1])
         assert arguments == by_id("target-dossier").arguments

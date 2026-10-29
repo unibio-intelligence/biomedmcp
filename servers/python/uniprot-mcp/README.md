@@ -1,6 +1,6 @@
 # UniProt retained adapter
 
-Generated from biomedmcp.examples. From the public runtime root, refresh with uv run --frozen python scripts/catalog.py.
+Examples use the public BioMedMCP tools and their typed JSON arguments.
 
 Use the biomedmcp server and its canonical tools. Retained adapters are implementation packages; their internal tools are not separate public MCP mounts.
 
@@ -29,14 +29,14 @@ Follow advertised provider continuation for further acquisition. If the result a
 }
 ```
 
-## Human BRAF protein by UniProt accession
+## Human PCSK9 protein by UniProt accession
 
 ```json
 {
   "tool": "get",
   "arguments": {
     "entity": "protein",
-    "id": "P15056"
+    "id": "Q8NBP7"
   }
 }
 ```

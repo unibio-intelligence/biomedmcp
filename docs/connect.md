@@ -12,7 +12,7 @@ Install Python 3.13+ and [uv](https://docs.astral.sh/uv/). From the repository r
 
 ```sh
 uv sync --frozen
-UBI_PROFILE=local uv run --frozen biomedmcp literature_search '{"query":"BRAF melanoma","filters":{"source":"pubmed"}}'
+UBI_PROFILE=local uv run --frozen biomedmcp literature_search '{"query":"PCSK9 familial hypercholesterolemia","filters":{"source":"pubmed"}}'
 ```
 
 For a client that launches a **stdio** server, use this configuration, replacing the project path:
@@ -39,11 +39,38 @@ UBI_PROFILE=local uv run --frozen biomedmcp-server --transport http --host 127.0
 
 Connect to `http://127.0.0.1:8000/mcp`. This server is unauthenticated and listens on your machine only. Network-facing deployments need an operator-managed access configuration; see [contributing](../CONTRIBUTING.md).
 
+
+## Installed Python package
+
+In a Python 3.13+ virtual environment, run `python -m pip install biomedmcp==0.2.3`.
+For a stdio client, the package command is:
+
+```sh
+UBI_PROFILE=local biomedmcp mcp --transport stdio
+```
+
+The `biomedmcp-server` command accepts the same server options. A client with uvx
+can use `uvx --from biomedmcp==0.2.3 biomedmcp mcp --transport stdio`.
+
+## Container
+
+A stdio client can run the versioned container:
+
+```sh
+docker run --rm -i --no-healthcheck ghcr.io/unibio-intelligence/biomedmcp:0.2.3 biomedmcp-server --transport stdio
+```
+
+For local HTTP, publish port 8000 on loopback only:
+
+```sh
+docker run --rm -p 127.0.0.1:8000:8000 ghcr.io/unibio-intelligence/biomedmcp:0.2.3
+```
+
 ## Use the CLI with a server
 
 ```sh
 uv run --frozen biomedmcp tools --url https://biomedmcp.unibiointelligence.com/mcp
-uv run --frozen biomedmcp literature_search '{"query":"BRAF melanoma"}' --url https://biomedmcp.unibiointelligence.com/mcp
+uv run --frozen biomedmcp literature_search '{"query":"PCSK9 familial hypercholesterolemia"}' --url https://biomedmcp.unibiointelligence.com/mcp
 ```
 
 Add `--login` to sign in through OAuth. Repeat it for later commands, or provide `UBI_PUBLIC_TOKEN` through secret storage. Keep keys and tokens out of tool arguments and shared command transcripts.
