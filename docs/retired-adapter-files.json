@@ -1,0 +1,9 @@
+{
+  "reason": "Unregistered synchronous duplicate helpers; active source adapter uses bounded shared transport. Extraction hashes retain original provenance.",
+  "files": [
+    "servers/python/antibody-registry/_get_antibody_information.py",
+    "servers/python/antibody-registry/_get_antibody_list.py",
+    "servers/python/antibody-registry/antibody_registry/_get_antibody_information.py",
+    "servers/python/antibody-registry/antibody_registry/_get_antibody_list.py"
+  ]
+}

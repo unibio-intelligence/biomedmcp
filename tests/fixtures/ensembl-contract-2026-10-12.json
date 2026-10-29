@@ -1,0 +1,98 @@
+{
+  "observed_date": "2026-10-12",
+  "source_contracts": [
+    {
+      "repository": "Ensembl/ensembl-rest",
+      "revision": "45d2746e23ab43a6a2a9c1bbe726404c3ce003e1",
+      "path": "lib/EnsEMBL/REST/Controller/Assembly.pm",
+      "sha256": "b7e1ffa22560f5a216877371d259180b6ea6aaac33ba9c2b42f62a40e5569796"
+    },
+    {
+      "repository": "Ensembl/ensembl-rest",
+      "revision": "45d2746e23ab43a6a2a9c1bbe726404c3ce003e1",
+      "path": "lib/EnsEMBL/REST/Controller/Lookup.pm",
+      "sha256": "f738b5d4220c1b214b5f462da7d98a6452cc630a7a31ba8557c77538ec13aac8"
+    },
+    {
+      "repository": "Ensembl/ensembl-rest",
+      "revision": "45d2746e23ab43a6a2a9c1bbe726404c3ce003e1",
+      "path": "lib/EnsEMBL/REST/Controller/GeneTree.pm",
+      "sha256": "627b04d79ceffebe9e2779b6a6c8cee2c3152d015149cdadc7bc2c774fe5285b"
+    },
+    {
+      "repository": "Ensembl/ensembl-rest",
+      "revision": "45d2746e23ab43a6a2a9c1bbe726404c3ce003e1",
+      "path": "lib/EnsEMBL/REST/Controller/Sequence.pm",
+      "sha256": "1facd47b5965f3f40dd43e1e41c1fb216f5d1de4f642f5801b18116879ed6bc0"
+    },
+    {
+      "repository": "Ensembl/ensembl-rest",
+      "revision": "45d2746e23ab43a6a2a9c1bbe726404c3ce003e1",
+      "path": "lib/EnsEMBL/REST/Controller/Homology.pm",
+      "sha256": "4396d4928fe0b996005083081906f0fcf02bdccacec2a6f25911adf076bdcc44"
+    },
+    {
+      "repository": "Ensembl/ensembl-rest",
+      "revision": "45d2746e23ab43a6a2a9c1bbe726404c3ce003e1",
+      "path": "lib/EnsEMBL/REST/Controller/Overlap.pm",
+      "sha256": "3d1b424049c9eedb21f500a6fd938ea06fd6ccdd1239245a28259511cbfaab83"
+    },
+    {
+      "repository": "Ensembl/ensembl-rest",
+      "revision": "45d2746e23ab43a6a2a9c1bbe726404c3ce003e1",
+      "path": "lib/EnsEMBL/REST/Model/Assembly.pm",
+      "sha256": "faeb367be9e0812736b22fc1b81d73fe10527dde315fbb92ccd4d1818cb3c19f"
+    },
+    {
+      "repository": "Ensembl/ensembl-rest",
+      "revision": "45d2746e23ab43a6a2a9c1bbe726404c3ce003e1",
+      "path": "lib/EnsEMBL/REST/Role/Homology.pm",
+      "sha256": "0bcc529e2d1db21bac9f3050194c82da2800b314e2c7d89368381a7b101a5101"
+    },
+    {
+      "repository": "Ensembl/ensembl-rest",
+      "revision": "45d2746e23ab43a6a2a9c1bbe726404c3ce003e1",
+      "path": "root/documentation/sequence.conf",
+      "sha256": "faff20d30d5b52fb3fbe0b503055777023f08e3df13aa1c61e7cea29094a4616"
+    },
+    {
+      "repository": "Ensembl/ensembl-rest",
+      "revision": "45d2746e23ab43a6a2a9c1bbe726404c3ce003e1",
+      "path": "lib/EnsEMBL/REST/Controller/Map.pm",
+      "sha256": "8ce31d95728bd411f7c96ea99b957c89a5f35fd198fdca1f15fd904659e9f998"
+    },
+    {
+      "repository": "Ensembl/ensembl-rest",
+      "revision": "45d2746e23ab43a6a2a9c1bbe726404c3ce003e1",
+      "path": "lib/EnsEMBL/REST/Controller/VEP.pm",
+      "sha256": "83d44a8feab77300ec16b07831d3b974b3e8f6e390343749f2aeeb5a3896b022"
+    },
+    {
+      "repository": "Ensembl/ensembl-rest",
+      "revision": "45d2746e23ab43a6a2a9c1bbe726404c3ce003e1",
+      "path": "lib/EnsEMBL/REST/Model/Lookup.pm",
+      "sha256": "bac0af30e9da8844f35681c56c67ef8fd2817a496e413824712e9d6333df4db7"
+    },
+    {
+      "repository": "Ensembl/ensembl-rest",
+      "revision": "45d2746e23ab43a6a2a9c1bbe726404c3ce003e1",
+      "path": "lib/EnsEMBL/REST/Model/Overlap.pm",
+      "sha256": "3d45f5f8b31d319efa7c503894b51ea3a37e1168bbb2eddb4325e85b21332217"
+    },
+    {
+      "repository": "Ensembl/ensembl-compara",
+      "revision": "4038708d5a92d109d64413775113cd2eb6607668",
+      "path": "modules/Bio/EnsEMBL/Compara/Utils/GeneTreeHash.pm",
+      "sha256": "57bcaed161e8fd01ab63309bea240373d1e093097d2469989c73e864d37e3590"
+    },
+    {
+      "repository": "Ensembl/ensembl-compara",
+      "revision": "4038708d5a92d109d64413775113cd2eb6607668",
+      "path": "modules/Bio/EnsEMBL/Compara/Utils/HomologyHash.pm",
+      "sha256": "b1a4b97030fb31e34029c11531b66c010ce8f15e5fc7e144a8e01fb9d8ac9842"
+    }
+  ],
+  "live_health_qualified": false,
+  "permission_status": "held; synthetic fixture qualification authorizes no data acquisition",
+  "scope": "minimum acquisition shapes, requested identity/region/assembly scope and actual retained/public MCP paths; no full annotation schema or biological inference validation"
+}

@@ -1,0 +1,293 @@
+{
+  "source": "https://raw.githubusercontent.com/griffithlab/civic-v2/0488d61aeb0a5c45d2a1a7edc114ac085942939f/client/src/app/generated/server.schema.json",
+  "source_revision": "0488d61aeb0a5c45d2a1a7edc114ac085942939f",
+  "review_date": "2026-10-09",
+  "interpretation": "Selected query output fields copied from the official generated schema; no data-release pin or live-health claim.",
+  "types": {
+    "EvidenceItem": {
+      "kind": "OBJECT",
+      "fields": {
+        "description": "String!",
+        "disease": "Disease",
+        "evidenceDirection": "EvidenceDirection!",
+        "evidenceLevel": "EvidenceLevel!",
+        "evidenceType": "EvidenceType!",
+        "id": "Int!",
+        "link": "String!",
+        "molecularProfile": "MolecularProfile!",
+        "name": "String!",
+        "significance": "EvidenceSignificance!",
+        "source": "Source!",
+        "status": "EvidenceStatus!",
+        "therapies": "[Therapy!]!"
+      }
+    },
+    "Assertion": {
+      "kind": "OBJECT",
+      "fields": {
+        "ampLevel": "AmpLevel",
+        "assertionDirection": "AssertionDirection!",
+        "assertionType": "AssertionType!",
+        "disease": "Disease",
+        "id": "Int!",
+        "link": "String!",
+        "molecularProfile": "MolecularProfile!",
+        "name": "String!",
+        "significance": "AssertionSignificance!",
+        "status": "EvidenceStatus!",
+        "summary": "String!",
+        "therapies": "[Therapy!]!"
+      }
+    },
+    "MolecularProfile": {
+      "kind": "OBJECT",
+      "fields": {
+        "deprecated": "Boolean!",
+        "id": "Int!",
+        "isComplex": "Boolean!",
+        "isMultiVariant": "Boolean!",
+        "name": "String!",
+        "variants": "[VariantInterface!]!"
+      }
+    },
+    "VariantInterface": {
+      "kind": "INTERFACE",
+      "fields": {
+        "feature": "Feature!",
+        "id": "Int!",
+        "name": "String!"
+      },
+      "members": [
+        "FactorVariant",
+        "FusionVariant",
+        "GeneVariant",
+        "RegionVariant",
+        "Variant"
+      ]
+    },
+    "Feature": {
+      "kind": "OBJECT",
+      "fields": {
+        "featureInstance": "FeatureInstance!",
+        "featureType": "FeatureInstanceTypes!",
+        "id": "Int!",
+        "name": "String!"
+      }
+    },
+    "Gene": {
+      "kind": "OBJECT",
+      "fields": {
+        "entrezId": "Int!",
+        "name": "String!"
+      }
+    },
+    "Fusion": {
+      "kind": "OBJECT",
+      "fields": {
+        "knownPartnerGenes": "[Gene!]!"
+      }
+    },
+    "Factor": {
+      "kind": "OBJECT",
+      "fields": {}
+    },
+    "Region": {
+      "kind": "OBJECT",
+      "fields": {}
+    },
+    "Disease": {
+      "kind": "OBJECT",
+      "fields": {
+        "displayName": "String!",
+        "id": "Int!",
+        "name": "String!"
+      }
+    },
+    "Therapy": {
+      "kind": "OBJECT",
+      "fields": {
+        "id": "Int!",
+        "name": "String!"
+      }
+    },
+    "Source": {
+      "kind": "OBJECT",
+      "fields": {
+        "citation": "String",
+        "id": "Int!",
+        "link": "String!",
+        "publicationYear": "Int",
+        "retracted": "Boolean!",
+        "sourceType": "SourceSource!",
+        "sourceUrl": "String"
+      }
+    },
+    "PageInfo": {
+      "kind": "OBJECT",
+      "fields": {
+        "endCursor": "String",
+        "hasNextPage": "Boolean!"
+      }
+    },
+    "EvidenceItemConnection": {
+      "kind": "OBJECT",
+      "fields": {
+        "nodes": "[EvidenceItem!]!",
+        "pageInfo": "PageInfo!",
+        "totalCount": "Int!"
+      }
+    },
+    "AssertionConnection": {
+      "kind": "OBJECT",
+      "fields": {
+        "nodes": "[Assertion!]!",
+        "pageInfo": "PageInfo!",
+        "totalCount": "Int!"
+      }
+    },
+    "FeatureInstance": {
+      "kind": "UNION",
+      "members": [
+        "Factor",
+        "Fusion",
+        "Gene",
+        "Region"
+      ]
+    },
+    "AmpLevel": {
+      "kind": "ENUM",
+      "values": [
+        "TIER_I_LEVEL_A",
+        "TIER_I_LEVEL_B",
+        "TIER_II_LEVEL_C",
+        "TIER_II_LEVEL_D",
+        "TIER_III",
+        "TIER_IV",
+        "NA"
+      ]
+    },
+    "AssertionDirection": {
+      "kind": "ENUM",
+      "values": [
+        "SUPPORTS",
+        "DOES_NOT_SUPPORT"
+      ]
+    },
+    "AssertionSignificance": {
+      "kind": "ENUM",
+      "values": [
+        "SENSITIVITYRESPONSE",
+        "RESISTANCE",
+        "ADVERSE_RESPONSE",
+        "REDUCED_SENSITIVITY",
+        "NA",
+        "POSITIVE",
+        "NEGATIVE",
+        "BETTER_OUTCOME",
+        "POOR_OUTCOME",
+        "PATHOGENIC",
+        "LIKELY_PATHOGENIC",
+        "BENIGN",
+        "LIKELY_BENIGN",
+        "UNCERTAIN_SIGNIFICANCE",
+        "ONCOGENIC",
+        "LIKELY_ONCOGENIC"
+      ]
+    },
+    "AssertionType": {
+      "kind": "ENUM",
+      "values": [
+        "DIAGNOSTIC",
+        "PROGNOSTIC",
+        "PREDICTIVE",
+        "PREDISPOSING",
+        "ONCOGENIC"
+      ]
+    },
+    "EvidenceDirection": {
+      "kind": "ENUM",
+      "values": [
+        "SUPPORTS",
+        "DOES_NOT_SUPPORT",
+        "NA"
+      ]
+    },
+    "EvidenceLevel": {
+      "kind": "ENUM",
+      "values": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    },
+    "EvidenceSignificance": {
+      "kind": "ENUM",
+      "values": [
+        "SENSITIVITYRESPONSE",
+        "RESISTANCE",
+        "BETTER_OUTCOME",
+        "POOR_OUTCOME",
+        "POSITIVE",
+        "NEGATIVE",
+        "NA",
+        "ADVERSE_RESPONSE",
+        "PATHOGENIC",
+        "LIKELY_PATHOGENIC",
+        "BENIGN",
+        "LIKELY_BENIGN",
+        "UNCERTAIN_SIGNIFICANCE",
+        "REDUCED_SENSITIVITY",
+        "GAIN_OF_FUNCTION",
+        "LOSS_OF_FUNCTION",
+        "UNALTERED_FUNCTION",
+        "NEOMORPHIC",
+        "UNKNOWN",
+        "DOMINANT_NEGATIVE",
+        "PREDISPOSITION",
+        "PROTECTIVENESS",
+        "ONCOGENICITY",
+        "LIKELY_ONCOGENIC"
+      ]
+    },
+    "EvidenceStatus": {
+      "kind": "ENUM",
+      "values": [
+        "ACCEPTED",
+        "SUBMITTED",
+        "REJECTED"
+      ]
+    },
+    "EvidenceType": {
+      "kind": "ENUM",
+      "values": [
+        "DIAGNOSTIC",
+        "PROGNOSTIC",
+        "PREDICTIVE",
+        "PREDISPOSING",
+        "FUNCTIONAL",
+        "ONCOGENIC"
+      ]
+    },
+    "FeatureInstanceTypes": {
+      "kind": "ENUM",
+      "values": [
+        "GENE",
+        "FACTOR",
+        "FUSION",
+        "REGION"
+      ]
+    },
+    "SourceSource": {
+      "kind": "ENUM",
+      "values": [
+        "PUBMED",
+        "ASCO",
+        "ASH",
+        "BIORXIV",
+        "MEDRXIV"
+      ]
+    }
+  }
+}

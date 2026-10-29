@@ -1,0 +1,2697 @@
+{
+  "source_url": "https://gtexportal.org/api/v2/openapi.json",
+  "retrieved_on": "2026-10-09",
+  "source_sha256": "5cc28ae92cc01c2fcf6c553b3faf3b5b8700bf85b659505538397311a2667dbd",
+  "api_version": "2.0.0",
+  "openapi_version": "3.1.0",
+  "endpoints": {
+    "/": {
+      "$ref": "#/components/schemas/ServiceInfo"
+    },
+    "/expression/medianGeneExpression": {
+      "$ref": "#/components/schemas/PaginatedResponse_MedianGeneExpression_"
+    },
+    "/expression/geneExpression": {
+      "$ref": "#/components/schemas/PaginatedResponse_GeneExpression_"
+    },
+    "/expression/topExpressedGene": {
+      "$ref": "#/components/schemas/PaginatedResponse_TopExpressedGenes_"
+    },
+    "/association/egene": {
+      "$ref": "#/components/schemas/PaginatedResponse_EqtlGene_"
+    },
+    "/association/sgene": {
+      "$ref": "#/components/schemas/PaginatedResponse_SGene_"
+    },
+    "/association/singleTissueEqtl": {
+      "$ref": "#/components/schemas/PaginatedResponse_SingleTissueEqtl_"
+    },
+    "/association/singleTissueSqtl": {
+      "$ref": "#/components/schemas/PaginatedResponse_SingleTissueSqtl_"
+    },
+    "/association/metasoft": {
+      "$ref": "#/components/schemas/PaginatedResponse_MetaSoft_"
+    },
+    "/association/dyneqtl": {
+      "$ref": "#/components/schemas/Eqtl"
+    },
+    "/association/dynsqtl": {
+      "$ref": "#/components/schemas/Sqtl"
+    },
+    "/reference/gene": {
+      "$ref": "#/components/schemas/PaginatedResponse_Gene_"
+    },
+    "/reference/transcript": {
+      "$ref": "#/components/schemas/PaginatedResponse_Transcript_"
+    },
+    "/reference/exon": {
+      "$ref": "#/components/schemas/PaginatedResponse_Exon_"
+    },
+    "/dataset/variant": {
+      "$ref": "#/components/schemas/PaginatedResponse_Variant_"
+    },
+    "/dataset/tissueSiteDetail": {
+      "$ref": "#/components/schemas/PaginatedResponse_TissueSiteDetail_"
+    },
+    "/metadata/dataset": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Dataset"
+      }
+    },
+    "/dataset/sample": {
+      "$ref": "#/components/schemas/PaginatedResponse_DatasetSample_"
+    }
+  },
+  "requests": {
+    "/": {
+      "type": "object",
+      "properties": {},
+      "required": [],
+      "additionalProperties": false
+    },
+    "/expression/medianGeneExpression": {
+      "type": "object",
+      "properties": {
+        "gencodeId": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "maxItems": 60000
+        },
+        "datasetId": {
+          "$ref": "#/components/schemas/DatasetId",
+          "default": "gtex_v10"
+        },
+        "tissueSiteDetailId": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TissueSiteDetailId"
+              },
+              {
+                "$ref": "#/components/schemas/TissueSiteOntologyId"
+              }
+            ]
+          }
+        },
+        "page": {
+          "type": "integer",
+          "maximum": 1000000.0,
+          "minimum": 0,
+          "default": 0
+        },
+        "itemsPerPage": {
+          "type": "integer",
+          "maximum": 100000,
+          "minimum": 1,
+          "default": 250
+        }
+      },
+      "required": [
+        "gencodeId"
+      ],
+      "additionalProperties": false
+    },
+    "/expression/geneExpression": {
+      "type": "object",
+      "properties": {
+        "gencodeId": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "maxItems": 60000
+        },
+        "datasetId": {
+          "$ref": "#/components/schemas/DatasetId",
+          "default": "gtex_v10"
+        },
+        "tissueSiteDetailId": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TissueSiteDetailId"
+              },
+              {
+                "$ref": "#/components/schemas/TissueSiteOntologyId"
+              }
+            ]
+          }
+        },
+        "attributeSubset": {
+          "$ref": "#/components/schemas/DonorAttribute"
+        },
+        "page": {
+          "type": "integer",
+          "maximum": 1000000.0,
+          "minimum": 0,
+          "default": 0
+        },
+        "itemsPerPage": {
+          "type": "integer",
+          "maximum": 100000,
+          "minimum": 1,
+          "default": 250
+        }
+      },
+      "required": [
+        "gencodeId"
+      ],
+      "additionalProperties": false
+    },
+    "/expression/topExpressedGene": {
+      "type": "object",
+      "properties": {
+        "tissueSiteDetailId": {
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/TissueSiteDetailId"
+            },
+            {
+              "$ref": "#/components/schemas/TissueSiteOntologyId"
+            }
+          ]
+        },
+        "datasetId": {
+          "$ref": "#/components/schemas/DatasetId",
+          "default": "gtex_v10"
+        },
+        "filterMtGene": {
+          "type": "boolean",
+          "default": true
+        },
+        "page": {
+          "type": "integer",
+          "maximum": 1000000.0,
+          "minimum": 0,
+          "default": 0
+        },
+        "itemsPerPage": {
+          "type": "integer",
+          "maximum": 100000,
+          "minimum": 1,
+          "default": 250
+        }
+      },
+      "required": [
+        "tissueSiteDetailId"
+      ],
+      "additionalProperties": false
+    },
+    "/association/egene": {
+      "type": "object",
+      "properties": {
+        "tissueSiteDetailId": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TissueSiteDetailId"
+              },
+              {
+                "$ref": "#/components/schemas/TissueSiteOntologyId"
+              }
+            ]
+          }
+        },
+        "datasetId": {
+          "$ref": "#/components/schemas/DatasetId",
+          "default": "gtex_v10"
+        },
+        "page": {
+          "type": "integer",
+          "maximum": 1000000.0,
+          "minimum": 0,
+          "default": 0
+        },
+        "itemsPerPage": {
+          "type": "integer",
+          "maximum": 100000,
+          "minimum": 1,
+          "default": 250
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "/association/sgene": {
+      "type": "object",
+      "properties": {
+        "tissueSiteDetailId": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TissueSiteDetailId"
+              },
+              {
+                "$ref": "#/components/schemas/TissueSiteOntologyId"
+              }
+            ]
+          }
+        },
+        "datasetId": {
+          "$ref": "#/components/schemas/DatasetId",
+          "default": "gtex_v10"
+        },
+        "page": {
+          "type": "integer",
+          "maximum": 1000000.0,
+          "minimum": 0,
+          "default": 0
+        },
+        "itemsPerPage": {
+          "type": "integer",
+          "maximum": 100000,
+          "minimum": 1,
+          "default": 250
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "/association/singleTissueEqtl": {
+      "type": "object",
+      "properties": {
+        "gencodeId": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "maxItems": 60000
+        },
+        "variantId": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tissueSiteDetailId": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TissueSiteDetailId"
+              },
+              {
+                "$ref": "#/components/schemas/TissueSiteOntologyId"
+              }
+            ]
+          }
+        },
+        "datasetId": {
+          "$ref": "#/components/schemas/DatasetId",
+          "default": "gtex_v10"
+        },
+        "page": {
+          "type": "integer",
+          "maximum": 1000000.0,
+          "minimum": 0,
+          "default": 0
+        },
+        "itemsPerPage": {
+          "type": "integer",
+          "maximum": 100000,
+          "minimum": 1,
+          "default": 250
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "/association/singleTissueSqtl": {
+      "type": "object",
+      "properties": {
+        "gencodeId": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "maxItems": 60000
+        },
+        "variantId": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tissueSiteDetailId": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TissueSiteDetailId"
+              },
+              {
+                "$ref": "#/components/schemas/TissueSiteOntologyId"
+              }
+            ]
+          }
+        },
+        "datasetId": {
+          "$ref": "#/components/schemas/DatasetId",
+          "default": "gtex_v8"
+        },
+        "page": {
+          "type": "integer",
+          "maximum": 1000000.0,
+          "minimum": 0,
+          "default": 0
+        },
+        "itemsPerPage": {
+          "type": "integer",
+          "maximum": 100000,
+          "minimum": 1,
+          "default": 250
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "/association/metasoft": {
+      "type": "object",
+      "properties": {
+        "gencodeId": {
+          "type": "string"
+        },
+        "variantId": {
+          "type": "string"
+        },
+        "datasetId": {
+          "$ref": "#/components/schemas/DatasetId",
+          "default": "gtex_v8"
+        },
+        "page": {
+          "type": "integer",
+          "maximum": 1000000.0,
+          "minimum": 0,
+          "default": 0
+        },
+        "itemsPerPage": {
+          "type": "integer",
+          "maximum": 100000,
+          "minimum": 1,
+          "default": 250
+        }
+      },
+      "required": [
+        "gencodeId"
+      ],
+      "additionalProperties": false
+    },
+    "/association/dyneqtl": {
+      "type": "object",
+      "properties": {
+        "tissueSiteDetailId": {
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/TissueSiteDetailId"
+            },
+            {
+              "$ref": "#/components/schemas/TissueSiteOntologyId"
+            }
+          ]
+        },
+        "gencodeId": {
+          "type": "string"
+        },
+        "variantId": {
+          "type": "string"
+        },
+        "datasetId": {
+          "$ref": "#/components/schemas/DatasetId",
+          "default": "gtex_v8"
+        }
+      },
+      "required": [
+        "tissueSiteDetailId",
+        "gencodeId",
+        "variantId"
+      ],
+      "additionalProperties": false
+    },
+    "/association/dynsqtl": {
+      "type": "object",
+      "properties": {
+        "tissueSiteDetailId": {
+          "$ref": "#/components/schemas/TissueSiteDetailId"
+        },
+        "phenotypeId": {
+          "type": "string"
+        },
+        "variantId": {
+          "type": "string"
+        },
+        "datasetId": {
+          "$ref": "#/components/schemas/DatasetId",
+          "default": "gtex_v8"
+        }
+      },
+      "required": [
+        "tissueSiteDetailId",
+        "phenotypeId",
+        "variantId"
+      ],
+      "additionalProperties": false
+    },
+    "/reference/gene": {
+      "type": "object",
+      "properties": {
+        "geneId": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "gencodeVersion": {
+          "$ref": "#/components/schemas/GencodeVersion",
+          "default": "v26"
+        },
+        "genomeBuild": {
+          "$ref": "#/components/schemas/GenomeBuild",
+          "default": "GRCh38/hg38"
+        },
+        "page": {
+          "type": "integer",
+          "maximum": 1000000.0,
+          "minimum": 0,
+          "default": 0
+        },
+        "itemsPerPage": {
+          "type": "integer",
+          "maximum": 100000,
+          "minimum": 1,
+          "default": 250
+        }
+      },
+      "required": [
+        "geneId"
+      ],
+      "additionalProperties": false
+    },
+    "/reference/transcript": {
+      "type": "object",
+      "properties": {
+        "gencodeId": {
+          "type": "string"
+        },
+        "gencodeVersion": {
+          "$ref": "#/components/schemas/GencodeVersion",
+          "default": "v26"
+        },
+        "genomeBuild": {
+          "$ref": "#/components/schemas/GenomeBuild",
+          "default": "GRCh38/hg38"
+        },
+        "page": {
+          "type": "integer",
+          "maximum": 1000000.0,
+          "minimum": 0,
+          "default": 0
+        },
+        "itemsPerPage": {
+          "type": "integer",
+          "maximum": 100000,
+          "minimum": 1,
+          "default": 250
+        }
+      },
+      "required": [
+        "gencodeId"
+      ],
+      "additionalProperties": false
+    },
+    "/reference/exon": {
+      "type": "object",
+      "properties": {
+        "gencodeId": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "maxItems": 60000
+        },
+        "gencodeVersion": {
+          "$ref": "#/components/schemas/GencodeVersion"
+        },
+        "genomeBuild": {
+          "$ref": "#/components/schemas/GenomeBuild"
+        },
+        "datasetId": {
+          "$ref": "#/components/schemas/DatasetId"
+        },
+        "page": {
+          "type": "integer",
+          "maximum": 1000000.0,
+          "minimum": 0,
+          "default": 0
+        },
+        "itemsPerPage": {
+          "type": "integer",
+          "maximum": 100000,
+          "minimum": 1,
+          "default": 250
+        }
+      },
+      "required": [
+        "gencodeId"
+      ],
+      "additionalProperties": false
+    },
+    "/dataset/variant": {
+      "type": "object",
+      "properties": {
+        "snpId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "variantId": {
+          "type": "string"
+        },
+        "datasetId": {
+          "$ref": "#/components/schemas/DatasetId",
+          "default": "gtex_v8"
+        },
+        "chromosome": {
+          "$ref": "#/components/schemas/Chromosome"
+        },
+        "pos": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "page": {
+          "type": "integer",
+          "maximum": 1000000.0,
+          "minimum": 0,
+          "default": 0
+        },
+        "itemsPerPage": {
+          "type": "integer",
+          "maximum": 100000,
+          "minimum": 1,
+          "default": 250
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "/dataset/tissueSiteDetail": {
+      "type": "object",
+      "properties": {
+        "datasetId": {
+          "$ref": "#/components/schemas/DatasetId",
+          "default": "gtex_v8"
+        },
+        "page": {
+          "type": "integer",
+          "maximum": 1000000.0,
+          "minimum": 0,
+          "default": 0
+        },
+        "itemsPerPage": {
+          "type": "integer",
+          "maximum": 100000,
+          "minimum": 1,
+          "default": 250
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "/metadata/dataset": {
+      "type": "object",
+      "properties": {
+        "datasetId": {
+          "$ref": "#/components/schemas/DatasetId"
+        },
+        "organizationName": {
+          "$ref": "#/components/schemas/OrganizationNames"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "/dataset/sample": {
+      "type": "object",
+      "properties": {
+        "datasetId": {
+          "$ref": "#/components/schemas/DatasetId",
+          "default": "gtex_v10"
+        },
+        "sampleId": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^GTEX-[A-Z0-9]{4,5}-[0-9]{4}(-[A-Z0-9a-z]{3,7})?-SM-[A-Z0-9]{5}$"
+          }
+        },
+        "tissueSampleId": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^GTEX-[A-Z0-9]{4,5}-[0-9]{4}(-[A-Z0-9a-z]{3,7})?$"
+          }
+        },
+        "subjectId": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^GTEX-[A-Z0-9]{4,5}$"
+          }
+        },
+        "ageBracket": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/DonorAgeBracket"
+          }
+        },
+        "sex": {
+          "$ref": "#/components/schemas/DonorSex"
+        },
+        "pathCategory": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/PathCategory"
+          }
+        },
+        "tissueSiteDetailId": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/TissueSiteDetailId"
+          }
+        },
+        "aliquotId": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^SM-[A-Z0-9]{5}$"
+          }
+        },
+        "autolysisScore": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/AutolysisScore"
+          }
+        },
+        "hardyScale": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/HardyScale-Input"
+          }
+        },
+        "ischemicTime": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "maximum": 2100,
+            "minimum": -1300
+          }
+        },
+        "ischemicTimeGroup": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/IschemicTimeGroup"
+          }
+        },
+        "rin": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "maximum": 10,
+            "minimum": 1
+          }
+        },
+        "uberonId": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/TissueSiteOntologyId"
+          }
+        },
+        "dataType": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/DataType"
+          }
+        },
+        "sortBy": {
+          "$ref": "#/components/schemas/SampleSortBy",
+          "default": "sampleId"
+        },
+        "sortDirection": {
+          "$ref": "#/components/schemas/SortDirection",
+          "default": "asc"
+        },
+        "page": {
+          "type": "integer",
+          "maximum": 1000000.0,
+          "minimum": 0,
+          "default": 0
+        },
+        "itemsPerPage": {
+          "type": "integer",
+          "maximum": 100000,
+          "minimum": 1,
+          "default": 250
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  "components": {
+    "schemas": {
+      "ServiceInfo": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "organization": {
+            "$ref": "#/components/schemas/Organization"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "contactUrl": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "documentationUrl": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "environment": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "version",
+          "organization",
+          "description",
+          "contactUrl",
+          "documentationUrl",
+          "environment"
+        ]
+      },
+      "Organization": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "url"
+        ]
+      },
+      "PaginatedResponse_MedianGeneExpression_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/MedianGeneExpression"
+            },
+            "type": "array"
+          },
+          "paging_info": {
+            "$ref": "#/components/schemas/PaginationInfo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "data",
+          "paging_info"
+        ]
+      },
+      "MedianGeneExpression": {
+        "properties": {
+          "median": {
+            "type": "number"
+          },
+          "tissueSiteDetailId": {
+            "$ref": "#/components/schemas/TissueSiteDetailId"
+          },
+          "ontologyId": {
+            "$ref": "#/components/schemas/TissueSiteOntologyId"
+          },
+          "datasetId": {
+            "$ref": "#/components/schemas/DatasetId"
+          },
+          "gencodeId": {
+            "type": "string"
+          },
+          "geneSymbol": {
+            "type": "string"
+          },
+          "unit": {
+            "$ref": "#/components/schemas/Units"
+          }
+        },
+        "type": "object",
+        "required": [
+          "median",
+          "tissueSiteDetailId",
+          "ontologyId",
+          "datasetId",
+          "gencodeId",
+          "geneSymbol",
+          "unit"
+        ]
+      },
+      "TissueSiteDetailId": {
+        "type": "string",
+        "enum": [
+          "Adipose_Subcutaneous",
+          "Adipose_Visceral_Omentum",
+          "Adrenal_Gland",
+          "Artery_Aorta",
+          "Artery_Coronary",
+          "Artery_Tibial",
+          "Bladder",
+          "Brain_Amygdala",
+          "Brain_Anterior_cingulate_cortex_BA24",
+          "Brain_Caudate_basal_ganglia",
+          "Brain_Cerebellar_Hemisphere",
+          "Brain_Cerebellum",
+          "Brain_Cortex",
+          "Brain_Frontal_Cortex_BA9",
+          "Brain_Hippocampus",
+          "Brain_Hypothalamus",
+          "Brain_Nucleus_accumbens_basal_ganglia",
+          "Brain_Putamen_basal_ganglia",
+          "Brain_Spinal_cord_cervical_c-1",
+          "Brain_Substantia_nigra",
+          "Breast_Mammary_Tissue",
+          "Cells_Cultured_fibroblasts",
+          "Cells_EBV-transformed_lymphocytes",
+          "Cells_Transformed_fibroblasts",
+          "Cervix_Ectocervix",
+          "Cervix_Endocervix",
+          "Colon_Sigmoid",
+          "Colon_Transverse",
+          "Esophagus_Gastroesophageal_Junction",
+          "Esophagus_Mucosa",
+          "Esophagus_Muscularis",
+          "Fallopian_Tube",
+          "Heart_Atrial_Appendage",
+          "Heart_Left_Ventricle",
+          "Kidney_Cortex",
+          "Kidney_Medulla",
+          "Liver",
+          "Lung",
+          "Minor_Salivary_Gland",
+          "Muscle_Skeletal",
+          "Nerve_Tibial",
+          "Ovary",
+          "Pancreas",
+          "Pituitary",
+          "Prostate",
+          "Skin_Not_Sun_Exposed_Suprapubic",
+          "Skin_Sun_Exposed_Lower_leg",
+          "Small_Intestine_Terminal_Ileum",
+          "Spleen",
+          "Stomach",
+          "Testis",
+          "Thyroid",
+          "Uterus",
+          "Vagina",
+          "Whole_Blood"
+        ]
+      },
+      "TissueSiteOntologyId": {
+        "type": "string",
+        "enum": [
+          "UBERON:EFO_0000572",
+          "EFO:0000572",
+          "UBERON:EFO_0002009",
+          "EFO:0002009",
+          "UBERON:0000007",
+          "UBERON:0000458",
+          "UBERON:0000473",
+          "UBERON:0000945",
+          "UBERON:0000992",
+          "UBERON:0000995",
+          "UBERON:0000996",
+          "UBERON:0001114",
+          "UBERON:0001150",
+          "UBERON:0001157",
+          "UBERON:0001159",
+          "UBERON:0001211",
+          "UBERON:0001225",
+          "UBERON:0001255",
+          "UBERON:0001293",
+          "UBERON:0001323",
+          "UBERON:0001496",
+          "UBERON:0001621",
+          "UBERON:0001870",
+          "UBERON:0001873",
+          "UBERON:0001874",
+          "UBERON:0001876",
+          "UBERON:0001882",
+          "UBERON:0001898",
+          "UBERON:0001954",
+          "UBERON:0002037",
+          "UBERON:0002038",
+          "UBERON:0002046",
+          "UBERON:0002106",
+          "UBERON:0002190",
+          "UBERON:0002367",
+          "UBERON:0002369",
+          "UBERON:0003889",
+          "UBERON:0004264",
+          "UBERON:0004550",
+          "UBERON:0004648",
+          "UBERON:0006330",
+          "UBERON:0006469",
+          "UBERON:0006566",
+          "UBERON:0006631",
+          "UBERON:0006920",
+          "UBERON:0007610",
+          "UBERON:0008367",
+          "UBERON:0008952",
+          "UBERON:0009834",
+          "UBERON:0009835",
+          "UBERON:0010414",
+          "UBERON:0011907",
+          "UBERON:0012249",
+          "UBERON:0013756",
+          "UBERON:0036149"
+        ]
+      },
+      "DatasetId": {
+        "type": "string",
+        "enum": [
+          "gtex_v8",
+          "gtex_snrnaseq_pilot",
+          "gtex_v10"
+        ]
+      },
+      "Units": {
+        "type": "string",
+        "enum": [
+          "TPM",
+          "read count",
+          "log(CP10K)"
+        ]
+      },
+      "PaginationInfo": {
+        "properties": {
+          "numberOfPages": {
+            "type": "integer"
+          },
+          "page": {
+            "type": "integer"
+          },
+          "maxItemsPerPage": {
+            "type": "integer"
+          },
+          "totalNumberOfItems": {
+            "type": "integer"
+          }
+        },
+        "type": "object",
+        "required": [
+          "numberOfPages",
+          "page",
+          "maxItemsPerPage",
+          "totalNumberOfItems"
+        ]
+      },
+      "PaginatedResponse_GeneExpression_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/GeneExpression"
+            },
+            "type": "array"
+          },
+          "paging_info": {
+            "$ref": "#/components/schemas/PaginationInfo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "data",
+          "paging_info"
+        ]
+      },
+      "GeneExpression": {
+        "properties": {
+          "data": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array"
+          },
+          "tissueSiteDetailId": {
+            "$ref": "#/components/schemas/TissueSiteDetailId"
+          },
+          "ontologyId": {
+            "$ref": "#/components/schemas/TissueSiteOntologyId"
+          },
+          "datasetId": {
+            "$ref": "#/components/schemas/DatasetId"
+          },
+          "gencodeId": {
+            "type": "string"
+          },
+          "geneSymbol": {
+            "type": "string"
+          },
+          "unit": {
+            "$ref": "#/components/schemas/Units"
+          },
+          "subsetGroup": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DonorSex"
+              },
+              {
+                "$ref": "#/components/schemas/DonorAgeBracket"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "data",
+          "tissueSiteDetailId",
+          "ontologyId",
+          "datasetId",
+          "gencodeId",
+          "geneSymbol",
+          "unit"
+        ]
+      },
+      "DonorSex": {
+        "type": "string",
+        "enum": [
+          "male",
+          "female"
+        ]
+      },
+      "DonorAgeBracket": {
+        "type": "string",
+        "enum": [
+          "20-29",
+          "30-39",
+          "40-49",
+          "50-59",
+          "60-69",
+          "70-79"
+        ]
+      },
+      "PaginatedResponse_TopExpressedGenes_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/TopExpressedGenes"
+            },
+            "type": "array"
+          },
+          "paging_info": {
+            "$ref": "#/components/schemas/PaginationInfo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "data",
+          "paging_info"
+        ]
+      },
+      "TopExpressedGenes": {
+        "properties": {
+          "tissueSiteDetailId": {
+            "$ref": "#/components/schemas/TissueSiteDetailId"
+          },
+          "ontologyId": {
+            "$ref": "#/components/schemas/TissueSiteOntologyId"
+          },
+          "datasetId": {
+            "$ref": "#/components/schemas/DatasetId"
+          },
+          "gencodeId": {
+            "type": "string"
+          },
+          "geneSymbol": {
+            "type": "string"
+          },
+          "median": {
+            "type": "number"
+          },
+          "unit": {
+            "$ref": "#/components/schemas/Units"
+          }
+        },
+        "type": "object",
+        "required": [
+          "tissueSiteDetailId",
+          "ontologyId",
+          "datasetId",
+          "gencodeId",
+          "geneSymbol",
+          "median",
+          "unit"
+        ]
+      },
+      "PaginatedResponse_EqtlGene_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/EqtlGene"
+            },
+            "type": "array"
+          },
+          "paging_info": {
+            "$ref": "#/components/schemas/PaginationInfo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "data",
+          "paging_info"
+        ]
+      },
+      "EqtlGene": {
+        "properties": {
+          "tissueSiteDetailId": {
+            "$ref": "#/components/schemas/TissueSiteDetailId"
+          },
+          "ontologyId": {
+            "$ref": "#/components/schemas/TissueSiteOntologyId"
+          },
+          "datasetId": {
+            "$ref": "#/components/schemas/DatasetId"
+          },
+          "empiricalPValue": {
+            "type": "number"
+          },
+          "gencodeId": {
+            "type": "string"
+          },
+          "geneSymbol": {
+            "type": "string"
+          },
+          "log2AllelicFoldChange": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "pValue": {
+            "type": "number"
+          },
+          "pValueThreshold": {
+            "type": "number"
+          },
+          "qValue": {
+            "type": "number"
+          }
+        },
+        "type": "object",
+        "required": [
+          "tissueSiteDetailId",
+          "ontologyId",
+          "datasetId",
+          "empiricalPValue",
+          "gencodeId",
+          "geneSymbol",
+          "pValue",
+          "pValueThreshold",
+          "qValue"
+        ]
+      },
+      "PaginatedResponse_SGene_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/SGene"
+            },
+            "type": "array"
+          },
+          "paging_info": {
+            "$ref": "#/components/schemas/PaginationInfo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "data",
+          "paging_info"
+        ]
+      },
+      "SGene": {
+        "properties": {
+          "nPhenotypes": {
+            "type": "integer"
+          },
+          "pValueThreshold": {
+            "type": "number"
+          },
+          "phenotypeId": {
+            "type": "string"
+          },
+          "geneSymbol": {
+            "type": "string"
+          },
+          "pValue": {
+            "type": "number"
+          },
+          "datasetId": {
+            "$ref": "#/components/schemas/DatasetId"
+          },
+          "empiricalPValue": {
+            "type": "number"
+          },
+          "tissueSiteDetailId": {
+            "$ref": "#/components/schemas/TissueSiteDetailId"
+          },
+          "ontologyId": {
+            "$ref": "#/components/schemas/TissueSiteOntologyId"
+          },
+          "qValue": {
+            "type": "number"
+          },
+          "gencodeId": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "required": [
+          "nPhenotypes",
+          "pValueThreshold",
+          "phenotypeId",
+          "geneSymbol",
+          "pValue",
+          "datasetId",
+          "empiricalPValue",
+          "tissueSiteDetailId",
+          "ontologyId",
+          "qValue",
+          "gencodeId"
+        ]
+      },
+      "PaginatedResponse_SingleTissueEqtl_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/SingleTissueEqtl"
+            },
+            "type": "array"
+          },
+          "paging_info": {
+            "$ref": "#/components/schemas/PaginationInfo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "data",
+          "paging_info"
+        ]
+      },
+      "SingleTissueEqtl": {
+        "properties": {
+          "snpId": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "pos": {
+            "type": "integer"
+          },
+          "snpIdUpper": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "variantId": {
+            "type": "string"
+          },
+          "geneSymbol": {
+            "type": "string"
+          },
+          "pValue": {
+            "type": "number"
+          },
+          "geneSymbolUpper": {
+            "type": "string"
+          },
+          "datasetId": {
+            "$ref": "#/components/schemas/DatasetId"
+          },
+          "tissueSiteDetailId": {
+            "$ref": "#/components/schemas/TissueSiteDetailId"
+          },
+          "ontologyId": {
+            "$ref": "#/components/schemas/TissueSiteOntologyId"
+          },
+          "chromosome": {
+            "$ref": "#/components/schemas/Chromosome"
+          },
+          "gencodeId": {
+            "type": "string"
+          },
+          "nes": {
+            "type": "number"
+          }
+        },
+        "type": "object",
+        "required": [
+          "pos",
+          "variantId",
+          "geneSymbol",
+          "pValue",
+          "geneSymbolUpper",
+          "datasetId",
+          "tissueSiteDetailId",
+          "ontologyId",
+          "chromosome",
+          "gencodeId",
+          "nes"
+        ]
+      },
+      "Chromosome": {
+        "type": "string",
+        "enum": [
+          "chr1",
+          "chr10",
+          "chr11",
+          "chr12",
+          "chr13",
+          "chr14",
+          "chr15",
+          "chr16",
+          "chr17",
+          "chr18",
+          "chr19",
+          "chr2",
+          "chr20",
+          "chr21",
+          "chr22",
+          "chr3",
+          "chr4",
+          "chr5",
+          "chr6",
+          "chr7",
+          "chr8",
+          "chr9",
+          "chrM",
+          "chrX",
+          "chrY"
+        ]
+      },
+      "PaginatedResponse_SingleTissueSqtl_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/SingleTissueSqtl"
+            },
+            "type": "array"
+          },
+          "paging_info": {
+            "$ref": "#/components/schemas/PaginationInfo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "data",
+          "paging_info"
+        ]
+      },
+      "SingleTissueSqtl": {
+        "properties": {
+          "snpId": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "pos": {
+            "type": "integer"
+          },
+          "snpIdUpper": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "variantId": {
+            "type": "string"
+          },
+          "geneSymbol": {
+            "type": "string"
+          },
+          "pValue": {
+            "type": "number"
+          },
+          "geneSymbolUpper": {
+            "type": "string"
+          },
+          "datasetId": {
+            "$ref": "#/components/schemas/DatasetId"
+          },
+          "tissueSiteDetailId": {
+            "$ref": "#/components/schemas/TissueSiteDetailId"
+          },
+          "ontologyId": {
+            "$ref": "#/components/schemas/TissueSiteOntologyId"
+          },
+          "chromosome": {
+            "$ref": "#/components/schemas/Chromosome"
+          },
+          "gencodeId": {
+            "type": "string"
+          },
+          "nes": {
+            "type": "number"
+          },
+          "phenotypeId": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "required": [
+          "pos",
+          "variantId",
+          "geneSymbol",
+          "pValue",
+          "geneSymbolUpper",
+          "datasetId",
+          "tissueSiteDetailId",
+          "ontologyId",
+          "chromosome",
+          "gencodeId",
+          "nes",
+          "phenotypeId"
+        ]
+      },
+      "PaginatedResponse_MetaSoft_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/MetaSoft"
+            },
+            "type": "array"
+          },
+          "paging_info": {
+            "$ref": "#/components/schemas/PaginationInfo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "data",
+          "paging_info"
+        ]
+      },
+      "MetaSoft": {
+        "properties": {
+          "gencodeId": {
+            "type": "string"
+          },
+          "datasetId": {
+            "$ref": "#/components/schemas/DatasetId"
+          },
+          "metaP": {
+            "type": "number"
+          },
+          "variantId": {
+            "type": "string"
+          },
+          "tissues": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/TissueLevelMetasoftInfo"
+            },
+            "type": "object"
+          }
+        },
+        "type": "object",
+        "required": [
+          "gencodeId",
+          "datasetId",
+          "metaP",
+          "variantId",
+          "tissues"
+        ]
+      },
+      "TissueLevelMetasoftInfo": {
+        "properties": {
+          "mValue": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "pValue": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "se": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "nes": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object"
+      },
+      "Eqtl": {
+        "properties": {
+          "data": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array"
+          },
+          "error": {
+            "type": "number"
+          },
+          "gencodeId": {
+            "type": "string"
+          },
+          "geneSymbol": {
+            "type": "string"
+          },
+          "genotypes": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          "hetCount": {
+            "type": "integer"
+          },
+          "homoAltCount": {
+            "type": "integer"
+          },
+          "homoRefCount": {
+            "type": "integer"
+          },
+          "maf": {
+            "type": "number"
+          },
+          "nes": {
+            "type": "number"
+          },
+          "pValue": {
+            "type": "number"
+          },
+          "pValueThreshold": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "tStatistic": {
+            "type": "number"
+          },
+          "tissueSiteDetailId": {
+            "$ref": "#/components/schemas/TissueSiteDetailId"
+          },
+          "variantId": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "required": [
+          "data",
+          "error",
+          "gencodeId",
+          "geneSymbol",
+          "genotypes",
+          "hetCount",
+          "homoAltCount",
+          "homoRefCount",
+          "maf",
+          "nes",
+          "pValue",
+          "tStatistic",
+          "tissueSiteDetailId",
+          "variantId"
+        ]
+      },
+      "Sqtl": {
+        "properties": {
+          "data": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array"
+          },
+          "error": {
+            "type": "number"
+          },
+          "genotypes": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          "hetCount": {
+            "type": "integer"
+          },
+          "homoAltCount": {
+            "type": "integer"
+          },
+          "homoRefCount": {
+            "type": "integer"
+          },
+          "maf": {
+            "type": "number"
+          },
+          "nes": {
+            "type": "number"
+          },
+          "pValue": {
+            "type": "number"
+          },
+          "pValueThreshold": {
+            "type": "number"
+          },
+          "phenotypeId": {
+            "type": "string"
+          },
+          "tStatistic": {
+            "type": "number"
+          },
+          "tissueSiteDetailId": {
+            "$ref": "#/components/schemas/TissueSiteDetailId"
+          },
+          "variantId": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "required": [
+          "data",
+          "error",
+          "genotypes",
+          "hetCount",
+          "homoAltCount",
+          "homoRefCount",
+          "maf",
+          "nes",
+          "pValue",
+          "pValueThreshold",
+          "phenotypeId",
+          "tStatistic",
+          "tissueSiteDetailId",
+          "variantId"
+        ]
+      },
+      "PaginatedResponse_Gene_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/Gene"
+            },
+            "type": "array"
+          },
+          "paging_info": {
+            "$ref": "#/components/schemas/PaginationInfo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "data",
+          "paging_info"
+        ]
+      },
+      "Gene": {
+        "properties": {
+          "chromosome": {
+            "$ref": "#/components/schemas/Chromosome"
+          },
+          "dataSource": {
+            "type": "string"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "end": {
+            "type": "integer"
+          },
+          "entrezGeneId": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "gencodeId": {
+            "type": "string"
+          },
+          "gencodeVersion": {
+            "$ref": "#/components/schemas/GencodeVersion"
+          },
+          "geneStatus": {
+            "type": "string"
+          },
+          "geneSymbol": {
+            "type": "string"
+          },
+          "geneSymbolUpper": {
+            "type": "string"
+          },
+          "geneType": {
+            "type": "string"
+          },
+          "genomeBuild": {
+            "$ref": "#/components/schemas/GenomeBuild"
+          },
+          "start": {
+            "type": "integer"
+          },
+          "strand": {
+            "$ref": "#/components/schemas/Strand"
+          },
+          "tss": {
+            "type": "integer"
+          }
+        },
+        "type": "object",
+        "required": [
+          "chromosome",
+          "dataSource",
+          "end",
+          "gencodeId",
+          "gencodeVersion",
+          "geneStatus",
+          "geneSymbol",
+          "geneSymbolUpper",
+          "geneType",
+          "genomeBuild",
+          "start",
+          "strand",
+          "tss"
+        ]
+      },
+      "GencodeVersion": {
+        "type": "string",
+        "enum": [
+          "v39",
+          "v26",
+          "v19"
+        ]
+      },
+      "GenomeBuild": {
+        "type": "string",
+        "enum": [
+          "GRCh38/hg38",
+          "GRCh37/hg19"
+        ]
+      },
+      "Strand": {
+        "type": "string",
+        "enum": [
+          "+",
+          "-"
+        ]
+      },
+      "PaginatedResponse_Transcript_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/Transcript"
+            },
+            "type": "array"
+          },
+          "paging_info": {
+            "$ref": "#/components/schemas/PaginationInfo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "data",
+          "paging_info"
+        ]
+      },
+      "Transcript": {
+        "properties": {
+          "start": {
+            "type": "integer"
+          },
+          "end": {
+            "type": "integer"
+          },
+          "featureType": {
+            "type": "string"
+          },
+          "genomeBuild": {
+            "$ref": "#/components/schemas/GenomeBuild"
+          },
+          "transcriptId": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "chromosome": {
+            "$ref": "#/components/schemas/Chromosome"
+          },
+          "gencodeId": {
+            "type": "string"
+          },
+          "geneSymbol": {
+            "type": "string"
+          },
+          "gencodeVersion": {
+            "$ref": "#/components/schemas/GencodeVersion"
+          },
+          "strand": {
+            "$ref": "#/components/schemas/Strand"
+          }
+        },
+        "type": "object",
+        "required": [
+          "start",
+          "end",
+          "featureType",
+          "genomeBuild",
+          "transcriptId",
+          "source",
+          "chromosome",
+          "gencodeId",
+          "geneSymbol",
+          "gencodeVersion",
+          "strand"
+        ]
+      },
+      "PaginatedResponse_Exon_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/Exon"
+            },
+            "type": "array"
+          },
+          "paging_info": {
+            "$ref": "#/components/schemas/PaginationInfo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "data",
+          "paging_info"
+        ]
+      },
+      "Exon": {
+        "properties": {
+          "featureType": {
+            "type": "string"
+          },
+          "end": {
+            "type": "integer"
+          },
+          "genomeBuild": {
+            "$ref": "#/components/schemas/GenomeBuild"
+          },
+          "start": {
+            "type": "integer"
+          },
+          "exonId": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "chromosome": {
+            "$ref": "#/components/schemas/Chromosome"
+          },
+          "gencodeId": {
+            "type": "string"
+          },
+          "transcriptId": {
+            "type": "string"
+          },
+          "geneSymbol": {
+            "type": "string"
+          },
+          "gencodeVersion": {
+            "$ref": "#/components/schemas/GencodeVersion"
+          },
+          "strand": {
+            "$ref": "#/components/schemas/Strand"
+          },
+          "exonNumber": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "required": [
+          "featureType",
+          "end",
+          "genomeBuild",
+          "start",
+          "exonId",
+          "source",
+          "chromosome",
+          "gencodeId",
+          "transcriptId",
+          "geneSymbol",
+          "gencodeVersion",
+          "strand",
+          "exonNumber"
+        ]
+      },
+      "PaginatedResponse_Variant_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/Variant"
+            },
+            "type": "array"
+          },
+          "paging_info": {
+            "$ref": "#/components/schemas/PaginationInfo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "data",
+          "paging_info"
+        ]
+      },
+      "Variant": {
+        "properties": {
+          "snpId": {
+            "type": "string"
+          },
+          "b37VariantId": {
+            "type": "string"
+          },
+          "pos": {
+            "type": "integer"
+          },
+          "maf01": {
+            "type": "boolean"
+          },
+          "variantId": {
+            "type": "string"
+          },
+          "alt": {
+            "type": "string"
+          },
+          "chromosome": {
+            "$ref": "#/components/schemas/Chromosome"
+          },
+          "snpIdUpper": {
+            "type": "string"
+          },
+          "datasetId": {
+            "type": "string"
+          },
+          "ref": {
+            "type": "string"
+          },
+          "shorthand": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "snpId",
+          "b37VariantId",
+          "pos",
+          "maf01",
+          "variantId",
+          "alt",
+          "chromosome",
+          "snpIdUpper",
+          "datasetId",
+          "ref"
+        ]
+      },
+      "PaginatedResponse_TissueSiteDetail_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/TissueSiteDetail"
+            },
+            "type": "array"
+          },
+          "paging_info": {
+            "$ref": "#/components/schemas/PaginationInfo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "data",
+          "paging_info"
+        ]
+      },
+      "TissueSiteDetail": {
+        "properties": {
+          "tissueSiteDetailId": {
+            "$ref": "#/components/schemas/TissueSiteDetailId"
+          },
+          "colorHex": {
+            "type": "string"
+          },
+          "colorRgb": {
+            "type": "string"
+          },
+          "datasetId": {
+            "$ref": "#/components/schemas/DatasetId"
+          },
+          "eGeneCount": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "expressedGeneCount": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "hasEGenes": {
+            "type": "boolean"
+          },
+          "hasSGenes": {
+            "type": "boolean"
+          },
+          "mappedInHubmap": {
+            "type": "boolean"
+          },
+          "eqtlSampleSummary": {
+            "$ref": "#/components/schemas/SexBasedSummary"
+          },
+          "rnaSeqSampleSummary": {
+            "$ref": "#/components/schemas/SexBasedSummary"
+          },
+          "sGeneCount": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "samplingSite": {
+            "type": "string"
+          },
+          "tissueSite": {
+            "type": "string"
+          },
+          "tissueSiteDetail": {
+            "type": "string"
+          },
+          "tissueSiteDetailAbbr": {
+            "type": "string"
+          },
+          "ontologyId": {
+            "$ref": "#/components/schemas/TissueSiteOntologyId"
+          },
+          "ontologyIri": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "required": [
+          "tissueSiteDetailId",
+          "colorHex",
+          "colorRgb",
+          "datasetId",
+          "hasEGenes",
+          "hasSGenes",
+          "mappedInHubmap",
+          "eqtlSampleSummary",
+          "rnaSeqSampleSummary",
+          "samplingSite",
+          "tissueSite",
+          "tissueSiteDetail",
+          "tissueSiteDetailAbbr",
+          "ontologyId",
+          "ontologyIri"
+        ]
+      },
+      "SexBasedSummary": {
+        "properties": {
+          "totalCount": {
+            "type": "integer"
+          },
+          "female": {
+            "$ref": "#/components/schemas/AgeAndCountSummary"
+          },
+          "male": {
+            "$ref": "#/components/schemas/AgeAndCountSummary"
+          }
+        },
+        "type": "object",
+        "required": [
+          "totalCount",
+          "female",
+          "male"
+        ]
+      },
+      "AgeAndCountSummary": {
+        "properties": {
+          "ageMax": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "ageMin": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "ageMean": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "count": {
+            "type": "integer"
+          }
+        },
+        "type": "object",
+        "required": [
+          "count"
+        ]
+      },
+      "Dataset": {
+        "properties": {
+          "datasetId": {
+            "type": "string"
+          },
+          "dbSnpBuild": {
+            "type": "integer"
+          },
+          "dbgapId": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "description": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "eqtlSubjectCount": {
+            "type": "integer"
+          },
+          "eqtlTissuesCount": {
+            "type": "integer"
+          },
+          "gencodeVersion": {
+            "$ref": "#/components/schemas/GencodeVersion"
+          },
+          "genomeBuild": {
+            "$ref": "#/components/schemas/GenomeBuild"
+          },
+          "organization": {
+            "type": "string"
+          },
+          "rnaSeqAndGenotypeSampleCount": {
+            "type": "integer"
+          },
+          "rnaSeqSampleCount": {
+            "type": "integer"
+          },
+          "subjectCount": {
+            "type": "integer"
+          },
+          "tissueCount": {
+            "type": "integer"
+          }
+        },
+        "type": "object",
+        "required": [
+          "datasetId",
+          "dbSnpBuild",
+          "description",
+          "displayName",
+          "eqtlSubjectCount",
+          "eqtlTissuesCount",
+          "gencodeVersion",
+          "genomeBuild",
+          "organization",
+          "rnaSeqAndGenotypeSampleCount",
+          "rnaSeqSampleCount",
+          "subjectCount",
+          "tissueCount"
+        ]
+      },
+      "PaginatedResponse_DatasetSample_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/DatasetSample"
+            },
+            "type": "array"
+          },
+          "paging_info": {
+            "$ref": "#/components/schemas/PaginationInfo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "data",
+          "paging_info"
+        ]
+      },
+      "DatasetSample": {
+        "properties": {
+          "ischemicTime": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "aliquotId": {
+            "type": "string"
+          },
+          "tissueSampleId": {
+            "type": "string"
+          },
+          "tissueSiteDetail": {
+            "type": "string"
+          },
+          "dataType": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "ischemicTimeGroup": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "pathologyNotesCategories": {
+            "additionalProperties": {
+              "type": "boolean"
+            },
+            "propertyNames": {
+              "$ref": "#/components/schemas/PathCategory"
+            },
+            "type": "object"
+          },
+          "freezeType": {
+            "type": "string"
+          },
+          "pathologyNotes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "sampleId": {
+            "type": "string"
+          },
+          "sampleIdUpper": {
+            "type": "string"
+          },
+          "ageBracket": {
+            "$ref": "#/components/schemas/DonorAgeBracket"
+          },
+          "rin": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "hardyScale": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/HardyScale-Output"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "tissueSiteDetailId": {
+            "$ref": "#/components/schemas/TissueSiteDetailId"
+          },
+          "subjectId": {
+            "type": "string"
+          },
+          "uberonId": {
+            "type": "string"
+          },
+          "sex": {
+            "$ref": "#/components/schemas/Sex"
+          },
+          "autolysisScore": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "datasetId": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "required": [
+          "aliquotId",
+          "tissueSampleId",
+          "tissueSiteDetail",
+          "pathologyNotesCategories",
+          "freezeType",
+          "sampleId",
+          "sampleIdUpper",
+          "ageBracket",
+          "tissueSiteDetailId",
+          "subjectId",
+          "uberonId",
+          "sex",
+          "datasetId"
+        ]
+      },
+      "PathCategory": {
+        "type": "string",
+        "enum": [
+          "adenoma",
+          "amylacea",
+          "atelectasis",
+          "atherosclerosis",
+          "atherosis",
+          "atrophy",
+          "calcification",
+          "cirrhosis",
+          "clean_specimens",
+          "congestion",
+          "corpora_albicantia",
+          "cyst",
+          "desquamation",
+          "diabetic",
+          "dysplasia",
+          "edema",
+          "emphysema",
+          "esophagitis",
+          "fibrosis",
+          "gastritis",
+          "glomerulosclerosis",
+          "goiter",
+          "gynecomastoid",
+          "hashimoto",
+          "heart_failure_cells",
+          "hemorrhage",
+          "hepatitis",
+          "hyalinization",
+          "hypereosinophilia",
+          "hyperplasia",
+          "hypertrophy",
+          "hypoxic",
+          "infarction",
+          "inflammation",
+          "ischemic_changes",
+          "macrophages",
+          "mastopathy",
+          "metaplasia",
+          "monckeberg",
+          "necrosis",
+          "nephritis",
+          "nephrosclerosis",
+          "no_abnormalities",
+          "nodularity",
+          "pancreatitis",
+          "pigment",
+          "pneumonia",
+          "post_menopausal",
+          "prostatitis",
+          "saponification",
+          "scarring",
+          "sclerotic",
+          "solar_elastosis",
+          "spermatogenesis",
+          "steatosis",
+          "sweat_glands",
+          "tma"
+        ]
+      },
+      "HardyScale-Output": {
+        "enum": [
+          "Ventilator case",
+          "Fast death - violent",
+          "Fast death - natural causes",
+          "Intermediate death",
+          "Slow death",
+          null
+        ]
+      },
+      "Sex": {
+        "type": "string",
+        "enum": [
+          "male",
+          "female"
+        ]
+      },
+      "DonorAttribute": {
+        "type": "string",
+        "enum": [
+          "sex",
+          "ageBracket"
+        ]
+      },
+      "OrganizationNames": {
+        "type": "string",
+        "enum": [
+          "GTEx Consortium",
+          "Kid's First"
+        ]
+      },
+      "AutolysisScore": {
+        "type": "string",
+        "enum": [
+          "None",
+          "Mild",
+          "Moderate",
+          "Severe"
+        ]
+      },
+      "HardyScale-Input": {
+        "type": "string",
+        "enum": [
+          "Ventilator case",
+          "Fast death - violent",
+          "Fast death - natural causes",
+          "Intermediate death",
+          "Slow death"
+        ]
+      },
+      "IschemicTimeGroup": {
+        "type": "string",
+        "enum": [
+          "<= 0",
+          "1 - 300",
+          "301 - 600",
+          "601 - 900",
+          "901 - 1200",
+          "1201 - 1500",
+          "> 1500"
+        ]
+      },
+      "DataType": {
+        "type": "string",
+        "enum": [
+          "RNASEQ",
+          "WGS",
+          "WES",
+          "OMNI",
+          "EXCLUDE"
+        ]
+      },
+      "SampleSortBy": {
+        "type": "string",
+        "enum": [
+          "sampleId",
+          "ischemicTime",
+          "aliquotId",
+          "tissueSampleId",
+          "hardyScale",
+          "pathologyNotes",
+          "ageBracket",
+          "tissueSiteDetailId",
+          "sex"
+        ]
+      },
+      "SortDirection": {
+        "type": "string",
+        "enum": [
+          "asc",
+          "desc"
+        ]
+      }
+    }
+  }
+}

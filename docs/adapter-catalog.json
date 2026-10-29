@@ -1,0 +1,3968 @@
+{
+  "sources": [
+    {
+      "source": "antibody-registry",
+      "schema_available": true,
+      "health": "not_probed",
+      "reason": null,
+      "license_review": {
+        "source": "antibody-registry",
+        "review_status": "unresolved",
+        "release_status": "eligible",
+        "license": "not_established",
+        "evidence": [
+          "https://www.antibodyregistry.org/"
+        ],
+        "scope": "Current implemented API and returned data",
+        "reason": "Enabled under the owner default policy for free research hosting; exact content permissions remain unresolved. Preserve contributor terms and attribution; this is not a blanket permissive license.",
+        "byok": "not_applicable",
+        "activation_basis": "owner_default_allow"
+      },
+      "operation_count": 1,
+      "operations": [
+        {
+          "description": "Query the Antibody Registry for antibodies or get details for a specific antibody.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "limit": {
+                "default": 25,
+                "description": "Maximum number of results per page (1-25, default: 25). Only for search queries.",
+                "maximum": 25,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "page": {
+                "default": 1,
+                "description": "Page number for pagination (default: 1). Only for search queries.",
+                "maximum": 10000,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "query": {
+                "description": "Query string\n- For search: Gene symbol (e.g., 'BRCA1'), protein name, or UniProt ID (e.g., 'P38398')\n- For details: Antibody ID (e.g., '2722030') from the 'abId' field in search results",
+                "maxLength": 200,
+                "minLength": 1,
+                "type": "string"
+              },
+              "query_type": {
+                "description": "Type of query - \"search\" or \"details\"\n- \"search\": Search for antibodies by gene symbol, protein name, or UniProt ID\n- \"details\": Get detailed information for a specific antibody by its ID",
+                "enum": [
+                  "search",
+                  "details"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "query_type",
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "query_antibody"
+        }
+      ]
+    },
+    {
+      "source": "article-content",
+      "schema_available": false,
+      "health": "not_probed",
+      "reason": "Source integration is unreleased under the source license policy.",
+      "license_review": {
+        "source": "article-content",
+        "review_status": "unresolved",
+        "release_status": "unreleased",
+        "license": "not_established",
+        "evidence": [],
+        "reason": "No reviewed source permission is available; keep unreleased.",
+        "byok": "not_applicable"
+      },
+      "operation_count": 0,
+      "operations": []
+    },
+    {
+      "source": "bio-ontology",
+      "schema_available": true,
+      "health": "not_probed",
+      "reason": null,
+      "license_review": {
+        "source": "bio-ontology",
+        "review_status": "content_review_required",
+        "release_status": "eligible",
+        "license": "per_ontology",
+        "evidence": [
+          "https://www.bioontology.org/terms/"
+        ],
+        "scope": "Current implemented API and returned data",
+        "reason": "Enabled under the owner default policy for free research hosting; exact content permissions remain content_review_required. Preserve contributor terms and attribution; this is not a blanket permissive license.",
+        "byok": "required_local_environment",
+        "activation_basis": "owner_default_allow"
+      },
+      "operation_count": 4,
+      "operations": [
+        {
+          "description": "List ontologies, optionally filtering acronym/name locally.\n\nThe provider's ontology collection is not a term search. Offset/limit\ncontinue the filtered collection, whose contents may change over time.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "include_views": {
+                "anyOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null
+              },
+              "limit": {
+                "default": 25,
+                "maximum": 25,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "offset": {
+                "default": 0,
+                "maximum": 10000,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "query": {
+                "anyOf": [
+                  {
+                    "maxLength": 200,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null
+              }
+            },
+            "type": "object"
+          },
+          "name": "search_ontologies"
+        },
+        {
+          "description": "Get detailed information about a specific ontology class",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "class_id": {
+                "description": "Class ID/URI (URL-encoded if necessary)",
+                "maxLength": 2048,
+                "minLength": 1,
+                "type": "string"
+              },
+              "include": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Comma-separated attributes to include (e.g., prefLabel,definition,parents,children)"
+              },
+              "ontology": {
+                "description": "Ontology acronym",
+                "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "ontology",
+              "class_id"
+            ],
+            "type": "object"
+          },
+          "name": "get_class_info"
+        },
+        {
+          "description": "Retrieve a provider page of classes with labels and original class URIs.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "ontology": {
+                "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$",
+                "type": "string"
+              },
+              "page": {
+                "default": 1,
+                "maximum": 10000,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "pagesize": {
+                "default": 25,
+                "maximum": 25,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "ontology"
+            ],
+            "type": "object"
+          },
+          "name": "get_ontology_classes"
+        },
+        {
+          "description": "Retrieve mapping assertions for an ontology or class.\n\nPreserve classes, source and process. A mapping is not automatically\nbiological equivalence; its generating process determines its meaning.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "class_id": {
+                "anyOf": [
+                  {
+                    "maxLength": 2048,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null
+              },
+              "ontology": {
+                "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$",
+                "type": "string"
+              },
+              "page": {
+                "default": 1,
+                "maximum": 10000,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "pagesize": {
+                "default": 25,
+                "maximum": 25,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "ontology"
+            ],
+            "type": "object"
+          },
+          "name": "get_mappings"
+        }
+      ]
+    },
+    {
+      "source": "chembl",
+      "schema_available": true,
+      "health": "not_probed",
+      "reason": null,
+      "license_review": {
+        "source": "chembl",
+        "review_status": "permissive",
+        "release_status": "eligible",
+        "license": "CC-BY-SA-3.0",
+        "evidence": [
+          "https://chembl.github.io/chembl-licensing/",
+          "https://platform-docs.opentargets.org/licence"
+        ],
+        "scope": "Current implemented API and returned data",
+        "reason": "Share-alike accepted by the owner. Preserve attribution, the upstream data license, applicable derivative-database obligations and study-specific notices; Apache-2.0 applies to integration code only.",
+        "byok": "not_applicable"
+      },
+      "operation_count": 9,
+      "operations": [
+        {
+          "description": "Search ChEMBL database for compounds by various methods.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "limit": {
+                "default": 25,
+                "description": "Number of results to return (1-1000)",
+                "type": "integer"
+              },
+              "offset": {
+                "default": 0,
+                "description": "Number of results to skip",
+                "type": "integer"
+              },
+              "query": {
+                "description": "Search query (compound name, synonym, identifier, or InChI string)",
+                "type": "string"
+              },
+              "search_type": {
+                "default": "name",
+                "description": "Type of search to perform:\n- \"name\": Search by name or identifier (default)\n- \"inchi\": Search by InChI key or InChI string\n- \"similarity\": Find similar compounds by SMILES (requires smiles parameter)\n- \"substructure\": Find compounds containing substructure (requires smiles parameter)",
+                "enum": [
+                  "name",
+                  "inchi",
+                  "similarity",
+                  "substructure"
+                ],
+                "type": "string"
+              },
+              "similarity_threshold": {
+                "default": 0.7,
+                "description": "Similarity threshold for similarity search (0-1, default: 0.7)",
+                "type": "number"
+              },
+              "smiles": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "SMILES string (required for similarity and substructure searches)"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "search_compounds"
+        },
+        {
+          "description": "Get detailed information for a specific compound.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "chembl_id": {
+                "description": "ChEMBL compound ID (e.g., CHEMBL59)",
+                "type": "string"
+              },
+              "include_properties": {
+                "default": true,
+                "description": "Include molecular properties (MW, LogP, etc.)",
+                "type": "boolean"
+              },
+              "include_structure": {
+                "default": true,
+                "description": "Include chemical structure data",
+                "type": "boolean"
+              },
+              "structure_format": {
+                "default": "all",
+                "description": "Structure format to return",
+                "enum": [
+                  "smiles",
+                  "inchi",
+                  "all"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "chembl_id"
+            ],
+            "type": "object"
+          },
+          "name": "get_compound_details"
+        },
+        {
+          "description": "Search for biological targets in ChEMBL.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "limit": {
+                "default": 25,
+                "description": "Number of results to return (1-1000)",
+                "type": "integer"
+              },
+              "organism": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Filter by organism (e.g., \"Homo sapiens\")"
+              },
+              "query": {
+                "description": "Target name, UniProt ID, or search query",
+                "type": "string"
+              },
+              "search_by": {
+                "default": "name",
+                "description": "Search method:\n- \"name\": Search by target name (default)\n- \"uniprot\": Search by UniProt accession number\n- \"type\": Search by target type",
+                "enum": [
+                  "name",
+                  "uniprot",
+                  "type"
+                ],
+                "type": "string"
+              },
+              "target_type": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Filter by target type (e.g., \"SINGLE PROTEIN\", \"PROTEIN COMPLEX\")"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "search_targets"
+        },
+        {
+          "description": "Get detailed information for a specific target.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "activity_type": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Filter compounds by activity type (e.g., \"IC50\", \"Ki\", \"Kd\")"
+              },
+              "compound_limit": {
+                "default": 25,
+                "description": "Maximum compounds to return if include_compounds=True",
+                "type": "integer"
+              },
+              "include_compounds": {
+                "default": false,
+                "description": "Include compounds tested against this target",
+                "type": "boolean"
+              },
+              "include_pathways": {
+                "default": false,
+                "description": "Include biological pathways (if available)",
+                "type": "boolean"
+              },
+              "target_chembl_id": {
+                "description": "ChEMBL target ID (e.g., CHEMBL2095173)",
+                "type": "string"
+              }
+            },
+            "required": [
+              "target_chembl_id"
+            ],
+            "type": "object"
+          },
+          "name": "get_target_details"
+        },
+        {
+          "description": "Search bioactivity measurements and assay results.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "activity_type": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Activity type (e.g., \"IC50\", \"Ki\", \"EC50\", \"Kd\")"
+              },
+              "assay_chembl_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Filter by ChEMBL assay ID"
+              },
+              "limit": {
+                "default": 25,
+                "description": "Number of results to return (1-1000)",
+                "type": "integer"
+              },
+              "max_value": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Maximum activity value"
+              },
+              "min_value": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Minimum activity value"
+              },
+              "molecule_chembl_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Filter by ChEMBL compound ID"
+              },
+              "target_chembl_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Filter by ChEMBL target ID"
+              },
+              "units": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Units filter (e.g., \"nM\", \"uM\")"
+              }
+            },
+            "type": "object"
+          },
+          "name": "search_bioactivities"
+        },
+        {
+          "description": "Get detailed information for a specific assay.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "activity_limit": {
+                "default": 25,
+                "description": "Maximum activities to return if include_activities=True",
+                "type": "integer"
+              },
+              "assay_chembl_id": {
+                "description": "ChEMBL assay ID (e.g., CHEMBL1217643)",
+                "type": "string"
+              },
+              "include_activities": {
+                "default": false,
+                "description": "Include bioactivity measurements from this assay",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "assay_chembl_id"
+            ],
+            "type": "object"
+          },
+          "name": "get_assay_details"
+        },
+        {
+          "description": "Compare bioactivity data across multiple compounds.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "activity_type": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Optional activity type for comparison (e.g., \"IC50\", \"Ki\")"
+              },
+              "molecule_chembl_ids": {
+                "description": "List of ChEMBL compound IDs to compare (2-10 compounds)",
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "target_chembl_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Optional target filter for comparison"
+              }
+            },
+            "required": [
+              "molecule_chembl_ids"
+            ],
+            "type": "object"
+          },
+          "name": "compare_compound_activities"
+        },
+        {
+          "description": "Read ChEMBL physicochemical descriptors and compute bounded rule-of-five checks.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "chembl_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "ChEMBL compound ID (provide either chembl_id or smiles)"
+              },
+              "property_type": {
+                "default": "all",
+                "description": "Type of properties to analyze:\n- \"all\": Available physicochemical descriptors and rule-of-five checks\n- \"drug_likeness\": Lipinski Rule of Five and drug-likeness metrics\n- \"admet\": Reports unavailable: this acquisition supplies no ADMET measurements\n- \"descriptors\": Molecular descriptors and physicochemical properties",
+                "enum": [
+                  "all",
+                  "drug_likeness",
+                  "admet",
+                  "descriptors"
+                ],
+                "type": "string"
+              },
+              "smiles": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "SMILES string (alternative to chembl_id)"
+              }
+            },
+            "type": "object"
+          },
+          "name": "analyze_compound_properties"
+        },
+        {
+          "description": "Search compounds using multiple chemical and biological property filters.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "limit": {
+                "default": 25,
+                "description": "Number of results to return (1-1000)",
+                "type": "integer"
+              },
+              "max_hba": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Maximum hydrogen bond acceptors"
+              },
+              "max_hbd": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Maximum hydrogen bond donors"
+              },
+              "max_logp": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Maximum LogP value"
+              },
+              "max_mw": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Maximum molecular weight (Da)"
+              },
+              "min_logp": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Minimum LogP value"
+              },
+              "min_mw": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Minimum molecular weight (Da)"
+              },
+              "ro5_compliant": {
+                "default": false,
+                "description": "Only return Lipinski Rule of Five compliant compounds",
+                "type": "boolean"
+              }
+            },
+            "type": "object"
+          },
+          "name": "advanced_property_search"
+        }
+      ]
+    },
+    {
+      "source": "clingen",
+      "schema_available": true,
+      "health": "not_probed",
+      "reason": null,
+      "license_review": {
+        "source": "clingen",
+        "review_status": "permissive",
+        "release_status": "eligible",
+        "license": "CC0-1.0",
+        "evidence": [
+          "https://clinicalgenome.org/docs/terms-of-use/"
+        ],
+        "scope": "Current implemented API and returned data",
+        "reason": "ClinGen curated content is dedicated to the public domain; original publications remain separate.",
+        "byok": "not_applicable"
+      },
+      "operation_count": 4,
+      "operations": [
+        {
+          "name": "normalize",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "hgvs": {
+                "maxLength": 350,
+                "minLength": 5,
+                "title": "Hgvs",
+                "type": "string"
+              }
+            },
+            "required": [
+              "hgvs"
+            ],
+            "title": "NormalizeVariant",
+            "type": "object"
+          },
+          "description": "Typed clingen normalize operation."
+        },
+        {
+          "name": "assertions",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "caid": {
+                "pattern": "^CA\\d+$",
+                "title": "Caid",
+                "type": "string"
+              }
+            },
+            "required": [
+              "caid"
+            ],
+            "title": "VariantAssertions",
+            "type": "object"
+          },
+          "description": "Typed clingen assertions operation."
+        },
+        {
+          "name": "linked_data",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "caid": {
+                "pattern": "^CA\\d+$",
+                "title": "Caid",
+                "type": "string"
+              }
+            },
+            "required": [
+              "caid"
+            ],
+            "title": "VariantAssertions",
+            "type": "object"
+          },
+          "description": "Typed clingen linked_data operation."
+        },
+        {
+          "name": "specifications",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "gene": {
+                "pattern": "^[A-Z0-9_.-]{1,40}$",
+                "title": "Gene",
+                "type": "string"
+              }
+            },
+            "required": [
+              "gene"
+            ],
+            "title": "GeneSpecifications",
+            "type": "object"
+          },
+          "description": "Typed clingen specifications operation."
+        }
+      ]
+    },
+    {
+      "source": "clinical-trials",
+      "schema_available": true,
+      "health": "not_probed",
+      "reason": null,
+      "license_review": {
+        "source": "clinical-trials",
+        "review_status": "unresolved",
+        "release_status": "eligible",
+        "license": "not_established",
+        "evidence": [
+          "https://clinicaltrials.gov/about-site/terms-conditions"
+        ],
+        "scope": "Current implemented API and returned data",
+        "reason": "Enabled under the owner default policy for free research hosting; exact content permissions remain unresolved. Preserve contributor terms and attribution; this is not a blanket permissive license.",
+        "byok": "not_applicable",
+        "activation_basis": "owner_default_allow"
+      },
+      "operation_count": 2,
+      "operations": [
+        {
+          "description": "Count study memberships in one bounded provider window; not a population estimate.\n\nMissing grouping fields stay unavailable. A study can belong to several\nphase/condition groups; their sum can exceed the unique study denominator.\nRecords retain the exact study IDs and grouping values used by these counts;\nretrieve a trial separately for its full protocol. Follow public next_actions\nfor additional windows; counts are not cumulative.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "condition": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null
+              },
+              "group_by": {
+                "default": "phase",
+                "enum": [
+                  "phase",
+                  "status",
+                  "studyType",
+                  "condition",
+                  "sponsor"
+                ],
+                "type": "string"
+              },
+              "page_size": {
+                "default": 25,
+                "type": "integer"
+              },
+              "page_token": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null
+              },
+              "phase": {
+                "anyOf": [
+                  {
+                    "enum": [
+                      "NA",
+                      "EARLY_PHASE1",
+                      "PHASE1",
+                      "PHASE2",
+                      "PHASE3",
+                      "PHASE4"
+                    ],
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null
+              },
+              "status": {
+                "anyOf": [
+                  {
+                    "enum": [
+                      "ACTIVE_NOT_RECRUITING",
+                      "COMPLETED",
+                      "ENROLLING_BY_INVITATION",
+                      "NOT_YET_RECRUITING",
+                      "RECRUITING",
+                      "SUSPENDED",
+                      "TERMINATED",
+                      "WITHDRAWN",
+                      "AVAILABLE",
+                      "NO_LONGER_AVAILABLE",
+                      "TEMPORARILY_NOT_AVAILABLE",
+                      "APPROVED_FOR_MARKETING",
+                      "WITHHELD",
+                      "UNKNOWN"
+                    ],
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null
+              }
+            },
+            "type": "object"
+          },
+          "name": "get_trial_statistics"
+        },
+        {
+          "description": "Compare multiple clinical trials side by side.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "comparison_fields": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "enum": [
+                        "phase",
+                        "status",
+                        "enrollment",
+                        "dates",
+                        "outcomes"
+                      ],
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Fields to compare across trials"
+              },
+              "nct_ids": {
+                "description": "List of NCT IDs to compare (2-5 trials)",
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "nct_ids"
+            ],
+            "type": "object"
+          },
+          "name": "compare_trials"
+        }
+      ]
+    },
+    {
+      "source": "dailymed",
+      "schema_available": true,
+      "health": "not_probed",
+      "reason": null,
+      "license_review": {
+        "source": "dailymed",
+        "review_status": "unresolved",
+        "release_status": "eligible",
+        "license": "not_established",
+        "evidence": [
+          "https://dailymed.nlm.nih.gov/"
+        ],
+        "scope": "Current implemented API and returned data",
+        "reason": "Enabled under the owner default policy for free research hosting; exact content permissions remain unresolved. Preserve contributor terms and attribution; this is not a blanket permissive license.",
+        "byok": "not_applicable",
+        "activation_basis": "owner_default_allow"
+      },
+      "operation_count": 1,
+      "operations": [
+        {
+          "description": "Get specific sections from a drug label.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "section_types": {
+                "default": null,
+                "description": "List of section types to retrieve (optional)\n          Common: INDICATIONS, CONTRAINDICATIONS, WARNINGS,\n                  ADVERSE_REACTIONS, DOSAGE, DRUG_INTERACTIONS",
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "set_id": {
+                "description": "SPL set_id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "set_id"
+            ],
+            "type": "object"
+          },
+          "name": "get_drug_label_sections"
+        }
+      ]
+    },
+    {
+      "source": "depmap",
+      "schema_available": false,
+      "health": "not_probed",
+      "reason": "The former public API is unavailable; curated platform data is a separate capability.",
+      "license_review": {
+        "source": "depmap",
+        "review_status": "unresolved",
+        "release_status": "eligible",
+        "license": "not_established",
+        "evidence": [
+          "https://depmap.org/portal/terms/"
+        ],
+        "scope": "Current implemented API and returned data",
+        "reason": "Enabled under the owner default policy for free research hosting; exact content permissions remain unresolved. Preserve contributor terms and attribution; this is not a blanket permissive license.",
+        "byok": "not_applicable",
+        "activation_basis": "owner_default_allow"
+      },
+      "operation_count": 0,
+      "operations": []
+    },
+    {
+      "source": "enrichment",
+      "schema_available": true,
+      "health": "not_probed",
+      "reason": null,
+      "license_review": {
+        "source": "enrichment",
+        "review_status": "unresolved",
+        "release_status": "eligible",
+        "license": "not_established",
+        "evidence": [
+          "https://biit.cs.ut.ee/gprofiler/"
+        ],
+        "scope": "Current implemented API and returned data",
+        "reason": "Enabled under the owner default policy for free research hosting; exact content permissions remain unresolved. Preserve contributor terms and attribution; this is not a blanket permissive license.",
+        "byok": "not_applicable",
+        "activation_basis": "owner_default_allow"
+      },
+      "operation_count": 1,
+      "operations": [
+        {
+          "name": "gene_set",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "genes": {
+                "items": {
+                  "type": "string"
+                },
+                "maxItems": 100,
+                "minItems": 1,
+                "title": "Genes",
+                "type": "array"
+              },
+              "organism": {
+                "default": "hsapiens",
+                "enum": [
+                  "hsapiens",
+                  "mmusculus",
+                  "rnorvegicus"
+                ],
+                "title": "Organism",
+                "type": "string"
+              },
+              "background": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 1000,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Background"
+              },
+              "sources": {
+                "items": {
+                  "enum": [
+                    "GO:BP",
+                    "GO:MF",
+                    "GO:CC",
+                    "REAC",
+                    "WP",
+                    "HP"
+                  ],
+                  "type": "string"
+                },
+                "maxItems": 6,
+                "minItems": 1,
+                "title": "Sources",
+                "type": "array"
+              },
+              "limit": {
+                "default": 10,
+                "maximum": 25,
+                "minimum": 1,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "significance_threshold": {
+                "default": 0.05,
+                "exclusiveMinimum": 0,
+                "maximum": 0.2,
+                "title": "Significance Threshold",
+                "type": "number"
+              }
+            },
+            "required": [
+              "genes"
+            ],
+            "title": "Enrichment",
+            "type": "object"
+          },
+          "description": "Typed enrichment gene_set operation."
+        }
+      ]
+    },
+    {
+      "source": "ensembl",
+      "schema_available": true,
+      "health": "not_probed",
+      "reason": null,
+      "license_review": {
+        "source": "ensembl",
+        "review_status": "content_review_required",
+        "release_status": "eligible",
+        "license": "LicenseRef-Ensembl-Project",
+        "evidence": [
+          "https://www.ensembl.org/about/articles/ensembl-content-disclaimer",
+          "https://www.ebi.ac.uk/about/terms-of-use/",
+          "https://rest.ensembl.org/documentation/info/assembly_info",
+          "https://rest.ensembl.org/documentation/info/species"
+        ],
+        "scope": "Existing implemented Ensembl routes; preserve upstream contributor terms. Genome inventory still uses a bounded projection.",
+        "reason": "Project-generated data are unrestricted. Existing routes enabled under owner default for incorporated content; uncertain annotations retain their upstream terms rather than a verified blanket license.",
+        "byok": "not_applicable",
+        "activation_basis": "owner_default_allow"
+      },
+      "operation_count": 6,
+      "operations": [
+        {
+          "description": "Get DNA or protein sequences for genes and transcripts.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "gene_id": {
+                "description": "Ensembl gene or transcript ID",
+                "type": "string"
+              },
+              "output_format": {
+                "default": "json",
+                "description": "Output format (json or fasta)",
+                "enum": [
+                  "json",
+                  "fasta"
+                ],
+                "type": "string"
+              },
+              "sequence_type": {
+                "default": "genomic",
+                "description": "Type of sequence to retrieve",
+                "enum": [
+                  "genomic",
+                  "cds",
+                  "cdna",
+                  "protein"
+                ],
+                "type": "string"
+              },
+              "species": {
+                "default": "homo_sapiens",
+                "description": "Species name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "gene_id"
+            ],
+            "type": "object"
+          },
+          "name": "get_sequences"
+        },
+        {
+          "description": "Analyze evolutionary relationships and gene trees.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "analysis_type": {
+                "default": "homologs",
+                "description": "Type of evolutionary analysis",
+                "enum": [
+                  "homologs",
+                  "orthologs",
+                  "paralogs",
+                  "gene_tree"
+                ],
+                "type": "string"
+              },
+              "gene_id": {
+                "description": "Ensembl gene ID",
+                "type": "string"
+              },
+              "sequence_type": {
+                "default": "protein",
+                "description": "Sequence type for homology",
+                "enum": [
+                  "protein",
+                  "cdna"
+                ],
+                "type": "string"
+              },
+              "species": {
+                "default": "homo_sapiens",
+                "description": "Species of the submitted gene",
+                "type": "string"
+              },
+              "target_species": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Target species for homology (optional)"
+              }
+            },
+            "required": [
+              "gene_id"
+            ],
+            "type": "object"
+          },
+          "name": "analyze_evolution"
+        },
+        {
+          "description": "Analyze genetic variants and their consequences.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "analysis_type": {
+                "default": "variants",
+                "description": "Type of variant analysis",
+                "enum": [
+                  "variants",
+                  "consequences"
+                ],
+                "type": "string"
+              },
+              "region_or_id": {
+                "description": "Genomic region (chr:start-end) or variant ID",
+                "type": "string"
+              },
+              "species": {
+                "default": "homo_sapiens",
+                "description": "Species name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "region_or_id"
+            ],
+            "type": "object"
+          },
+          "name": "analyze_variants"
+        },
+        {
+          "description": "Get regulatory features and motifs for a genomic region.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "element_type": {
+                "default": "both",
+                "description": "Type of regulatory elements",
+                "enum": [
+                  "regulatory",
+                  "motif",
+                  "both"
+                ],
+                "type": "string"
+              },
+              "region": {
+                "description": "Genomic region (chr:start-end)",
+                "type": "string"
+              },
+              "species": {
+                "default": "homo_sapiens",
+                "description": "Species name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "region"
+            ],
+            "type": "object"
+          },
+          "name": "get_regulatory_elements"
+        },
+        {
+          "description": "Get genome assembly and species information.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "info_type": {
+                "default": "assembly",
+                "description": "Type of genome information",
+                "enum": [
+                  "species",
+                  "assembly",
+                  "karyotype"
+                ],
+                "type": "string"
+              },
+              "species": {
+                "default": "homo_sapiens",
+                "description": "Species name (not used for species list)",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "name": "get_genome_info"
+        },
+        {
+          "description": "Map coordinates between genome assemblies.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "region": {
+                "description": "Genomic region (chr:start-end)",
+                "type": "string"
+              },
+              "source_assembly": {
+                "description": "Source assembly name (e.g., GRCh37)",
+                "type": "string"
+              },
+              "species": {
+                "default": "homo_sapiens",
+                "description": "Species name",
+                "type": "string"
+              },
+              "target_assembly": {
+                "description": "Target assembly name (e.g., GRCh38)",
+                "type": "string"
+              }
+            },
+            "required": [
+              "region",
+              "source_assembly",
+              "target_assembly"
+            ],
+            "type": "object"
+          },
+          "name": "map_coordinates"
+        }
+      ]
+    },
+    {
+      "source": "gtex",
+      "schema_available": true,
+      "health": "not_probed",
+      "reason": null,
+      "license_review": {
+        "source": "gtex",
+        "review_status": "permissive",
+        "release_status": "eligible",
+        "license": "LicenseRef-GTEx-Portal",
+        "evidence": [
+          "https://gtexportal.org/home/license"
+        ],
+        "scope": "Current implemented API and returned data",
+        "reason": "Public portal data terms permit services/products with source/date acknowledgment, no implied endorsement, and current-version or conspicuous release-age disclosure. Protected dbGaP data are outside this integration.",
+        "byok": "not_applicable"
+      },
+      "operation_count": 2,
+      "operations": [
+        {
+          "description": "Get GTEx system metadata.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "dataset_id": {
+                "default": "gtex_v10",
+                "description": "GTEx dataset (default: 'gtex_v10')",
+                "type": "string"
+              },
+              "info_type": {
+                "description": "Metadata type:\n- \"service\": API service information and version\n- \"dataset\": Dataset release metadata\n- \"tissues\": List all available GTEx tissues",
+                "type": "string"
+              },
+              "limit": {
+                "default": 25,
+                "description": "Requested maximum; acquired pages fit the 25-row public budget.",
+                "maximum": 100,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "page": {
+                "default": 0,
+                "description": "Zero-based provider page; follow next_actions.",
+                "maximum": 100000,
+                "minimum": 0,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "info_type"
+            ],
+            "type": "object"
+          },
+          "name": "get_metadata"
+        },
+        {
+          "description": "Get information about a specific GTEx biobank sample.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "dataset_id": {
+                "default": "gtex_v10",
+                "description": "GTEx dataset (default: 'gtex_v10')",
+                "type": "string"
+              },
+              "limit": {
+                "default": 25,
+                "description": "Requested maximum; acquired pages fit the 25-row public budget.",
+                "maximum": 100,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "page": {
+                "default": 0,
+                "description": "Zero-based provider page; follow next_actions.",
+                "maximum": 100000,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "sample_id": {
+                "description": "GTEx sample ID (e.g., 'GTEX-1117F-0003-SM-58Q7G')",
+                "type": "string"
+              }
+            },
+            "required": [
+              "sample_id"
+            ],
+            "type": "object"
+          },
+          "name": "get_sample"
+        }
+      ]
+    },
+    {
+      "source": "mychem",
+      "schema_available": true,
+      "health": "not_probed",
+      "reason": null,
+      "license_review": {
+        "source": "mychem",
+        "review_status": "content_review_required",
+        "release_status": "eligible",
+        "license": "mixed",
+        "evidence": [
+          "https://mychem.info/terms",
+          "https://mychem.info/v1/metadata"
+        ],
+        "scope": "Current implemented API and returned data",
+        "reason": "Mixed aggregator enabled by owner default; unresolved rights remain unresolved. Known SIDER and UMLS fields are removed before runtime caching/output; retain other contributor licenses and notices.",
+        "byok": "not_applicable",
+        "activation_basis": "owner_default_allow"
+      },
+      "operation_count": 2,
+      "operations": [
+        {
+          "description": "Retrieve reported annotations; missing modalities are unavailable, not negative.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "chemical_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "chemical_id"
+            ],
+            "type": "object"
+          },
+          "name": "get_admet_properties"
+        },
+        {
+          "description": "Map literal identifiers; preserve all source matches and explicit missingness.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "from_type": {
+                "type": "string"
+              },
+              "input_ids": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "missing_ok": {
+                "default": true,
+                "type": "boolean"
+              },
+              "to_types": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "input_ids",
+              "from_type",
+              "to_types"
+            ],
+            "type": "object"
+          },
+          "name": "map_identifiers"
+        }
+      ]
+    },
+    {
+      "source": "mydisease",
+      "schema_available": true,
+      "health": "not_probed",
+      "reason": null,
+      "license_review": {
+        "source": "mydisease",
+        "review_status": "content_review_required",
+        "release_status": "eligible",
+        "license": "mixed",
+        "evidence": [
+          "https://mydisease.info/terms",
+          "https://mydisease.info/v1/metadata"
+        ],
+        "scope": "Current implemented API and returned data",
+        "reason": "Mixed aggregator enabled by owner default; known UMLS fields are removed before runtime caching/output. Preserve remaining contributor notices; unresolved rights are not labeled permissive.",
+        "byok": "not_applicable",
+        "activation_basis": "owner_default_allow"
+      },
+      "operation_count": 4,
+      "operations": [
+        {
+          "description": "Retrieve source assertions without inventing confidence or an aggregate score.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "disease_id": {
+                "type": "string"
+              },
+              "gene_symbol": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "gene_symbol",
+              "disease_id"
+            ],
+            "type": "object"
+          },
+          "name": "get_gene_disease_evidence"
+        },
+        {
+          "description": "Preserve every exact HPO annotation and its reported frequency units.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "disease_id": {
+                "type": "string"
+              },
+              "phenotype_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "disease_id",
+              "phenotype_id"
+            ],
+            "type": "object"
+          },
+          "name": "get_phenotype_frequency"
+        },
+        {
+          "description": "Rank annotation-set overlap within one source window, not clinical similarity.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "algorithm": {
+                "default": "jaccard",
+                "type": "string"
+              },
+              "min_similarity": {
+                "default": 0.5,
+                "type": "number"
+              },
+              "phenotype_list": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "size": {
+                "default": 20,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "phenotype_list"
+            ],
+            "type": "object"
+          },
+          "name": "get_phenotype_similarity"
+        },
+        {
+          "description": "Map literal identifiers; preserve all source matches and explicit missingness.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "from_type": {
+                "type": "string"
+              },
+              "input_ids": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "missing_ok": {
+                "default": true,
+                "type": "boolean"
+              },
+              "to_types": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "input_ids",
+              "from_type",
+              "to_types"
+            ],
+            "type": "object"
+          },
+          "name": "map_disease_ids"
+        }
+      ]
+    },
+    {
+      "source": "mygene",
+      "schema_available": true,
+      "health": "not_probed",
+      "reason": null,
+      "license_review": {
+        "source": "mygene",
+        "review_status": "permissive",
+        "release_status": "eligible",
+        "license": "LicenseRef-MyGene-Identity",
+        "evidence": [
+          "https://mygene.info/terms",
+          "https://www.genenames.org/about/license/",
+          "https://www.ncbi.nlm.nih.gov/home/about/policies/",
+          "https://geneontology.org/docs/go-citation-policy/",
+          "https://www.uniprot.org/help/license"
+        ],
+        "scope": "Only gene search/resolution and fixed identity/GO projection from NCBI/HGNC/Ensembl/UniProt/GO; no disease/UMLS annotations or arbitrary fields.",
+        "reason": "MyGene authorizes API access/use; selected upstream gene identifiers and annotations are covered by HGNC CC0, NCBI public data and UniProt/GO CC-BY. Restrict query fields and projected results; preserve upstream attribution and applicable notices.",
+        "byok": "not_applicable"
+      },
+      "operation_count": 0,
+      "operations": []
+    },
+    {
+      "source": "ncbi",
+      "schema_available": true,
+      "health": "not_probed",
+      "reason": null,
+      "license_review": {
+        "source": "ncbi",
+        "review_status": "permissive",
+        "release_status": "eligible",
+        "license": "LicenseRef-NCBI-PublicData",
+        "evidence": [
+          "https://www.ncbi.nlm.nih.gov/home/about/policies/",
+          "https://www.ncbi.nlm.nih.gov/clinvar/docs/maintenance_use/"
+        ],
+        "scope": "Implemented public NCBI Datasets molecular/genome/taxonomy metadata and direct ClinVar E-utilities variant identity/classification metadata; no controlled-access repositories, publisher documents or OMIM text. ClinVar exposes source-submitted assertions, not independent clinical validation.",
+        "reason": "NCBI imposes no reuse/distribution restrictions on its public molecular data and does not accept submitter reuse restrictions. Preserve its notices and attribution; this is a data-access grant, not a patent license or a grant for separately copyrighted works.",
+        "byok": "optional_local_environment"
+      },
+      "operation_count": 7,
+      "operations": [
+        {
+          "description": "Search NCBI dataset records; assembly discovery uses documented bounded report pages.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "assembly_level": {
+                "anyOf": [
+                  {
+                    "enum": [
+                      "complete_genome",
+                      "chromosome",
+                      "scaffold",
+                      "contig"
+                    ],
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Filter assemblies by completion level"
+              },
+              "assembly_source": {
+                "anyOf": [
+                  {
+                    "enum": [
+                      "refseq",
+                      "genbank",
+                      "all"
+                    ],
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": "all",
+                "description": "Assembly source filter (refseq, genbank, or all)"
+              },
+              "chromosome": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Filter by chromosome name (for genes/features)"
+              },
+              "data_type": {
+                "default": "genomes",
+                "description": "Type of data to search for",
+                "enum": [
+                  "genomes",
+                  "assemblies",
+                  "taxonomy",
+                  "viruses",
+                  "features"
+                ],
+                "type": "string"
+              },
+              "feature_type": {
+                "anyOf": [
+                  {
+                    "enum": [
+                      "CDS",
+                      "gene",
+                      "rRNA",
+                      "tRNA",
+                      "ncRNA",
+                      "all"
+                    ],
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Type of genomic feature to search for"
+              },
+              "max_results": {
+                "default": 25,
+                "description": "Maximum number of records per page (1-25)",
+                "maximum": 25,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "organism": {
+                "anyOf": [
+                  {
+                    "maxLength": 512,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Filter by organism name"
+              },
+              "page_token": {
+                "anyOf": [
+                  {
+                    "maxLength": 8192,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Page token for pagination"
+              },
+              "query": {
+                "description": "A taxon/name or exact accession for assemblies; search text within an explicit taxon",
+                "maxLength": 512,
+                "minLength": 1,
+                "type": "string"
+              },
+              "rank": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Taxonomic rank filter (for taxonomy searches)"
+              },
+              "tax_id": {
+                "anyOf": [
+                  {
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Filter by NCBI taxonomy ID"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "search_ncbi_data"
+        },
+        {
+          "description": "Retrieve an exact assembly report or a bounded page of documented annotation records.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "accession": {
+                "description": "Exact versioned GCF_ or GCA_ assembly accession",
+                "maxLength": 40,
+                "pattern": "^GC[AF]_[0-9]+\\.[0-9]+$",
+                "type": "string"
+              },
+              "chromosome": {
+                "anyOf": [
+                  {
+                    "maxLength": 64,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Chromosome name or sequence accession, for annotation only"
+              },
+              "end_position": {
+                "anyOf": [
+                  {
+                    "maximum": 1000000000000,
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Provider-native region stop; no coordinate offset conversion is applied"
+              },
+              "gene_types": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "maxLength": 64,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 25,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Provider gene locus types, such as protein-coding, for annotation only"
+              },
+              "include_annotation": {
+                "default": true,
+                "description": "Include annotation metadata in full/summary reports",
+                "type": "boolean"
+              },
+              "info_type": {
+                "default": "full",
+                "description": "Full metadata, a metadata summary or annotation feature records",
+                "enum": [
+                  "full",
+                  "summary",
+                  "annotation"
+                ],
+                "type": "string"
+              },
+              "page_size": {
+                "default": 25,
+                "description": "Annotation page limit (1-25); exact assembly metadata retrieves one record",
+                "maximum": 25,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "page_token": {
+                "anyOf": [
+                  {
+                    "maxLength": 8192,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Resume a provider window with the same parameters"
+              },
+              "start_position": {
+                "anyOf": [
+                  {
+                    "maximum": 1000000000000,
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Provider-native region start; requires chromosome and end_position"
+              },
+              "symbols": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "maxLength": 128,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 25,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Exact case-sensitive gene symbols, for annotation only"
+              }
+            },
+            "required": [
+              "accession"
+            ],
+            "type": "object"
+          },
+          "name": "get_genome_data"
+        },
+        {
+          "description": "Retrieve qualified taxonomy, ancestor TaxIDs, names and optional genome assembly pages.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "format": {
+                "default": "json",
+                "description": "Retain structured evidence; text also adds a TaxID lineage presentation",
+                "enum": [
+                  "json",
+                  "text"
+                ],
+                "type": "string"
+              },
+              "genome_page_size": {
+                "default": 10,
+                "description": "Associated assembly page size, 1-25",
+                "maximum": 25,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "genome_page_token": {
+                "anyOf": [
+                  {
+                    "maxLength": 8192,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Resume the organism-mode assembly page"
+              },
+              "include_lineage": {
+                "default": true,
+                "description": "Include provider ancestor IDs and named-rank classification; lineage mode always includes them",
+                "type": "boolean"
+              },
+              "include_synonyms": {
+                "default": false,
+                "description": "Retrieve the provider name report without inventing absent synonyms",
+                "type": "boolean"
+              },
+              "info_type": {
+                "default": "info",
+                "description": "Metadata, lineage, or taxonomy with an associated genome page",
+                "enum": [
+                  "info",
+                  "organism",
+                  "lineage"
+                ],
+                "type": "string"
+              },
+              "names_page_token": {
+                "anyOf": [
+                  {
+                    "maxLength": 8192,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Resume the optional name report"
+              },
+              "organism": {
+                "anyOf": [
+                  {
+                    "maxLength": 512,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "One scientific/common taxon name; ambiguous matches do not join genome evidence"
+              },
+              "page_size": {
+                "default": 25,
+                "description": "Taxonomy page size, 1-25",
+                "maximum": 25,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "page_token": {
+                "anyOf": [
+                  {
+                    "maxLength": 8192,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Resume the primary taxonomy report"
+              },
+              "tax_id": {
+                "anyOf": [
+                  {
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Exact positive TaxID; select this or organism, never both"
+              }
+            },
+            "type": "object"
+          },
+          "name": "get_taxonomy_data"
+        },
+        {
+          "description": "Retrieve documented exact-assembly metadata, statistics, quality or feature reports.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "assembly_accession": {
+                "description": "Exact versioned GCF_ or GCA_ assembly",
+                "maxLength": 40,
+                "pattern": "^GC[AF]_[0-9]+\\.[0-9]+$",
+                "type": "string"
+              },
+              "include_annotation": {
+                "default": true,
+                "description": "Retain annotation metadata for info/stats",
+                "type": "boolean"
+              },
+              "include_busco": {
+                "default": true,
+                "description": "Include available annotation BUSCO measurements with lineage/version and raw scale",
+                "type": "boolean"
+              },
+              "include_checkm": {
+                "default": true,
+                "description": "Include available CheckM marker-completeness measurements for quality",
+                "type": "boolean"
+              },
+              "include_contamination": {
+                "default": true,
+                "description": "Include available CheckM contamination estimates; absence is unavailable",
+                "type": "boolean"
+              },
+              "page_size": {
+                "default": 25,
+                "description": "Feature/sequence page limit, 1-25; metadata retrieves one exact record",
+                "maximum": 25,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "page_token": {
+                "anyOf": [
+                  {
+                    "maxLength": 8192,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Resume the same report and assembly"
+              },
+              "report_type": {
+                "default": "info",
+                "description": "Assembly metadata/stats/quality, sequence metadata, or annotation records",
+                "enum": [
+                  "info",
+                  "stats",
+                  "quality",
+                  "sequence_report",
+                  "annotation_report"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "assembly_accession"
+            ],
+            "type": "object"
+          },
+          "name": "get_assembly_data"
+        },
+        {
+          "description": "Retrieve a versioned viral nucleotide record's reported metadata.\n\nThe report preserves collection/annotation fields and unknown measurements;\nit does not download nucleotide/protein sequences or infer transmission.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "accession": {
+                "maxLength": 64,
+                "minLength": 1,
+                "type": "string"
+              },
+              "tax_id": {
+                "anyOf": [
+                  {
+                    "exclusiveMinimum": 0,
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null
+              }
+            },
+            "required": [
+              "accession"
+            ],
+            "type": "object"
+          },
+          "name": "get_virus_info"
+        },
+        {
+          "description": "Retrieve NCBI-inferred ortholog annotations for an exact, species-qualified GeneID.\n\nSource identity is independently checked. Exact target taxa are selected after\nvalidating every returned row. Provider continuation survives filtering.\nReported orthology is not sequence identity, functional equivalence or an\nexperimentally demonstrated relationship. No similarity threshold is inferred.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "gene_id": {
+                "exclusiveMinimum": 0,
+                "type": "integer"
+              },
+              "max_results": {
+                "default": 10,
+                "maximum": 25,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "page_token": {
+                "anyOf": [
+                  {
+                    "maxLength": 8192,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null
+              },
+              "source_tax_id": {
+                "exclusiveMinimum": 0,
+                "type": "integer"
+              },
+              "target_tax_ids": {
+                "items": {
+                  "exclusiveMinimum": 0,
+                  "type": "integer"
+                },
+                "maxItems": 25,
+                "minItems": 1,
+                "type": "array"
+              }
+            },
+            "required": [
+              "gene_id",
+              "source_tax_id",
+              "target_tax_ids"
+            ],
+            "type": "object"
+          },
+          "name": "find_orthologs"
+        },
+        {
+          "description": "Retrieve genome assembly associations for one BioProject or BioSample.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "accession": {
+                "description": "PRJNA/PRJEB/PRJDB project or SAMN/SAMEA/SAMD sample accession",
+                "maxLength": 40,
+                "minLength": 1,
+                "type": "string"
+              },
+              "data_type": {
+                "default": "genomes",
+                "description": "Genome assembly records; no gene or universal-repository search is implied",
+                "enum": [
+                  "genomes",
+                  "assemblies"
+                ],
+                "type": "string"
+              },
+              "include_metadata": {
+                "default": true,
+                "description": "Retain provider assembly/sample/annotation metadata",
+                "type": "boolean"
+              },
+              "include_related": {
+                "default": false,
+                "description": "Retain related project lineage and linked assembly references when supplied",
+                "type": "boolean"
+              },
+              "max_results": {
+                "default": 25,
+                "description": "Provider assembly page size, 1-25",
+                "maximum": 25,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "page_token": {
+                "anyOf": [
+                  {
+                    "maxLength": 8192,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Resume the same accession and parameters"
+              },
+              "search_type": {
+                "default": "bioproject",
+                "description": "Project or sample association",
+                "enum": [
+                  "bioproject",
+                  "biosample"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "accession"
+            ],
+            "type": "object"
+          },
+          "name": "search_project_sample"
+        }
+      ]
+    },
+    {
+      "source": "ncbi-records",
+      "schema_available": true,
+      "health": "not_probed",
+      "reason": null,
+      "license_review": {
+        "source": "ncbi-records",
+        "review_status": "permissive",
+        "release_status": "eligible",
+        "license": "LicenseRef-NCBI-PublicData",
+        "evidence": [
+          "https://www.ncbi.nlm.nih.gov/home/about/policies/",
+          "https://www.ncbi.nlm.nih.gov/genbank/genbank/"
+        ],
+        "scope": "Implemented public GEO/SRA/GenBank metadata, sequence records and identifier links; no publisher abstract/full-text retrieval.",
+        "reason": "Primary molecular-data policies impose no NCBI reuse/distribution restrictions and reject requested submitter reuse restrictions. Preserve source/version and attribution; patents and separately copyrighted works are not licensed by this integration.",
+        "byok": "optional_local_environment"
+      },
+      "operation_count": 3,
+      "operations": [
+        {
+          "name": "search",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "database": {
+                "enum": [
+                  "geo",
+                  "sra",
+                  "genbank"
+                ],
+                "title": "Database",
+                "type": "string"
+              },
+              "query": {
+                "maxLength": 512,
+                "minLength": 1,
+                "title": "Query",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "maximum": 25,
+                "minimum": 1,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "offset": {
+                "default": 0,
+                "maximum": 1000,
+                "minimum": 0,
+                "title": "Offset",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "database",
+              "query"
+            ],
+            "title": "NcbiSearch",
+            "type": "object"
+          },
+          "description": "Typed ncbi-records search operation."
+        },
+        {
+          "name": "get",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "database": {
+                "enum": [
+                  "geo",
+                  "sra",
+                  "genbank"
+                ],
+                "title": "Database",
+                "type": "string"
+              },
+              "accession": {
+                "maxLength": 64,
+                "minLength": 3,
+                "title": "Accession",
+                "type": "string"
+              },
+              "sequence": {
+                "default": false,
+                "title": "Sequence",
+                "type": "boolean"
+              },
+              "start": {
+                "anyOf": [
+                  {
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start"
+              },
+              "stop": {
+                "anyOf": [
+                  {
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Stop"
+              },
+              "strand": {
+                "default": 1,
+                "enum": [
+                  1,
+                  2
+                ],
+                "title": "Strand",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "database",
+              "accession"
+            ],
+            "title": "NcbiGet",
+            "type": "object"
+          },
+          "description": "Typed ncbi-records get operation."
+        },
+        {
+          "name": "links",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "database": {
+                "enum": [
+                  "geo",
+                  "sra",
+                  "genbank"
+                ],
+                "title": "Database",
+                "type": "string"
+              },
+              "uid": {
+                "maxLength": 32,
+                "pattern": "^\\d+$",
+                "title": "Uid",
+                "type": "string"
+              },
+              "destination": {
+                "enum": [
+                  "pubmed",
+                  "sra",
+                  "gds",
+                  "bioproject",
+                  "biosample"
+                ],
+                "title": "Destination",
+                "type": "string"
+              }
+            },
+            "required": [
+              "database",
+              "uid",
+              "destination"
+            ],
+            "title": "NcbiLinks",
+            "type": "object"
+          },
+          "description": "Typed ncbi-records links operation."
+        }
+      ]
+    },
+    {
+      "source": "omnipath",
+      "schema_available": true,
+      "health": "not_probed",
+      "reason": null,
+      "license_review": {
+        "source": "omnipath",
+        "review_status": "content_review_required",
+        "release_status": "eligible",
+        "license": "per_resource",
+        "evidence": [
+          "https://omnipathdb.org/",
+          "https://r.omnipathdb.org/reference/dot-omnipathr_options_defaults.html"
+        ],
+        "scope": "Current implemented API and returned data",
+        "reason": "Enabled under the owner default policy for free research hosting; exact content permissions remain content_review_required. Preserve contributor terms and attribution; this is not a blanket permissive license.",
+        "byok": "not_applicable",
+        "activation_basis": "owner_default_allow"
+      },
+      "operation_count": 7,
+      "operations": [
+        {
+          "description": "Get protein-protein interactions from OmniPath.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "datasets": {
+                "default": null,
+                "description": "Datasets to query (e.g., \"omnipath\", \"kinaseextra\", \"ligrecextra\")",
+                "type": "string"
+              },
+              "limit": {
+                "default": 500,
+                "description": "Maximum interactions to return (default: 500)",
+                "type": "integer"
+              },
+              "proteins": {
+                "default": null,
+                "description": "Protein gene symbols or UniProt IDs (comma-separated for multiple)",
+                "type": "string"
+              },
+              "sources": {
+                "default": null,
+                "description": "Data sources to include (e.g., \"SignaLink,PhosphoSite\")",
+                "type": "string"
+              },
+              "types": {
+                "default": null,
+                "description": "Interaction types (e.g., \"post_translational\", \"transcriptional\")",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "name": "get_interactions"
+        },
+        {
+          "description": "Get enzyme-substrate relationships (phosphorylation, ubiquitination, etc.).",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "enzyme": {
+                "default": null,
+                "description": "Enzyme gene symbol or UniProt ID",
+                "type": "string"
+              },
+              "limit": {
+                "default": 500,
+                "description": "Maximum results",
+                "type": "integer"
+              },
+              "modification": {
+                "default": null,
+                "description": "Modification type (e.g., \"phosphorylation\", \"ubiquitination\")",
+                "type": "string"
+              },
+              "substrate": {
+                "default": null,
+                "description": "Substrate gene symbol or UniProt ID",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "name": "get_enzyme_substrate"
+        },
+        {
+          "description": "Get ligand-receptor interactions for cell communication.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "ligand": {
+                "default": null,
+                "description": "Ligand gene symbol",
+                "type": "string"
+              },
+              "limit": {
+                "default": 500,
+                "description": "Maximum interactions",
+                "type": "integer"
+              },
+              "receptor": {
+                "default": null,
+                "description": "Receptor gene symbol",
+                "type": "string"
+              },
+              "sources": {
+                "default": null,
+                "description": "Data sources (e.g., \"CellPhoneDB,CellChatDB\")",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "name": "get_ligand_receptor"
+        },
+        {
+          "description": "Get transcription factor regulatory relationships.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "dorothea_confidence": {
+                "default": null,
+                "description": "DoRothEA confidence level (\"A\", \"B\", \"C\", \"D\", \"E\")",
+                "type": "string"
+              },
+              "limit": {
+                "default": 500,
+                "description": "Maximum results",
+                "type": "integer"
+              },
+              "target": {
+                "default": null,
+                "description": "Target gene symbol",
+                "type": "string"
+              },
+              "transcription_factor": {
+                "default": null,
+                "description": "TF gene symbol (e.g., \"TP53\", \"MYC\")",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "name": "get_tf_targets"
+        },
+        {
+          "description": "Get miRNA-target gene relationships.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "limit": {
+                "default": 500,
+                "description": "Maximum results",
+                "type": "integer"
+              },
+              "mirna": {
+                "default": null,
+                "description": "miRNA identifier (e.g., \"hsa-miR-21\")",
+                "type": "string"
+              },
+              "target": {
+                "default": null,
+                "description": "Target gene symbol",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "name": "get_mirna_targets"
+        },
+        {
+          "description": "Get protein complex information.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "limit": {
+                "default": 100,
+                "description": "Maximum complexes",
+                "type": "integer"
+              },
+              "protein": {
+                "default": null,
+                "description": "Protein gene symbol to find complexes for",
+                "type": "string"
+              },
+              "sources": {
+                "default": null,
+                "description": "Data sources (e.g., \"CORUM,ComplexPortal\")",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "name": "get_complexes"
+        },
+        {
+          "description": "Get protein annotations and classifications.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "annotation_type": {
+                "default": null,
+                "description": "Annotation type (e.g., \"pathway\", \"function\", \"location\")",
+                "type": "string"
+              },
+              "protein": {
+                "description": "Protein gene symbol or UniProt ID",
+                "type": "string"
+              }
+            },
+            "required": [
+              "protein"
+            ],
+            "type": "object"
+          },
+          "name": "get_annotations"
+        }
+      ]
+    },
+    {
+      "source": "openfda",
+      "schema_available": true,
+      "health": "not_probed",
+      "reason": null,
+      "license_review": {
+        "source": "openfda",
+        "review_status": "permissive",
+        "release_status": "eligible",
+        "license": "CC0-1.0",
+        "evidence": [
+          "https://open.fda.gov/terms/",
+          "https://open.fda.gov/apis/drug/event/",
+          "https://open.fda.gov/apis/drug/drugsfda/",
+          "https://open.fda.gov/apis/drug/enforcement/",
+          "https://open.fda.gov/apis/drug/label/"
+        ],
+        "scope": "OpenFDA factual records and manufacturer-submitted SPL label prose; no attachment downloads or embedded images.",
+        "reason": "General openFDA CC0 dedication applies unless a documented third-party exception applies. Owner explicitly enabled manufacturer-submitted label prose on 2026-10-22. Preserve supplied notices, source/set/version/date, official links and the warning that listing content is not proof of FDA approval or current distributed labeling. GMDN/device-UDI content, embedded images, HTML tables and attachments remain outside this projection.",
+        "byok": "optional_local_environment"
+      },
+      "operation_count": 1,
+      "operations": [
+        {
+          "description": "Search FDA drug recall enforcement facts.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "classification": {
+                "anyOf": [
+                  {
+                    "enum": [
+                      "Class I",
+                      "Class II",
+                      "Class III"
+                    ],
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Recall classification:\n- \"Class I\": Dangerous or defective products with serious health consequences\n- \"Class II\": May cause temporary health problems\n- \"Class III\": Unlikely to cause health problems"
+              },
+              "date_from": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Start date for recall initiation (YYYYMMDD format)"
+              },
+              "date_to": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "End date for recall initiation (YYYYMMDD format)"
+              },
+              "limit": {
+                "default": 10,
+                "description": "Maximum results to return (1-100)",
+                "type": "integer"
+              },
+              "query": {
+                "description": "Product name, recalling firm, or reason for recall",
+                "type": "string"
+              },
+              "recall_type": {
+                "const": "drug",
+                "default": "drug",
+                "description": "Only drug recall enforcement is supported",
+                "type": "string",
+                "enum": [
+                  "drug"
+                ]
+              },
+              "state": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "U.S. state where recall occurred"
+              },
+              "status": {
+                "anyOf": [
+                  {
+                    "enum": [
+                      "Ongoing",
+                      "Completed",
+                      "Pending",
+                      "Terminated"
+                    ],
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Current status of the recall"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "search_recalls"
+        }
+      ]
+    },
+    {
+      "source": "opentargets",
+      "schema_available": true,
+      "health": "not_probed",
+      "reason": null,
+      "license_review": {
+        "source": "opentargets",
+        "review_status": "permissive",
+        "release_status": "eligible",
+        "license": "CC0-1.0",
+        "evidence": [
+          "https://platform-docs.opentargets.org/licence"
+        ],
+        "scope": "Current implemented API and returned data",
+        "reason": "Platform states CC0 and that listed contributors permit unrestricted use by all Open Targets users; preserve contributor provenance.",
+        "byok": "not_applicable"
+      },
+      "operation_count": 3,
+      "operations": [
+        {
+          "description": "Advanced analyses: compare targets, find similar entities, validate targets, prioritize.\n\nThis tool replaces 5 advanced analysis tools:\n- compare_targets, find_similar_targets, build_target_validation_report,\n  get_target_prioritization, get_api_metadata, get_interaction_resources",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "analysis_type": {
+                "description": "Type of advanced analysis:\n- \"compare\": Side-by-side comparison of multiple targets\n- \"similar\": Compare recorded annotation overlap within a bounded literature-model candidate window\n- \"validate\": Source evidence assessment with annotation counts and interpretation limits\n- \"prioritize\": Rank direct disease associations by their reported genetic component\n- \"metadata\": Get API and system metadata",
+                "type": "string"
+              },
+              "comparison_aspects": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Aspects to compare (for compare mode). Pass as an ARRAY.\nExamples: [\"tractability\"], [\"tractability\", \"safety\"], [\"diseases\", \"pathways\"]\nDefault: None (all aspects)\nIMPORTANT: Pass [\"tractability\", \"safety\"] NOT \"[\"tractability\", \"safety\"]\""
+              },
+              "disease_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Disease context for validation/prioritization"
+              },
+              "entity_ids": {
+                "description": "One or more entity IDs (targets for most analyses). Pass as an ARRAY.\nExamples: [\"ENSG00000012048\"], [\"ENSG00000012048\", \"ENSG00000141510\"]\nIMPORTANT: Pass [\"ENSG00000012048\"] NOT \"[\"ENSG00000012048\"]\"",
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "limit": {
+                "default": 10,
+                "description": "Display bound for similar/prioritize modes (1-100, default: 10).\nOther modes reject nondefault unrelated parameters. Prioritize accepts 0-10\ndistinct targets; an empty array discovers within the bounded source window.",
+                "type": "integer"
+              },
+              "similarity_criteria": {
+                "default": "pathways",
+                "description": "For similarity analysis:\n- \"pathways\": Similar pathway membership\n- \"diseases\": Similar disease associations\n- \"go_terms\": Similar GO term annotations\n- \"interactions\": Similar interaction partners",
+                "type": "string"
+              },
+              "threshold": {
+                "default": 0.5,
+                "description": "Minimum annotation Jaccard for similar mode (0.0-1.0).\nProvider literature-model scores only discover candidates; they are not annotation overlap.",
+                "type": "number"
+              }
+            },
+            "required": [
+              "analysis_type",
+              "entity_ids"
+            ],
+            "type": "object"
+          },
+          "name": "analyze_advanced"
+        },
+        {
+          "description": "Analyze associations and evidence between entities, or discover therapeutic opportunities.\n\nThis tool replaces:\n- analyze_target_disease_association\n- get_target_disease_biomarkers\n- discover_therapeutic_opportunities\n- get_association_datasources",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "association_type": {
+                "default": "target-disease",
+                "description": "Type of association to analyze:\n- \"target-disease\": Target-disease evidence and associations\n- \"drug-target\": Drug-target mechanism relationships\n- \"drug-disease\": Drug-disease indications\n- \"discover-opportunities\": Find and rank therapeutic targets for a disease",
+                "type": "string"
+              },
+              "evidence_cursor": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Follow the service-signed target-disease next action unchanged.\nThe action binds the original identities, filters, biomarker flag, limit and account."
+              },
+              "evidence_types": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Filter by specific evidence types. Pass as an ARRAY.\nExamples: [\"genetic_association\"], [\"somatic_mutation\"], [\"genetic_association\", \"known_drug\"]\nIMPORTANT: Pass [\"genetic_association\"] NOT \"[\"genetic_association\"]\""
+              },
+              "filters": {
+                "anyOf": [
+                  {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Discovery accepts only min_score for that component.\nOther modes reject discovery filters and ranking strategies."
+              },
+              "include_biomarkers": {
+                "default": true,
+                "description": "Retain reported biomarkerList annotations from displayed evidence",
+                "type": "boolean"
+              },
+              "limit": {
+                "default": 20,
+                "description": "Maximum results to return (1-100, default: 20)",
+                "type": "integer"
+              },
+              "min_score": {
+                "default": 0.0,
+                "description": "Minimum association score threshold (0.0-1.0, default: 0.0)",
+                "type": "number"
+              },
+              "ranking_strategy": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Discovery supports \"genetic_evidence\",\nusing the separately reported genetic_association component."
+              },
+              "source_id": {
+                "description": "Source entity ID (target, disease, or drug)",
+                "type": "string"
+              },
+              "target_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Target entity ID (required for pair-specific analysis)"
+              }
+            },
+            "required": [
+              "source_id"
+            ],
+            "type": "object"
+          },
+          "name": "analyze_association"
+        },
+        {
+          "description": "Query genetic variants, GWAS studies, and credible sets.\n\nThis tool replaces 10 genetics/variant tools:\n- analyze_genetic_variant, get_variant_info, get_variant_evidences,\n  get_variant_credible_sets, get_variant_pharmacogenomics\n- explore_gwas_studies, get_studies_by_disease, get_study_info,\n  get_study_credible_sets, get_credible_set_by_id",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "credible_set_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Credible set identifier"
+              },
+              "disease_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "One exact indexed disease ID for study discovery.\nStudy mode requires exactly one of study_id, disease_id or gene_id."
+              },
+              "evidence_cursor": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Variant evidence continuation returned by the public service.\nIt preserves the variant, flags and limit; it is independent of credible-set page_index."
+              },
+              "gene_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Internal study discovery selector. Public gene genetics\nuses get(entity=\"gene\", sections=[\"genetics\"]) with qualified identity."
+              },
+              "include_credible_sets": {
+                "default": false,
+                "description": "Include associated credible sets (variant/study queries)",
+                "type": "boolean"
+              },
+              "include_evidences": {
+                "default": false,
+                "description": "Include evidence strings (variant queries)",
+                "type": "boolean"
+              },
+              "include_functional_consequences": {
+                "default": true,
+                "description": "Include VEP functional predictions (variant queries)",
+                "type": "boolean"
+              },
+              "include_pharmacogenomics": {
+                "default": false,
+                "description": "Include pharmacogenomics data (variant queries)",
+                "type": "boolean"
+              },
+              "limit": {
+                "default": 25,
+                "description": "Maximum results to return (1-100, default: 25)",
+                "type": "integer"
+              },
+              "page_index": {
+                "default": 0,
+                "description": "Source page index for paginated credible sets or study discovery.",
+                "type": "integer"
+              },
+              "query_type": {
+                "description": "Type of genetics query:\n- \"variant\": Query variant information and annotations\n- \"study\": Query GWAS study information\n- \"credible_set\": Query fine-mapping credible sets",
+                "type": "string"
+              },
+              "study_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "GWAS study identifier"
+              },
+              "variant_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Exact source variant ID, e.g. chromosome_position_ref_alt.\nrsIDs require a separately qualified identity lookup."
+              }
+            },
+            "required": [
+              "query_type"
+            ],
+            "type": "object"
+          },
+          "name": "query_genetics"
+        }
+      ]
+    },
+    {
+      "source": "orange-book",
+      "schema_available": true,
+      "health": "not_probed",
+      "reason": null,
+      "license_review": {
+        "source": "orange-book",
+        "review_status": "unresolved",
+        "release_status": "eligible",
+        "license": "not_established",
+        "evidence": [
+          "https://www.fda.gov/drugs/drug-approvals-and-databases/orange-book-data-files"
+        ],
+        "scope": "Current implemented API and returned data",
+        "reason": "Enabled under the owner default policy for free research hosting; exact content permissions remain unresolved. Preserve contributor terms and attribution; this is not a blanket permissive license.",
+        "byok": "not_applicable",
+        "activation_basis": "owner_default_allow"
+      },
+      "operation_count": 4,
+      "operations": [
+        {
+          "description": "Get therapeutic equivalence information for a drug application.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "application_number": {
+                "description": "FDA application number (e.g., \"NDA021462\")",
+                "type": "string"
+              }
+            },
+            "required": [
+              "application_number"
+            ],
+            "type": "object"
+          },
+          "name": "get_therapeutic_equivalence"
+        },
+        {
+          "description": "Find generic equivalents for a brand name drug or ingredient.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "brand_name": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Brand/trade name to find generics for"
+              },
+              "ingredient": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Active ingredient name"
+              },
+              "limit": {
+                "default": 50,
+                "description": "Maximum results (default: 50)",
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          "name": "search_generic_equivalents"
+        },
+        {
+          "description": "Get patent information for a drug application.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "application_number": {
+                "description": "FDA application number",
+                "type": "string"
+              }
+            },
+            "required": [
+              "application_number"
+            ],
+            "type": "object"
+          },
+          "name": "get_patent_info"
+        },
+        {
+          "description": "Get exclusivity information for a drug application.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "application_number": {
+                "description": "FDA application number",
+                "type": "string"
+              }
+            },
+            "required": [
+              "application_number"
+            ],
+            "type": "object"
+          },
+          "name": "get_exclusivity_info"
+        }
+      ]
+    },
+    {
+      "source": "orcid",
+      "schema_available": true,
+      "health": "not_probed",
+      "reason": null,
+      "license_review": {
+        "source": "orcid",
+        "review_status": "content_review_required",
+        "release_status": "eligible",
+        "license": "LicenseRef-ORCID-Public-API",
+        "evidence": [
+          "https://info.orcid.org/public-client-terms-of-service/",
+          "https://info.orcid.org/documentation/integration-and-api-faq/",
+          "https://info.orcid.org/public-data-file-use-policy/"
+        ],
+        "scope": "Current implemented API and returned data",
+        "reason": "Enabled for the declared free research service only. Public API terms prohibit reuse fees and use with a revenue-generating product/service; paid platform use is outside this activation.",
+        "byok": "not_applicable",
+        "activation_basis": "owner_default_allow"
+      },
+      "operation_count": 0,
+      "operations": []
+    },
+    {
+      "source": "patents",
+      "schema_available": false,
+      "health": "not_probed",
+      "reason": "Source integration is unreleased under the source license policy.",
+      "license_review": {
+        "source": "patents",
+        "review_status": "restricted",
+        "release_status": "unreleased",
+        "license": "LicenseRef-EPO-OPS",
+        "evidence": [
+          "https://www.epo.org/en/service-support/ordering/terms-and-conditions/ops-terms-and-conditions"
+        ],
+        "scope": "Current implemented API and returned data",
+        "reason": "OPS contract permits data in products but prohibits redistributing data as such; raw evidence route remains unreleased.",
+        "byok": "required_local_environment_unreleased"
+      },
+      "operation_count": 0,
+      "operations": []
+    },
+    {
+      "source": "pdb",
+      "schema_available": true,
+      "health": "not_probed",
+      "reason": null,
+      "license_review": {
+        "source": "pdb",
+        "review_status": "permissive",
+        "release_status": "eligible",
+        "license": "CC0-1.0",
+        "evidence": [
+          "https://www1.rcsb.org/pages/usage-policy"
+        ],
+        "scope": "PDB archive entry metadata and coordinate files; search excludes computed models and non-PDB third-party model identifiers.",
+        "reason": "PDB archive data are CC0; preserve depositors and structure attribution; linked publications are separate.",
+        "byok": "not_applicable"
+      },
+      "operation_count": 4,
+      "operations": [
+        {
+          "description": "Search experimental PDB archive entries by keyword, protein name, or PDB ID.\n\nUses RCSB PDB's full-text search with optional filters for experimental method\nand resolution. Computed models are excluded from this archive search.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "experimental_method": {
+                "anyOf": [
+                  {
+                    "enum": [
+                      "ELECTRON CRYSTALLOGRAPHY",
+                      "ELECTRON MICROSCOPY",
+                      "EPR",
+                      "FIBER DIFFRACTION",
+                      "FLUORESCENCE TRANSFER",
+                      "INFRARED SPECTROSCOPY",
+                      "NEUTRON DIFFRACTION",
+                      "POWDER DIFFRACTION",
+                      "SOLID-STATE NMR",
+                      "SOLUTION NMR",
+                      "SOLUTION SCATTERING",
+                      "THEORETICAL MODEL",
+                      "X-RAY DIFFRACTION"
+                    ],
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Filter by experimental method"
+              },
+              "limit": {
+                "default": 25,
+                "description": "Number of results to return (1-100)",
+                "maximum": 100,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "offset": {
+                "default": 0,
+                "maximum": 100000000,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "query": {
+                "description": "Search query (protein name, keyword, PDB ID, UniProt ID, etc.)",
+                "type": "string"
+              },
+              "resolution_range": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Resolution range filter (e.g., \"1.0-2.0\" in Angstroms)"
+              },
+              "sort_by": {
+                "default": "score",
+                "description": "Documented RCSB field: score, rcsb_accession_info.initial_release_date, or rcsb_entry_info.resolution_combined",
+                "enum": [
+                  "score",
+                  "rcsb_accession_info.initial_release_date",
+                  "rcsb_entry_info.resolution_combined"
+                ],
+                "type": "string"
+              },
+              "sort_direction": {
+                "default": "desc",
+                "description": "Ascending or descending provider sort",
+                "enum": [
+                  "asc",
+                  "desc"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "search_structures"
+        },
+        {
+          "description": "Get detailed information for a specific PDB structure.\n\nRetrieves comprehensive structure information including experimental details,\nresolution, organism, associated proteins, and more.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "format": {
+                "default": "json",
+                "description": "Output format (json for metadata, pdb/mmcif/xml for coordinates)",
+                "enum": [
+                  "json",
+                  "pdb",
+                  "mmcif",
+                  "xml"
+                ],
+                "type": "string"
+              },
+              "pdb_id": {
+                "description": "PDB ID (4-character code, e.g., \"1ABC\", \"4HHB\")",
+                "type": "string"
+              }
+            },
+            "required": [
+              "pdb_id"
+            ],
+            "type": "object"
+          },
+          "name": "get_structure_info"
+        },
+        {
+          "description": "Download structure coordinates in various formats.\n\nDownloads protein structure files in standard formats. Optionally download\nspecific biological assemblies.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "assembly_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Biological assembly ID (e.g., \"1\", \"2\") - downloads specific assembly if provided"
+              },
+              "format": {
+                "default": "pdb",
+                "description": "File format (pdb, mmcif or xml); assembly downloads support pdb or mmcif",
+                "enum": [
+                  "pdb",
+                  "mmcif",
+                  "xml"
+                ],
+                "type": "string"
+              },
+              "pdb_id": {
+                "description": "PDB ID (4-character code)",
+                "type": "string"
+              }
+            },
+            "required": [
+              "pdb_id"
+            ],
+            "type": "object"
+          },
+          "name": "download_structure"
+        },
+        {
+          "description": "Get structure metadata and embedded wwPDB validation summaries.\n\nRetains source entry metadata and available validation summary categories.\nResolution units are angstroms; missing measurements remain unknown.\nThis does not perform independent structural validation or quality ranking.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "pdb_id": {
+                "description": "PDB ID (4-character code)",
+                "type": "string"
+              }
+            },
+            "required": [
+              "pdb_id"
+            ],
+            "type": "object"
+          },
+          "name": "get_structure_quality"
+        }
+      ]
+    },
+    {
+      "source": "protein-atlas",
+      "schema_available": true,
+      "health": "not_probed",
+      "reason": null,
+      "license_review": {
+        "source": "protein-atlas",
+        "review_status": "permissive",
+        "release_status": "eligible",
+        "license": "CC-BY-4.0",
+        "evidence": [
+          "https://www.proteinatlas.org/about/licence"
+        ],
+        "scope": "Current implemented API and returned data",
+        "reason": "Source data/output license permits commercial reuse with attribution; preserve source, changes and applicable third-party notices.",
+        "byok": "not_applicable"
+      },
+      "operation_count": 2,
+      "operations": [
+        {
+          "description": "Retrieve validated source XML for subcellular annotation review.\n\nThis does not compute localization or reliability scores. Requested\nselectors are reported explicitly as unapplied to the whole document.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "ensembl_id": {
+                "description": "Ensembl gene ID (e.g., 'ENSG00000141510' for TP53)",
+                "type": "string"
+              },
+              "include_reliability": {
+                "default": true,
+                "type": "boolean"
+              },
+              "search_by_location": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null
+              }
+            },
+            "required": [
+              "ensembl_id"
+            ],
+            "type": "object"
+          },
+          "name": "analyze_localization"
+        },
+        {
+          "description": "Retrieve each gene's source annotations for expression-profile review.\n\nRetains successful peers and explicit failures. No normalized quantitative\ncomparison or tissue filtering is computed.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "ensembl_ids": {
+                "description": "List of Ensembl gene IDs (e.g., ['ENSG00000141510', 'ENSG00000139618'])",
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "tissue": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null
+              }
+            },
+            "required": [
+              "ensembl_ids"
+            ],
+            "type": "object"
+          },
+          "name": "compare_expression_profiles"
+        }
+      ]
+    },
+    {
+      "source": "reactome",
+      "schema_available": true,
+      "health": "not_probed",
+      "reason": null,
+      "license_review": {
+        "source": "reactome",
+        "review_status": "permissive",
+        "release_status": "eligible",
+        "license": "CC-BY-4.0",
+        "evidence": [
+          "https://reactome.org/license",
+          "https://www.reactome.org/about/news/97-updated-license-agreement"
+        ],
+        "scope": "Current implemented API and returned data",
+        "reason": "Source data/output license permits commercial reuse with attribution; preserve source, changes and applicable third-party notices.",
+        "byok": "not_applicable"
+      },
+      "operation_count": 1,
+      "operations": [
+        {
+          "description": "Retrieve diagram geometry or a checked external image locator with byte hash.\n\nJSON is the diagram layout, not the pathway identity record. Images remain external\nsource assets; their media/signature and bytes are checked without executing SVG.\nMutable current diagram URLs are time-dependent, not frozen release identities.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "output_format": {
+                "default": "json",
+                "enum": [
+                  "json",
+                  "svg",
+                  "png"
+                ],
+                "type": "string"
+              },
+              "pathway_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "pathway_id"
+            ],
+            "type": "object"
+          },
+          "name": "get_pathway_diagram"
+        }
+      ]
+    },
+    {
+      "source": "study",
+      "schema_available": false,
+      "health": "not_probed",
+      "reason": "No checksummed public study release is installed.",
+      "license_review": {
+        "source": "study",
+        "review_status": "permissive",
+        "release_status": "eligible",
+        "license": "per_release",
+        "evidence": [
+          "https://creativecommons.org/publicdomain/zero/1.0/",
+          "https://creativecommons.org/licenses/by/4.0/"
+        ],
+        "scope": "Only installed checksummed releases whose data_rights pass the existing CC0/CC-BY all-declared-files gate.",
+        "reason": "Study engine eligibility does not clear a dataset. Installed immutable manifests bind CC0, CC-BY or accepted share-alike rights, evidence URLs, declared files and hashes; missing or changed inputs fail closed.",
+        "byok": "not_applicable"
+      },
+      "operation_count": 0,
+      "operations": []
+    },
+    {
+      "source": "surechembl",
+      "schema_available": true,
+      "health": "not_probed",
+      "reason": null,
+      "license_review": {
+        "source": "surechembl",
+        "review_status": "permissive",
+        "release_status": "eligible",
+        "license": "CC-BY-4.0",
+        "evidence": [
+          "https://chembl.gitbook.io/surechembl/faq"
+        ],
+        "scope": "SureChEMBL-derived compound/chemical-annotation metadata and bibliographic facts; excludes underlying patent text, claims, drawings and attachments.",
+        "reason": "SureChEMBL-derived data permit commercial reuse with attribution. The source grant is not treated as a grant for underlying third-party patent document content; only explicit eligible projections may be released.",
+        "byok": "not_applicable"
+      },
+      "operation_count": 3,
+      "operations": [
+        {
+          "description": "Retrieve source-derived annotation identifiers/positions, category counts or identifier-membership counts. Underlying patent text is excluded; selected sections are not exhaustive chemistry.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "analysis_type": {
+                "default": "annotations",
+                "enum": [
+                  "frequency",
+                  "categories",
+                  "annotations"
+                ],
+                "type": "string"
+              },
+              "patent_number": {
+                "maxLength": 64,
+                "minLength": 3,
+                "type": "string"
+              }
+            },
+            "required": [
+              "patent_number"
+            ],
+            "type": "object"
+          },
+          "name": "analyze_patent_chemistry"
+        },
+        {
+          "description": "Retrieve source Tanimoto similarity windows. Resume the returned signed action for queued searches or more pages; no bioactivity inference.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "limit": {
+                "default": 50,
+                "maximum": 100,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "search_cursor": {
+                "anyOf": [
+                  {
+                    "maxLength": 8192,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null
+              },
+              "similarity_threshold": {
+                "default": 0.85,
+                "maximum": 1,
+                "minimum": 0.5,
+                "type": "number"
+              },
+              "smiles": {
+                "maxLength": 8192,
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "smiles"
+            ],
+            "type": "object"
+          },
+          "name": "search_similar_structures"
+        },
+        {
+          "description": "Count acquired document metadata by publication year or assignee, preserving missingness, window denominators and continuation. Classification is not reported by this response contract.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "group_by": {
+                "default": "year",
+                "enum": [
+                  "year",
+                  "assignee",
+                  "class"
+                ],
+                "type": "string"
+              },
+              "limit": {
+                "default": 25,
+                "maximum": 100,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "page": {
+                "default": 1,
+                "maximum": 100000,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "query": {
+                "maxLength": 2000,
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "name": "get_patent_statistics"
+        }
+      ]
+    },
+    {
+      "source": "uniprot",
+      "schema_available": true,
+      "health": "not_probed",
+      "reason": null,
+      "license_review": {
+        "source": "uniprot",
+        "review_status": "permissive",
+        "release_status": "eligible",
+        "license": "CC-BY-4.0",
+        "evidence": [
+          "https://www.uniprot.org/help/license",
+          "https://www.uniprot.org/api-documentation/support-data"
+        ],
+        "scope": "Current implemented API and returned data",
+        "reason": "Source data/output license permits commercial reuse with attribution; preserve source, changes and applicable third-party notices.",
+        "byok": "not_applicable"
+      },
+      "operation_count": 2,
+      "operations": [
+        {
+          "description": "Retrieve UniProt similarity annotations or external orthology/phylogeny references; no relationship or tree inference.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "accession": {
+                "type": "string"
+              },
+              "analysis_type": {
+                "default": "similarity_annotations",
+                "enum": [
+                  "similarity_annotations",
+                  "orthology_references",
+                  "phylogeny_references"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "accession"
+            ],
+            "type": "object"
+          },
+          "name": "analyze_evolution"
+        },
+        {
+          "description": "Compare exact sequences, literal FUNCTION annotations, or PDB reference IDs for 2\u20135 distinct UniProt accessions. Retain failed peers and input locators; no alignment or structural equivalence inference.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "accessions": {
+                "items": {
+                  "type": "string"
+                },
+                "maxItems": 5,
+                "minItems": 2,
+                "type": "array"
+              },
+              "comparison_type": {
+                "default": "sequence",
+                "enum": [
+                  "sequence",
+                  "function",
+                  "structure"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "accessions"
+            ],
+            "type": "object"
+          },
+          "name": "compare_proteins"
+        }
+      ]
+    }
+  ],
+  "operation_count": 73,
+  "configuration_mode": "Synthetic credential/access settings and an empty study directory; schemas only, no source calls.",
+  "meaning": "Only source-permission-eligible operations are exposed. Offline schema discovery is not configured operator access or live source qualification; retained unexposed adapter tests use synthetic fixtures, not real data-use grants."
+}

@@ -1,0 +1,72 @@
+{
+  "inspected_on": "2026-10-11",
+  "official_commit": "e920779bdae870fc4d94bf858d46c14d691c4712",
+  "official_sources": {
+    "V1OntologyTermController.java": {
+      "url": "https://raw.githubusercontent.com/EBISPOT/ols4/e920779bdae870fc4d94bf858d46c14d691c4712/backend/src/main/java/uk/ac/ebi/spot/ols/controller/api/v1/V1OntologyTermController.java",
+      "sha256": "359a24dcbdcb90612d233e32b7876c91285124c372f390e83a33129364b6e85d"
+    },
+    "V1SearchController.java": {
+      "url": "https://raw.githubusercontent.com/EBISPOT/ols4/e920779bdae870fc4d94bf858d46c14d691c4712/backend/src/main/java/uk/ac/ebi/spot/ols/controller/api/v1/V1SearchController.java",
+      "sha256": "80f5bb8e50dad4f693887b91351f8caebaff945d1333227c946be30ac329fdbf"
+    },
+    "V1Term.java": {
+      "url": "https://raw.githubusercontent.com/EBISPOT/ols4/e920779bdae870fc4d94bf858d46c14d691c4712/backend/src/main/java/uk/ac/ebi/spot/ols/model/v1/V1Term.java",
+      "sha256": "c8bcc4d53e058b5560be6cf5d29b42fcd01a05f8b04778b334fcbf2a27f29ef9"
+    },
+    "V1OboSynonym.java": {
+      "url": "https://raw.githubusercontent.com/EBISPOT/ols4/e920779bdae870fc4d94bf858d46c14d691c4712/backend/src/main/java/uk/ac/ebi/spot/ols/model/v1/V1OboSynonym.java",
+      "sha256": "86dfb1f43dfd9df7a5a53c4e167631f73c2871cad36d0c84e9ac98ca34e21216"
+    },
+    "V1OboXref.java": {
+      "url": "https://raw.githubusercontent.com/EBISPOT/ols4/e920779bdae870fc4d94bf858d46c14d691c4712/backend/src/main/java/uk/ac/ebi/spot/ols/model/v1/V1OboXref.java",
+      "sha256": "49632d5d99bbb32fb39dbaac516867223cec4217d92c28c4d19b3cc8e2d5672f"
+    },
+    "V1OboDefinitionCitation.java": {
+      "url": "https://raw.githubusercontent.com/EBISPOT/ols4/e920779bdae870fc4d94bf858d46c14d691c4712/backend/src/main/java/uk/ac/ebi/spot/ols/model/v1/V1OboDefinitionCitation.java",
+      "sha256": "67ae214928a40d4f3208510f6765f664483b82aba8481e91ec2413e335d1476a"
+    }
+  },
+  "search": {
+    "path": "/api/search",
+    "fixed_parameters": {
+      "ontology": "hp",
+      "type": "class",
+      "local": "true"
+    },
+    "required_response_fields": [
+      "response.docs",
+      "response.numFound",
+      "response.start"
+    ],
+    "identity_fields": [
+      "obo_id",
+      "iri",
+      "short_form",
+      "ontology_name",
+      "ontology_prefix",
+      "label",
+      "type"
+    ]
+  },
+  "record": {
+    "path": "/api/ontologies/hp/terms",
+    "parameter": "obo_id",
+    "required_response_fields": [
+      "_embedded.terms",
+      "page.size",
+      "page.totalElements",
+      "page.totalPages",
+      "page.number"
+    ],
+    "exact_page": {
+      "size": 1,
+      "totalElements": 1,
+      "totalPages": 1,
+      "number": 0
+    },
+    "missing_status": 404,
+    "synonym_xrefs": "List<V1OboXref>; nullable string database/id/description/url fields"
+  },
+  "scope": "Selected HPO search and exact-record contracts; no claim of exhaustive nested semantic validation."
+}

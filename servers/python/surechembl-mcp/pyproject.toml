@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "surechembl-mcp"
+version = "0.0.1"
+description = "SureChEMBL MCP Server - Patent chemistry database"
+authors = [{name = "UniBio Intelligence"}]
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+dependencies = ["fastmcp>=4.0.2,<5.0.0", "httpx>=0.25.0"]
+
+
+[project.urls]
+Repository = "https://github.com/unibio-intelligence/biomedmcp"

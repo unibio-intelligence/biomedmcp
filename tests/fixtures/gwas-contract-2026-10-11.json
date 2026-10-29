@@ -1,0 +1,189 @@
+{
+  "scope": "Selected observed EBI GWAS Catalog v2 projections; mutable source, not exhaustive provider health or pinned biological release",
+  "observed_at": "2026-10-11",
+  "gene_page": {
+    "_embedded": {
+      "associations": [
+        {
+          "association_id": 103252357,
+          "risk_frequency": "0.4878",
+          "pvalue_description": "",
+          "pvalue_mantissa": 3,
+          "pvalue_exponent": -101,
+          "multi_snp_haplotype": false,
+          "snp_interaction": false,
+          "range": "[0.013-0.016]",
+          "beta": "0.0146 unit decrease",
+          "p_value": 3e-101,
+          "efo_traits": [
+            {
+              "efo_id": "OBA_VT0001253",
+              "efo_trait": "body height"
+            }
+          ],
+          "reported_trait": [
+            "Height"
+          ],
+          "accession_id": "GCST90245848",
+          "locations": [
+            "7:140799307"
+          ],
+          "mapped_genes": [
+            "BRAF"
+          ],
+          "bg_efo_traits": [],
+          "pubmed_id": "36224396",
+          "first_author": "Yengo L",
+          "ci_lower": 0.013,
+          "ci_upper": 0.016,
+          "snp_effect_allele": [
+            "rs10487888-T"
+          ],
+          "snp_allele": [
+            {
+              "rs_id": "rs10487888",
+              "effect_allele": "T"
+            }
+          ],
+          "_links": {
+            "self": {
+              "href": "https://www.ebi.ac.uk/gwas/rest/api/v2/associations/103252357"
+            },
+            "loci": {
+              "href": "https://www.ebi.ac.uk/gwas/rest/api/v2/associations/103252357/loci"
+            },
+            "snp": {
+              "href": "https://www.ebi.ac.uk/gwas/rest/api/v2/single-nucleotide-polymorphisms/rs10487888"
+            }
+          }
+        },
+        {
+          "association_id": 103252352,
+          "risk_frequency": "0.1653",
+          "pvalue_description": "",
+          "pvalue_mantissa": 2,
+          "pvalue_exponent": -74,
+          "multi_snp_haplotype": false,
+          "snp_interaction": false,
+          "range": "[0.014-0.018]",
+          "beta": "0.0161 unit increase",
+          "p_value": 2e-74,
+          "efo_traits": [
+            {
+              "efo_id": "OBA_VT0001253",
+              "efo_trait": "body height"
+            }
+          ],
+          "reported_trait": [
+            "Height"
+          ],
+          "accession_id": "GCST90245848",
+          "locations": [
+            "7:140735277"
+          ],
+          "mapped_genes": [
+            "BRAF"
+          ],
+          "bg_efo_traits": [],
+          "pubmed_id": "36224396",
+          "first_author": "Yengo L",
+          "ci_lower": 0.014,
+          "ci_upper": 0.018,
+          "snp_effect_allele": [
+            "rs2364399-G"
+          ],
+          "snp_allele": [
+            {
+              "rs_id": "rs2364399",
+              "effect_allele": "G"
+            }
+          ],
+          "_links": {
+            "self": {
+              "href": "https://www.ebi.ac.uk/gwas/rest/api/v2/associations/103252352"
+            },
+            "loci": {
+              "href": "https://www.ebi.ac.uk/gwas/rest/api/v2/associations/103252352/loci"
+            },
+            "snp": {
+              "href": "https://www.ebi.ac.uk/gwas/rest/api/v2/single-nucleotide-polymorphisms/rs2364399"
+            }
+          }
+        }
+      ]
+    },
+    "_links": {
+      "first": {
+        "href": "https://www.ebi.ac.uk/gwas/rest/api/v2/associations?mapped_gene=BRAF&extended_geneset=false&direction=asc&page=0&size=2&sort=p_value"
+      },
+      "self": {
+        "href": "https://www.ebi.ac.uk/gwas/rest/api/v2/associations?mapped_gene=BRAF&extended_geneset=false&direction=asc&page=0&size=2&sort=p_value"
+      },
+      "next": {
+        "href": "https://www.ebi.ac.uk/gwas/rest/api/v2/associations?mapped_gene=BRAF&extended_geneset=false&direction=asc&page=1&size=2&sort=p_value"
+      },
+      "last": {
+        "href": "https://www.ebi.ac.uk/gwas/rest/api/v2/associations?mapped_gene=BRAF&extended_geneset=false&direction=asc&page=27&size=2&sort=p_value"
+      }
+    },
+    "page": {
+      "size": 2,
+      "totalElements": 55,
+      "totalPages": 28,
+      "number": 0
+    }
+  },
+  "record": {
+    "association_id": 103252357,
+    "risk_frequency": "0.4878",
+    "pvalue_description": "",
+    "pvalue_mantissa": 3,
+    "pvalue_exponent": -101,
+    "multi_snp_haplotype": false,
+    "snp_interaction": false,
+    "range": "[0.013-0.016]",
+    "beta": "0.0146 unit decrease",
+    "p_value": 3e-101,
+    "efo_traits": [
+      {
+        "efo_id": "OBA_VT0001253",
+        "efo_trait": "body height"
+      }
+    ],
+    "reported_trait": [
+      "Height"
+    ],
+    "accession_id": "GCST90245848",
+    "locations": [
+      "7:140799307"
+    ],
+    "mapped_genes": [
+      "BRAF"
+    ],
+    "bg_efo_traits": [],
+    "pubmed_id": "36224396",
+    "first_author": "Yengo L",
+    "ci_lower": 0.013,
+    "ci_upper": 0.016,
+    "snp_effect_allele": [
+      "rs10487888-T"
+    ],
+    "snp_allele": [
+      {
+        "rs_id": "rs10487888",
+        "effect_allele": "T"
+      }
+    ],
+    "_links": {
+      "self": {
+        "href": "https://www.ebi.ac.uk/gwas/rest/api/v2/associations/103252357"
+      },
+      "loci": {
+        "href": "https://www.ebi.ac.uk/gwas/rest/api/v2/associations/103252357/loci"
+      },
+      "snp": {
+        "href": "https://www.ebi.ac.uk/gwas/rest/api/v2/single-nucleotide-polymorphisms/rs10487888"
+      }
+    }
+  }
+}

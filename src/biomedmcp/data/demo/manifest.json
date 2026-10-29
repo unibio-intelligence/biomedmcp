@@ -1,0 +1,35 @@
+{
+  "studies": [
+    {
+      "id": "ubi_synthetic",
+      "enabled": true,
+      "release": "synthetic-v1",
+      "source_url": "https://example.org/synthetic",
+      "synthetic": true,
+      "description": "Bundled synthetic demonstration with invented patients and measurements. Not a real biological cohort.",
+      "data_rights": {
+        "license": "CC0-1.0",
+        "evidence_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "scope": "all_declared_files"
+      },
+      "files": {
+        "data_cna.txt": "df6091c23e9d391d4fac17ea578d075a20bc055c1d19967b5e62bcb8f8a6c728",
+        "data_clinical_patient.txt": "8ad6e464b77bc56008482b9d3a4934042748b70fd25130d7b0cedbee4f3ae95d",
+        "data_clinical_sample.txt": "63a50960b1a879788c656c54a3da55d9fe637c910270e6ae391dd141bc012ef2",
+        "meta_study.txt": "edc74d93f72a589f3a52dff3def865402fdf1cbeb350e94cc1add95076686716",
+        "data_mutations.txt": "94ddfac7f264d9392d57cf291920c7149927a7bb001c7525cccfbaa52d6b6793",
+        "data_mrna_seq_v2_rsem_zscores_ref_all_samples.txt": "24ac869728924517a68cd26afcd496d26680784ddf699efb526c38af1e5f6733"
+      },
+      "sha256": "76e5da01d18e4f6cb643200c3f2e3eae670e965e09e442d70b56aa5b0ee64587",
+      "mutation_coverage": {
+        "samples": [
+          "S1",
+          "S2",
+          "S3",
+          "S4"
+        ],
+        "genes": "all"
+      }
+    }
+  ]
+}

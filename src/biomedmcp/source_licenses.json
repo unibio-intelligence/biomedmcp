@@ -1,0 +1,870 @@
+{
+  "schema_version": 1,
+  "reviewed_on": "2026-10-13",
+  "policy": "Owner-approved default enablement for the free hosted research service: share-alike is accepted; mixed or unresolved permissions are eligible unless a documented restriction blocks the implemented use. Eligibility is not a verified permissive license. Preserve upstream attribution, license, share-alike and use limitations separately from Apache-2.0 integration code. Keys cannot override documented holds.",
+  "policy_owner_confirmation": "confirmed_2026-10-13_default_enable",
+  "sources": [
+    {
+      "source": "antibody-registry",
+      "review_status": "unresolved",
+      "release_status": "eligible",
+      "license": "not_established",
+      "evidence": [
+        "https://www.antibodyregistry.org/"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Enabled under the owner default policy for free research hosting; exact content permissions remain unresolved. Preserve contributor terms and attribution; this is not a blanket permissive license.",
+      "byok": "not_applicable",
+      "activation_basis": "owner_default_allow"
+    },
+    {
+      "source": "bio-ontology",
+      "review_status": "content_review_required",
+      "release_status": "eligible",
+      "license": "per_ontology",
+      "evidence": [
+        "https://www.bioontology.org/terms/"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Enabled under the owner default policy for free research hosting; exact content permissions remain content_review_required. Preserve contributor terms and attribution; this is not a blanket permissive license.",
+      "byok": "required_local_environment",
+      "activation_basis": "owner_default_allow"
+    },
+    {
+      "source": "cancerhotspots",
+      "review_status": "unresolved",
+      "release_status": "eligible",
+      "license": "not_established",
+      "evidence": [
+        "https://www.cancerhotspots.org/"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Enabled under the owner default policy for free research hosting; exact content permissions remain unresolved. Preserve contributor terms and attribution; this is not a blanket permissive license.",
+      "byok": "not_applicable",
+      "activation_basis": "owner_default_allow"
+    },
+    {
+      "source": "cbioportal",
+      "review_status": "permissive",
+      "release_status": "eligible",
+      "license": "ODbL-1.0",
+      "evidence": [
+        "https://docs.cbioportal.org/user-guide/faq/"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Share-alike accepted by the owner. Preserve attribution, the upstream data license, applicable derivative-database obligations and study-specific notices; Apache-2.0 applies to integration code only.",
+      "byok": "not_applicable"
+    },
+    {
+      "source": "chembl",
+      "review_status": "permissive",
+      "release_status": "eligible",
+      "license": "CC-BY-SA-3.0",
+      "evidence": [
+        "https://chembl.github.io/chembl-licensing/",
+        "https://platform-docs.opentargets.org/licence"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Share-alike accepted by the owner. Preserve attribution, the upstream data license, applicable derivative-database obligations and study-specific notices; Apache-2.0 applies to integration code only.",
+      "byok": "not_applicable"
+    },
+    {
+      "source": "civic",
+      "review_status": "permissive",
+      "release_status": "eligible",
+      "license": "CC0-1.0",
+      "evidence": [
+        "https://docs.civicdb.org/en/latest/about/participating.html"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "CIViC curated data are dedicated to the public domain; preserve scientific attribution.",
+      "byok": "not_applicable"
+    },
+    {
+      "source": "clingen",
+      "review_status": "permissive",
+      "release_status": "eligible",
+      "license": "CC0-1.0",
+      "evidence": [
+        "https://clinicalgenome.org/docs/terms-of-use/"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "ClinGen curated content is dedicated to the public domain; original publications remain separate.",
+      "byok": "not_applicable"
+    },
+    {
+      "source": "clinical-trials",
+      "review_status": "unresolved",
+      "release_status": "eligible",
+      "license": "not_established",
+      "evidence": [
+        "https://clinicaltrials.gov/about-site/terms-conditions"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Enabled under the owner default policy for free research hosting; exact content permissions remain unresolved. Preserve contributor terms and attribution; this is not a blanket permissive license.",
+      "byok": "not_applicable",
+      "activation_basis": "owner_default_allow"
+    },
+    {
+      "source": "complexportal",
+      "review_status": "permissive",
+      "release_status": "eligible",
+      "license": "CC0-1.0",
+      "evidence": [
+        "https://pmc.ncbi.nlm.nih.gov/articles/PMC11701666/",
+        "https://www.ebi.ac.uk/complexportal/about"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Complex Portal data are CC0; cite complexes and their originating studies.",
+      "byok": "not_applicable"
+    },
+    {
+      "source": "cpic",
+      "review_status": "content_review_required",
+      "release_status": "eligible",
+      "license": "CC0-1.0; additional API terms",
+      "evidence": [
+        "https://github.com/cpicpgx/cpic-data/blob/82aa2518f1051bb2db9c42c1023a9f08db5a5f80/LICENSE.md",
+        "https://www.clinpgx.org/page/dataUsagePolicy"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Enabled under the owner default policy for free research hosting; exact content permissions remain content_review_required. Preserve contributor terms and attribution; this is not a blanket permissive license.",
+      "byok": "not_applicable",
+      "activation_basis": "owner_default_allow"
+    },
+    {
+      "source": "dailymed",
+      "review_status": "unresolved",
+      "release_status": "eligible",
+      "license": "not_established",
+      "evidence": [
+        "https://dailymed.nlm.nih.gov/"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Enabled under the owner default policy for free research hosting; exact content permissions remain unresolved. Preserve contributor terms and attribution; this is not a blanket permissive license.",
+      "byok": "not_applicable",
+      "activation_basis": "owner_default_allow"
+    },
+    {
+      "source": "depmap",
+      "review_status": "unresolved",
+      "release_status": "eligible",
+      "license": "not_established",
+      "evidence": [
+        "https://depmap.org/portal/terms/"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Enabled under the owner default policy for free research hosting; exact content permissions remain unresolved. Preserve contributor terms and attribution; this is not a blanket permissive license.",
+      "byok": "not_applicable",
+      "activation_basis": "owner_default_allow"
+    },
+    {
+      "source": "disgenet",
+      "review_status": "restricted",
+      "release_status": "unreleased",
+      "license": "LicenseRef-DISGENET",
+      "evidence": [
+        "https://support.disgenet.com/support/solutions/articles/202000087487-do-i-need-a-commercial-license-can-i-use-disgenet-data-in-my-product-"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Commercial product/service use requires a commercial agreement; a supplied key is not permission.",
+      "byok": "required_local_environment_unreleased"
+    },
+    {
+      "source": "ema",
+      "review_status": "content_review_required",
+      "release_status": "eligible",
+      "license": "LicenseRef-EMA",
+      "evidence": [
+        "https://www.ema.europa.eu/en/about-us/about-website/legal-notice"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Enabled under the owner default policy for free research hosting; exact content permissions remain content_review_required. Preserve contributor terms and attribution; this is not a blanket permissive license.",
+      "byok": "not_applicable",
+      "activation_basis": "owner_default_allow"
+    },
+    {
+      "source": "enrichment",
+      "review_status": "unresolved",
+      "release_status": "eligible",
+      "license": "not_established",
+      "evidence": [
+        "https://biit.cs.ut.ee/gprofiler/"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Enabled under the owner default policy for free research hosting; exact content permissions remain unresolved. Preserve contributor terms and attribution; this is not a blanket permissive license.",
+      "byok": "not_applicable",
+      "activation_basis": "owner_default_allow"
+    },
+    {
+      "source": "ensembl",
+      "review_status": "content_review_required",
+      "release_status": "eligible",
+      "license": "LicenseRef-Ensembl-Project",
+      "evidence": [
+        "https://www.ensembl.org/about/articles/ensembl-content-disclaimer",
+        "https://www.ebi.ac.uk/about/terms-of-use/",
+        "https://rest.ensembl.org/documentation/info/assembly_info",
+        "https://rest.ensembl.org/documentation/info/species"
+      ],
+      "scope": "Existing implemented Ensembl routes; preserve upstream contributor terms. Genome inventory still uses a bounded projection.",
+      "reason": "Project-generated data are unrestricted. Existing routes enabled under owner default for incorporated content; uncertain annotations retain their upstream terms rather than a verified blanket license.",
+      "byok": "not_applicable",
+      "activation_basis": "owner_default_allow"
+    },
+    {
+      "source": "europepmc",
+      "review_status": "content_review_required",
+      "release_status": "eligible",
+      "license": "mixed",
+      "evidence": [
+        "https://europepmc.org/Copyright",
+        "https://www.nlm.nih.gov/databases/download.html",
+        "https://pmc.ncbi.nlm.nih.gov/about/copyright/"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Enabled under the owner default policy for free research hosting; exact content permissions remain content_review_required. Preserve contributor terms and attribution; this is not a blanket permissive license.",
+      "byok": "not_applicable",
+      "activation_basis": "owner_default_allow"
+    },
+    {
+      "source": "fda-devices",
+      "review_status": "permissive",
+      "release_status": "eligible",
+      "license": "CC0-1.0",
+      "evidence": [
+        "https://open.fda.gov/terms/",
+        "https://open.fda.gov/apis/device/510k/"
+      ],
+      "scope": "Implemented device/510k clearance records only; no UDI/GMDN or document downloads.",
+      "reason": "Primary openFDA CC0 grant applies to the 510k endpoint; its documentation identifies FDA clearance records and no GMDN content. The shared request gate rejects UDI/GMDN and other unreviewed endpoints.",
+      "byok": "not_applicable"
+    },
+    {
+      "source": "gencc",
+      "review_status": "permissive",
+      "release_status": "eligible",
+      "license": "CC0-1.0",
+      "evidence": [
+        "https://thegencc.org/terms",
+        "https://thegencc.org/download"
+      ],
+      "scope": "Versioned GenCC submission CSV only; linked reports and OMIM data are not retrieved",
+      "reason": "Official terms dedicate GenCC data to CC0. Keep GenCC/submitter attribution, SGC/version identity and independent classifications. The export excludes OMIM data; linked publications have separate rights.",
+      "byok": "not_applicable"
+    },
+    {
+      "source": "gnomad",
+      "review_status": "permissive",
+      "release_status": "eligible",
+      "license": "CC0-1.0",
+      "evidence": [
+        "https://gnomad.broadinstitute.org/policies"
+      ],
+      "scope": "Fixed native GraphQL projections: primary exome/genome/joint aggregate counts and gnomAD gene constraint statistics with factual gene/transcript identifiers; no imported predictor annotations, individual-level data or arbitrary GraphQL.",
+      "reason": "Official rendered policy reviewed2026-10-13 dedicates primary exome/genome data to CC0. Fixed queries select project-generated aggregate measurements and identity fields only; strict response models reject extra annotations. SpliceAI, CADD and unqualified third-party fields remain excluded; legacy aggregator snapshots remain held. Preserve gnomAD attribution, dataset selector and the warning that an exact release is unavailable.",
+      "byok": "not_applicable"
+    },
+    {
+      "source": "gtex",
+      "review_status": "permissive",
+      "release_status": "eligible",
+      "license": "LicenseRef-GTEx-Portal",
+      "evidence": [
+        "https://gtexportal.org/home/license"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Public portal data terms permit services/products with source/date acknowledgment, no implied endorsement, and current-version or conspicuous release-age disclosure. Protected dbGaP data are outside this integration.",
+      "byok": "not_applicable"
+    },
+    {
+      "source": "gtr",
+      "review_status": "content_review_required",
+      "release_status": "eligible",
+      "license": "mixed",
+      "evidence": [
+        "https://www.ncbi.nlm.nih.gov/home/about/policies/"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Enabled under the owner default policy for free research hosting; exact content permissions remain content_review_required. Preserve contributor terms and attribution; this is not a blanket permissive license.",
+      "byok": "optional_local_environment",
+      "activation_basis": "owner_default_allow"
+    },
+    {
+      "source": "gwas",
+      "review_status": "permissive",
+      "release_status": "eligible",
+      "license": "LicenseRef-EBI-GWAS",
+      "evidence": [
+        "https://www.ebi.ac.uk/gwas/docs/faq/",
+        "https://www.ebi.ac.uk/about/terms-of-use/"
+      ],
+      "scope": "Implemented curated association API; no summary-statistic files or linked publication content.",
+      "reason": "Primary FAQ permits other Catalog data under EBI service terms. Preserve Catalog/study/publication attribution and collection dates. Dataset-specific summary-statistic exceptions remain outside this integration.",
+      "byok": "not_applicable"
+    },
+    {
+      "source": "interpro",
+      "review_status": "permissive",
+      "release_status": "eligible",
+      "license": "CC0-1.0",
+      "evidence": [
+        "https://interpro-documentation.readthedocs.io/en/latest/license.html",
+        "https://www.ebi.ac.uk/about/terms-of-use/",
+        "https://interpro-documentation.readthedocs.io/en/latest/api.html"
+      ],
+      "scope": "Fixed integrated InterPro entry/match projection for a separately qualified UniProt accession: entry identity/name/type, accession/taxon/length and match fragments. No member-database annotations, GO text, predictor scores/models or AlphaFold flags.",
+      "reason": "Official InterPro data license dedicates InterPro data to CC0. The fixed /entry/interpro/protein/uniprot route acquires integrated entries only and applies an explicit output projection before runtime cache and recovery. Separate UniProt identity retains CC-BY attribution. Preserve InterPro release headers and avoid equating predictions with experimental measurements.",
+      "byok": "not_applicable"
+    },
+    {
+      "source": "litsense2",
+      "review_status": "content_review_required",
+      "release_status": "eligible",
+      "license": "mixed",
+      "evidence": [
+        "https://www.ncbi.nlm.nih.gov/research/litsense2/",
+        "https://www.nlm.nih.gov/databases/download.html",
+        "https://pmc.ncbi.nlm.nih.gov/about/copyright/"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Enabled under the owner default policy for free research hosting; exact content permissions remain content_review_required. Preserve contributor terms and attribution; this is not a blanket permissive license.",
+      "byok": "not_applicable",
+      "activation_basis": "owner_default_allow"
+    },
+    {
+      "source": "monarch",
+      "review_status": "content_review_required",
+      "release_status": "eligible",
+      "license": "per_resource",
+      "evidence": [
+        "https://monarch-app.monarchinitiative.org/Licensing/"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Enabled under the owner default policy for free research hosting; exact content permissions remain content_review_required. Preserve contributor terms and attribution; this is not a blanket permissive license.",
+      "byok": "not_applicable",
+      "activation_basis": "owner_default_allow"
+    },
+    {
+      "source": "mychem",
+      "review_status": "content_review_required",
+      "release_status": "eligible",
+      "license": "mixed",
+      "evidence": [
+        "https://mychem.info/terms",
+        "https://mychem.info/v1/metadata"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Mixed aggregator enabled by owner default; unresolved rights remain unresolved. Known SIDER and UMLS fields are removed before runtime caching/output; retain other contributor licenses and notices.",
+      "byok": "not_applicable",
+      "activation_basis": "owner_default_allow"
+    },
+    {
+      "source": "mydisease",
+      "review_status": "content_review_required",
+      "release_status": "eligible",
+      "license": "mixed",
+      "evidence": [
+        "https://mydisease.info/terms",
+        "https://mydisease.info/v1/metadata"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Mixed aggregator enabled by owner default; known UMLS fields are removed before runtime caching/output. Preserve remaining contributor notices; unresolved rights are not labeled permissive.",
+      "byok": "not_applicable",
+      "activation_basis": "owner_default_allow"
+    },
+    {
+      "source": "mygene",
+      "review_status": "permissive",
+      "release_status": "eligible",
+      "license": "LicenseRef-MyGene-Identity",
+      "evidence": [
+        "https://mygene.info/terms",
+        "https://www.genenames.org/about/license/",
+        "https://www.ncbi.nlm.nih.gov/home/about/policies/",
+        "https://geneontology.org/docs/go-citation-policy/",
+        "https://www.uniprot.org/help/license"
+      ],
+      "scope": "Only gene search/resolution and fixed identity/GO projection from NCBI/HGNC/Ensembl/UniProt/GO; no disease/UMLS annotations or arbitrary fields.",
+      "reason": "MyGene authorizes API access/use; selected upstream gene identifiers and annotations are covered by HGNC CC0, NCBI public data and UniProt/GO CC-BY. Restrict query fields and projected results; preserve upstream attribution and applicable notices.",
+      "byok": "not_applicable"
+    },
+    {
+      "source": "myvariant",
+      "review_status": "content_review_required",
+      "release_status": "unreleased",
+      "license": "mixed",
+      "evidence": [
+        "https://myvariant.info/terms",
+        "https://docs.myvariant.info/en/latest/doc/data.html",
+        "https://myvariant.info/v1/metadata",
+        "https://www.dbnsfp.org/license/"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Implemented variant queries request dbNSFP including predictor bundles. Metadata identifies academic branch 4.8a; its noncommercial/no-derivatives terms and separately restricted predictors do not clear the hosted redistribution workflow. Keep held pending a cleared projection.",
+      "byok": "not_applicable"
+    },
+    {
+      "source": "ncbi",
+      "review_status": "permissive",
+      "release_status": "eligible",
+      "license": "LicenseRef-NCBI-PublicData",
+      "evidence": [
+        "https://www.ncbi.nlm.nih.gov/home/about/policies/",
+        "https://www.ncbi.nlm.nih.gov/clinvar/docs/maintenance_use/"
+      ],
+      "scope": "Implemented public NCBI Datasets molecular/genome/taxonomy metadata and direct ClinVar E-utilities variant identity/classification metadata; no controlled-access repositories, publisher documents or OMIM text. ClinVar exposes source-submitted assertions, not independent clinical validation.",
+      "reason": "NCBI imposes no reuse/distribution restrictions on its public molecular data and does not accept submitter reuse restrictions. Preserve its notices and attribution; this is a data-access grant, not a patent license or a grant for separately copyrighted works.",
+      "byok": "optional_local_environment"
+    },
+    {
+      "source": "pmc",
+      "review_status": "content_review_required",
+      "release_status": "eligible",
+      "activation_basis": "owner_default_allow",
+      "license": "article_specific",
+      "evidence": [
+        "https://pmc.ncbi.nlm.nih.gov/tools/developers/",
+        "https://pmc.ncbi.nlm.nih.gov/about/copyright/"
+      ],
+      "scope": "Bounded PMC article body windows and attachment metadata through official E-utilities; no arbitrary publisher downloads, attachment fetching or bulk harvesting. Article-specific copyright and license conditions remain applicable.",
+      "reason": "Enabled under the existing owner policy for bounded research extracts from publisher content. This is not the NCBI public molecular-data grant: preserve article-specific terms and missing-license uncertainty; free access is not blanket redistribution permission.",
+      "byok": "optional_local_environment"
+    },
+    {
+      "source": "ncbi-records",
+      "review_status": "permissive",
+      "release_status": "eligible",
+      "license": "LicenseRef-NCBI-PublicData",
+      "evidence": [
+        "https://www.ncbi.nlm.nih.gov/home/about/policies/",
+        "https://www.ncbi.nlm.nih.gov/genbank/genbank/"
+      ],
+      "scope": "Implemented public GEO/SRA/GenBank metadata, sequence records and identifier links; no publisher abstract/full-text retrieval.",
+      "reason": "Primary molecular-data policies impose no NCBI reuse/distribution restrictions and reject requested submitter reuse restrictions. Preserve source/version and attribution; patents and separately copyrighted works are not licensed by this integration.",
+      "byok": "optional_local_environment"
+    },
+    {
+      "source": "nci",
+      "review_status": "content_review_required",
+      "release_status": "eligible",
+      "license": "mixed",
+      "evidence": [
+        "https://www.cancer.gov/policies/copyright-reuse",
+        "https://www.cancer.gov/policies/copyright-reuse"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Enabled under the owner default policy for free research hosting; exact content permissions remain content_review_required. Preserve contributor terms and attribution; this is not a blanket permissive license.",
+      "byok": "required_local_environment",
+      "activation_basis": "owner_default_allow"
+    },
+    {
+      "source": "nih-reporter",
+      "review_status": "unresolved",
+      "release_status": "eligible",
+      "license": "not_established",
+      "evidence": [
+        "https://reporter.nih.gov/"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Enabled under the owner default policy for free research hosting; exact content permissions remain unresolved. Preserve contributor terms and attribution; this is not a blanket permissive license.",
+      "byok": "not_applicable",
+      "activation_basis": "owner_default_allow"
+    },
+    {
+      "source": "ols",
+      "review_status": "content_review_required",
+      "release_status": "eligible",
+      "license": "per_ontology",
+      "evidence": [
+        "https://www.ebi.ac.uk/ols4/",
+        "https://github.com/obophenotype/human-phenotype-ontology/blob/master/LICENSE.md",
+        "https://human-phenotype-ontology.github.io/license.html"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Read-only HPO retrieval is enabled; preserve the HPO acknowledgment, source date/version and original ontology content/relationships. The nonmodification clause does not prohibit this read-only integration.",
+      "byok": "not_applicable",
+      "activation_basis": "owner_default_allow"
+    },
+    {
+      "source": "omnipath",
+      "review_status": "content_review_required",
+      "release_status": "eligible",
+      "license": "per_resource",
+      "evidence": [
+        "https://omnipathdb.org/",
+        "https://r.omnipathdb.org/reference/dot-omnipathr_options_defaults.html"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Enabled under the owner default policy for free research hosting; exact content permissions remain content_review_required. Preserve contributor terms and attribution; this is not a blanket permissive license.",
+      "byok": "not_applicable",
+      "activation_basis": "owner_default_allow"
+    },
+    {
+      "source": "oncokb",
+      "review_status": "restricted",
+      "release_status": "unreleased",
+      "license": "LicenseRef-OncoKB",
+      "evidence": [
+        "https://faq.oncokb.org/licensing"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Commercial organizations require a signed annual license; remain unreleased even with a token.",
+      "byok": "required_local_environment_unreleased"
+    },
+    {
+      "source": "openfda",
+      "review_status": "permissive",
+      "release_status": "eligible",
+      "license": "CC0-1.0",
+      "evidence": [
+        "https://open.fda.gov/terms/",
+        "https://open.fda.gov/apis/drug/event/",
+        "https://open.fda.gov/apis/drug/drugsfda/",
+        "https://open.fda.gov/apis/drug/enforcement/",
+        "https://open.fda.gov/apis/drug/label/"
+      ],
+      "scope": "OpenFDA factual records and manufacturer-submitted SPL label prose; no attachment downloads or embedded images.",
+      "reason": "General openFDA CC0 dedication applies unless a documented third-party exception applies. Owner explicitly enabled manufacturer-submitted label prose on 2026-10-22. Preserve supplied notices, source/set/version/date, official links and the warning that listing content is not proof of FDA approval or current distributed labeling. GMDN/device-UDI content, embedded images, HTML tables and attachments remain outside this projection.",
+      "byok": "optional_local_environment"
+    },
+    {
+      "source": "opentargets",
+      "review_status": "permissive",
+      "release_status": "eligible",
+      "license": "CC0-1.0",
+      "evidence": [
+        "https://platform-docs.opentargets.org/licence"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Platform states CC0 and that listed contributors permit unrestricted use by all Open Targets users; preserve contributor provenance.",
+      "byok": "not_applicable"
+    },
+    {
+      "source": "orange-book",
+      "review_status": "unresolved",
+      "release_status": "eligible",
+      "license": "not_established",
+      "evidence": [
+        "https://www.fda.gov/drugs/drug-approvals-and-databases/orange-book-data-files"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Enabled under the owner default policy for free research hosting; exact content permissions remain unresolved. Preserve contributor terms and attribution; this is not a blanket permissive license.",
+      "byok": "not_applicable",
+      "activation_basis": "owner_default_allow"
+    },
+    {
+      "source": "orcid",
+      "review_status": "content_review_required",
+      "release_status": "eligible",
+      "license": "LicenseRef-ORCID-Public-API",
+      "evidence": [
+        "https://info.orcid.org/public-client-terms-of-service/",
+        "https://info.orcid.org/documentation/integration-and-api-faq/",
+        "https://info.orcid.org/public-data-file-use-policy/"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Enabled for the declared free research service only. Public API terms prohibit reuse fees and use with a revenue-generating product/service; paid platform use is outside this activation.",
+      "byok": "not_applicable",
+      "activation_basis": "owner_default_allow"
+    },
+    {
+      "source": "patents",
+      "review_status": "restricted",
+      "release_status": "unreleased",
+      "license": "LicenseRef-EPO-OPS",
+      "evidence": [
+        "https://www.epo.org/en/service-support/ordering/terms-and-conditions/ops-terms-and-conditions"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "OPS contract permits data in products but prohibits redistributing data as such; raw evidence route remains unreleased.",
+      "byok": "required_local_environment_unreleased"
+    },
+    {
+      "source": "pdb",
+      "review_status": "permissive",
+      "release_status": "eligible",
+      "license": "CC0-1.0",
+      "evidence": [
+        "https://www1.rcsb.org/pages/usage-policy"
+      ],
+      "scope": "PDB archive entry metadata and coordinate files; search excludes computed models and non-PDB third-party model identifiers.",
+      "reason": "PDB archive data are CC0; preserve depositors and structure attribution; linked publications are separate.",
+      "byok": "not_applicable"
+    },
+    {
+      "source": "protein-atlas",
+      "review_status": "permissive",
+      "release_status": "eligible",
+      "license": "CC-BY-4.0",
+      "evidence": [
+        "https://www.proteinatlas.org/about/licence"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Source data/output license permits commercial reuse with attribution; preserve source, changes and applicable third-party notices.",
+      "byok": "not_applicable"
+    },
+    {
+      "source": "pubmed",
+      "review_status": "content_review_required",
+      "release_status": "eligible",
+      "license": "mixed",
+      "evidence": [
+        "https://www.nlm.nih.gov/databases/download.html",
+        "https://www.nlm.nih.gov/databases/download.html",
+        "https://pmc.ncbi.nlm.nih.gov/about/copyright/"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Enabled under the owner default policy for free research hosting; exact content permissions remain content_review_required. Preserve contributor terms and attribution; this is not a blanket permissive license.",
+      "byok": "optional_local_environment",
+      "activation_basis": "owner_default_allow"
+    },
+    {
+      "source": "pubtator",
+      "review_status": "content_review_required",
+      "release_status": "eligible",
+      "license": "mixed",
+      "evidence": [
+        "https://www.ncbi.nlm.nih.gov/home/about/policies/",
+        "https://www.nlm.nih.gov/databases/download.html",
+        "https://pmc.ncbi.nlm.nih.gov/about/copyright/"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Enabled under the owner default policy for free research hosting; exact content permissions remain content_review_required. Preserve contributor terms and attribution; this is not a blanket permissive license.",
+      "byok": "not_applicable",
+      "activation_basis": "owner_default_allow"
+    },
+    {
+      "source": "reactome",
+      "review_status": "permissive",
+      "release_status": "eligible",
+      "license": "CC-BY-4.0",
+      "evidence": [
+        "https://reactome.org/license",
+        "https://www.reactome.org/about/news/97-updated-license-agreement"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Source data/output license permits commercial reuse with attribution; preserve source, changes and applicable third-party notices.",
+      "byok": "not_applicable"
+    },
+    {
+      "source": "string",
+      "review_status": "permissive",
+      "release_status": "eligible",
+      "license": "CC-BY-4.0",
+      "evidence": [
+        "https://www.string-db.org/cgi/access"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Source data/output license permits commercial reuse with attribution; preserve source, changes and applicable third-party notices.",
+      "byok": "not_applicable"
+    },
+    {
+      "source": "study",
+      "review_status": "permissive",
+      "release_status": "eligible",
+      "license": "per_release",
+      "evidence": [
+        "https://creativecommons.org/publicdomain/zero/1.0/",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "scope": "Only installed checksummed releases whose data_rights pass the existing CC0/CC-BY all-declared-files gate.",
+      "reason": "Study engine eligibility does not clear a dataset. Installed immutable manifests bind CC0, CC-BY or accepted share-alike rights, evidence URLs, declared files and hashes; missing or changed inputs fail closed.",
+      "byok": "not_applicable"
+    },
+    {
+      "source": "surechembl",
+      "review_status": "permissive",
+      "release_status": "eligible",
+      "license": "CC-BY-4.0",
+      "evidence": [
+        "https://chembl.gitbook.io/surechembl/faq"
+      ],
+      "scope": "SureChEMBL-derived compound/chemical-annotation metadata and bibliographic facts; excludes underlying patent text, claims, drawings and attachments.",
+      "reason": "SureChEMBL-derived data permit commercial reuse with attribution. The source grant is not treated as a grant for underlying third-party patent document content; only explicit eligible projections may be released.",
+      "byok": "not_applicable"
+    },
+    {
+      "source": "uniprot",
+      "review_status": "permissive",
+      "release_status": "eligible",
+      "license": "CC-BY-4.0",
+      "evidence": [
+        "https://www.uniprot.org/help/license",
+        "https://www.uniprot.org/api-documentation/support-data"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Source data/output license permits commercial reuse with attribution; preserve source, changes and applicable third-party notices.",
+      "byok": "not_applicable"
+    },
+    {
+      "source": "who",
+      "review_status": "content_review_required",
+      "release_status": "eligible",
+      "license": "LicenseRef-WHO",
+      "evidence": [
+        "https://www.who.int/about/policies/terms-of-use"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Enabled for bounded research extracts in the declared free service with WHO source URLs and acknowledgment. Commercial use and substantial reproduction require written authorization; this activation does not permit either.",
+      "byok": "not_applicable",
+      "activation_basis": "owner_default_allow"
+    },
+    {
+      "source": "who-ivd",
+      "review_status": "content_review_required",
+      "release_status": "eligible",
+      "license": "LicenseRef-WHO",
+      "evidence": [
+        "https://www.who.int/about/policies/terms-of-use"
+      ],
+      "scope": "Current implemented API and returned data",
+      "reason": "Enabled for bounded research extracts in the declared free service with WHO source URLs and acknowledgment. Commercial use and substantial reproduction require written authorization; this activation does not permit either.",
+      "byok": "not_applicable",
+      "activation_basis": "owner_default_allow"
+    },
+    {
+      "source": "openalex",
+      "review_status": "permissive",
+      "release_status": "eligible",
+      "license": "CC0-1.0",
+      "evidence": [
+        "https://help.openalex.org/api/",
+        "https://help.openalex.org/data/authors/",
+        "https://help.openalex.org/data/works/attributes/"
+      ],
+      "scope": "Factual bibliographic and author metadata, author-work edges and related-work identifiers; abstracts, full text and content downloads excluded.",
+      "reason": "OpenAlex metadata is CC0. Preserve source-qualified identities, independent source counts and algorithmic relatedness. Abstracts and full text are outside this metadata projection.",
+      "byok": "optional_local_environment"
+    },
+    {
+      "source": "alphamissense",
+      "review_status": "permissive",
+      "release_status": "eligible",
+      "license": "CC-BY-4.0",
+      "evidence": [
+        "https://github.com/google-deepmind/alphamissense",
+        "https://rest.ensembl.org/documentation/info/vep_region_get",
+        "https://alphafold.ebi.ac.uk/faq"
+      ],
+      "scope": "AlphaMissense precomputed predictions only, via official Ensembl VEP or AlphaFold DB per-protein files; exact human allele/transcript or canonical protein substitution.",
+      "reason": "DeepMind explicitly licenses prediction data under CC BY 4.0. Preserve attribution, license, publication, source service and sequence/transcript/allele identity. Protein files are bound by content hash; VEP service release is observed and its exact AlphaMissense dataset release is not reported. No trained model weights or restricted CADD/dbNSFP/SIFT/PolyPhen fields are served. Computational score is not a clinical classification.",
+      "byok": "not_applicable"
+    },
+    {
+      "source": "eve",
+      "review_status": "permissive",
+      "release_status": "eligible",
+      "license": "MIT",
+      "evidence": [
+        "https://evemodel.org/download/bulk",
+        "https://evemodel.org/LICENSE.txt",
+        "https://github.com/OATML-Markslab/EVE"
+      ],
+      "scope": "Original EVE per-protein ASM score/uncertainty and 75%-retained classification; no mixed dbNSFP or clinical-label bundle.",
+      "reason": "Publisher explicitly applies MIT to all site data; preserve copyright/permission notice and Frazer et al. attribution. Exact canonical human protein identity and score artifact hash required.",
+      "byok": "not_applicable"
+    }
+  ],
+  "embedded_sources": [
+    {
+      "source": "COSMIC",
+      "release_status": "unreleased",
+      "reason": "Current commercial licensing and exact historical MyVariant snapshot permissions must be established independently.",
+      "evidence": [
+        "https://www.cosmickb.org/licensing/",
+        "https://docs.myvariant.info/en/latest/doc/data.html"
+      ]
+    },
+    {
+      "source": "dbNSFP",
+      "release_status": "unreleased",
+      "reason": "MyVariant metadata reports dbNSFP 4.8a, an academic branch. Exact constituent predictor permissions remain unqualified; keep bundled predictions unreleased.",
+      "evidence": [
+        "https://www.dbnsfp.org/license/",
+        "https://www.dbnsfp.org/download/"
+      ]
+    },
+    {
+      "source": "CADD",
+      "release_status": "unreleased",
+      "reason": "Commercial permissions must be established; exclude bundled scores pending primary terms review.",
+      "evidence": [
+        "https://cadd.gs.washington.edu/"
+      ]
+    },
+    {
+      "source": "Cancer Genome Interpreter",
+      "release_status": "eligible",
+      "reason": "Owner default-enable for uncertain or mixed content; exact rights remain unresolved and original contributor notices must be retained. No blanket permission or Apache relicensing of content is asserted.",
+      "evidence": [
+        "https://www.cancergenomeinterpreter.org/conditions"
+      ]
+    },
+    {
+      "source": "GMDN",
+      "release_status": "unreleased",
+      "reason": "Separate license needed for specified commercial categorization/mapping and AI-training uses; exclude unqualified content.",
+      "evidence": [
+        "https://open.fda.gov/terms/"
+      ]
+    },
+    {
+      "source": "Publisher abstracts/full text/supplements",
+      "release_status": "eligible",
+      "reason": "Owner default-enable for uncertain or mixed content; exact rights remain unresolved and original contributor notices must be retained. No blanket permission or Apache relicensing of content is asserted.",
+      "evidence": [
+        "https://www.nlm.nih.gov/databases/download.html",
+        "https://pmc.ncbi.nlm.nih.gov/about/copyright/"
+      ]
+    },
+    {
+      "source": "SNPedia",
+      "release_status": "unreleased",
+      "reason": "MyVariant metadata reports CC BY-NC-SA; exclude the current field distribution.",
+      "evidence": [
+        "https://www.snpedia.com/index.php/SNPedia:General_disclaimer"
+      ]
+    },
+    {
+      "source": "SIDER",
+      "release_status": "unreleased",
+      "reason": "MyChem metadata reports CC BY-NC-SA 3.0; exclude current side-effect fields.",
+      "evidence": [
+        "https://mychem.info/v1/metadata"
+      ]
+    },
+    {
+      "source": "DrugCentral / PharmGKB / GtoPdb / UniChem",
+      "release_status": "eligible",
+      "reason": "Share-alike accepted; preserve attribution and original data/database license and applicable obligations.",
+      "evidence": [
+        "https://mychem.info/v1/metadata"
+      ]
+    },
+    {
+      "source": "UMLS",
+      "release_status": "unreleased",
+      "reason": "MyGene/MyChem/MyDisease may include UMLS material; license and constituent vocabulary restrictions require exact field review.",
+      "evidence": [
+        "https://www.nlm.nih.gov/research/umls/knowledge_sources/metathesaurus/release/license_agreement.html"
+      ]
+    },
+    {
+      "source": "ExAC / legacy gnomAD",
+      "release_status": "eligible",
+      "reason": "Share-alike accepted; preserve attribution and original data/database license and applicable obligations.",
+      "evidence": [
+        "https://myvariant.info/v1/metadata"
+      ]
+    },
+    {
+      "source": "DrugBank",
+      "release_status": "eligible",
+      "reason": "Owner default-enable for uncertain or mixed content; exact rights remain unresolved and original contributor notices must be retained. No blanket permission or Apache relicensing of content is asserted.",
+      "evidence": [
+        "https://go.drugbank.com/releases/latest#open-data"
+      ]
+    }
+  ]
+}

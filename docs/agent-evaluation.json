@@ -1,0 +1,102 @@
+{
+  "status": "not_run",
+  "tasks": [
+    {
+      "id": "gene-record",
+      "question": "Retrieve the BRAF gene record.",
+      "routes": [
+        "get"
+      ]
+    },
+    {
+      "id": "ambiguous-alias",
+      "question": "Resolve HER2 before combining gene evidence.",
+      "routes": [
+        "resolve"
+      ]
+    },
+    {
+      "id": "gtex-only",
+      "question": "Retrieve ERBB2 expression using only GTEx.",
+      "routes": [
+        "get"
+      ]
+    },
+    {
+      "id": "literature-dates",
+      "question": "Find PubMed BRAF papers published since 2024-01-01.",
+      "routes": [
+        "literature_search"
+      ]
+    },
+    {
+      "id": "article-direct",
+      "question": "Read the full text for PMC123.",
+      "routes": [
+        "get"
+      ]
+    },
+    {
+      "id": "trial-status",
+      "question": "Find recruiting melanoma trials.",
+      "routes": [
+        "trial_search"
+      ]
+    },
+    {
+      "id": "exact-variant",
+      "question": "Retrieve ClinVar evidence for GRCh38 chr7:140753336:A:T.",
+      "routes": [
+        "variant_evidence"
+      ]
+    },
+    {
+      "id": "ambiguous-variant",
+      "question": "Retrieve evidence for BRAF V600E; preserve allele ambiguity.",
+      "routes": [
+        "variant_evidence"
+      ]
+    },
+    {
+      "id": "target-dossier",
+      "question": "Assemble a target dossier for ERBB2.",
+      "routes": [
+        "research"
+      ]
+    },
+    {
+      "id": "study-frequency",
+      "question": "Calculate TP53 mutation frequency in ubi_synthetic, using assay coverage.",
+      "routes": [
+        "study_analysis"
+      ]
+    },
+    {
+      "id": "study-survival",
+      "question": "Calculate overall survival by TP53 mutation in ubi_synthetic.",
+      "routes": [
+        "study_analysis"
+      ]
+    },
+    {
+      "id": "source-failure",
+      "question": "Find BRAF PubMed papers when the provider is unavailable; preserve the failure.",
+      "routes": [
+        "literature_search"
+      ]
+    },
+    {
+      "id": "advanced-source",
+      "question": "Retrieve GTEx tissue metadata.",
+      "routes": [
+        "query_source"
+      ]
+    },
+    {
+      "id": "platform-handoff",
+      "question": "Import this evidence into my private project and start a durable modeling run.",
+      "routes": []
+    }
+  ],
+  "instructions": "Run multiple held-out attempts with recorded model/client versions, then supply JSONL traces. Missing metrics and scientific adjudication remain missing."
+}

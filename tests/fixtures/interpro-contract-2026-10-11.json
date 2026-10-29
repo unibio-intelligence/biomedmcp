@@ -1,0 +1,130 @@
+{
+  "as_of": "2026-10-11",
+  "scope": "Selected integrated InterPro entries filtered by one canonical UniProt accession, current public API observations and official documentation. Public serializer repository and Swagger locators returned 404; there is no complete pinned serializer/OpenAPI qualification.",
+  "documentation": [
+    "https://interpro-documentation.readthedocs.io/en/latest/api.html",
+    "https://interpro-documentation.readthedocs.io/en/latest/represent_dom.html"
+  ],
+  "observations": [
+    {
+      "url": "https://www.ebi.ac.uk/interpro/api/",
+      "status": 200,
+      "bytes": 14935,
+      "sha256": "e2de7f867c31df2180e3f44cb64445644e65df7d64b19a4202ebc1be376ca2e7",
+      "headers": {
+        "InterPro-Version": "110.0",
+        "Content-Type": "application/json"
+      }
+    },
+    {
+      "url": "https://www.ebi.ac.uk/interpro/api/entry/interpro/protein/uniprot/P15056/?page_size=2&type=repeat",
+      "status": 204,
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "headers": {
+        "InterPro-Version": "110.0",
+        "Content-Type": "application/json"
+      }
+    },
+    {
+      "url": "https://www.ebi.ac.uk/interpro/api/entry/interpro/protein/uniprot/P15056/?page_size=25",
+      "status": 200,
+      "bytes": 7296,
+      "sha256": "731b7749ccd81fa83926ada9de947312782fe145239ad7e0218f24737b4c845f",
+      "headers": {
+        "InterPro-Version": "110.0",
+        "X-UniProt-Release": null,
+        "Content-Type": "application/json"
+      }
+    },
+    {
+      "url": "https://interpro-documentation.readthedocs.io/en/latest/api.html",
+      "status": 403,
+      "bytes": 17,
+      "sha256": "2938e9f1284180959e33ab1718d0793a72ff6e4cdb8108c34dcd14e69446de5c",
+      "headers": {}
+    },
+    {
+      "url": "https://interpro-documentation.readthedocs.io/en/latest/protein.html",
+      "status": 403,
+      "bytes": 17,
+      "sha256": "2938e9f1284180959e33ab1718d0793a72ff6e4cdb8108c34dcd14e69446de5c",
+      "headers": {}
+    },
+    {
+      "url": "https://www.ebi.ac.uk/interpro/api/entry/interpro/protein/uniprot/P15056/?cursor=source%7Cs%7Cipr001245&page_size=2",
+      "status": 200,
+      "bytes": 1766,
+      "sha256": "8d37fd0d803d419c976239cc0e4835aa050b08d89701b9db4be8663fa546b75f",
+      "headers": {
+        "InterPro-Version": "110.0",
+        "Content-Type": "application/json"
+      }
+    },
+    {
+      "url": "https://www.ebi.ac.uk/interpro/api/static_files/swagger/index.html",
+      "status": 404,
+      "bytes": 62,
+      "sha256": "48fa3e4af9bcdff757c94207d11344337d6979fc1241e161a395cd37d1ace249",
+      "headers": {}
+    },
+    {
+      "url": "https://rest.uniprot.org/uniprotkb/P15056.json",
+      "status": 200,
+      "bytes": 177821,
+      "sha256": "f4d1e9e4534be377e91691c09016add1972ecb6f149195320fad2b40260cdc46",
+      "headers": {
+        "InterPro-Version": null,
+        "X-UniProt-Release": "2026_03",
+        "Content-Type": "application/json"
+      }
+    },
+    {
+      "url": "https://www.ebi.ac.uk/interpro/api/entry/interpro/protein/uniprot/P00000/?page_size=2",
+      "status": 204,
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "headers": {
+        "InterPro-Version": "110.0",
+        "Content-Type": "application/json"
+      }
+    }
+  ],
+  "minimum_projection": {
+    "page": [
+      "count",
+      "next",
+      "previous",
+      "results"
+    ],
+    "entry": [
+      "metadata.accession",
+      "metadata.name",
+      "metadata.source_database",
+      "metadata.type",
+      "proteins"
+    ],
+    "protein": [
+      "accession",
+      "protein_length",
+      "source_database",
+      "organism",
+      "entry_protein_locations"
+    ],
+    "location": [
+      "fragments"
+    ],
+    "fragment": [
+      "start",
+      "end",
+      "dc-status"
+    ]
+  },
+  "interpretation": [
+    "200 populated results and parsed continuation were observed for P15056. Full response count11 has domain, family, homologous_superfamily, active_site and binding_site entries.",
+    "HTTP204 was observed both for a valid but empty type filter and for a nonexistent accession. A separate exact UniProt identity is required before source-confined empty evidence.",
+    "InterPro110.0 and UniProt2026_03 were observed for separate bounded reads. No global live readiness, immutable snapshot pin, identical sequence-release alignment, experimental residue effect, clinical function or representative-domain selection is established.",
+    "The initial A0A000 probe was labeled empty in its acquisition helper but returned six populated entries; its original raw bytes are retained as a populated observation.",
+    "Only consumed fields are validated. Optional absent representative/score/model/member/GO metadata remain unknown, with no experimental meaning invented. Unknown entry types and malformed or out-of-bound coordinates fail closed."
+  ]
+}

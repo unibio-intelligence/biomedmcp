@@ -1,0 +1,598 @@
+{
+  "as_of": "2026-10-13",
+  "implementation": "biomedmcp/0.2.1",
+  "scope": "Public implementation and bounded offline fixture qualification. Configuration/importability are distinct from response contract evidence, live health and client/model task readiness. No current provider-wide live readiness claim.",
+  "source_schemas": "adapter-catalog.json",
+  "live_observations": "live-qualification.md",
+  "architecture": "native-python-architecture.md",
+  "rows": [
+    {
+      "id": "C01",
+      "capability": "Common gene/drug/disease/trial/protein lookup",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_entities.py",
+        "tests/test_scientific_workflows.py",
+        "docs/native-python-architecture.md",
+        "tests/test_typed_trial_records.py",
+        "tests/test_interpro_responses.py",
+        "docs/interpro-matches.md",
+        "tests/test_biothings_responses.py",
+        "docs/annotation-aggregators.md"
+      ],
+      "qualification_boundary": "Python contract/fixture qualification where covered. Live health, access credentials and release-specific scientific coverage require separate source qualification. Selected trial registry fixtures preserve qualified NCT/NCI identities, nullable enrollment, participants units and actual/estimated/minimum-target meanings. NCI registry codes remain source-specific; its results fields are not normalized. Nested dossiers and exhaustive provider semantics remain open. Selected InterPro protein entry windows validate canonical accession, species, length, types, fragments and observed release. Scoped actions continue bounded windows; residue overlaps preserve non-domain types and failures. Full serializer, identical sequence-release alignment, experimental effects and source-wide health remain unqualified. Source55 validates minimum MyChem/MyDisease envelopes before client caching and preserves bulk candidates, missingness and reported annotations. Chemical conversion/substructure/similarity placeholders are retired. Disease scores no longer invent confidence. Per-source eligibility and content restrictions follow the source license inventory; unresolved rights remain identified. Live source health and biological qualification are not established.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C02",
+      "capability": "Gene aliases and identifier resolution",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_entities.py",
+        "tests/test_scientific_workflows.py",
+        "docs/native-python-architecture.md"
+      ],
+      "qualification_boundary": "Python contract/fixture qualification where covered. Live health, access credentials and release-specific scientific coverage require separate source qualification.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C03",
+      "capability": "Exact variant identity",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_variants.py",
+        "tests/test_native_entities.py",
+        "tests/test_scientific_workflows.py"
+      ],
+      "qualification_boundary": "Python contract/fixture qualification where covered. Live health, access credentials and release-specific scientific coverage require separate source qualification.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C04",
+      "capability": "ClinGen CAR/ERepo/CSpec/LDH and GenCC",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_variants.py",
+        "tests/test_native_entities.py",
+        "tests/test_scientific_workflows.py",
+        "tests/test_clingen_responses.py",
+        "tests/test_typed_variant_assertions.py",
+        "tests/test_record_schema_resources.py",
+        "tests/test_gencc_responses.py",
+        "docs/gencc-assertions.md"
+      ],
+      "qualification_boundary": "Selected ClinGen acquisition shape/identity, assertion/reference, retry/cache and MCP recovery contracts; not exhaustive ClinGen/GenCC qualification or live health. Source53 adds typed ERepo expert interpretation records and optional scientific record schemas; new regressions pass native/Docker fixture qualification. Species/build/transcript/condition are unqualified by the selected summary contract, document versions are not repository replay pins, and page-one coverage is not exhaustive. Source58 adds current GenCC SGC/version CSV validation, complete matching assertion retention, bounded off-loop parsing and scoped CC0 export permissions. This is selected response-contract qualification, not a consensus computation, linked-report permission or live source-wide readiness.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C05",
+      "capability": "Federated literature search",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_literature.py",
+        "tests/test_scientific_workflows.py",
+        "tests/test_typed_literature_records.py"
+      ],
+      "qualification_boundary": "Python contract/fixture qualification where covered. Live health, access credentials and release-specific scientific coverage require separate source qualification. Selected typed literature metadata, nullable counts/flags and independently retained assertions are covered offline; nested dossier/graph schemas and exhaustive provider semantics remain open.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C06",
+      "capability": "Literature ranking and search-plan explanation",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_literature.py",
+        "tests/test_scientific_workflows.py"
+      ],
+      "qualification_boundary": "Python contract/fixture qualification where covered. Live health, access credentials and release-specific scientific coverage require separate source qualification.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C07",
+      "capability": "Article details, full text and indexing",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_literature.py",
+        "tests/test_scientific_workflows.py",
+        "tests/test_fulltext_range_contract.py",
+        "tests/test_typed_literature_records.py",
+        "tests/test_evidence_recovery.py",
+        "docs/evidence-resources.md"
+      ],
+      "qualification_boundary": "Selected offline full-text range, schema, MCP/CLI/batch and bounded line-preservation fixtures pass. Selected retained row/field/character and whole-section/composed-record recovery is fixture-qualified through pinned MCP and separate CLI processes, with identity, scope, expiry and payload bounds. Real hosted clients, model token/task impact, live health and exhaustive provider semantics require separate qualification. Selected typed literature metadata, nullable counts/flags and independently retained assertions are covered offline; nested dossier/graph schemas and exhaustive provider semantics remain open.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C08",
+      "capability": "Supplements and article assets",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_literature.py",
+        "tests/test_scientific_workflows.py"
+      ],
+      "qualification_boundary": "Native JATS attachment metadata and bounded article reading; arbitrary attachment URLs are not fetched or executed.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C09",
+      "capability": "Citations, references and recommendations",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_literature.py",
+        "tests/test_scientific_workflows.py"
+      ],
+      "qualification_boundary": "Python contract/fixture qualification where covered. Live health, access credentials and release-specific scientific coverage require separate source qualification.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C10",
+      "capability": "Author identity and ORCID",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_literature.py",
+        "tests/test_scientific_workflows.py"
+      ],
+      "qualification_boundary": "Python contract/fixture qualification where covered. Live health, access credentials and release-specific scientific coverage require separate source qualification.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C11",
+      "capability": "Clinical trials, criteria, locations/results/documents",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_entities.py",
+        "tests/test_scientific_workflows.py",
+        "docs/native-python-architecture.md",
+        "tests/test_clinical_trials_responses.py",
+        "tests/test_typed_trial_records.py"
+      ],
+      "qualification_boundary": "Dated official ClinicalTrials.gov request/response shapes, exact/aliased NCT identity, selected nested scientific fields, phase/status scope, continuation, bounded per-window statistics, missing enrollment and safe partial comparison failures are covered offline. Arbitrary complex search criteria, exhaustive scientific result semantics, live health and real client/model outcomes remain unqualified. NCI requires its provider key. Selected trial registry fixtures preserve qualified NCT/NCI identities, nullable enrollment, participants units and actual/estimated/minimum-target meanings. NCI registry codes remain source-specific; its results fields are not normalized. Nested dossiers and exhaustive provider semantics remain open.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C12",
+      "capability": "Drug labels, adverse events, recalls and shortages",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_entities.py",
+        "tests/test_scientific_workflows.py",
+        "docs/native-python-architecture.md"
+      ],
+      "qualification_boundary": "Python contract/fixture qualification where covered. Live health, access credentials and release-specific scientific coverage require separate source qualification.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C13",
+      "capability": "Drug approvals and regulatory records",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_entities.py",
+        "tests/test_scientific_workflows.py",
+        "docs/native-python-architecture.md"
+      ],
+      "qualification_boundary": "Python contract/fixture qualification where covered. Live health, access credentials and release-specific scientific coverage require separate source qualification.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C14",
+      "capability": "Orange Book equivalence, patents, exclusivity",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_entities.py",
+        "tests/test_scientific_workflows.py",
+        "docs/native-python-architecture.md"
+      ],
+      "qualification_boundary": "Python contract/fixture qualification where covered. Live health, access credentials and release-specific scientific coverage require separate source qualification.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C15",
+      "capability": "GTEx expression",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_entities.py",
+        "tests/test_scientific_workflows.py",
+        "docs/native-python-architecture.md"
+      ],
+      "qualification_boundary": "Python contract/fixture qualification where covered. Live health, access credentials and release-specific scientific coverage require separate source qualification.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C16",
+      "capability": "GTEx eQTL, sQTL, multi-tissue/dynamic modes",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_entities.py",
+        "tests/test_scientific_workflows.py",
+        "docs/native-python-architecture.md",
+        "tests/test_typed_qtl_records.py",
+        "docs/qtl-records.md"
+      ],
+      "qualification_boundary": "Canonical single-tissue eQTL/sQTL, MetaSoft and dynamic gene sections expose typed records with qualified gene/allele/release, distinct probability and uncertainty fields, unknown participant/measurement denominators, prefilter source page/row/response hashes and exact dynamic sQTL join inputs. Synthetic fixtures preserve independent conflicting rows, missing/null tissue values, paired genotype counts, executable provider continuation and same-snapshot array recovery. Retained internal gene-summary modes are typed without adding public aliases. Real-study scientific validity, provider-wide live health and current model/client impact remain separate qualification.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C17",
+      "capability": "Open Targets target/drug/disease evidence",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_entities.py",
+        "tests/test_scientific_workflows.py",
+        "docs/native-python-architecture.md",
+        "tests/test_source_schemas.py",
+        "tests/test_opentargets_responses.py",
+        "tests/test_opentargets_assessments.py",
+        "tests/test_opentargets_partial.py",
+        "tests/test_opentargets_workflows.py",
+        "tests/test_opentargets_variant_evidence.py",
+        "src/biomedmcp/native/opentargets_pair_evidence.py",
+        "tests/test_opentargets_pair_evidence.py"
+      ],
+      "qualification_boundary": "Selected current GraphQL query/type, exact identity, independent primary/optional retention and actual MCP retry/cache/recovery; acquired annotation Jaccard, separate genetic-component ranking, gene-linked credible-set and disease/study projections with separately executable study/locus continuation. Raw inputs, missing scores and source-window coverage remain explicit. Other derived/nested provider semantics, exhaustive scientific qualification and live/model accuracy remain separate. Selected variant evidence windows preserve source measurements and use signed, private, request/account-scoped continuation with cycle/admission bounds, empty-page continuation and primary retention. Variant credible-set windows preserve independent lead-variant/study identity and reported fine-mapping fields with executable page actions separate from evidence cursors. Actual MCP resource recovery and independent local CLI process continuation are covered. Genomic-build/allele qualification, complete variant nesting and exhaustive scientific adjudication remain separate. Target-disease evidence and nested target validation use private signed/scoped state with executable canonical pair actions, filtered/empty continuation, cycle and acquisition bounds, unavailable-continuation retention, actual MCP omission recovery, separate CLI processes and Redis workers. Other provider/page qualification remains separate.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C18",
+      "capability": "Open Targets variants, studies, credible sets",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_entities.py",
+        "tests/test_scientific_workflows.py",
+        "docs/native-python-architecture.md",
+        "tests/test_source_schemas.py",
+        "tests/test_opentargets_responses.py"
+      ],
+      "qualification_boundary": "Selected current GraphQL query/type, single-entity identity, gene composition and MCP retry/cache/recovery contracts. Advanced composition/derived analyses, complete provider semantics and live/model accuracy remain separate qualification.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C19",
+      "capability": "ChEMBL/MyChem bioactivity and chemical detail",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_entities.py",
+        "tests/test_scientific_workflows.py",
+        "docs/native-python-architecture.md",
+        "tests/test_biothings_responses.py",
+        "docs/annotation-aggregators.md"
+      ],
+      "qualification_boundary": "Python contract/fixture qualification where covered. Live health, access credentials and release-specific scientific coverage require separate source qualification. Source55 validates minimum MyChem/MyDisease envelopes before client caching and preserves bulk candidates, missingness and reported annotations. Chemical conversion/substructure/similarity placeholders are retired. Disease scores no longer invent confidence. Per-source eligibility and content restrictions follow the source license inventory; unresolved rights remain identified. Live source health and biological qualification are not established.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C20",
+      "capability": "SureChEMBL patent chemistry",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_entities.py",
+        "tests/test_scientific_workflows.py",
+        "docs/native-python-architecture.md",
+        "tests/test_surechembl_metadata.py",
+        "docs/surechembl-metadata.md",
+        "tests/test_surechembl_search.py",
+        "tests/test_surechembl_annotations.py"
+      ],
+      "qualification_boundary": "Python contract/fixture qualification where covered. Live health, access credentials and release-specific scientific coverage require separate source qualification. Source53 implements current SureChEMBL metadata/window statistics, source similarity jobs with signed scoped continuation, and derived patent annotation projections. Missing measurements and mappings remain explicit; underlying patent text is excluded. New regressions pass native/Docker fixture qualification; precise fingerprints, global-frequency alignment and exhaustive document/family chemistry remain unqualified. Retained nonpublic exact/family/chemical aliases remain blocked.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C21",
+      "capability": "Broad patent search/detail/families/citations",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_entities.py",
+        "tests/test_scientific_workflows.py",
+        "docs/native-python-architecture.md",
+        "tests/test_surechembl_metadata.py",
+        "docs/surechembl-metadata.md",
+        "tests/test_surechembl_search.py",
+        "tests/test_surechembl_annotations.py"
+      ],
+      "qualification_boundary": "Python contract/fixture qualification where covered. Live health, access credentials and release-specific scientific coverage require separate source qualification. Source53 implements current SureChEMBL metadata/window statistics, source similarity jobs with signed scoped continuation, and derived patent annotation projections. Missing measurements and mappings remain explicit; underlying patent text is excluded. New regressions pass native/Docker fixture qualification; precise fingerprints, global-frequency alignment and exhaustive document/family chemistry remain unqualified. Retained nonpublic exact/family/chemical aliases remain blocked.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C22",
+      "capability": "NCBI assembly/taxonomy datasets, inferred orthology and viral metadata",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_entities.py",
+        "tests/test_scientific_workflows.py",
+        "docs/native-python-architecture.md",
+        "tests/test_ncbi_gene_reports.py",
+        "docs/ncbi-orthologs-virus.md"
+      ],
+      "qualification_boundary": "Python contract/fixture qualification where covered. Live health, access credentials and release-specific scientific coverage require separate source qualification. Source56 checks exact GeneID/source taxon and reported shared ortholog groups, preserving all raw rows and provider continuation through exact target-taxon filtering. Current virus metadata validates exact accession/viral taxon and nullable counts. Unsupported comparison/tree/global-statistics and generic search modes are retired. NCBI remains held; inference is not sequence similarity, functional equivalence or an experimental relationship. Live health, source-wide semantics and current model/client performance remain unqualified.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C23",
+      "capability": "GEO/SRA/GenBank and sequencing-study links",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_entities.py",
+        "tests/test_scientific_workflows.py",
+        "docs/native-python-architecture.md"
+      ],
+      "qualification_boundary": "Python contract/fixture qualification where covered. Live health, access credentials and release-specific scientific coverage require separate source qualification.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C24",
+      "capability": "Ensembl lookup/homology/regions/VEP",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_entities.py",
+        "tests/test_scientific_workflows.py",
+        "docs/native-python-architecture.md"
+      ],
+      "qualification_boundary": "Python contract/fixture qualification where covered. Live health, access credentials and release-specific scientific coverage require separate source qualification.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C25",
+      "capability": "Proteins, domains, complexes, interactions",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_entities.py",
+        "tests/test_scientific_workflows.py",
+        "docs/native-python-architecture.md",
+        "tests/test_interpro_responses.py",
+        "docs/interpro-matches.md",
+        "tests/test_pdb_responses.py",
+        "docs/pdb.md",
+        "tests/test_uniprot_annotations.py",
+        "docs/uniprot-responses.md",
+        "tests/test_complexportal_responses.py",
+        "docs/complex-membership.md"
+      ],
+      "qualification_boundary": "Python contract/fixture qualification where covered. Live health, access credentials and release-specific scientific coverage require separate source qualification. Selected integrated InterPro windows verify canonical protein identity, taxonomy, sequence length, entry types, fragment coordinates, observed release and scoped continuation. The structure relation preserves partial source failures and residue-overlap meaning. Complete serializer and sequence-release alignment remain unqualified. Source53 adds dated RCSB entry/search validation, archive citations and bounded coordinate parsing; its new PDB regressions pass native/Docker fixture qualification. Experimental archive search excludes computed models; assembly transforms and geometry are not independently verified. Source53 also replaces unsupported UniProt evolutionary inference claims with explicit annotation/reference modes and adds method-qualified sequence/function/PDB-reference comparisons. Their new regression tests pass native/Docker fixture qualification; alignment, inferred relationships and geometry are not computed. Source54 selects exact Complex Portal participant/species annotations with independent UniProt identity, raw offset continuation, duplicate suppression, nullable source stoichiometry, source-row hashes and unqualified candidates. No experimental binding inference, pinned search release, stable ordering or full participant-detail qualification is claimed.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C26",
+      "capability": "Variant-to-structure context",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_variants.py",
+        "tests/test_native_entities.py",
+        "tests/test_scientific_workflows.py"
+      ],
+      "qualification_boundary": "Reference amino acid is checked on one reviewed UniProt sequence. Domain intervals and PDB sequence coverage are returned. Experimental residue numbering, isoform equivalence and variant pathogenicity are not inferred.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C27",
+      "capability": "Pathways and signaling networks",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_entities.py",
+        "tests/test_scientific_workflows.py",
+        "docs/native-python-architecture.md",
+        "tests/test_reactome_responses.py",
+        "tests/test_string_network.py",
+        "docs/string-network.md",
+        "tests/test_reactome_contracts.py",
+        "tests/fixtures/reactome-contract-2026-10-11.json",
+        "docs/reactome-contracts.md"
+      ],
+      "qualification_boundary": "Selected Reactome controller/model contracts qualify forced-filter unclustered search, scoped continuation, exact pathway identity, species-qualified gene mapping, events/physical participants, peer retention, bounded diagram JSON/image metadata and safe errors. STRING remains separately fixture-qualified. Disease pathway text matches do not verify ontology relationships. Nested scientific semantics, exact source release, broad live health and actual model/client validity remain unqualified.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C28",
+      "capability": "Gene-set enrichment",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_entities.py",
+        "tests/test_scientific_workflows.py",
+        "docs/native-python-architecture.md"
+      ],
+      "qualification_boundary": "Python contract/fixture qualification where covered. Live health, access credentials and release-specific scientific coverage require separate source qualification.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C29",
+      "capability": "Disease/phenotype/ontology discovery",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_entities.py",
+        "tests/test_scientific_workflows.py",
+        "docs/native-python-architecture.md",
+        "tests/test_ols_responses.py",
+        "docs/ols-phenotypes.md",
+        "tests/test_biothings_responses.py",
+        "docs/annotation-aggregators.md"
+      ],
+      "qualification_boundary": "Python contract/fixture qualification where covered. Live health, access credentials and release-specific scientific coverage require separate source qualification. Selected HPO search and exact OLS term records validate identity, source pagination and optional metadata before caching. Name resolution generates executable HPO get actions; definitions and replacement assertions do not establish clinical observations. Other ontology/provider and exhaustive nested meanings remain open. Source55 validates minimum MyChem/MyDisease envelopes before client caching and preserves bulk candidates, missingness and reported annotations. Chemical conversion/substructure/similarity placeholders are retired. Disease scores no longer invent confidence. Per-source eligibility and content restrictions follow the source license inventory; unresolved rights remain identified. Live source health and biological qualification are not established.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C30",
+      "capability": "GWAS and phenotype associations",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_entities.py",
+        "tests/test_scientific_workflows.py",
+        "docs/native-python-architecture.md",
+        "tests/test_gwas_responses.py",
+        "docs/gwas-associations.md"
+      ],
+      "qualification_boundary": "Python contract/fixture qualification where covered. Live health, access credentials and release-specific scientific coverage require separate source qualification. Selected GWAS v2 associations validate minimum identity, p-value/missingness and provider windows. Unknown/conflicting p-values are retained, and variant sections generate executable continuation. Complete source semantics, causal interpretation, genome-build qualification and current-source model/client readiness remain open.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C31",
+      "capability": "Pharmacogenomics",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_entities.py",
+        "tests/test_scientific_workflows.py",
+        "docs/native-python-architecture.md"
+      ],
+      "qualification_boundary": "Python contract/fixture qualification where covered. Live health, access credentials and release-specific scientific coverage require separate source qualification.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C32",
+      "capability": "Cancer-specific evidence",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_variants.py",
+        "tests/test_native_entities.py",
+        "tests/test_scientific_workflows.py"
+      ],
+      "qualification_boundary": "Python contract/fixture qualification where covered. Live health, access credentials and release-specific scientific coverage require separate source qualification.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C33",
+      "capability": "Public study/cohort/survival/compare/co-occurrence",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_studies.py",
+        "tests/test_extensions.py",
+        "tests/test_study_initialization.py",
+        "tests/test_study_concurrent_recovery.py",
+        "tests/test_typed_mutation_profile.py",
+        "tests/test_typed_study_derivations.py"
+      ],
+      "qualification_boundary": "Synthetic verified releases exercise typed mutation/measurement profiles and eight derived families with exact consumed file/selector locators, separate sample/patient populations, explicit inference/uncertainty availability and bounded recovery. Installed empty SV windows remain coverage-unqualified; unknown SV samples, absent patient outcomes and nonfinite filter thresholds fail safely. Independent statistical references are preserved. Operator-reviewed real releases, broader resource/SLO qualification and real model/client outcomes remain required.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C34",
+      "capability": "Charts for public study analysis",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_studies.py",
+        "tests/test_extensions.py"
+      ],
+      "qualification_boundary": "Synthetic verified study release exercises Python counts, assay denominators, patient grouping, tied-event survival, exact contingency tests and charts. Operator-reviewed real public releases remain required.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C35",
+      "capability": "Diagnostic catalogs and vaccines",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_entities.py",
+        "tests/test_scientific_workflows.py",
+        "docs/native-python-architecture.md"
+      ],
+      "qualification_boundary": "Python contract/fixture qualification where covered. Live health, access credentials and release-specific scientific coverage require separate source qualification.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C36",
+      "capability": "Funding and contextual public records",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_entities.py",
+        "tests/test_scientific_workflows.py",
+        "docs/native-python-architecture.md"
+      ],
+      "qualification_boundary": "Python contract/fixture qualification where covered. Live health, access credentials and release-specific scientific coverage require separate source qualification.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C37",
+      "capability": "Drug\u2013drug interaction sources",
+      "status": "implemented_not_exhaustively_qualified",
+      "evidence": [
+        "tests/test_native_entities.py",
+        "tests/test_scientific_workflows.py",
+        "docs/native-python-architecture.md"
+      ],
+      "qualification_boundary": "Python contract/fixture qualification where covered. Live health, access credentials and release-specific scientific coverage require separate source qualification.",
+      "implementation": "Ubi Python/FastMCP; retained clients and native scientific modules",
+      "owner": "public_science"
+    },
+    {
+      "id": "C38",
+      "capability": "AlphaGenome or other costly predictive computation",
+      "status": "platform_owned",
+      "evidence": [
+        "docs/native-python-architecture.md"
+      ],
+      "qualification_boundary": "Outside public qualification. Inspect the released platform manifest for available capabilities; public research does not install private compute or write projects.",
+      "owner": "platform"
+    },
+    {
+      "id": "C39",
+      "capability": "TS R/Bioconductor/WASM bioinformatics",
+      "status": "platform_owned",
+      "evidence": [
+        "docs/native-python-architecture.md"
+      ],
+      "qualification_boundary": "Outside public qualification. Inspect the released platform manifest for available capabilities; public research does not install private compute or write projects.",
+      "owner": "platform"
+    },
+    {
+      "id": "C40",
+      "capability": "TS arbitrary SQL/database connectivity",
+      "status": "platform_owned",
+      "evidence": [
+        "docs/native-python-architecture.md"
+      ],
+      "qualification_boundary": "Outside public qualification. Inspect the released platform manifest for available capabilities; public research does not install private compute or write projects.",
+      "owner": "platform"
+    },
+    {
+      "id": "C41",
+      "capability": "Curated knowledgebase",
+      "status": "platform_owned",
+      "evidence": [
+        "docs/native-python-architecture.md"
+      ],
+      "qualification_boundary": "Outside public qualification. Inspect the released platform manifest for available capabilities; public research does not install private compute or write projects.",
+      "owner": "platform"
+    },
+    {
+      "id": "C42",
+      "capability": "Public evidence into projects/models",
+      "status": "platform_owned",
+      "evidence": [
+        "docs/native-python-architecture.md"
+      ],
+      "qualification_boundary": "Outside public qualification. Inspect the released platform manifest for available capabilities; public research does not install private compute or write projects.",
+      "owner": "platform"
+    }
+  ]
+}

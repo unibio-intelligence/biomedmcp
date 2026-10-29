@@ -1,0 +1,53 @@
+# Study statistical methods and interpretation
+
+`study_analysis` provides bounded exploratory analyses of installed, verified public releases. These are unadjusted observational associations. They do not establish causality, treatment benefit, clinical suitability or absence of an effect. Checksums identify the input release; they do not establish scientific validity. Independent numerical qualification uses synthetic cases, not a representative real-study validation.
+
+## Population, identity and repeated samples
+
+Survival, mutation comparison, expression comparison and co-occurrence use **patients** as the inferential unit. Each eligible sample must have a nonempty `PATIENT_ID`. A patient is mutant when any of their eligible, declared mutation-assayed samples has the requested mutation; all other eligible patients form the wild-type group. Events outside assay coverage cannot assign a patient to either mutation-positive numerator. A measured negative requires declared gene and sample coverage. Unknown assay coverage remains unavailable.
+
+Expression comparison aggregates the finite measurements for each patient using their median across eligible samples. A patient with one measured and one missing biopsy retains the measured value; a patient with no finite measurements is excluded. No values are imputed. Each patient enters one mutation group once, even when biopsies have different mutation status. Measurements retain the release-provided units and normalization; no implicit renormalization, batch correction or transformation occurs. The default named expression file represents z-scores, not raw counts or TPM. Comparisons across incompatible assays or releases are not supplied.
+
+Sample-level gene profiles, frequencies, cohorts and filters remain descriptive sample outputs. Inferential responses preserve `total_samples` and `sample_denominator`, and report `total_patients`, `analysis_unit` and `statistical_context`. Expression responses report measured/excluded samples and patients separately. Survival groups count endpoint-evaluable patients and disclose exclusion reasons. Missing duration, negative duration, nonfinite duration, invalid event status and absent patient records are excluded rather than becoming censoring or events.
+
+Patients are treated as independent. Family, site, treatment and other clustering are unmodeled. Aggregation prevents repeated biopsies from being counted as independent observations; it does not remove confounding. Any-sample mutation status does not establish a baseline exposure. Post-baseline biopsies can introduce temporal selection or immortal-time bias. Co-occurrence means mutations in the same patient's eligible samples and can involve different biopsies; it does not establish presence in the same cells.
+
+## Survival
+
+Kaplan–Meier uses nonnegative finite durations in months and binary event status. Events occur before censoring at tied times, with the full risk set immediately before that time. The median is the earliest observed time with estimated survival at or below 0.5; this explicit convention differs from a plateau-midpoint convention. Fixed-time survival is unavailable beyond the final observed follow-up, with no extrapolation.
+
+Each curve point reports a Greenwood standard error and a pointwise 95% log-log confidence interval. These are not simultaneous confidence bands. At estimated survival zero, the standard error and interval are undefined and returned as null with `undefined_at_zero`. Before any events, the asymptotic bounds are [1, 1] with `boundary_no_events`; those boundary values do not prove that true event risk is zero. Right censoring is assumed to be noninformative. Competing risks, delayed entry, time-varying exposure and covariate adjustment are not modeled. The [official survival documentation](https://stat.ethz.ch/R-manual/R-devel/library/survival/html/survfit.formula.html) describes the underlying curve and uncertainty methods.
+
+The two-sided log-rank test compares mutant and wild-type curves using tied-event hypergeometric variance and a one-degree-of-freedom chi-square probability. It does not fit a proportional-hazards model or report a hazard ratio. Empty groups, no informative events or zero risk-set variance return null statistics/probabilities and an explicit reason. A large p-value does not establish equivalence; nonproportional hazards and informative censoring can limit interpretation.
+
+## Mutation association and effects
+
+The two-by-two table contains patients with both mutations, only A, only B and neither. Fisher's two-sided exact test uses the **unmodified integer counts**. Empty populations or constant mutation indicators have unavailable inference rather than a fabricated null association.
+
+`odds_ratio` is the observed cross-product ratio. `conditional_odds_ratio` is a distinct conditional maximum-likelihood estimate, with an exact conditional 95% confidence interval. Infinite estimates use null numeric values with `infinite` status; unbounded upper limits use null and `upper_unbounded: true`. A finite zero estimate remains zero. The natural `log_odds_ratio` adds 0.5 to all four effect-size cells only when any cell is zero; `effect_pseudocount` discloses the correction. This correction never changes Fisher's test or the conditional estimate/interval. The [official Fisher documentation](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/fisher.test.html) distinguishes conditional estimation from the sample ratio and defines the exact test.
+
+## Expression test, effects and uncertainty
+
+The two-sided Mann–Whitney U test uses an asymptotic approximation with tie and continuity corrections, including small groups. Small samples can make that approximation unreliable; this service does not claim exact rank inference. Empty groups have insufficient data; all-tied measurements have insufficient variation and a null probability. `statistic` is U for the mutant group. Rank-biserial effect is `2U / (n_mutant * n_wild_type) - 1`; positive values mean larger mutant measurements, negative values smaller measurements, with half credit for ties. The [official rank-test documentation](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/wilcox.test.html) describes the test and its location interpretation; a rank test is not generally a test of only the difference in medians.
+
+`mean_difference` is mutant minus wild-type patient-level mean in the reported release units. Its separate 95% **Welch t interval** uses sample variances, unequal-variance standard error and Welch–Satterthwaite degrees of freedom. It describes a different estimand from the rank test. It assumes independent patients and an adequate t approximation for their mean difference; small, highly non-normal groups can violate that approximation. It is not a Mann–Whitney confidence interval or an interval for median difference. Both groups need at least two measured patients and estimable variance for this interval. Undefined variance or arithmetic range limits return unavailable uncertainty with reasons. Finite input measurements remain measured even when an effect or its uncertainty exceeds representable numeric range; effect status states that limitation. Nonfinite JSON numbers are never emitted.
+
+## Multiple testing
+
+Co-occurrence applies Benjamini–Hochberg correction to **all requested unordered distinct gene pairs in one call**, including unavailable hypotheses in the family size. Unavailable pairs retain null p-values and null adjusted values. Repeated gene hypotheses are rejected. Metadata reports the full family and the number of estimable tests. Separate calls, survival tests and individual comparisons have no cross-request correction. Shared genes and patients create dependence, so arbitrary-dependence FDR control is not established. The [official correction documentation](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/p.adjust.html) describes BH, missing tests, family size and the distinct arbitrary-dependence correction.
+
+## Independent reference qualification and reproduction
+
+The [fixed inputs](../tests/fixtures/statistics/r-cases.json), [R outputs](../tests/fixtures/statistics/r-reference.json) and [offline generator](../scripts/reference-statistics.R) cover 37 numerical cases: seven Kaplan–Meier, eleven log-rank, seven Fisher, seven expression and five BH vectors. Cases include tied events/censoring, all events, no events, an exact-half plateau, empty groups, zero cells, expression ties, unbalanced groups and missing hypotheses. Integration tests separately exercise assay coverage, partial missingness, repeated patients, ordering, endpoint exclusions, arithmetic limits and the actual MCP response.
+
+References were generated using R 4.6.1, stats 4.6.1, survival 3.8-6 and jsonlite 2.0.0. The official [survival source archive](https://cloud.r-project.org/src/contrib/Archive/survival/survival_3.8-6.tar.gz) has SHA-256 `9a4c0a35d86c64ec5a6e6cf179ab22dcffb5ce1d313d2880a09f1e53422699d7`. Install that reviewed library separately for developer reproduction; R is not a Python runtime or CI dependency. Normal tests read the fixed files offline:
+
+```sh
+uv run --frozen pytest tests/test_study_statistics_reference.py tests/test_study_patient_inference.py tests/test_study_statistics_boundaries.py
+# Optional developer reproduction with the specified R/package versions already installed:
+Rscript --vanilla scripts/reference-statistics.R tests/fixtures/statistics/r-cases.json /tmp/r-reference.json
+```
+
+The generator never imports the Python implementation. It retains `stats::fisher.test` equations but uses a local function environment to tighten `uniroot` tolerance to `1e-12`; the original R namespace/function is unchanged. Stock R's default root tolerance was too coarse for wide conditional intervals. Comparison tolerances are relative `1e-8`/absolute `1e-10` for conditional odds ratios and intervals, and relative `1e-10`/absolute `1e-12` for other numerical references. Tests bind the generator/input MD5 drift fingerprints in the reference metadata; these are not security attestations. Root qualification separately records SHA-256 identities.
+
+Known degenerate R results are interpreted explicitly: a raw no-event log-rank zero statistic/p-value one does not establish a meaningful comparison; the service returns unavailable inference. R's undefined survival-zero uncertainty and all-tied rank probabilities remain unavailable. Unexpected reference errors stop generation. Future changes to missingness, denominator policy or statistical optimization must preserve these reference and integration cases; throughput and real-study memory qualification remain separate requirements.

@@ -1,0 +1,11 @@
+{
+  "provider": "UniProt",
+  "license": "CC-BY-4.0",
+  "attribution": "UniProt Consortium; UniProtKB P02751",
+  "source_url": "https://rest.uniprot.org/uniprotkb/P02751",
+  "observed_on": "2026-10-12",
+  "source_release": "2026_03",
+  "fixture_sha256": "847e953da4ce6042a010619b36e7cbf32e16e56a31a3ea22f517b82cb8aea0aa",
+  "projection": "https://rest.uniprot.org/uniprotkb/P02751?format=json&fields=accession%2Cid%2Cprotein_name%2Cgene_names%2Corganism_name%2Clength%2Creviewed%2Cxref_pdb%2Cxref_alphafolddb%2Cxref_refseq%2Csequence%2Cft_var_seq%2Cft_variant%2Cft_non_cons%2Cft_non_std%2Cft_non_ter%2Cft_conflict%2Cft_unsure%2Cft_act_site%2Cft_binding%2Cft_dna_bind%2Cft_site%2Cft_mutagen%2Cft_intramem%2Cft_topo_dom%2Cft_transmem%2Cft_chain%2Cft_crosslnk%2Cft_disulfid%2Cft_carbohyd%2Cft_init_met%2Cft_lipid%2Cft_mod_res%2Cft_peptide%2Cft_propep%2Cft_signal%2Cft_transit%2Cft_strand%2Cft_helix%2Cft_turn%2Cft_coiled%2Cft_compbias%2Cft_domain%2Cft_motif%2Cft_region%2Cft_repeat%2Cft_zn_fing",
+  "scope": "Exact public projected response, including source-declared unknown feature endpoints; live source data remain time-dependent."
+}

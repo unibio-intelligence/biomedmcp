@@ -1,0 +1,1931 @@
+[
+  {
+    "primitive": "search/gene",
+    "tool": "search",
+    "sources": [
+      "mygene"
+    ],
+    "handler": "ResearchService.search"
+  },
+  {
+    "primitive": "search/variant",
+    "tool": "search",
+    "sources": [
+      "myvariant"
+    ],
+    "handler": "ResearchService.search"
+  },
+  {
+    "primitive": "search/article",
+    "tool": "literature_search",
+    "sources": [
+      "pubmed",
+      "europepmc",
+      "pubtator",
+      "litsense2"
+    ],
+    "handler": "ResearchService.search"
+  },
+  {
+    "primitive": "search/author",
+    "tool": "search",
+    "sources": [
+      "openalex"
+    ],
+    "handler": "ResearchService.search"
+  },
+  {
+    "primitive": "search/trial",
+    "tool": "trial_search",
+    "sources": [
+      "clinical-trials",
+      "nci"
+    ],
+    "handler": "ResearchService.search"
+  },
+  {
+    "primitive": "search/drug",
+    "tool": "search",
+    "sources": [
+      "mychem",
+      "ema",
+      "who"
+    ],
+    "handler": "ResearchService.search"
+  },
+  {
+    "primitive": "search/disease",
+    "tool": "search",
+    "sources": [
+      "mydisease"
+    ],
+    "handler": "ResearchService.search"
+  },
+  {
+    "primitive": "search/phenotype",
+    "tool": "search",
+    "sources": [
+      "ols"
+    ],
+    "handler": "ResearchService.search"
+  },
+  {
+    "primitive": "search/protein",
+    "tool": "search",
+    "sources": [
+      "uniprot"
+    ],
+    "handler": "ResearchService.search"
+  },
+  {
+    "primitive": "search/pathway",
+    "tool": "search",
+    "sources": [
+      "reactome"
+    ],
+    "handler": "ResearchService.search"
+  },
+  {
+    "primitive": "search/pgx",
+    "tool": "search",
+    "sources": [
+      "cpic"
+    ],
+    "handler": "ResearchService.search"
+  },
+  {
+    "primitive": "search/gwas",
+    "tool": "search",
+    "sources": [
+      "gwas"
+    ],
+    "handler": "ResearchService.search"
+  },
+  {
+    "primitive": "search/diagnostic",
+    "tool": "search",
+    "sources": [
+      "gtr",
+      "fda-devices",
+      "who-ivd"
+    ],
+    "handler": "ResearchService.search"
+  },
+  {
+    "primitive": "search/adverse-event",
+    "tool": "search",
+    "sources": [
+      "openfda"
+    ],
+    "handler": "ResearchService.search"
+  },
+  {
+    "primitive": "search/study",
+    "tool": "search",
+    "sources": [
+      "study"
+    ],
+    "handler": "ResearchService.search"
+  },
+  {
+    "primitive": "search/patent",
+    "tool": "search",
+    "sources": [
+      "surechembl"
+    ],
+    "handler": "ResearchService.search"
+  },
+  {
+    "primitive": "get/gene/record",
+    "tool": "get",
+    "sources": [
+      "mygene"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/gene/go",
+    "tool": "get",
+    "sources": [
+      "mygene"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/gene/pathways",
+    "tool": "get",
+    "sources": [
+      "reactome"
+    ],
+    "identity_dependencies": [
+      "mygene"
+    ],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/gene/protein",
+    "tool": "get",
+    "sources": [
+      "uniprot"
+    ],
+    "identity_dependencies": [
+      "mygene"
+    ],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/gene/expression",
+    "tool": "get",
+    "sources": [
+      "gtex"
+    ],
+    "identity_dependencies": [],
+    "conditional_identity_dependencies": {
+      "mygene": "Entrez inputs or composed gene enrichment"
+    },
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/gene/eqtl",
+    "tool": "get",
+    "sources": [
+      "gtex"
+    ],
+    "identity_dependencies": [],
+    "conditional_identity_dependencies": {
+      "mygene": "Entrez inputs or composed gene enrichment"
+    },
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/gene/sqtl",
+    "tool": "get",
+    "sources": [
+      "gtex"
+    ],
+    "identity_dependencies": [],
+    "conditional_identity_dependencies": {
+      "mygene": "Entrez inputs or composed gene enrichment"
+    },
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/gene/transcripts",
+    "tool": "get",
+    "sources": [
+      "gtex"
+    ],
+    "identity_dependencies": [],
+    "conditional_identity_dependencies": {
+      "mygene": "Entrez inputs or composed gene enrichment"
+    },
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/gene/exons",
+    "tool": "get",
+    "sources": [
+      "gtex"
+    ],
+    "identity_dependencies": [],
+    "conditional_identity_dependencies": {
+      "mygene": "Entrez inputs or composed gene enrichment"
+    },
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/gene/target_evidence",
+    "tool": "get",
+    "sources": [
+      "opentargets"
+    ],
+    "identity_dependencies": [
+      "mygene"
+    ],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/gene/diseases",
+    "tool": "get",
+    "sources": [
+      "opentargets"
+    ],
+    "identity_dependencies": [
+      "mygene"
+    ],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/gene/druggability",
+    "tool": "get",
+    "sources": [
+      "opentargets"
+    ],
+    "identity_dependencies": [
+      "mygene"
+    ],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/gene/genetics",
+    "tool": "get",
+    "sources": [
+      "opentargets"
+    ],
+    "identity_dependencies": [
+      "mygene"
+    ],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/gene/hpa",
+    "tool": "get",
+    "sources": [
+      "protein-atlas"
+    ],
+    "identity_dependencies": [
+      "mygene"
+    ],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/gene/interactions",
+    "tool": "get",
+    "sources": [
+      "string"
+    ],
+    "identity_dependencies": [
+      "mygene"
+    ],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/gene/civic",
+    "tool": "get",
+    "sources": [
+      "civic"
+    ],
+    "identity_dependencies": [
+      "mygene"
+    ],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/gene/clingen",
+    "tool": "get",
+    "sources": [
+      "clingen"
+    ],
+    "identity_dependencies": [
+      "mygene"
+    ],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/gene/gencc",
+    "tool": "get",
+    "sources": [
+      "gencc"
+    ],
+    "identity_dependencies": [
+      "mygene"
+    ],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/gene/constraint",
+    "tool": "get",
+    "sources": [
+      "gnomad"
+    ],
+    "identity_dependencies": [
+      "mygene"
+    ],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/gene/disgenet",
+    "tool": "get",
+    "sources": [
+      "disgenet"
+    ],
+    "identity_dependencies": [
+      "mygene"
+    ],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/gene/funding",
+    "tool": "get",
+    "sources": [
+      "nih-reporter"
+    ],
+    "identity_dependencies": [
+      "mygene"
+    ],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/gene/diagnostics",
+    "tool": "get",
+    "sources": [
+      "gtr"
+    ],
+    "identity_dependencies": [
+      "mygene"
+    ],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/variant/record",
+    "tool": "variant_evidence",
+    "sources": [
+      "myvariant"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/variant/conservation",
+    "tool": "variant_evidence",
+    "sources": [
+      "myvariant"
+    ],
+    "identity_dependencies": [
+      "myvariant"
+    ],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/variant/cosmic",
+    "tool": "variant_evidence",
+    "sources": [
+      "myvariant"
+    ],
+    "identity_dependencies": [
+      "myvariant"
+    ],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/variant/cgi",
+    "tool": "variant_evidence",
+    "sources": [
+      "myvariant"
+    ],
+    "identity_dependencies": [
+      "myvariant"
+    ],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/variant/predictions",
+    "tool": "variant_evidence",
+    "sources": [
+      "alphamissense"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/variant/eve",
+    "tool": "variant_evidence",
+    "sources": [
+      "eve"
+    ],
+    "identity_dependencies": [
+      "uniprot"
+    ],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/variant/clinvar",
+    "tool": "variant_evidence",
+    "sources": [
+      "ncbi"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/variant/population",
+    "tool": "variant_evidence",
+    "sources": [
+      "gnomad"
+    ],
+    "identity_dependencies": [
+      "myvariant"
+    ],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/variant/civic",
+    "tool": "variant_evidence",
+    "sources": [
+      "civic"
+    ],
+    "identity_dependencies": [],
+    "conditional_identity_dependencies": {
+      "myvariant": "Non-protein identifiers require one exact allele and one gene/protein change"
+    },
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/variant/cbioportal",
+    "tool": "variant_evidence",
+    "sources": [
+      "cbioportal"
+    ],
+    "identity_dependencies": [
+      "mygene",
+      "myvariant"
+    ],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/variant/gwas",
+    "tool": "variant_evidence",
+    "sources": [
+      "gwas"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/variant/oncokb",
+    "tool": "variant_evidence",
+    "sources": [
+      "oncokb"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/variant/hotspots",
+    "tool": "variant_evidence",
+    "sources": [
+      "cancerhotspots"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/article/record",
+    "tool": "get",
+    "sources": [
+      "pubmed"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/article/annotations",
+    "tool": "get",
+    "sources": [
+      "pubtator"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/article/fulltext",
+    "tool": "get",
+    "sources": [
+      "europepmc"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/article/assets",
+    "tool": "get",
+    "sources": [
+      "europepmc"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/article/indexing",
+    "tool": "get",
+    "sources": [
+      "pubmed"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/author/record",
+    "tool": "get",
+    "sources": [
+      "openalex"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/trial/record",
+    "tool": "get",
+    "sources": [
+      "clinical-trials"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/trial/eligibility",
+    "tool": "get",
+    "sources": [
+      "clinical-trials"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/trial/contacts",
+    "tool": "get",
+    "sources": [
+      "clinical-trials"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/trial/locations",
+    "tool": "get",
+    "sources": [
+      "clinical-trials"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/trial/outcomes",
+    "tool": "get",
+    "sources": [
+      "clinical-trials"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/trial/arms",
+    "tool": "get",
+    "sources": [
+      "clinical-trials"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/trial/references",
+    "tool": "get",
+    "sources": [
+      "clinical-trials"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/drug/record",
+    "tool": "get",
+    "sources": [
+      "mychem"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/drug/label",
+    "tool": "get",
+    "sources": [
+      "openfda"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/drug/regulatory",
+    "tool": "get",
+    "sources": [
+      "openfda"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/drug/safety",
+    "tool": "get",
+    "sources": [
+      "openfda"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/drug/shortage",
+    "tool": "get",
+    "sources": [
+      "openfda"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/drug/targets",
+    "tool": "get",
+    "sources": [
+      "mychem"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/drug/indications",
+    "tool": "get",
+    "sources": [
+      "mychem"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/drug/interactions",
+    "tool": "get",
+    "sources": [
+      "mychem"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/drug/civic",
+    "tool": "get",
+    "sources": [
+      "civic"
+    ],
+    "identity_dependencies": [
+      "mychem"
+    ],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/drug/approvals",
+    "tool": "get",
+    "sources": [
+      "orange-book"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/disease/record",
+    "tool": "get",
+    "sources": [
+      "mydisease"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/disease/genes",
+    "tool": "get",
+    "sources": [
+      "monarch"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/disease/phenotypes",
+    "tool": "get",
+    "sources": [
+      "monarch"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/disease/models",
+    "tool": "get",
+    "sources": [
+      "monarch"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/disease/variants",
+    "tool": "get",
+    "sources": [
+      "mydisease"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/disease/prevalence",
+    "tool": "get",
+    "sources": [
+      "mydisease"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/disease/survival",
+    "tool": "get",
+    "sources": [
+      "mydisease"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/disease/clinical_features",
+    "tool": "get",
+    "sources": [
+      "mydisease"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/disease/pathways",
+    "tool": "get",
+    "sources": [
+      "reactome"
+    ],
+    "identity_dependencies": [
+      "mydisease"
+    ],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/disease/diagnostics",
+    "tool": "get",
+    "sources": [
+      "gtr"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/disease/funding",
+    "tool": "get",
+    "sources": [
+      "nih-reporter"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/disease/civic",
+    "tool": "get",
+    "sources": [
+      "civic"
+    ],
+    "identity_dependencies": [
+      "mydisease"
+    ],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/disease/disgenet",
+    "tool": "get",
+    "sources": [
+      "disgenet"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/phenotype/record",
+    "tool": "get",
+    "sources": [
+      "ols"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/protein/record",
+    "tool": "get",
+    "sources": [
+      "uniprot"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/protein/domains",
+    "tool": "get",
+    "sources": [
+      "interpro"
+    ],
+    "identity_dependencies": [
+      "uniprot"
+    ],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/protein/interactions",
+    "tool": "get",
+    "sources": [
+      "string"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/protein/complexes",
+    "tool": "get",
+    "sources": [
+      "complexportal"
+    ],
+    "identity_dependencies": [
+      "uniprot"
+    ],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/protein/structures",
+    "tool": "get",
+    "sources": [
+      "uniprot"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/pathway/record",
+    "tool": "get",
+    "sources": [
+      "reactome"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/pathway/genes",
+    "tool": "get",
+    "sources": [
+      "reactome"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/pathway/events",
+    "tool": "get",
+    "sources": [
+      "reactome"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/pgx/record",
+    "tool": "get",
+    "sources": [
+      "cpic"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/pgx/interactions",
+    "tool": "get",
+    "sources": [
+      "cpic"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/pgx/recommendations",
+    "tool": "get",
+    "sources": [
+      "cpic"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/pgx/frequencies",
+    "tool": "get",
+    "sources": [
+      "cpic"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/pgx/guidelines",
+    "tool": "get",
+    "sources": [
+      "cpic"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/gwas/record",
+    "tool": "get",
+    "sources": [
+      "gwas"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/diagnostic/record",
+    "tool": "get",
+    "sources": [
+      "gtr"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/diagnostic/genes",
+    "tool": "get",
+    "sources": [
+      "gtr"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/diagnostic/conditions",
+    "tool": "get",
+    "sources": [
+      "gtr"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/diagnostic/methods",
+    "tool": "get",
+    "sources": [
+      "gtr"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/diagnostic/regulatory",
+    "tool": "get",
+    "sources": [
+      "fda-devices"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/adverse-event/record",
+    "tool": "get",
+    "sources": [
+      "openfda"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/adverse-event/reactions",
+    "tool": "get",
+    "sources": [
+      "openfda"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/adverse-event/outcomes",
+    "tool": "get",
+    "sources": [
+      "openfda"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/adverse-event/concomitant",
+    "tool": "get",
+    "sources": [
+      "openfda"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/adverse-event/guidance",
+    "tool": "get",
+    "sources": [
+      "openfda"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/study/record",
+    "tool": "get",
+    "sources": [
+      "study"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/patent/record",
+    "tool": "get",
+    "sources": [
+      "patents"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/patent/biblio",
+    "tool": "get",
+    "sources": [
+      "patents"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/patent/family",
+    "tool": "get",
+    "sources": [
+      "patents"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/patent/claims",
+    "tool": "get",
+    "sources": [
+      "patents"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "get/patent/citations",
+    "tool": "get",
+    "sources": [
+      "patents"
+    ],
+    "identity_dependencies": [],
+    "handler": "ResearchService.get"
+  },
+  {
+    "primitive": "relate/gene/articles",
+    "tool": "relate",
+    "handler": "ResearchService.relate"
+  },
+  {
+    "primitive": "relate/gene/trials",
+    "tool": "relate",
+    "handler": "ResearchService.relate"
+  },
+  {
+    "primitive": "relate/drug/articles",
+    "tool": "relate",
+    "handler": "ResearchService.relate"
+  },
+  {
+    "primitive": "relate/drug/trials",
+    "tool": "relate",
+    "handler": "ResearchService.relate"
+  },
+  {
+    "primitive": "relate/disease/articles",
+    "tool": "relate",
+    "handler": "ResearchService.relate"
+  },
+  {
+    "primitive": "relate/disease/trials",
+    "tool": "relate",
+    "handler": "ResearchService.relate"
+  },
+  {
+    "primitive": "relate/variant/articles",
+    "tool": "relate",
+    "handler": "ResearchService.relate"
+  },
+  {
+    "primitive": "relate/variant/structure",
+    "tool": "relate",
+    "handler": "ResearchService.relate"
+  },
+  {
+    "primitive": "relate/article/citations",
+    "tool": "relate",
+    "handler": "ResearchService.relate"
+  },
+  {
+    "primitive": "relate/article/references",
+    "tool": "relate",
+    "handler": "ResearchService.relate"
+  },
+  {
+    "primitive": "relate/article/recommendations",
+    "tool": "relate",
+    "handler": "ResearchService.relate"
+  },
+  {
+    "primitive": "relate/article/authors",
+    "tool": "relate",
+    "handler": "ResearchService.relate"
+  },
+  {
+    "primitive": "relate/article/entities",
+    "tool": "relate",
+    "handler": "ResearchService.relate"
+  },
+  {
+    "primitive": "relate/author/articles",
+    "tool": "relate",
+    "handler": "ResearchService.relate"
+  },
+  {
+    "primitive": "source/gtex/get_metadata",
+    "tool": "query_source",
+    "sources": [
+      "gtex"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/gtex/get_sample",
+    "tool": "query_source",
+    "sources": [
+      "gtex"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/uniprot/analyze_evolution",
+    "tool": "query_source",
+    "sources": [
+      "uniprot"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/uniprot/compare_proteins",
+    "tool": "query_source",
+    "sources": [
+      "uniprot"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/ensembl/analyze_evolution",
+    "tool": "query_source",
+    "sources": [
+      "ensembl"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/ensembl/analyze_variants",
+    "tool": "query_source",
+    "sources": [
+      "ensembl"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/ensembl/get_genome_info",
+    "tool": "query_source",
+    "sources": [
+      "ensembl"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/ensembl/get_regulatory_elements",
+    "tool": "query_source",
+    "sources": [
+      "ensembl"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/ensembl/get_sequences",
+    "tool": "query_source",
+    "sources": [
+      "ensembl"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/ensembl/map_coordinates",
+    "tool": "query_source",
+    "sources": [
+      "ensembl"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/chembl/advanced_property_search",
+    "tool": "query_source",
+    "sources": [
+      "chembl"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/chembl/analyze_compound_properties",
+    "tool": "query_source",
+    "sources": [
+      "chembl"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/chembl/compare_compound_activities",
+    "tool": "query_source",
+    "sources": [
+      "chembl"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/chembl/get_assay_details",
+    "tool": "query_source",
+    "sources": [
+      "chembl"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/chembl/get_compound_details",
+    "tool": "query_source",
+    "sources": [
+      "chembl"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/chembl/get_target_details",
+    "tool": "query_source",
+    "sources": [
+      "chembl"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/chembl/search_bioactivities",
+    "tool": "query_source",
+    "sources": [
+      "chembl"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/chembl/search_compounds",
+    "tool": "query_source",
+    "sources": [
+      "chembl"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/chembl/search_targets",
+    "tool": "query_source",
+    "sources": [
+      "chembl"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/mychem/get_admet_properties",
+    "tool": "query_source",
+    "sources": [
+      "mychem"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/mychem/map_identifiers",
+    "tool": "query_source",
+    "sources": [
+      "mychem"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/mygene/compare_genes",
+    "tool": "query_source",
+    "sources": [
+      "mygene"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/mygene/map_gene_ids",
+    "tool": "query_source",
+    "sources": [
+      "mygene"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/mydisease/get_gene_disease_evidence",
+    "tool": "query_source",
+    "sources": [
+      "mydisease"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/mydisease/get_phenotype_frequency",
+    "tool": "query_source",
+    "sources": [
+      "mydisease"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/mydisease/get_phenotype_similarity",
+    "tool": "query_source",
+    "sources": [
+      "mydisease"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/mydisease/map_disease_ids",
+    "tool": "query_source",
+    "sources": [
+      "mydisease"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/clinical-trials/compare_trials",
+    "tool": "query_source",
+    "sources": [
+      "clinical-trials"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/clinical-trials/get_trial_statistics",
+    "tool": "query_source",
+    "sources": [
+      "clinical-trials"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/dailymed/get_drug_label_sections",
+    "tool": "query_source",
+    "sources": [
+      "dailymed"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/opentargets/analyze_advanced",
+    "tool": "query_source",
+    "sources": [
+      "opentargets"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/opentargets/analyze_association",
+    "tool": "query_source",
+    "sources": [
+      "opentargets"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/opentargets/query_genetics",
+    "tool": "query_source",
+    "sources": [
+      "opentargets"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/protein-atlas/analyze_localization",
+    "tool": "query_source",
+    "sources": [
+      "protein-atlas"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/protein-atlas/compare_expression_profiles",
+    "tool": "query_source",
+    "sources": [
+      "protein-atlas"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/reactome/get_pathway_diagram",
+    "tool": "query_source",
+    "sources": [
+      "reactome"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/surechembl/analyze_patent_chemistry",
+    "tool": "query_source",
+    "sources": [
+      "surechembl"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/surechembl/get_patent_statistics",
+    "tool": "query_source",
+    "sources": [
+      "surechembl"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/surechembl/search_similar_structures",
+    "tool": "query_source",
+    "sources": [
+      "surechembl"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/pdb/download_structure",
+    "tool": "query_source",
+    "sources": [
+      "pdb"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/pdb/get_structure_info",
+    "tool": "query_source",
+    "sources": [
+      "pdb"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/pdb/get_structure_quality",
+    "tool": "query_source",
+    "sources": [
+      "pdb"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/pdb/search_structures",
+    "tool": "query_source",
+    "sources": [
+      "pdb"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/omnipath/get_annotations",
+    "tool": "query_source",
+    "sources": [
+      "omnipath"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/omnipath/get_complexes",
+    "tool": "query_source",
+    "sources": [
+      "omnipath"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/omnipath/get_enzyme_substrate",
+    "tool": "query_source",
+    "sources": [
+      "omnipath"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/omnipath/get_interactions",
+    "tool": "query_source",
+    "sources": [
+      "omnipath"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/omnipath/get_ligand_receptor",
+    "tool": "query_source",
+    "sources": [
+      "omnipath"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/omnipath/get_mirna_targets",
+    "tool": "query_source",
+    "sources": [
+      "omnipath"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/omnipath/get_tf_targets",
+    "tool": "query_source",
+    "sources": [
+      "omnipath"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/antibody-registry/query_antibody",
+    "tool": "query_source",
+    "sources": [
+      "antibody-registry"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/bio-ontology/get_class_info",
+    "tool": "query_source",
+    "sources": [
+      "bio-ontology"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/bio-ontology/get_mappings",
+    "tool": "query_source",
+    "sources": [
+      "bio-ontology"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/bio-ontology/get_ontology_classes",
+    "tool": "query_source",
+    "sources": [
+      "bio-ontology"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/bio-ontology/search_ontologies",
+    "tool": "query_source",
+    "sources": [
+      "bio-ontology"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/ncbi-records/get",
+    "tool": "query_source",
+    "sources": [
+      "ncbi-records"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/ncbi-records/links",
+    "tool": "query_source",
+    "sources": [
+      "ncbi-records"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/ncbi-records/search",
+    "tool": "query_source",
+    "sources": [
+      "ncbi-records"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/enrichment/gene_set",
+    "tool": "query_source",
+    "sources": [
+      "enrichment"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/patents/search",
+    "tool": "query_source",
+    "sources": [
+      "patents"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/study/co_occurrence",
+    "tool": "study_analysis",
+    "sources": [
+      "study"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/study/cohort",
+    "tool": "study_analysis",
+    "sources": [
+      "study"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/study/compare",
+    "tool": "study_analysis",
+    "sources": [
+      "study"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/study/filter",
+    "tool": "study_analysis",
+    "sources": [
+      "study"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/study/query",
+    "tool": "study_analysis",
+    "sources": [
+      "study"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/study/survival",
+    "tool": "study_analysis",
+    "sources": [
+      "study"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/study/top_mutated",
+    "tool": "study_analysis",
+    "sources": [
+      "study"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/clingen/assertions",
+    "tool": "query_source",
+    "sources": [
+      "clingen"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/clingen/linked_data",
+    "tool": "query_source",
+    "sources": [
+      "clingen"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/clingen/normalize",
+    "tool": "query_source",
+    "sources": [
+      "clingen"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/clingen/specifications",
+    "tool": "query_source",
+    "sources": [
+      "clingen"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/orange-book/get_exclusivity_info",
+    "tool": "query_source",
+    "sources": [
+      "orange-book"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/orange-book/get_patent_info",
+    "tool": "query_source",
+    "sources": [
+      "orange-book"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/orange-book/get_therapeutic_equivalence",
+    "tool": "query_source",
+    "sources": [
+      "orange-book"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/orange-book/search_generic_equivalents",
+    "tool": "query_source",
+    "sources": [
+      "orange-book"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/ncbi/find_orthologs",
+    "tool": "query_source",
+    "sources": [
+      "ncbi"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/ncbi/get_assembly_data",
+    "tool": "query_source",
+    "sources": [
+      "ncbi"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/ncbi/get_genome_data",
+    "tool": "query_source",
+    "sources": [
+      "ncbi"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/ncbi/get_taxonomy_data",
+    "tool": "query_source",
+    "sources": [
+      "ncbi"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/ncbi/get_virus_info",
+    "tool": "query_source",
+    "sources": [
+      "ncbi"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/ncbi/search_ncbi_data",
+    "tool": "query_source",
+    "sources": [
+      "ncbi"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/ncbi/search_project_sample",
+    "tool": "query_source",
+    "sources": [
+      "ncbi"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "source/openfda/search_recalls",
+    "tool": "query_source",
+    "sources": [
+      "openfda"
+    ],
+    "handler": "ResearchService.source"
+  },
+  {
+    "primitive": "workflow/target_dossier",
+    "tool": "research",
+    "public_workflow": "target_dossier",
+    "retired_alias": false,
+    "handler": "ResearchService.research"
+  },
+  {
+    "primitive": "workflow/variant_evidence",
+    "tool": "research",
+    "public_workflow": "variant_dossier",
+    "retired_alias": false,
+    "handler": "ResearchService.research"
+  },
+  {
+    "primitive": "workflow/drug_review",
+    "tool": "research",
+    "public_workflow": "drug_review",
+    "retired_alias": false,
+    "handler": "ResearchService.research"
+  },
+  {
+    "primitive": "workflow/disease_landscape",
+    "tool": "research",
+    "public_workflow": "disease_landscape",
+    "retired_alias": false,
+    "handler": "ResearchService.research"
+  },
+  {
+    "primitive": "workflow/literature_review",
+    "tool": "literature_search",
+    "public_workflow": "literature_review",
+    "retired_alias": true,
+    "handler": "ResearchService.research"
+  },
+  {
+    "primitive": "workflow/pathway_review",
+    "tool": "research",
+    "public_workflow": "pathway_review",
+    "retired_alias": false,
+    "handler": "ResearchService.research"
+  },
+  {
+    "primitive": "workflow/negative_evidence",
+    "tool": "research",
+    "public_workflow": "negative_evidence",
+    "retired_alias": false,
+    "handler": "ResearchService.research"
+  },
+  {
+    "primitive": "workflow/study_summary",
+    "tool": "search",
+    "public_workflow": "study_summary",
+    "retired_alias": true,
+    "handler": "ResearchService.research"
+  },
+  {
+    "primitive": "workflow/patent_landscape",
+    "tool": "search",
+    "public_workflow": "patent_landscape",
+    "retired_alias": true,
+    "handler": "ResearchService.research"
+  },
+  {
+    "primitive": "workflow/model_input_bundle",
+    "tool": "research",
+    "public_workflow": "model_input_bundle",
+    "retired_alias": false,
+    "handler": "ResearchService.research"
+  }
+]

@@ -1,0 +1,345 @@
+{
+  "antibody-registry": {
+    "type": "python",
+    "module": "antibody_registry.main",
+    "category": "molecular",
+    "description": "Antibody Registry - searchable database of antibodies",
+    "tags": [
+      "antibody",
+      "molecular",
+      "protein",
+      "immunology"
+    ],
+    "tool_count": "~1",
+    "executable": true,
+    "layer": "ubi-bio"
+  },
+  "gtex": {
+    "type": "python",
+    "module": "gtex_mcp.server",
+    "category": "expression",
+    "description": "GTEx - gene expression data across human tissues",
+    "tags": [
+      "expression",
+      "tissue",
+      "genes",
+      "rna",
+      "transcriptomics"
+    ],
+    "tool_count": "~15",
+    "executable": true,
+    "layer": "ubi-bio"
+  },
+  "mychem": {
+    "type": "python",
+    "module": "mychem_mcp.server",
+    "category": "chemical",
+    "description": "MyChem.info - chemical and drug annotations",
+    "tags": [
+      "chemical",
+      "drug",
+      "compound",
+      "pharmacology"
+    ],
+    "tool_count": "~42",
+    "executable": true,
+    "layer": "ubi-bio"
+  },
+  "mydisease": {
+    "type": "python",
+    "module": "mydisease_mcp.server",
+    "category": "disease",
+    "description": "MyDisease.info - disease annotations and associations",
+    "tags": [
+      "disease",
+      "phenotype",
+      "annotation",
+      "medical"
+    ],
+    "tool_count": "~55",
+    "executable": true,
+    "layer": "ubi-bio"
+  },
+  "mygene": {
+    "type": "python",
+    "module": "mygene_mcp.server",
+    "category": "genomic",
+    "description": "MyGene.info - gene annotation and query service",
+    "tags": [
+      "gene",
+      "genomic",
+      "annotation",
+      "genetics"
+    ],
+    "tool_count": "~26",
+    "executable": true,
+    "layer": "ubi-bio"
+  },
+  "opentargets": {
+    "type": "python",
+    "module": "opentargets_mcp.server",
+    "category": "knowledge",
+    "description": "Open Targets Platform - target-disease associations and drug discovery",
+    "tags": [
+      "target",
+      "disease",
+      "association",
+      "drug",
+      "therapeutic"
+    ],
+    "tool_count": "~42",
+    "executable": true,
+    "layer": "ubi-bio"
+  },
+  "openfda": {
+    "type": "python",
+    "module": "openfda_mcp.server",
+    "category": "clinical",
+    "description": "OpenFDA - FDA adverse events, drug labels, recalls, and device clearances",
+    "tags": [
+      "fda",
+      "adverse events",
+      "safety",
+      "recalls",
+      "regulatory",
+      "drugs",
+      "devices"
+    ],
+    "tool_count": "~5",
+    "executable": true,
+    "layer": "ubi-bio"
+  },
+  "dailymed": {
+    "type": "python",
+    "module": "dailymed_mcp.server",
+    "category": "clinical",
+    "description": "DailyMed - NLM drug labels and SPL documents",
+    "tags": [
+      "drug labels",
+      "spl",
+      "fda",
+      "prescribing information",
+      "dailymed"
+    ],
+    "tool_count": "~5",
+    "executable": true,
+    "layer": "ubi-bio"
+  },
+  "orange-book": {
+    "type": "python",
+    "module": "orange_book_mcp.server",
+    "category": "clinical",
+    "description": "Orange Book - FDA therapeutic equivalence data, patents, and exclusivity",
+    "tags": [
+      "therapeutic equivalence",
+      "generic",
+      "patent",
+      "exclusivity",
+      "fda"
+    ],
+    "tool_count": "~6",
+    "executable": true,
+    "layer": "ubi-bio"
+  },
+  "ncbi": {
+    "type": "python",
+    "module": "ncbi_mcp.server",
+    "category": "genomic",
+    "description": "NCBI Datasets - genomes, genes, taxonomy, assemblies, proteins, viruses, and comparative genomics",
+    "tags": [
+      "ncbi",
+      "genome",
+      "gene",
+      "taxonomy",
+      "assembly",
+      "protein",
+      "virus",
+      "blast",
+      "phylogeny"
+    ],
+    "tool_count": "~15",
+    "executable": true,
+    "layer": "ubi-bio"
+  },
+  "chembl": {
+    "type": "python",
+    "module": "chembl_mcp.server",
+    "category": "chemical",
+    "description": "ChEMBL - bioactive molecules database with drug discovery data",
+    "tags": [
+      "drug",
+      "chemical",
+      "bioactivity",
+      "medicinal chemistry",
+      "targets"
+    ],
+    "tool_count": "~13",
+    "executable": true,
+    "layer": "ubi-bio"
+  },
+  "clinical-trials": {
+    "type": "python",
+    "module": "clinical_trials_mcp.server",
+    "category": "clinical",
+    "description": "ClinicalTrials.gov - database of clinical studies worldwide",
+    "tags": [
+      "clinical",
+      "trials",
+      "studies",
+      "research",
+      "medical"
+    ],
+    "tool_count": "~8",
+    "executable": true,
+    "layer": "ubi-bio"
+  },
+  "ensembl": {
+    "type": "python",
+    "module": "ensembl_mcp.server",
+    "category": "genomic",
+    "description": "Ensembl - genome browser and annotation database",
+    "tags": [
+      "genome",
+      "genomic",
+      "variation",
+      "annotation",
+      "ensembl"
+    ],
+    "tool_count": "~9",
+    "executable": true,
+    "layer": "ubi-bio"
+  },
+  "protein-atlas": {
+    "type": "python",
+    "module": "protein_atlas_mcp.server",
+    "category": "expression",
+    "description": "Human Protein Atlas - protein expression in tissues and cells",
+    "tags": [
+      "protein",
+      "expression",
+      "tissue",
+      "immunohistochemistry"
+    ],
+    "tool_count": "~10",
+    "executable": true,
+    "layer": "ubi-bio"
+  },
+  "uniprot": {
+    "type": "python",
+    "module": "uniprot_mcp.server",
+    "category": "protein",
+    "description": "UniProt - comprehensive protein sequence and function database",
+    "tags": [
+      "protein",
+      "sequence",
+      "function",
+      "proteomics"
+    ],
+    "tool_count": "~12",
+    "executable": true,
+    "layer": "ubi-bio"
+  },
+  "reactome": {
+    "type": "python",
+    "module": "reactome_mcp.server",
+    "category": "pathway",
+    "description": "Reactome - curated database of biological pathways",
+    "tags": [
+      "pathway",
+      "reaction",
+      "biological process",
+      "metabolism"
+    ],
+    "tool_count": "~6",
+    "executable": true,
+    "layer": "ubi-bio"
+  },
+  "surechembl": {
+    "type": "python",
+    "module": "surechembl_mcp.server",
+    "category": "chemical",
+    "description": "SureChEMBL - patent chemistry database",
+    "tags": [
+      "patent",
+      "chemical",
+      "compound",
+      "intellectual property"
+    ],
+    "tool_count": "~9",
+    "executable": true,
+    "layer": "ubi-bio"
+  },
+  "depmap": {
+    "type": "python",
+    "module": "depmap_mcp.server",
+    "category": "genomic",
+    "description": "DepMap - Cancer Dependency Map gene dependencies and CRISPR screens",
+    "tags": [
+      "cancer",
+      "crispr",
+      "gene dependency",
+      "cell lines",
+      "screening"
+    ],
+    "tool_count": "~6",
+    "executable": true,
+    "availability": {
+      "status": "unavailable",
+      "hidden": true,
+      "reason": "Broad DepMap /portal/api/v1 endpoints currently return 404 HTML; use ubi-data drugscreen tables until this server is rewired to a supported source."
+    },
+    "layer": "ubi-bio"
+  },
+  "omnipath": {
+    "type": "python",
+    "module": "omnipath_mcp.server",
+    "category": "pathway",
+    "description": "OmniPath - protein interactions, signaling pathways, and molecular networks",
+    "tags": [
+      "protein interaction",
+      "signaling",
+      "tf regulation",
+      "ligand-receptor",
+      "network"
+    ],
+    "tool_count": "~8",
+    "executable": true,
+    "layer": "ubi-bio"
+  },
+  "bio-ontology": {
+    "type": "python",
+    "module": "bio_ontology_mcp.server",
+    "category": "knowledge",
+    "description": "BioOntology - search and explore biological ontologies (NCBO Bioportal)",
+    "tags": [
+      "ontology",
+      "terminology",
+      "bioportal",
+      "medical",
+      "knowledge"
+    ],
+    "tool_count": "~12",
+    "executable": true,
+    "required_env": [
+      "BIOONTOLOGY_API_KEY"
+    ],
+    "hide_when_unconfigured": true,
+    "layer": "ubi-bio"
+  },
+  "pdb": {
+    "type": "python",
+    "module": "pdb_mcp.server",
+    "category": "structural",
+    "description": "Protein Data Bank - 3D structural data of proteins",
+    "tags": [
+      "protein",
+      "structure",
+      "pdb",
+      "crystallography",
+      "structural biology"
+    ],
+    "tool_count": "~5",
+    "executable": true,
+    "layer": "ubi-bio"
+  }
+}

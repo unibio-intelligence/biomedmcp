@@ -1,0 +1,461 @@
+{
+  "schema_version": 1,
+  "reference": {
+    "r_version": "R version 4.6.1 (2026-06-24)",
+    "stats_version": "4.6.1",
+    "fisher_root_tolerance": 9.9999999999999998e-13,
+    "survival_version": "3.8.6",
+    "jsonlite_version": "2.0.0",
+    "inputs_md5": "38ad929d88ccdfd7993a88fb76fc0e78",
+    "generator_md5": "9e011621b9b5cbe60eca6169b2ccec39"
+  },
+  "kaplan_meier": [
+    {
+      "id": "tied_event_censor",
+      "curve": [
+        {
+          "time_months": 2,
+          "at_risk": 4,
+          "events": 1,
+          "censored": 1,
+          "survival": 0.75,
+          "standard_error": 0.21650635094610965,
+          "lower": 0.12794691759514593,
+          "upper": 0.96054864228507841
+        },
+        {
+          "time_months": 5,
+          "at_risk": 2,
+          "events": 1,
+          "censored": 0,
+          "survival": 0.375,
+          "standard_error": 0.28641098093474004,
+          "lower": 0.010971121574844587,
+          "upper": 0.80800107248134345
+        },
+        {
+          "time_months": 8,
+          "at_risk": 1,
+          "events": 0,
+          "censored": 1,
+          "survival": 0.375,
+          "standard_error": 0.28641098093474004,
+          "lower": 0.010971121574844587,
+          "upper": 0.80800107248134345
+        }
+      ],
+      "median_survival_months": 5
+    },
+    {
+      "id": "all_event",
+      "curve": [
+        {
+          "time_months": 1,
+          "at_risk": 3,
+          "events": 1,
+          "censored": 0,
+          "survival": 0.66666666666666663,
+          "standard_error": 0.27216552697590868,
+          "lower": 0.054073426786516804,
+          "upper": 0.94520638727204687
+        },
+        {
+          "time_months": 2,
+          "at_risk": 2,
+          "events": 1,
+          "censored": 0,
+          "survival": 0.33333333333333331,
+          "standard_error": 0.27216552697590868,
+          "lower": 0.0089616283309790924,
+          "upper": 0.77414865036083258
+        },
+        {
+          "time_months": 3,
+          "at_risk": 1,
+          "events": 1,
+          "censored": 0,
+          "survival": 0,
+          "standard_error": null,
+          "lower": null,
+          "upper": null
+        }
+      ],
+      "median_survival_months": 2
+    },
+    {
+      "id": "all_censored",
+      "curve": [
+        {
+          "time_months": 2,
+          "at_risk": 3,
+          "events": 0,
+          "censored": 1,
+          "survival": 1,
+          "standard_error": 0,
+          "lower": 1,
+          "upper": 1
+        },
+        {
+          "time_months": 12,
+          "at_risk": 2,
+          "events": 0,
+          "censored": 1,
+          "survival": 1,
+          "standard_error": 0,
+          "lower": 1,
+          "upper": 1
+        },
+        {
+          "time_months": 48,
+          "at_risk": 1,
+          "events": 0,
+          "censored": 1,
+          "survival": 1,
+          "standard_error": 0,
+          "lower": 1,
+          "upper": 1
+        }
+      ],
+      "median_survival_months": null
+    },
+    {
+      "id": "all_tied_events",
+      "curve": [
+        {
+          "time_months": 2,
+          "at_risk": 3,
+          "events": 2,
+          "censored": 1,
+          "survival": 0.33333333333333331,
+          "standard_error": 0.27216552697590868,
+          "lower": 0.0089616283309790924,
+          "upper": 0.77414865036083258
+        }
+      ],
+      "median_survival_months": 2
+    },
+    {
+      "id": "half_plateau",
+      "curve": [
+        {
+          "time_months": 1,
+          "at_risk": 4,
+          "events": 2,
+          "censored": 0,
+          "survival": 0.5,
+          "standard_error": 0.25,
+          "lower": 0.057847082995144627,
+          "upper": 0.84486128119037396
+        },
+        {
+          "time_months": 4,
+          "at_risk": 2,
+          "events": 0,
+          "censored": 1,
+          "survival": 0.5,
+          "standard_error": 0.25,
+          "lower": 0.057847082995144627,
+          "upper": 0.84486128119037396
+        },
+        {
+          "time_months": 6,
+          "at_risk": 1,
+          "events": 1,
+          "censored": 0,
+          "survival": 0,
+          "standard_error": null,
+          "lower": null,
+          "upper": null
+        }
+      ],
+      "median_survival_months": 1
+    },
+    {
+      "id": "long_followup",
+      "curve": [
+        {
+          "time_months": 0,
+          "at_risk": 7,
+          "events": 0,
+          "censored": 1,
+          "survival": 1,
+          "standard_error": 0,
+          "lower": 1,
+          "upper": 1
+        },
+        {
+          "time_months": 1,
+          "at_risk": 6,
+          "events": 1,
+          "censored": 0,
+          "survival": 0.83333333333333337,
+          "standard_error": 0.15214515486254615,
+          "lower": 0.27312284992835606,
+          "upper": 0.97471242669089353
+        },
+        {
+          "time_months": 12,
+          "at_risk": 5,
+          "events": 1,
+          "censored": 1,
+          "survival": 0.66666666666666674,
+          "standard_error": 0.19245008972987529,
+          "lower": 0.19461663680623492,
+          "upper": 0.90443416432251644
+        },
+        {
+          "time_months": 36,
+          "at_risk": 3,
+          "events": 1,
+          "censored": 0,
+          "survival": 0.44444444444444448,
+          "standard_error": 0.22222222222222224,
+          "lower": 0.066186753146412522,
+          "upper": 0.78490836714795853
+        },
+        {
+          "time_months": 60,
+          "at_risk": 2,
+          "events": 1,
+          "censored": 1,
+          "survival": 0.22222222222222224,
+          "standard_error": 0.19245008972987526,
+          "lower": 0.0095691365390372877,
+          "upper": 0.61472052328762383
+        }
+      ],
+      "median_survival_months": 36
+    },
+    {
+      "id": "empty",
+      "curve": []
+    }
+  ],
+  "logrank": [
+    {
+      "id": "tied_groups",
+      "statistic": 0.032096288866599876,
+      "p_value": 0.85781649017961814
+    },
+    {
+      "id": "identical",
+      "statistic": 0,
+      "p_value": 1
+    },
+    {
+      "id": "no_events",
+      "statistic": 0,
+      "p_value": 1
+    },
+    {
+      "id": "empty_group",
+      "statistic": null,
+      "p_value": null
+    },
+    {
+      "id": "all_fail_same_time",
+      "statistic": null,
+      "p_value": null
+    },
+    {
+      "id": "one_censored_group",
+      "statistic": 2.4693877551020411,
+      "p_value": 0.11608313373865523
+    },
+    {
+      "id": "fixed_random_0",
+      "statistic": 0.2181702071465729,
+      "p_value": 0.64043767944833074
+    },
+    {
+      "id": "fixed_random_1",
+      "statistic": 0.0045090196104166248,
+      "p_value": 0.94646289934501715
+    },
+    {
+      "id": "fixed_random_2",
+      "statistic": 2.7120947659229713,
+      "p_value": 0.099590139414805171
+    },
+    {
+      "id": "fixed_random_3",
+      "statistic": 0.21326238742002315,
+      "p_value": 0.64422230689812066
+    },
+    {
+      "id": "fixed_random_4",
+      "statistic": 0.013846104976190638,
+      "p_value": 0.90632955538017801
+    }
+  ],
+  "fisher": [
+    {
+      "id": "ordinary",
+      "p_value": 1,
+      "conditional_odds_ratio": 3.1054826165263933,
+      "conditional_odds_ratio_infinite": false,
+      "lower": 0.067403864864658228,
+      "upper": 351.99748097908429,
+      "upper_unbounded": false
+    },
+    {
+      "id": "association",
+      "p_value": 0.0043141741822587138,
+      "conditional_odds_ratio": 15.444936988029262,
+      "conditional_odds_ratio_infinite": false,
+      "lower": 1.8999293712682248,
+      "upper": 224.57117565011407,
+      "upper_unbounded": false
+    },
+    {
+      "id": "zero_cell",
+      "p_value": 0.020979020979020969,
+      "conditional_odds_ratio": 0,
+      "conditional_odds_ratio_infinite": false,
+      "lower": 0,
+      "upper": 0.82575553951981551,
+      "upper_unbounded": false
+    },
+    {
+      "id": "perfect",
+      "p_value": 0.0021645021645021662,
+      "conditional_odds_ratio": null,
+      "conditional_odds_ratio_infinite": true,
+      "lower": 3.5239788318102474,
+      "upper": null,
+      "upper_unbounded": true
+    },
+    {
+      "id": "larger",
+      "p_value": 5.1861171571158778e-11,
+      "conditional_odds_ratio": 32.790889163818839,
+      "conditional_odds_ratio_infinite": false,
+      "lower": 8.9555302649596751,
+      "upper": 149.23149094176128,
+      "upper_unbounded": false
+    },
+    {
+      "id": "constant",
+      "p_value": 1,
+      "conditional_odds_ratio": 0,
+      "conditional_odds_ratio_infinite": false,
+      "lower": 0,
+      "upper": null,
+      "upper_unbounded": true
+    },
+    {
+      "id": "empty",
+      "p_value": 1,
+      "conditional_odds_ratio": 0,
+      "conditional_odds_ratio_infinite": false,
+      "lower": 0,
+      "upper": null,
+      "upper_unbounded": true
+    }
+  ],
+  "expression": [
+    {
+      "id": "unbalanced",
+      "statistic": 0,
+      "p_value": 0.10519250512004141,
+      "mean_difference": -3.25,
+      "mean_difference_lower": -5.9975350872636852,
+      "mean_difference_upper": -0.50246491273631499,
+      "degrees_of_freedom": 3.9993964996982507
+    },
+    {
+      "id": "ties",
+      "statistic": 1,
+      "p_value": 0.095483232097547333,
+      "mean_difference": -1.3333333333333333,
+      "mean_difference_lower": -2.6881489187445564,
+      "mean_difference_upper": 0.021482252077890129,
+      "degrees_of_freedom": 5.0000000000000018
+    },
+    {
+      "id": "reverse",
+      "statistic": 8.5,
+      "p_value": 0.12118327283746311,
+      "mean_difference": 2,
+      "mean_difference_lower": -0.26695793552751879,
+      "mean_difference_upper": 4.2669579355275191,
+      "degrees_of_freedom": 4.0000000000000009
+    },
+    {
+      "id": "negative_z_scores",
+      "statistic": 4.5,
+      "p_value": 0.37782163710006383,
+      "mean_difference": -1,
+      "mean_difference_lower": -3.2337146951647044,
+      "mean_difference_upper": 1.2337146951647042,
+      "degrees_of_freedom": 6
+    },
+    {
+      "id": "all_tied",
+      "statistic": 2,
+      "p_value": null,
+      "mean_difference": 0,
+      "mean_difference_lower": null,
+      "mean_difference_upper": null,
+      "degrees_of_freedom": null
+    },
+    {
+      "id": "empty",
+      "statistic": null,
+      "p_value": null,
+      "mean_difference": null,
+      "mean_difference_lower": null,
+      "mean_difference_upper": null,
+      "degrees_of_freedom": null
+    },
+    {
+      "id": "one_patient",
+      "statistic": 0,
+      "p_value": 0.54029137460742005,
+      "mean_difference": -1.5,
+      "mean_difference_lower": null,
+      "mean_difference_upper": null,
+      "degrees_of_freedom": null
+    }
+  ],
+  "bh": [
+    {
+      "id": "ordinary",
+      "adjusted": [
+        0.029999999999999999,
+        0.040000000000000001,
+        0.040000000000000001
+      ]
+    },
+    {
+      "id": "missing",
+      "adjusted": [
+        0.02,
+        null,
+        0.05333333333333333,
+        0.02
+      ]
+    },
+    {
+      "id": "mixed",
+      "adjusted": [
+        0.0025000000000000001,
+        0.0025000000000000001,
+        0.625,
+        null,
+        0.33333333333333337
+      ]
+    },
+    {
+      "id": "all_missing",
+      "adjusted": [
+        null,
+        null
+      ]
+    },
+    {
+      "id": "empty",
+      "adjusted": []
+    }
+  ]
+}

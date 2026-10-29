@@ -1,0 +1,2 @@
+Hugo_Symbol	Entrez_Gene_Id	S1	S2	S3	S4
+ERBB2	2064	2	0	1	-2

@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "observed_date": "2026-10-11",
+  "sources": [
+    {
+      "repository": "content-service",
+      "revision": "8d5b39fd903303163441ebf2ee3998a7c794bebe",
+      "path": "src/main/java/org/reactome/server/service/controller/search/SearchController.java",
+      "sha256": "343a9171a8ee6f0da98a7764ec4ddd282fb05bef59f5130efed0d1003e275a08"
+    },
+    {
+      "repository": "content-service",
+      "revision": "8d5b39fd903303163441ebf2ee3998a7c794bebe",
+      "path": "src/main/java/org/reactome/server/service/controller/graph/ParticipantsController.java",
+      "sha256": "a3e7070aff45029893e274a4215d45c247405f4e03b8cf4f4b625a46e3f38bd6"
+    },
+    {
+      "repository": "content-service",
+      "revision": "8d5b39fd903303163441ebf2ee3998a7c794bebe",
+      "path": "src/main/java/org/reactome/server/service/controller/graph/PathwaysController.java",
+      "sha256": "f8e5d394d2953807d62aabf50182e5bb9d7b39281ea3e0073c743749568a9d2b"
+    },
+    {
+      "repository": "content-service",
+      "revision": "8d5b39fd903303163441ebf2ee3998a7c794bebe",
+      "path": "src/main/java/org/reactome/server/service/controller/graph/QueryObjectController.java",
+      "sha256": "ebeed1d8851e1e3e40784a47d0bf67e499e893033bf09e89338371874d959f08"
+    },
+    {
+      "repository": "content-service",
+      "revision": "8d5b39fd903303163441ebf2ee3998a7c794bebe",
+      "path": "src/main/java/org/reactome/server/service/controller/graph/MappingController.java",
+      "sha256": "a81ac920f37cd1947d5068ce318c2922ebe83528538360b6643fbf11f86550f4"
+    },
+    {
+      "repository": "content-service",
+      "revision": "8d5b39fd903303163441ebf2ee3998a7c794bebe",
+      "path": "src/main/java/org/reactome/server/service/controller/interactors/StaticInteractionsController.java",
+      "sha256": "747671786d3a5bb8b699094e5c91b9edecd9e0ef2104c68289a2d7196ee8f8bc"
+    },
+    {
+      "repository": "content-service",
+      "revision": "8d5b39fd903303163441ebf2ee3998a7c794bebe",
+      "path": "src/main/java/org/reactome/server/service/controller/exporter/ImageExporterController.java",
+      "sha256": "d7f629fc53272512f3b9ea365b67daf1d441c17938090f370dedfc8e10023825"
+    },
+    {
+      "repository": "content-service",
+      "revision": "8d5b39fd903303163441ebf2ee3998a7c794bebe",
+      "path": "src/main/java/org/reactome/server/service/model/interactors/Interactors.java",
+      "sha256": "eb722f9caedb5a4f213186ed9409be06882ba2271347f18b915fb88761220dfd"
+    },
+    {
+      "repository": "content-service",
+      "revision": "8d5b39fd903303163441ebf2ee3998a7c794bebe",
+      "path": "src/main/java/org/reactome/server/service/model/interactors/InteractorEntity.java",
+      "sha256": "1023ab0b2f0ec5f0086c905cca500403ec129310d5ed9fc6d5ad2c765cd74597"
+    },
+    {
+      "repository": "content-service",
+      "revision": "8d5b39fd903303163441ebf2ee3998a7c794bebe",
+      "path": "src/main/java/org/reactome/server/service/model/interactors/Interactor.java",
+      "sha256": "e8c0b0e6a2cf88bd274aa8c85de34b563b5db7a78ee2200afe1f145e03dace7d"
+    },
+    {
+      "repository": "search-core",
+      "revision": "c3c993694394558168d0ad3b4aa07f63301110c5",
+      "path": "src/main/java/org/reactome/server/search/domain/Entry.java",
+      "sha256": "c26decada2726c3a345b26e726f23cf1b927c2015c1b5da5836436271c48f240"
+    },
+    {
+      "repository": "search-core",
+      "revision": "c3c993694394558168d0ad3b4aa07f63301110c5",
+      "path": "src/main/java/org/reactome/server/search/domain/GroupedResult.java",
+      "sha256": "fef4be66525673fbbac5741ad329572d824af2d9ed886d292c87488b9567cc13"
+    },
+    {
+      "repository": "search-core",
+      "revision": "c3c993694394558168d0ad3b4aa07f63301110c5",
+      "path": "src/main/java/org/reactome/server/search/domain/Result.java",
+      "sha256": "01241cc1828930be6bc8b018cee22d2c51700a494708341400338edd8be22eb1"
+    },
+    {
+      "repository": "search-core",
+      "revision": "c3c993694394558168d0ad3b4aa07f63301110c5",
+      "path": "src/main/java/org/reactome/server/search/solr/SolrConverter.java",
+      "sha256": "0a4e849e447cfeb39363120e2a04ecdfea71e86c5f815f67e954f81fd6bc9130"
+    },
+    {
+      "repository": "graph-core",
+      "revision": "62aef35d7a89403b8a8800dc004d8de62f847aee",
+      "path": "src/main/java/org/reactome/server/graph/domain/model/Event.java",
+      "sha256": "887cc01b13a5073d94620f1cc4c759c6cb10effcecee67c3a135bc5a0b9a04dc"
+    },
+    {
+      "repository": "graph-core",
+      "revision": "62aef35d7a89403b8a8800dc004d8de62f847aee",
+      "path": "src/main/java/org/reactome/server/graph/domain/model/Pathway.java",
+      "sha256": "9f32d6d2351c71f42411c67870099d9985b485fdb7ea3bd61304a599b5e20c39"
+    },
+    {
+      "repository": "graph-core",
+      "revision": "62aef35d7a89403b8a8800dc004d8de62f847aee",
+      "path": "src/main/java/org/reactome/server/graph/domain/result/Participant.java",
+      "sha256": "395f618b2a40f3481502cfe58ecdc94197e8b141754b734f3a54c33d9624f605"
+    },
+    {
+      "repository": "diagram-reader",
+      "revision": "6aa7a9f6c3645baf503aa79606563f5147273b3b",
+      "path": "src/main/java/org/reactome/server/tools/diagram/data/layout/Diagram.java",
+      "sha256": "6161b9ed52cf3f20eacc3492d4ab0cc52c0acd9489ad2353143f12644c53a2bd"
+    },
+    {
+      "repository": "diagram-reader",
+      "revision": "6aa7a9f6c3645baf503aa79606563f5147273b3b",
+      "path": "src/main/java/org/reactome/server/tools/diagram/data/graph/Graph.java",
+      "sha256": "79a51f631a849031b43ba784d9b552e33f645ce3d930ff80210e8dafa4bd5a2f"
+    }
+  ],
+  "selected_contracts": {
+    "search": {
+      "endpoint": "/search/query",
+      "forced_filters": "Force filters",
+      "offset": "Start row",
+      "limit": "rows",
+      "cluster": false,
+      "group_type": "Results",
+      "entry_type": "Pathway",
+      "global_count": "numberOfMatches",
+      "acquired_count": "rowCount"
+    },
+    "gene_mapping": {
+      "endpoint": "/data/mapping/UniProt/{identifier}/pathways",
+      "species_parameter": "species"
+    },
+    "participants": {
+      "endpoint": "/data/participants/{id}",
+      "physical_id": "peDbId",
+      "references": "refEntities"
+    },
+    "events": {
+      "endpoint": "/data/pathway/{id}/containedEvents",
+      "collection": true
+    },
+    "diagram": {
+      "layout": "/download/current/diagram/{id}.json",
+      "identity": "stableId",
+      "serializer": "NON_EMPTY",
+      "image": "/exporter/diagram/{id}.{ext}"
+    },
+    "interactions": {
+      "endpoint": "/interactors/static/molecule/{acc}/details",
+      "count_scope": "acquired_page"
+    }
+  },
+  "live_health_qualified": false
+}

@@ -1,0 +1,131 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                    MyGene MCP Tool Consolidation                              ║
+║                         26+ Tools → 5 Tools                                   ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+BEFORE: 26+ Granular Tools
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ Query Tools (3)                                                             │
+├────────────────────────────────────────────────────────────────────────────┤
+│  • query_genes                                                              │
+│  • search_by_field                                                          │
+│  • get_field_statistics                                                     │
+└────────────────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ Annotation Tools (3)                                                        │
+├────────────────────────────────────────────────────────────────────────────┤
+│  • get_gene_annotation                                                      │
+│  • query_genes_batch                                                        │
+│  • get_genes_batch                                                          │
+└────────────────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ Context Analysis Tools (11)                                                 │
+├────────────────────────────────────────────────────────────────────────────┤
+│  • get_gene_pathways              • query_genes_by_pathway                  │
+│  • get_gene_go_annotations        • query_genes_by_go_term                 │
+│  • get_gene_expression_profile    • query_genes_by_expression              │
+│  • get_gene_disease_associations  • query_genes_by_disease                 │
+│  • get_gene_chemical_interactions • query_genes_by_chemical                │
+│  • get_gene_variants                                                        │
+└────────────────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ Comparison Tools (3)                                                        │
+├────────────────────────────────────────────────────────────────────────────┤
+│  • get_gene_orthologs                                                       │
+│  • query_homologous_genes                                                   │
+│  • query_genes_by_interval                                                  │
+└────────────────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ Batch & Metadata Tools (6)                                                  │
+├────────────────────────────────────────────────────────────────────────────┤
+│  • export_gene_list               • build_complex_query                     │
+│  • query_with_filters             • get_mygene_metadata                     │
+│  • get_available_fields           • get_species_list                        │
+└────────────────────────────────────────────────────────────────────────────┘
+
+
+                                      ⬇ ⬇ ⬇
+                              CONSOLIDATION PROCESS
+                                      ⬇ ⬇ ⬇
+
+
+AFTER: 5 Unified Tools
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║ 1. query_genes                                                              ║
+╟────────────────────────────────────────────────────────────────────────────╢
+║ Universal gene search and querying                                          ║
+║ • Operations: search, field_search, field_stats                             ║
+║ • Replaces: 3 tools                                                         ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║ 2. get_gene                                                                 ║
+╟────────────────────────────────────────────────────────────────────────────╢
+║ Comprehensive gene information retrieval                                    ║
+║ • Sections: identity, genomic, pathways, go_terms, expression, disease,    ║
+║             drugs, variants, homology, all                                  ║
+║ • Modes: Single gene, batch mode                                            ║
+║ • Replaces: 3 tools                                                         ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║ 3. analyze_gene_context                                                     ║
+╟────────────────────────────────────────────────────────────────────────────╢
+║ Biological context analysis                                                 ║
+║ • Context Types: pathways, go_terms, expression, disease, drugs, variants  ║
+║ • Replaces: 11 tools                                                        ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║ 4. compare_genes                                                            ║
+╟────────────────────────────────────────────────────────────────────────────╢
+║ Gene comparison and relationships                                           ║
+║ • Operations: orthologs, homology, interval                                 ║
+║ • Replaces: 3 tools                                                         ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║ 5. batch_operations                                                         ║
+╟────────────────────────────────────────────────────────────────────────────╢
+║ Batch processing and metadata                                               ║
+║ • Operations: export, complex_query, filtered_query, metadata,              ║
+║               available_fields, species_list                                ║
+║ • Replaces: 6 tools                                                         ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STATISTICS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Before:  26+ tools across 14 modules
+  After:   5 unified tools in 1 module
+  
+  Reduction:  80% fewer tools
+  Pattern:    Exact match with OpenTargets MCP
+  Status:     ✅ ALL TESTS PASSED
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+KEY BENEFITS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✓ Reduced Complexity       - 80% fewer tools to learn
+  ✓ Better Organization      - Tools grouped by purpose
+  ✓ Improved Discoverability - Easier to find functionality
+  ✓ Enhanced Documentation   - Comprehensive examples
+  ✓ Pattern Consistency      - Matches OpenTargets pattern
+  ✓ Preserved Functionality  - All capabilities maintained
+  ✓ Flexible Parameters      - Operation-based routing
+  ✓ Future-Proof Design      - Easy to extend
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

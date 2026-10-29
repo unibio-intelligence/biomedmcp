@@ -1,0 +1,88 @@
+[project]
+name = "biomedmcp"
+version = "0.2.1"
+description = "biomedmcp biomedical research MCP and CLI"
+readme = "README.md"
+authors = [{name = "UniBio Intelligence"}]
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE.md", "servers/python/**/LICENSE*"]
+requires-python = ">=3.13"
+dependencies = [
+    "fastmcp==4.1.2",
+    "opentelemetry-api==1.45.1",
+    "httpx==0.28.1",
+    "aiohttp==3.14.5",
+    "certifi==2026.10.19",
+    "httpcore==1.0.9",
+    "uvicorn>=0.35",
+    "pydantic>=2.12,<3",
+    "jsonschema>=4.23",
+    "graphql-core==3.2.12",
+    "structlog>=24.1.0",
+    "defusedxml>=0.7",
+    "scipy>=1.15,<2",
+    "redis>=5,<7",
+    "mcp>=2.1.1,<3.0.0",
+    "requests>=2.31.0",
+    "python-dotenv",
+    "thefuzz",
+    "python-Levenshtein",
+    "pandas>=2.0.0",
+    "mmcif-pdbx==2.1.0",
+]
+
+[project.scripts]
+biomedmcp = "biomedmcp.cli:main"
+biomedmcp-server = "biomedmcp.mcp.server:main"
+
+[project.urls]
+Repository = "https://github.com/unibio-intelligence/biomedmcp"
+
+[build-system]
+requires = ["hatchling==1.32.4"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = [
+    "src/biomedmcp",
+    "servers/python/antibody-registry/antibody_registry",
+    "servers/python/bio-ontology-mcp/src/bio_ontology_mcp",
+    "servers/python/chembl-mcp/chembl_mcp",
+    "servers/python/clinical-trials-mcp/clinical_trials_mcp",
+    "servers/python/dailymed-mcp/dailymed_mcp",
+    "servers/python/depmap-mcp/depmap_mcp",
+    "servers/python/ensembl-mcp/ensembl_mcp",
+    "servers/python/gtex/src/gtex_mcp",
+    "servers/python/mychem/src/mychem_mcp",
+    "servers/python/mydisease/src/mydisease_mcp",
+    "servers/python/mygene/src/mygene_mcp",
+    "servers/python/ncbi-mcp/ncbi_mcp",
+    "servers/python/omnipath-mcp/omnipath_mcp",
+    "servers/python/openfda-mcp/openfda_mcp",
+    "servers/python/opentargets/src/opentargets_mcp",
+    "servers/python/orange-book-mcp/orange_book_mcp",
+    "servers/python/pdb-mcp/pdb_mcp",
+    "servers/python/protein-atlas-mcp/protein_atlas_mcp",
+    "servers/python/reactome-mcp/reactome_mcp",
+    "servers/python/surechembl-mcp/surechembl_mcp",
+    "servers/python/uniprot-mcp/uniprot_mcp",
+]
+
+[dependency-groups]
+dev = [
+    "markdown-it-py==4.2.0",
+    "pytest>=8",
+    "pytest-asyncio>=1",
+    "respx>=0.22",
+    "ruff>=0.12",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+addopts = '-m "not redis"'
+markers = ["redis: required real-Redis distributed runtime qualification (explicit -m redis)", "source_permissions: exercise installed source license policy without synthetic permission mocks"]
+
+[tool.ruff]
+target-version = "py313"
+line-length = 110

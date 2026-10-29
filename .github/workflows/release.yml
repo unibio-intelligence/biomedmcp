@@ -1,0 +1,111 @@
+name: Publish biomedmcp artifacts
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version already present in the reviewed public source
+        required: true
+permissions:
+  contents: read
+concurrency:
+  group: public-release-${{ inputs.version }}
+  cancel-in-progress: false
+jobs:
+  release:
+    if: github.repository == 'unibio-intelligence/biomedmcp' && github.event.repository.private == false
+    runs-on: ubuntu-latest
+    # Configure required reviewers for this environment before dispatching.
+    environment: public-release
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - name: Verify release version and license
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+        run: |
+          python - <<'PY'
+          import os, re, tomllib
+          from pathlib import Path
+          version = os.environ["RELEASE_VERSION"]
+          assert re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+(?:[-.][A-Za-z0-9.-]+)?", version)
+          assert tomllib.loads(Path("pyproject.toml").read_text())["project"]["version"] == version
+          assert Path("LICENSE").is_file()
+          PY
+      - name: Qualify containers and dependent checks with scoped cleanup
+        id: public_links
+        run: |
+          ./scripts/test-local.sh --report-dir "$RUNNER_TEMP/ubi-cleanup-report" -- bash -euo pipefail -c '
+            mkdir -p "$RUNNER_TEMP/ubi-link-report"
+            link_status=0
+            docker run --label "$UBI_TEST_RUN_LABEL" --rm --user "$(id -u):$(id -g)" --read-only --cap-drop ALL --security-opt no-new-privileges --tmpfs /tmp:rw,size=64m --env UV_CACHE_DIR=/tmp/uv-cache -v "$RUNNER_TEMP/ubi-link-report:/output" "$UBI_TEST_IMAGE" uv run --frozen --no-sync python scripts/check-public-links.py --output /output/report.json || link_status=$?
+            security_status=0
+            TMPDIR="$RUNNER_TEMP" python scripts/scan-security.py --image "$UBI_RUNTIME_IMAGE" --output "$RUNNER_TEMP/ubi-security-report" || security_status=$?
+            test "$link_status" -eq 0 && test "$security_status" -eq 0 || exit 1
+            export SOURCE_DATE_EPOCH="$(git show -s --format=%ct "$GITHUB_SHA")"
+            mkdir -p "$RUNNER_TEMP/ubi-wheels"
+            docker run --label "$UBI_TEST_RUN_LABEL" --rm -e SOURCE_DATE_EPOCH -v "$RUNNER_TEMP/ubi-wheels:/wheels" "$UBI_TEST_IMAGE" uv build --wheel --out-dir /wheels
+            docker run --label "$UBI_TEST_RUN_LABEL" --rm --network none -v "$RUNNER_TEMP/ubi-wheels:/wheels:ro" "$UBI_TEST_IMAGE" uv run --frozen --no-sync python scripts/check-wheel.py --wheels /wheels
+          '
+      - name: Retain Docker cleanup receipts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: docker-cleanup-evidence
+          path: ${{ runner.temp }}/ubi-cleanup-report
+          if-no-files-found: warn
+      - name: Retain public link qualification evidence
+        if: always() && steps.public_links.outcome != 'skipped'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: public-link-evidence
+          path: ${{ runner.temp }}/ubi-link-report
+          if-no-files-found: error
+      - name: Retain vulnerability reports, SBOMs and input identities
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: public-security-evidence
+          path: ${{ runner.temp }}/ubi-security-report
+          if-no-files-found: error
+      - name: Bundle public wheels
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+        run: python scripts/release-artifacts.py bundle --wheels "$RUNNER_TEMP/ubi-wheels" --assets "$RUNNER_TEMP/ubi-release-assets"
+      - name: Inventory the exact released wheel archive
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+        run: |
+          python scripts/release-artifacts.py sbom --assets "$RUNNER_TEMP/ubi-release-assets" --output "$RUNNER_TEMP/ubi-release-evidence/wheel-bundle.cdx.json"
+      - name: Attest the published archive and receipt provenance
+        id: provenance
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4
+        with:
+          subject-path: |
+            ${{ runner.temp }}/ubi-release-assets/public-wheels.tar.gz
+            ${{ runner.temp }}/ubi-release-assets/release-receipt.json
+      - name: Attest the wheel inventory against its archive
+        id: wheel_sbom
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4
+        with:
+          subject-path: ${{ runner.temp }}/ubi-release-assets/public-wheels.tar.gz
+          sbom-path: ${{ runner.temp }}/ubi-release-evidence/wheel-bundle.cdx.json
+      - name: Retain release attestation evidence
+        if: always() && steps.provenance.outcome != 'skipped'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: public-release-attestation-evidence
+          path: |
+            ${{ runner.temp }}/ubi-release-evidence
+            ${{ steps.provenance.outputs.bundle-path }}
+            ${{ steps.wheel_sbom.outputs.bundle-path }}
+          if-no-files-found: error
+      - name: Verify or resume versioned public artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_VERSION: ${{ inputs.version }}
+        run: |
+          python scripts/release-artifacts.py publish --assets "$RUNNER_TEMP/ubi-release-assets"

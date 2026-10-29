@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "orange-book-mcp"
+version = "0.0.1"
+description = "Orange Book MCP Server - FDA therapeutic equivalence data"
+authors = [{name = "UniBio Intelligence"}]
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+dependencies = [
+    "fastmcp>=4.0.2,<5.0.0",
+    "httpx>=0.25.0",
+    "pandas>=2.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+]
+
+[project.urls]
+Repository = "https://github.com/unibio-intelligence/biomedmcp"

@@ -1,0 +1,21 @@
+# GTEx QTL records
+
+Inspect `capabilities({"source":"gtex"})` for `record_schemas.qtl`. Five assertions cover the existing public `get` gene sections: single-tissue eQTL/sQTL associations, eQTL MetaSoft and dynamic eQTL/sQTL calculations. Use explicit tissue and dataset selectors; MetaSoft and dynamic modes require a qualified variant, and dynamic sQTL additionally requires a provider splicing phenotype. No additional public alias or gene-list operation is introduced.
+
+```json
+{"entity":"gene","id":"ENSG00000157764.14","sections":["sqtl"],"sources":["gtex"],"source_versions":{"gtex":"gtex_v10"},"section_parameters":{"sqtl":{"tissue_id":"Thyroid","analysis_mode":"gene_associations"}}}
+```
+
+Records retain a versioned GENCODE identity, supported dataset/reference annotation, human dataset scope and explicit GRCh38 GTEx allele. Allele validation checks identifier/reference-row consistency; it does not independently check FASTA, normalize an allele or establish an effect allele. A splicing phenotype remains in its own namespace, with no inferred transcript. Reported gene symbols and ontology codes remain source metadata. In dynamic responses that omit `datasetId`, `source_release_basis` explicitly labels the dataset as acquisition scope rather than a reported row version. Receipts remain time-dependent; a dataset selector does not prove immutable HTTP replay.
+
+`pValue`, normalized effect size `nes`, MetaSoft `metaP`, tissue posterior `mValue`, tissue standard error `se` and dynamic standard error `error` retain their independent meanings and nullable states. Missing MetaSoft tissue fields stay missing; supplied nulls stay null. They cannot become zero, no effect, a fold change, an odds ratio or clinical benefit. Measurement units and effect allele remain unknown. The [provider API contract](https://gtexportal.org/api/v2/openapi.json) describes these as separate quantities; Ubi does not recompute them or infer causality.
+
+Dynamic records retain aligned `data` and `genotypes` arrays, their supplied-value count and exact homoRef/heterozygous/homoAlt partition. This counts paired measurements, not identified unique participants. Participant/assay denominators and missing measurements remain unknown. Array positions do not support cross-gene, cross-tissue or cross-record participant joins. Provider-reported `maf` is preserved without recomputing its eligible-sample scope or rounding from the displayed genotypes. Non-significant dynamic calculations are retained with explicit threshold interpretation.
+
+Each assertion hashes its unchanged provider row and locates the original endpoint, page, row, whole-response hash and measurement pointers. Annotation happens before significance filtering, so a displayed row still points to its original source position. Provider-page counts and filtering describe retrieval windows, not biological absence. Conflicting acquired rows retain separate source hashes and locators. Use the surrounding section's evidence IDs and receipt to locate and cite the acquired record.
+
+Dynamic sQTL records retain the exact typed association used to qualify the gene/intron/variant/tissue join, including its source page, row and hash. The service refuses an unqualified join. This supporting association remains independent of the dynamic result's probability and measurements; neither replaces the other.
+
+Bounded delivery may omit array values or nested tissue evidence. Use the supplied [evidence resources](evidence-resources.md) and continuations to recover supporting ranges from the same snapshot and evidence IDs. Recover both paired arrays before exhaustive count checks or reconstruction; displayed prefixes cannot establish complete donor data. A full acquired record is needed to recompute its input hash and validate arithmetic. JSON Schema describes fields; additional production checks enforce identity, hashes, pointers, genotype partitions and joined-input consistency.
+
+Two gene-summary types also validate retained internal adapter results without adding a public route. Other expression providers, annotation/dossier nesting, broader variant assertions and independent scientific/model qualification remain separate requirements. These fixture-qualified records do not establish the scientific validity of a real association or live-provider health.

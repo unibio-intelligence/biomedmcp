@@ -1,0 +1,47 @@
+name: Contract and container qualification
+on:
+  # Temporarily manual-only; restore push/pull_request when automatic CI resumes.
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  contracts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - name: Qualify containers and dependent checks with scoped cleanup
+        id: public_links
+        run: |
+          ./scripts/test-local.sh --report-dir "$RUNNER_TEMP/ubi-cleanup-report" -- bash -euo pipefail -c '
+            mkdir -p "$RUNNER_TEMP/ubi-link-report"
+            link_status=0
+            docker run --label "$UBI_TEST_RUN_LABEL" --rm --user "$(id -u):$(id -g)" --read-only --cap-drop ALL --security-opt no-new-privileges --tmpfs /tmp:rw,size=64m --env UV_CACHE_DIR=/tmp/uv-cache -v "$RUNNER_TEMP/ubi-link-report:/output" "$UBI_TEST_IMAGE" uv run --frozen --no-sync python scripts/check-public-links.py --output /output/report.json || link_status=$?
+            security_status=0
+            TMPDIR="$RUNNER_TEMP" python scripts/scan-security.py --image "$UBI_RUNTIME_IMAGE" --output "$RUNNER_TEMP/ubi-security-report" || security_status=$?
+            if test "$link_status" -ne 0; then
+              echo "::warning title=External documentation links::External link checks failed; see the public-link-evidence artifact."
+            fi
+            test "$security_status" -eq 0 || exit 1
+          '
+      - name: Retain Docker cleanup receipts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: docker-cleanup-evidence
+          path: ${{ runner.temp }}/ubi-cleanup-report
+          if-no-files-found: warn
+      - name: Retain public link qualification evidence
+        if: always() && steps.public_links.outcome != 'skipped'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: public-link-evidence
+          path: ${{ runner.temp }}/ubi-link-report
+          if-no-files-found: error
+      - name: Retain vulnerability reports, SBOMs and input identities
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: public-security-evidence
+          path: ${{ runner.temp }}/ubi-security-report
+          if-no-files-found: error

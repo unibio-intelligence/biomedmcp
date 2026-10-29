@@ -1,0 +1,4969 @@
+{
+  "components": {
+    "schemas": {
+      "protobufAny": {
+        "properties": {
+          "type_url": {
+            "type": "string"
+          },
+          "value": {
+            "format": "byte",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "rpcStatus": {
+        "properties": {
+          "code": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "details": {
+            "items": {
+              "$ref": "#/components/schemas/protobufAny"
+            },
+            "type": "array"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2AssemblyDatasetDescriptorsFilterAssemblySource": {
+        "default": "all",
+        "enum": [
+          "all",
+          "refseq",
+          "genbank"
+        ],
+        "type": "string"
+      },
+      "v2AssemblyDatasetDescriptorsFilterAssemblyVersion": {
+        "default": "current",
+        "enum": [
+          "current",
+          "all_assemblies"
+        ],
+        "type": "string"
+      },
+      "v2AssemblyDatasetDescriptorsFilterMetagenomeDerivedFilter": {
+        "default": "METAGENOME_DERIVED_UNSET",
+        "enum": [
+          "METAGENOME_DERIVED_UNSET",
+          "metagenome_derived_only",
+          "metagenome_derived_exclude"
+        ],
+        "type": "string"
+      },
+      "v2AssemblyDatasetDescriptorsFilterTypeMaterialCategory": {
+        "default": "NONE",
+        "enum": [
+          "NONE",
+          "TYPE_MATERIAL",
+          "TYPE_MATERIAL_CLADE",
+          "TYPE_MATERIAL_NEOTYPE",
+          "TYPE_MATERIAL_REFTYPE",
+          "PATHOVAR_TYPE",
+          "TYPE_MATERIAL_SYN"
+        ],
+        "type": "string"
+      },
+      "v2AssemblyDatasetReportsRequestContentType": {
+        "default": "COMPLETE",
+        "enum": [
+          "COMPLETE",
+          "ASSM_ACC",
+          "PAIRED_ACC"
+        ],
+        "type": "string"
+      },
+      "v2GeneDatasetReportsRequestContentType": {
+        "default": "COMPLETE",
+        "enum": [
+          "COMPLETE",
+          "IDS_ONLY",
+          "COUNTS_ONLY"
+        ],
+        "type": "string"
+      },
+      "v2GeneType": {
+        "default": "UNKNOWN",
+        "enum": [
+          "UNKNOWN",
+          "tRNA",
+          "rRNA",
+          "snRNA",
+          "scRNA",
+          "snoRNA",
+          "PROTEIN_CODING",
+          "PSEUDO",
+          "TRANSPOSON",
+          "miscRNA",
+          "ncRNA",
+          "BIOLOGICAL_REGION",
+          "OTHER"
+        ],
+        "type": "string"
+      },
+      "v2GenomeAnnotationRequestGenomeAnnotationTableFormat": {
+        "default": "NO_TABLE",
+        "enum": [
+          "NO_TABLE",
+          "SUMMARY",
+          "PRODUCT"
+        ],
+        "type": "string"
+      },
+      "v2IncludeTabularHeader": {
+        "default": "INCLUDE_TABULAR_HEADER_FIRST_PAGE_ONLY",
+        "enum": [
+          "INCLUDE_TABULAR_HEADER_FIRST_PAGE_ONLY",
+          "INCLUDE_TABULAR_HEADER_ALWAYS",
+          "INCLUDE_TABULAR_HEADER_NEVER"
+        ],
+        "type": "string"
+      },
+      "v2OrthologRequestContentType": {
+        "default": "COMPLETE",
+        "enum": [
+          "COMPLETE",
+          "IDS_ONLY"
+        ],
+        "type": "string"
+      },
+      "v2SequenceReportPage": {
+        "properties": {
+          "next_page_token": {
+            "type": "string"
+          },
+          "reports": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsSequenceInfo"
+            },
+            "type": "array"
+          },
+          "total_count": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "v2SortDirection": {
+        "default": "SORT_DIRECTION_UNSPECIFIED",
+        "enum": [
+          "SORT_DIRECTION_UNSPECIFIED",
+          "SORT_DIRECTION_ASCENDING",
+          "SORT_DIRECTION_DESCENDING"
+        ],
+        "type": "string"
+      },
+      "v2TaxonomyMetadataRequestContentType": {
+        "default": "COMPLETE",
+        "enum": [
+          "COMPLETE",
+          "TAXIDS",
+          "METADATA"
+        ],
+        "type": "string"
+      },
+      "v2TaxonomyMetadataRequestTableFormat": {
+        "default": "SUMMARY",
+        "enum": [
+          "SUMMARY"
+        ],
+        "type": "string"
+      },
+      "v2VirusDataReportRequestContentType": {
+        "default": "COMPLETE",
+        "enum": [
+          "COMPLETE",
+          "ACCESSIONS_ONLY"
+        ],
+        "type": "string"
+      },
+      "v2reportsANIMatch": {
+        "properties": {
+          "ani": {
+            "format": "float",
+            "type": "number"
+          },
+          "assembly": {
+            "type": "string"
+          },
+          "assembly_coverage": {
+            "format": "float",
+            "type": "number"
+          },
+          "category": {
+            "$ref": "#/components/schemas/v2reportsANITypeCategory"
+          },
+          "organism_name": {
+            "type": "string"
+          },
+          "type_assembly_coverage": {
+            "format": "float",
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsANITypeCategory": {
+        "default": "ANI_CATEGORY_UNKNOWN",
+        "enum": [
+          "ANI_CATEGORY_UNKNOWN",
+          "claderef",
+          "category_na",
+          "neotype",
+          "no_type",
+          "pathovar",
+          "reftype",
+          "suspected_type",
+          "synonym",
+          "type"
+        ],
+        "type": "string"
+      },
+      "v2reportsAdditionalSubmitter": {
+        "properties": {
+          "bioproject_accession": {
+            "type": "string"
+          },
+          "chr_name": {
+            "type": "string"
+          },
+          "genbank_accession": {
+            "type": "string"
+          },
+          "molecule_type": {
+            "type": "string"
+          },
+          "refseq_accession": {
+            "type": "string"
+          },
+          "submitter": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsAggregateExpressionValue": {
+        "properties": {
+          "mean": {
+            "format": "float",
+            "type": "number"
+          },
+          "stddev": {
+            "format": "float",
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsAnnotation": {
+        "properties": {
+          "annotation_name": {
+            "type": "string"
+          },
+          "annotation_release_date": {
+            "type": "string"
+          },
+          "assembly_accession": {
+            "type": "string"
+          },
+          "assembly_name": {
+            "type": "string"
+          },
+          "genomic_locations": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsGenomicLocation"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsAnnotationInfo": {
+        "properties": {
+          "busco": {
+            "$ref": "#/components/schemas/v2reportsBuscoStat"
+          },
+          "method": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "pipeline": {
+            "type": "string"
+          },
+          "provider": {
+            "type": "string"
+          },
+          "release_date": {
+            "type": "string"
+          },
+          "release_version": {
+            "type": "string"
+          },
+          "report_url": {
+            "type": "string"
+          },
+          "software_version": {
+            "type": "string"
+          },
+          "stats": {
+            "$ref": "#/components/schemas/v2reportsFeatureCounts"
+          },
+          "status": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsAssemblyDataReport": {
+        "properties": {
+          "accession": {
+            "type": "string"
+          },
+          "additional_submitters": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsAdditionalSubmitter"
+            },
+            "type": "array"
+          },
+          "annotation_info": {
+            "$ref": "#/components/schemas/v2reportsAnnotationInfo"
+          },
+          "assembly_info": {
+            "$ref": "#/components/schemas/v2reportsAssemblyInfo"
+          },
+          "assembly_stats": {
+            "$ref": "#/components/schemas/v2reportsAssemblyStats"
+          },
+          "average_nucleotide_identity": {
+            "$ref": "#/components/schemas/v2reportsAverageNucleotideIdentity"
+          },
+          "checkm_info": {
+            "$ref": "#/components/schemas/v2reportsCheckM"
+          },
+          "current_accession": {
+            "type": "string"
+          },
+          "organelle_info": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsOrganelleInfo"
+            },
+            "type": "array"
+          },
+          "organism": {
+            "$ref": "#/components/schemas/v2reportsOrganism"
+          },
+          "paired_accession": {
+            "type": "string"
+          },
+          "source_database": {
+            "$ref": "#/components/schemas/v2reportsSourceDatabase"
+          },
+          "type_material": {
+            "$ref": "#/components/schemas/v2reportsTypeMaterial"
+          },
+          "wgs_info": {
+            "$ref": "#/components/schemas/v2reportsWGSInfo"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsAssemblyDataReportPage": {
+        "properties": {
+          "content_type": {
+            "$ref": "#/components/schemas/v2reportsContentType"
+          },
+          "messages": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsMessage"
+            },
+            "type": "array"
+          },
+          "next_page_token": {
+            "type": "string"
+          },
+          "reports": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsAssemblyDataReport"
+            },
+            "type": "array"
+          },
+          "total_count": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsAssemblyInfo": {
+        "properties": {
+          "assembly_level": {
+            "type": "string"
+          },
+          "assembly_long_name": {
+            "type": "string"
+          },
+          "assembly_method": {
+            "type": "string"
+          },
+          "assembly_name": {
+            "type": "string"
+          },
+          "assembly_status": {
+            "$ref": "#/components/schemas/v2reportsAssemblyStatus"
+          },
+          "assembly_type": {
+            "type": "string"
+          },
+          "atypical": {
+            "$ref": "#/components/schemas/v2reportsAtypicalInfo"
+          },
+          "bioproject_accession": {
+            "type": "string"
+          },
+          "bioproject_lineage": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsBioProjectLineage"
+            },
+            "type": "array"
+          },
+          "biosample": {
+            "$ref": "#/components/schemas/v2reportsBioSampleDescriptor"
+          },
+          "blast_url": {
+            "type": "string"
+          },
+          "comments": {
+            "type": "string"
+          },
+          "diploid_role": {
+            "$ref": "#/components/schemas/v2reportsLinkedAssemblyType"
+          },
+          "genome_notes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "grouping_method": {
+            "type": "string"
+          },
+          "linked_assemblies": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsLinkedAssembly"
+            },
+            "type": "array"
+          },
+          "linked_assembly": {
+            "type": "string"
+          },
+          "paired_assembly": {
+            "$ref": "#/components/schemas/v2reportsPairedAssembly"
+          },
+          "refseq_category": {
+            "type": "string"
+          },
+          "release_date": {
+            "type": "string"
+          },
+          "sequencing_tech": {
+            "type": "string"
+          },
+          "submission_date": {
+            "type": "string"
+          },
+          "submitter": {
+            "type": "string"
+          },
+          "suppression_reason": {
+            "type": "string"
+          },
+          "synonym": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsAssemblyLevel": {
+        "default": "chromosome",
+        "enum": [
+          "chromosome",
+          "scaffold",
+          "contig",
+          "complete_genome"
+        ],
+        "type": "string"
+      },
+      "v2reportsAssemblyStats": {
+        "properties": {
+          "atgc_count": {
+            "format": "uint64",
+            "type": "string"
+          },
+          "contig_l50": {
+            "type": "integer"
+          },
+          "contig_n50": {
+            "type": "integer"
+          },
+          "gaps_between_scaffolds_count": {
+            "type": "integer"
+          },
+          "gc_count": {
+            "format": "uint64",
+            "type": "string"
+          },
+          "gc_percent": {
+            "format": "float",
+            "type": "number"
+          },
+          "genome_coverage": {
+            "type": "string"
+          },
+          "number_of_component_sequences": {
+            "type": "integer"
+          },
+          "number_of_contigs": {
+            "type": "integer"
+          },
+          "number_of_organelles": {
+            "type": "integer"
+          },
+          "number_of_scaffolds": {
+            "type": "integer"
+          },
+          "scaffold_l50": {
+            "type": "integer"
+          },
+          "scaffold_n50": {
+            "type": "integer"
+          },
+          "total_number_of_chromosomes": {
+            "type": "integer"
+          },
+          "total_sequence_length": {
+            "format": "uint64",
+            "type": "string"
+          },
+          "total_ungapped_length": {
+            "format": "uint64",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsAssemblyStatus": {
+        "default": "ASSEMBLY_STATUS_UNKNOWN",
+        "enum": [
+          "ASSEMBLY_STATUS_UNKNOWN",
+          "current",
+          "previous",
+          "suppressed",
+          "retired"
+        ],
+        "type": "string"
+      },
+      "v2reportsAtypicalInfo": {
+        "properties": {
+          "is_atypical": {
+            "type": "boolean"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsAverageNucleotideIdentity": {
+        "properties": {
+          "best_ani_match": {
+            "$ref": "#/components/schemas/v2reportsANIMatch"
+          },
+          "category": {
+            "$ref": "#/components/schemas/v2reportsANITypeCategory"
+          },
+          "comment": {
+            "type": "string"
+          },
+          "match_status": {
+            "$ref": "#/components/schemas/v2reportsAverageNucleotideIdentityMatchStatus"
+          },
+          "submitted_ani_match": {
+            "$ref": "#/components/schemas/v2reportsANIMatch"
+          },
+          "submitted_organism": {
+            "type": "string"
+          },
+          "submitted_species": {
+            "type": "string"
+          },
+          "taxonomy_check_status": {
+            "$ref": "#/components/schemas/v2reportsAverageNucleotideIdentityTaxonomyCheckStatus"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsAverageNucleotideIdentityMatchStatus": {
+        "default": "BEST_MATCH_STATUS_UNKNOWN",
+        "enum": [
+          "BEST_MATCH_STATUS_UNKNOWN",
+          "approved_mismatch",
+          "below_threshold_match",
+          "below_threshold_mismatch",
+          "best_match_status",
+          "derived_species_match",
+          "genus_match",
+          "low_coverage",
+          "mismatch",
+          "status_na",
+          "species_match",
+          "subspecies_match",
+          "synonym_match",
+          "lineage_match",
+          "below_threshold_lineage_match"
+        ],
+        "type": "string"
+      },
+      "v2reportsAverageNucleotideIdentityTaxonomyCheckStatus": {
+        "default": "TAXONOMY_CHECK_STATUS_UNKNOWN",
+        "enum": [
+          "TAXONOMY_CHECK_STATUS_UNKNOWN",
+          "OK",
+          "Failed",
+          "Inconclusive"
+        ],
+        "type": "string"
+      },
+      "v2reportsBioProject": {
+        "properties": {
+          "accession": {
+            "type": "string"
+          },
+          "parent_accession": {
+            "type": "string"
+          },
+          "parent_accessions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsBioProjectLineage": {
+        "properties": {
+          "bioprojects": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsBioProject"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsBioSample": {
+        "properties": {
+          "accession": {
+            "type": "string"
+          },
+          "sra_runs": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsSraRun"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsBioSampleAttribute": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsBioSampleContact": {
+        "properties": {
+          "lab": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsBioSampleDescriptor": {
+        "properties": {
+          "accession": {
+            "type": "string"
+          },
+          "age": {
+            "type": "string"
+          },
+          "attributes": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsBioSampleAttribute"
+            },
+            "type": "array"
+          },
+          "biomaterial_provider": {
+            "type": "string"
+          },
+          "bioprojects": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsBioProject"
+            },
+            "type": "array"
+          },
+          "breed": {
+            "type": "string"
+          },
+          "collected_by": {
+            "type": "string"
+          },
+          "collection_date": {
+            "type": "string"
+          },
+          "cultivar": {
+            "type": "string"
+          },
+          "dev_stage": {
+            "type": "string"
+          },
+          "ecotype": {
+            "type": "string"
+          },
+          "geo_loc_name": {
+            "type": "string"
+          },
+          "host": {
+            "type": "string"
+          },
+          "host_disease": {
+            "type": "string"
+          },
+          "identified_by": {
+            "type": "string"
+          },
+          "ifsac_category": {
+            "type": "string"
+          },
+          "isolate": {
+            "type": "string"
+          },
+          "isolate_name_alias": {
+            "type": "string"
+          },
+          "isolation_source": {
+            "type": "string"
+          },
+          "last_updated": {
+            "type": "string"
+          },
+          "lat_lon": {
+            "type": "string"
+          },
+          "models": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "owner": {
+            "$ref": "#/components/schemas/v2reportsBioSampleOwner"
+          },
+          "package": {
+            "type": "string"
+          },
+          "project_name": {
+            "type": "string"
+          },
+          "publication_date": {
+            "type": "string"
+          },
+          "sample_ids": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsBioSampleId"
+            },
+            "type": "array"
+          },
+          "sample_name": {
+            "type": "string"
+          },
+          "serotype": {
+            "type": "string"
+          },
+          "serovar": {
+            "type": "string"
+          },
+          "sex": {
+            "type": "string"
+          },
+          "source_type": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/v2reportsBioSampleStatus"
+          },
+          "strain": {
+            "type": "string"
+          },
+          "sub_species": {
+            "type": "string"
+          },
+          "submission_date": {
+            "type": "string"
+          },
+          "tissue": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsBioSampleId": {
+        "properties": {
+          "db": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsBioSampleOwner": {
+        "properties": {
+          "contacts": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsBioSampleContact"
+            },
+            "type": "array"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsBioSampleStatus": {
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "when": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsBuscoStat": {
+        "properties": {
+          "busco_lineage": {
+            "type": "string"
+          },
+          "busco_ver": {
+            "type": "string"
+          },
+          "complete": {
+            "format": "float",
+            "type": "number"
+          },
+          "duplicated": {
+            "format": "float",
+            "type": "number"
+          },
+          "fragmented": {
+            "format": "float",
+            "type": "number"
+          },
+          "missing": {
+            "format": "float",
+            "type": "number"
+          },
+          "single_copy": {
+            "format": "float",
+            "type": "number"
+          },
+          "total_count": {
+            "format": "uint64",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsCheckM": {
+        "properties": {
+          "checkm_marker_set": {
+            "type": "string"
+          },
+          "checkm_marker_set_rank": {
+            "type": "string"
+          },
+          "checkm_species_tax_id": {
+            "type": "integer"
+          },
+          "checkm_version": {
+            "type": "string"
+          },
+          "completeness": {
+            "format": "float",
+            "type": "number"
+          },
+          "completeness_percentile": {
+            "format": "float",
+            "type": "number"
+          },
+          "contamination": {
+            "format": "float",
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsClassification": {
+        "properties": {
+          "acellular_root": {
+            "$ref": "#/components/schemas/v2reportsTaxData"
+          },
+          "class": {
+            "$ref": "#/components/schemas/v2reportsTaxData"
+          },
+          "domain": {
+            "$ref": "#/components/schemas/v2reportsTaxData"
+          },
+          "family": {
+            "$ref": "#/components/schemas/v2reportsTaxData"
+          },
+          "genus": {
+            "$ref": "#/components/schemas/v2reportsTaxData"
+          },
+          "kingdom": {
+            "$ref": "#/components/schemas/v2reportsTaxData"
+          },
+          "order": {
+            "$ref": "#/components/schemas/v2reportsTaxData"
+          },
+          "phylum": {
+            "$ref": "#/components/schemas/v2reportsTaxData"
+          },
+          "realm": {
+            "$ref": "#/components/schemas/v2reportsTaxData"
+          },
+          "species": {
+            "$ref": "#/components/schemas/v2reportsTaxData"
+          },
+          "superkingdom": {
+            "$ref": "#/components/schemas/v2reportsTaxData"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsCollectionType": {
+        "default": "no_collection_type",
+        "enum": [
+          "no_collection_type",
+          "collection_culture_collection",
+          "specimen_voucher"
+        ],
+        "type": "string"
+      },
+      "v2reportsContentType": {
+        "default": "COMPLETE",
+        "enum": [
+          "COMPLETE",
+          "ASSM_ACC",
+          "PAIRED_ACC"
+        ],
+        "type": "string"
+      },
+      "v2reportsCountType": {
+        "default": "COUNT_TYPE_UNSPECIFIED",
+        "enum": [
+          "COUNT_TYPE_UNSPECIFIED",
+          "COUNT_TYPE_ASSEMBLY",
+          "COUNT_TYPE_GENE",
+          "COUNT_TYPE_tRNA",
+          "COUNT_TYPE_rRNA",
+          "COUNT_TYPE_snRNA",
+          "COUNT_TYPE_scRNA",
+          "COUNT_TYPE_snoRNA",
+          "COUNT_TYPE_PROTEIN_CODING",
+          "COUNT_TYPE_PSEUDO",
+          "COUNT_TYPE_TRANSPOSON",
+          "COUNT_TYPE_miscRNA",
+          "COUNT_TYPE_ncRNA",
+          "COUNT_TYPE_BIOLOGICAL_REGION",
+          "COUNT_TYPE_OTHER",
+          "COUNT_TYPE_ORGANELLE"
+        ],
+        "type": "string"
+      },
+      "v2reportsError": {
+        "properties": {
+          "assembly_error_code": {
+            "$ref": "#/components/schemas/v2reportsErrorAssemblyErrorCode"
+          },
+          "gene_error_code": {
+            "$ref": "#/components/schemas/v2reportsErrorGeneErrorCode"
+          },
+          "invalid_identifiers": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "message": {
+            "type": "string"
+          },
+          "organelle_error_code": {
+            "$ref": "#/components/schemas/v2reportsErrorOrganelleErrorCode"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "sequence_error_code": {
+            "$ref": "#/components/schemas/v2reportsErrorSequenceErrorCode"
+          },
+          "taxonomy_error_code": {
+            "$ref": "#/components/schemas/v2reportsErrorTaxonomyErrorCode"
+          },
+          "virus_error_code": {
+            "$ref": "#/components/schemas/v2reportsErrorVirusErrorCode"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsErrorAssemblyErrorCode": {
+        "default": "UNKNOWN_ASSEMBLY_ERROR_CODE",
+        "enum": [
+          "UNKNOWN_ASSEMBLY_ERROR_CODE",
+          "INVALID_BIOPROJECT_IDS",
+          "NO_ASSEMBLIES_FOR_BIOPROJECTS",
+          "INVALID_TAXON",
+          "MISSING_SEARCH_FIELD",
+          "INVALID_BIOSAMPLE_IDS",
+          "NO_ASSEMBLIES_FOR_BIOSAMPLE_IDS",
+          "NO_ASSEMBLIES_FOR_ASSEMBLY_NAMES",
+          "INVALID_WGS_ACCESSIONS",
+          "NO_ASSEMBLIES_FOR_WGS_ACCESSIONS"
+        ],
+        "type": "string"
+      },
+      "v2reportsErrorGeneErrorCode": {
+        "default": "UNKNOWN_GENE_ERROR_CODE",
+        "enum": [
+          "UNKNOWN_GENE_ERROR_CODE",
+          "INCOMPLETE_LOOKUP_SYMBOL",
+          "INVALID_TAXON_GENE_ARGUMENT"
+        ],
+        "type": "string"
+      },
+      "v2reportsErrorOrganelleErrorCode": {
+        "default": "UNKNOWN_ORGANELLE_ERROR_CODE",
+        "enum": [
+          "UNKNOWN_ORGANELLE_ERROR_CODE",
+          "INVALID_ORGANELLE_TAXON",
+          "NO_ORGANELLES_FOR_ACCESSION"
+        ],
+        "type": "string"
+      },
+      "v2reportsErrorSequenceErrorCode": {
+        "default": "UNKNOWN_SEQUENCE_ERROR_CODE",
+        "enum": [
+          "UNKNOWN_SEQUENCE_ERROR_CODE",
+          "INVALID_SEQUENCE_ACCESSION"
+        ],
+        "type": "string"
+      },
+      "v2reportsErrorTaxonomyErrorCode": {
+        "default": "UNKNOWN_TAXONOMY_ERROR_CODE",
+        "enum": [
+          "UNKNOWN_TAXONOMY_ERROR_CODE",
+          "INVALID_TAXONOMY_TAXON"
+        ],
+        "type": "string"
+      },
+      "v2reportsErrorVirusErrorCode": {
+        "default": "UNKNOWN_VIRUS_ERROR_CODE",
+        "enum": [
+          "UNKNOWN_VIRUS_ERROR_CODE"
+        ],
+        "type": "string"
+      },
+      "v2reportsExpressionBioProject": {
+        "properties": {
+          "accession": {
+            "type": "string"
+          },
+          "pmid": {
+            "format": "uint64",
+            "type": "string"
+          },
+          "samples": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsSample"
+            },
+            "type": "array"
+          },
+          "sra_study_accession": {
+            "type": "string"
+          },
+          "study_title": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsExpressionDescriptor": {
+        "properties": {
+          "bioprojects": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsExpressionBioProject"
+            },
+            "type": "array"
+          },
+          "expression_method": {
+            "type": "string"
+          },
+          "expression_release": {
+            "$ref": "#/components/schemas/v2reportsExpressionRelease"
+          },
+          "gene_id": {
+            "format": "uint64",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsExpressionRelease": {
+        "properties": {
+          "assembly_accession": {
+            "type": "string"
+          },
+          "release_name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsFeatureCounts": {
+        "properties": {
+          "gene_counts": {
+            "$ref": "#/components/schemas/v2reportsGeneCounts"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsGeneCounts": {
+        "properties": {
+          "non_coding": {
+            "type": "integer"
+          },
+          "other": {
+            "type": "integer"
+          },
+          "protein_coding": {
+            "type": "integer"
+          },
+          "pseudogene": {
+            "type": "integer"
+          },
+          "total": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsGeneDataReportPage": {
+        "properties": {
+          "messages": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsMessage"
+            },
+            "type": "array"
+          },
+          "next_page_token": {
+            "type": "string"
+          },
+          "reports": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsGeneReportMatch"
+            },
+            "type": "array"
+          },
+          "total_count": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsGeneDescriptor": {
+        "properties": {
+          "alternate_names": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "annotations": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsAnnotation"
+            },
+            "type": "array"
+          },
+          "chromosomes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "common_name": {
+            "type": "string"
+          },
+          "ensembl_gene_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "gene_groups": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsGeneGroup"
+            },
+            "type": "array"
+          },
+          "gene_id": {
+            "format": "uint64",
+            "type": "string"
+          },
+          "gene_ontology": {
+            "$ref": "#/components/schemas/v2reportsGeneOntology"
+          },
+          "genomic_regions": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsGenomicRegion"
+            },
+            "type": "array"
+          },
+          "locus_tag": {
+            "type": "string"
+          },
+          "map_locations": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsMapLocation"
+            },
+            "type": "array"
+          },
+          "nomenclature_authority": {
+            "$ref": "#/components/schemas/v2reportsNomenclatureAuthority"
+          },
+          "omim_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "orientation": {
+            "$ref": "#/components/schemas/v2reportsOrientation"
+          },
+          "protein_count": {
+            "type": "integer"
+          },
+          "reference_standards": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsGenomicRegion"
+            },
+            "type": "array"
+          },
+          "replaced_gene_id": {
+            "format": "uint64",
+            "type": "string"
+          },
+          "rna_type": {
+            "$ref": "#/components/schemas/v2reportsRnaType"
+          },
+          "swiss_prot_accessions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "symbol": {
+            "type": "string"
+          },
+          "synonyms": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "tax_id": {
+            "format": "uint64",
+            "type": "string"
+          },
+          "taxname": {
+            "type": "string"
+          },
+          "transcript_count": {
+            "type": "integer"
+          },
+          "transcript_type_counts": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsTranscriptTypeCount"
+            },
+            "type": "array"
+          },
+          "type": {
+            "$ref": "#/components/schemas/v2reportsGeneType"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsGeneGroup": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsGeneOntology": {
+        "properties": {
+          "assigned_by": {
+            "type": "string"
+          },
+          "biological_processes": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsProcessMetadata"
+            },
+            "type": "array"
+          },
+          "cellular_components": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsProcessMetadata"
+            },
+            "type": "array"
+          },
+          "molecular_functions": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsProcessMetadata"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsGeneReportMatch": {
+        "properties": {
+          "errors": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsError"
+            },
+            "type": "array"
+          },
+          "expression": {
+            "$ref": "#/components/schemas/v2reportsExpressionDescriptor"
+          },
+          "gene": {
+            "$ref": "#/components/schemas/v2reportsGeneDescriptor"
+          },
+          "product": {
+            "$ref": "#/components/schemas/v2reportsProductDescriptor"
+          },
+          "query": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "warning": {
+            "$ref": "#/components/schemas/v2reportsWarning"
+          },
+          "warnings": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsWarning"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsGeneType": {
+        "default": "UNKNOWN",
+        "enum": [
+          "UNKNOWN",
+          "tRNA",
+          "rRNA",
+          "snRNA",
+          "scRNA",
+          "snoRNA",
+          "PROTEIN_CODING",
+          "PSEUDO",
+          "TRANSPOSON",
+          "miscRNA",
+          "ncRNA",
+          "BIOLOGICAL_REGION",
+          "OTHER"
+        ],
+        "type": "string"
+      },
+      "v2reportsGeneticCode": {
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsGeneticCodes": {
+        "properties": {
+          "hydrogenosome": {
+            "$ref": "#/components/schemas/v2reportsGeneticCode"
+          },
+          "mitochondrial": {
+            "$ref": "#/components/schemas/v2reportsGeneticCode"
+          },
+          "plastid": {
+            "$ref": "#/components/schemas/v2reportsGeneticCode"
+          },
+          "primary": {
+            "$ref": "#/components/schemas/v2reportsGeneticCode"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsGenomeAnnotation": {
+        "properties": {
+          "annotations": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsAnnotation"
+            },
+            "type": "array"
+          },
+          "chromosomes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "common_name": {
+            "type": "string"
+          },
+          "ensembl_gene_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "gene_id": {
+            "format": "uint64",
+            "type": "string"
+          },
+          "gene_type": {
+            "type": "string"
+          },
+          "genomic_regions": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsGenomicRegion"
+            },
+            "type": "array"
+          },
+          "locus_tag": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "omim_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "orientation": {
+            "$ref": "#/components/schemas/v2reportsOrientation"
+          },
+          "proteins": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsProtein"
+            },
+            "type": "array"
+          },
+          "reference_standards": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsGenomicRegion"
+            },
+            "type": "array"
+          },
+          "rna_type": {
+            "$ref": "#/components/schemas/v2reportsRnaType"
+          },
+          "swiss_prot_accessions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "symbol": {
+            "type": "string"
+          },
+          "synonyms": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "tax_id": {
+            "format": "uint64",
+            "type": "string"
+          },
+          "taxname": {
+            "type": "string"
+          },
+          "transcripts": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsTranscript"
+            },
+            "type": "array"
+          },
+          "type": {
+            "$ref": "#/components/schemas/v2reportsGeneType"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsGenomeAnnotationReportMatch": {
+        "properties": {
+          "annotation": {
+            "$ref": "#/components/schemas/v2reportsGenomeAnnotation"
+          },
+          "errors": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsError"
+            },
+            "type": "array"
+          },
+          "query": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "row_id": {
+            "type": "string"
+          },
+          "warning": {
+            "$ref": "#/components/schemas/v2reportsWarning"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsGenomeAnnotationReportPage": {
+        "properties": {
+          "messages": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsMessage"
+            },
+            "type": "array"
+          },
+          "next_page_token": {
+            "type": "string"
+          },
+          "reports": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsGenomeAnnotationReportMatch"
+            },
+            "type": "array"
+          },
+          "total_count": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsGenomicLocation": {
+        "properties": {
+          "exons": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsRange"
+            },
+            "type": "array"
+          },
+          "genomic_accession_version": {
+            "type": "string"
+          },
+          "genomic_range": {
+            "$ref": "#/components/schemas/v2reportsRange"
+          },
+          "sequence_name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsGenomicRegion": {
+        "properties": {
+          "gene_range": {
+            "$ref": "#/components/schemas/v2reportsSeqRangeSet"
+          },
+          "type": {
+            "$ref": "#/components/schemas/v2reportsGenomicRegionGenomicRegionType"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsGenomicRegionGenomicRegionType": {
+        "default": "UNKNOWN",
+        "enum": [
+          "UNKNOWN",
+          "REFSEQ_GENE",
+          "PSEUDOGENE",
+          "BIOLOGICAL_REGION",
+          "OTHER"
+        ],
+        "type": "string"
+      },
+      "v2reportsInfraspecificNames": {
+        "properties": {
+          "breed": {
+            "type": "string"
+          },
+          "cultivar": {
+            "type": "string"
+          },
+          "ecotype": {
+            "type": "string"
+          },
+          "isolate": {
+            "type": "string"
+          },
+          "sex": {
+            "type": "string"
+          },
+          "strain": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsIsolate": {
+        "properties": {
+          "collection_date": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsLineageOrganism": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "tax_id": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsLinkedAssembly": {
+        "properties": {
+          "assembly_type": {
+            "$ref": "#/components/schemas/v2reportsLinkedAssemblyType"
+          },
+          "linked_assembly": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsLinkedAssemblyType": {
+        "default": "LINKED_ASSEMBLY_TYPE_UNKNOWN",
+        "enum": [
+          "LINKED_ASSEMBLY_TYPE_UNKNOWN",
+          "alternate_pseudohaplotype_of_diploid",
+          "principal_pseudohaplotype_of_diploid",
+          "maternal_haplotype_of_diploid",
+          "paternal_haplotype_of_diploid",
+          "haplotype_1",
+          "haplotype_2",
+          "haplotype_3",
+          "haplotype_4",
+          "haploid"
+        ],
+        "type": "string"
+      },
+      "v2reportsMapLocation": {
+        "properties": {
+          "map_type": {
+            "$ref": "#/components/schemas/v2reportsMapLocationMapType"
+          },
+          "map_value": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsMapLocationMapType": {
+        "default": "Unknown",
+        "enum": [
+          "Unknown",
+          "Cytogenetic",
+          "Genetic"
+        ],
+        "type": "string"
+      },
+      "v2reportsMaturePeptide": {
+        "properties": {
+          "accession_version": {
+            "type": "string"
+          },
+          "length": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsMessage": {
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/v2reportsError"
+          },
+          "warning": {
+            "$ref": "#/components/schemas/v2reportsWarning"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsNameAndAuthority": {
+        "properties": {
+          "authority": {
+            "type": "string"
+          },
+          "basionym": {
+            "$ref": "#/components/schemas/v2reportsNameAndAuthority"
+          },
+          "curator_synonym": {
+            "type": "string"
+          },
+          "formal": {
+            "type": "boolean"
+          },
+          "heterotypic_synonyms": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsNameAndAuthority"
+            },
+            "type": "array"
+          },
+          "homotypic_synonyms": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsNameAndAuthority"
+            },
+            "type": "array"
+          },
+          "informal_names": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "name": {
+            "type": "string"
+          },
+          "notes": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsNameAndAuthorityNote"
+            },
+            "type": "array"
+          },
+          "other_synonyms": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsNameAndAuthority"
+            },
+            "type": "array"
+          },
+          "publications": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsNameAndAuthorityPublication"
+            },
+            "type": "array"
+          },
+          "type_strains": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsTaxonomyTypeMaterial"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsNameAndAuthorityNote": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          },
+          "note_classifier": {
+            "$ref": "#/components/schemas/v2reportsNameAndAuthorityNoteClassifier"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsNameAndAuthorityNoteClassifier": {
+        "default": "no_authority_classifier",
+        "enum": [
+          "no_authority_classifier",
+          "effective_name",
+          "nomen_approbbatum",
+          "ictv_accepted"
+        ],
+        "type": "string"
+      },
+      "v2reportsNameAndAuthorityPublication": {
+        "properties": {
+          "citation": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "pmid": {
+            "format": "uint64",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsNomenclatureAuthority": {
+        "properties": {
+          "authority": {
+            "type": "string"
+          },
+          "identifier": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsOrganelleInfo": {
+        "properties": {
+          "assembly_name": {
+            "type": "string"
+          },
+          "bioproject": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "infraspecific_name": {
+            "type": "string"
+          },
+          "submitter": {
+            "type": "string"
+          },
+          "total_seq_length": {
+            "format": "uint64",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsOrganism": {
+        "properties": {
+          "common_name": {
+            "type": "string"
+          },
+          "infraspecific_names": {
+            "$ref": "#/components/schemas/v2reportsInfraspecificNames"
+          },
+          "lineage": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsLineageOrganism"
+            },
+            "type": "array"
+          },
+          "organism_name": {
+            "type": "string"
+          },
+          "pangolin_classification": {
+            "type": "string"
+          },
+          "sci_name": {
+            "type": "string"
+          },
+          "strain": {
+            "type": "string"
+          },
+          "tax_id": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsOrientation": {
+        "default": "none",
+        "enum": [
+          "none",
+          "plus",
+          "minus"
+        ],
+        "type": "string"
+      },
+      "v2reportsPairedAssembly": {
+        "properties": {
+          "accession": {
+            "type": "string"
+          },
+          "annotation_name": {
+            "type": "string"
+          },
+          "changed": {
+            "type": "string"
+          },
+          "differences": {
+            "type": "string"
+          },
+          "manual_diff": {
+            "type": "string"
+          },
+          "only_genbank": {
+            "type": "string"
+          },
+          "only_refseq": {
+            "type": "string"
+          },
+          "refseq_genbank_are_different": {
+            "type": "boolean"
+          },
+          "status": {
+            "$ref": "#/components/schemas/v2reportsAssemblyStatus"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsProcessMetadata": {
+        "properties": {
+          "evidence_code": {
+            "type": "string"
+          },
+          "go_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "qualifier": {
+            "type": "string"
+          },
+          "reference": {
+            "$ref": "#/components/schemas/v2reportsReference"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsProductDescriptor": {
+        "properties": {
+          "common_name": {
+            "type": "string"
+          },
+          "gene_id": {
+            "format": "uint64",
+            "type": "string"
+          },
+          "protein_count": {
+            "type": "integer"
+          },
+          "rna_type": {
+            "$ref": "#/components/schemas/v2reportsRnaType"
+          },
+          "symbol": {
+            "type": "string"
+          },
+          "tax_id": {
+            "format": "uint64",
+            "type": "string"
+          },
+          "taxname": {
+            "type": "string"
+          },
+          "transcript_count": {
+            "type": "integer"
+          },
+          "transcript_type_counts": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsTranscriptTypeCount"
+            },
+            "type": "array"
+          },
+          "transcripts": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsTranscript"
+            },
+            "type": "array"
+          },
+          "type": {
+            "$ref": "#/components/schemas/v2reportsGeneType"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsProtein": {
+        "properties": {
+          "accession_version": {
+            "type": "string"
+          },
+          "ensembl_protein": {
+            "type": "string"
+          },
+          "isoform_name": {
+            "type": "string"
+          },
+          "length": {
+            "type": "integer"
+          },
+          "mature_peptides": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsMaturePeptide"
+            },
+            "type": "array"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsPurposeOfSampling": {
+        "default": "PURPOSE_OF_SAMPLING_UNKNOWN",
+        "enum": [
+          "PURPOSE_OF_SAMPLING_UNKNOWN",
+          "PURPOSE_OF_SAMPLING_BASELINE_SURVEILLANCE"
+        ],
+        "type": "string"
+      },
+      "v2reportsRange": {
+        "properties": {
+          "begin": {
+            "format": "uint64",
+            "type": "string"
+          },
+          "end": {
+            "format": "uint64",
+            "type": "string"
+          },
+          "order": {
+            "type": "integer"
+          },
+          "orientation": {
+            "$ref": "#/components/schemas/v2reportsOrientation"
+          },
+          "ribosomal_slippage": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsRankType": {
+        "default": "NO_RANK",
+        "enum": [
+          "NO_RANK",
+          "SUPERKINGDOM",
+          "DOMAIN",
+          "REALM",
+          "KINGDOM",
+          "SUBKINGDOM",
+          "SUPERPHYLUM",
+          "SUBPHYLUM",
+          "PHYLUM",
+          "CLADE",
+          "SUPERCLASS",
+          "CLASS",
+          "SUBCLASS",
+          "INFRACLASS",
+          "COHORT",
+          "SUBCOHORT",
+          "SUPERORDER",
+          "ORDER",
+          "SUBORDER",
+          "INFRAORDER",
+          "PARVORDER",
+          "SUPERFAMILY",
+          "FAMILY",
+          "SUBFAMILY",
+          "GENUS",
+          "SUBGENUS",
+          "SPECIES_GROUP",
+          "SPECIES_SUBGROUP",
+          "SPECIES",
+          "SUBSPECIES",
+          "TRIBE",
+          "SUBTRIBE",
+          "FORMA",
+          "VARIETAS",
+          "STRAIN",
+          "SECTION",
+          "SUBSECTION",
+          "PATHOGROUP",
+          "SUBVARIETY",
+          "GENOTYPE",
+          "SEROTYPE",
+          "ISOLATE",
+          "MORPH",
+          "SERIES",
+          "FORMA_SPECIALIS",
+          "SEROGROUP",
+          "BIOTYPE",
+          "ACELLULAR_ROOT",
+          "CELLULAR_ROOT"
+        ],
+        "type": "string"
+      },
+      "v2reportsReference": {
+        "properties": {
+          "pmids": {
+            "items": {
+              "format": "uint64",
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsRnaType": {
+        "default": "rna_UNKNOWN",
+        "enum": [
+          "rna_UNKNOWN",
+          "premsg",
+          "tmRna"
+        ],
+        "type": "string"
+      },
+      "v2reportsSample": {
+        "properties": {
+          "aggregate_expression_value": {
+            "$ref": "#/components/schemas/v2reportsAggregateExpressionValue"
+          },
+          "biosamples": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsBioSample"
+            },
+            "type": "array"
+          },
+          "sample_name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsSeqRangeSet": {
+        "properties": {
+          "accession_version": {
+            "type": "string"
+          },
+          "range": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsRange"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsSeqRangeSetFasta": {
+        "properties": {
+          "accession_version": {
+            "type": "string"
+          },
+          "range": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsRange"
+            },
+            "type": "array"
+          },
+          "seq_id": {
+            "type": "string"
+          },
+          "sequence_hash": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsSequenceInfo": {
+        "properties": {
+          "assembly_accession": {
+            "type": "string"
+          },
+          "assembly_unit": {
+            "type": "string"
+          },
+          "assembly_unplaced_count": {
+            "type": "integer"
+          },
+          "assigned_molecule_location_type": {
+            "type": "string"
+          },
+          "chr_name": {
+            "type": "string"
+          },
+          "gc_count": {
+            "format": "uint64",
+            "type": "string"
+          },
+          "gc_percent": {
+            "format": "float",
+            "type": "number"
+          },
+          "genbank_accession": {
+            "type": "string"
+          },
+          "length": {
+            "type": "integer"
+          },
+          "refseq_accession": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "sequence_name": {
+            "type": "string"
+          },
+          "sort_order": {
+            "type": "integer"
+          },
+          "ucsc_style_name": {
+            "type": "string"
+          },
+          "unlocalized_count": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsSourceDatabase": {
+        "default": "SOURCE_DATABASE_UNSPECIFIED",
+        "enum": [
+          "SOURCE_DATABASE_UNSPECIFIED",
+          "SOURCE_DATABASE_GENBANK",
+          "SOURCE_DATABASE_REFSEQ"
+        ],
+        "type": "string"
+      },
+      "v2reportsSraRun": {
+        "properties": {
+          "accession": {
+            "type": "string"
+          },
+          "expression_value": {
+            "format": "float",
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsTaxData": {
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsTaxonomyDataReportPage": {
+        "properties": {
+          "messages": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsMessage"
+            },
+            "type": "array"
+          },
+          "next_page_token": {
+            "type": "string"
+          },
+          "reports": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsTaxonomyReportMatch"
+            },
+            "type": "array"
+          },
+          "total_count": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsTaxonomyNamesDataReportPage": {
+        "properties": {
+          "messages": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsMessage"
+            },
+            "type": "array"
+          },
+          "next_page_token": {
+            "type": "string"
+          },
+          "reports": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsTaxonomyNamesReportMatch"
+            },
+            "type": "array"
+          },
+          "total_count": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsTaxonomyNamesDescriptor": {
+        "properties": {
+          "citations": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsTaxonomyNamesDescriptorCitation"
+            },
+            "type": "array"
+          },
+          "curator_common_name": {
+            "type": "string"
+          },
+          "current_scientific_name": {
+            "$ref": "#/components/schemas/v2reportsNameAndAuthority"
+          },
+          "current_scientific_name_is_formal": {
+            "type": "boolean"
+          },
+          "general_notes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "group_name": {
+            "type": "string"
+          },
+          "links_from_type": {
+            "type": "string"
+          },
+          "other_common_names": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "rank": {
+            "$ref": "#/components/schemas/v2reportsRankType"
+          },
+          "tax_id": {
+            "format": "uint64",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsTaxonomyNamesDescriptorCitation": {
+        "properties": {
+          "full_citation": {
+            "type": "string"
+          },
+          "pmid": {
+            "format": "uint64",
+            "type": "string"
+          },
+          "short_citation": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsTaxonomyNamesReportMatch": {
+        "properties": {
+          "errors": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsError"
+            },
+            "type": "array"
+          },
+          "query": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "taxonomy": {
+            "$ref": "#/components/schemas/v2reportsTaxonomyNamesDescriptor"
+          },
+          "warning": {
+            "$ref": "#/components/schemas/v2reportsWarning"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsTaxonomyNode": {
+        "properties": {
+          "basionym": {
+            "$ref": "#/components/schemas/v2reportsNameAndAuthority"
+          },
+          "children": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          "classification": {
+            "$ref": "#/components/schemas/v2reportsClassification"
+          },
+          "counts": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsTaxonomyNodeCountByType"
+            },
+            "type": "array"
+          },
+          "curator_common_name": {
+            "type": "string"
+          },
+          "current_scientific_name": {
+            "$ref": "#/components/schemas/v2reportsNameAndAuthority"
+          },
+          "current_scientific_name_is_formal": {
+            "type": "boolean"
+          },
+          "extinct": {
+            "type": "boolean"
+          },
+          "genetic_code": {
+            "$ref": "#/components/schemas/v2reportsGeneticCodes"
+          },
+          "genomic_moltype": {
+            "type": "string"
+          },
+          "group_name": {
+            "type": "string"
+          },
+          "has_type_material": {
+            "type": "boolean"
+          },
+          "parents": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          "rank": {
+            "$ref": "#/components/schemas/v2reportsRankType"
+          },
+          "secondary_tax_ids": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          "tax_id": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsTaxonomyNodeCountByType": {
+        "properties": {
+          "count": {
+            "type": "integer"
+          },
+          "type": {
+            "$ref": "#/components/schemas/v2reportsCountType"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsTaxonomyReportMatch": {
+        "properties": {
+          "errors": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsError"
+            },
+            "type": "array"
+          },
+          "query": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "taxonomy": {
+            "$ref": "#/components/schemas/v2reportsTaxonomyNode"
+          },
+          "warning": {
+            "$ref": "#/components/schemas/v2reportsWarning"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsTaxonomyTypeMaterial": {
+        "properties": {
+          "bio_collection_id": {
+            "type": "string"
+          },
+          "bio_collection_name": {
+            "type": "string"
+          },
+          "collection_type": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsCollectionType"
+            },
+            "type": "array"
+          },
+          "type_class": {
+            "type": "string"
+          },
+          "type_strain_id": {
+            "type": "string"
+          },
+          "type_strain_name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsTranscript": {
+        "properties": {
+          "accession_version": {
+            "type": "string"
+          },
+          "cds": {
+            "$ref": "#/components/schemas/v2reportsSeqRangeSet"
+          },
+          "ensembl_transcript": {
+            "type": "string"
+          },
+          "genomic_locations": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsGenomicLocation"
+            },
+            "type": "array"
+          },
+          "length": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "protein": {
+            "$ref": "#/components/schemas/v2reportsProtein"
+          },
+          "select_category": {
+            "$ref": "#/components/schemas/v2reportsTranscriptSelectCategory"
+          },
+          "type": {
+            "$ref": "#/components/schemas/v2reportsTranscriptTranscriptType"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsTranscriptSelectCategory": {
+        "default": "SELECT_UNKNOWN",
+        "enum": [
+          "SELECT_UNKNOWN",
+          "REFSEQ_SELECT",
+          "MANE_SELECT",
+          "MANE_PLUS_CLINICAL"
+        ],
+        "type": "string"
+      },
+      "v2reportsTranscriptTranscriptType": {
+        "default": "UNKNOWN",
+        "enum": [
+          "UNKNOWN",
+          "PROTEIN_CODING",
+          "NON_CODING",
+          "PROTEIN_CODING_MODEL",
+          "NON_CODING_MODEL"
+        ],
+        "type": "string"
+      },
+      "v2reportsTranscriptTypeCount": {
+        "properties": {
+          "count": {
+            "type": "integer"
+          },
+          "type": {
+            "$ref": "#/components/schemas/v2reportsTranscriptTranscriptType"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsTypeMaterial": {
+        "properties": {
+          "type_display_text": {
+            "type": "string"
+          },
+          "type_label": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsVirusAssembly": {
+        "properties": {
+          "accession": {
+            "type": "string"
+          },
+          "bioprojects": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "biosample": {
+            "type": "string"
+          },
+          "completeness": {
+            "$ref": "#/components/schemas/v2reportsVirusAssemblyCompleteness"
+          },
+          "gene_count": {
+            "type": "integer"
+          },
+          "host": {
+            "$ref": "#/components/schemas/v2reportsOrganism"
+          },
+          "is_annotated": {
+            "type": "boolean"
+          },
+          "is_complete": {
+            "type": "boolean"
+          },
+          "is_lab_host": {
+            "type": "boolean"
+          },
+          "is_vaccine_strain": {
+            "type": "boolean"
+          },
+          "isolate": {
+            "$ref": "#/components/schemas/v2reportsIsolate"
+          },
+          "lab_host": {
+            "type": "string"
+          },
+          "length": {
+            "type": "integer"
+          },
+          "location": {
+            "$ref": "#/components/schemas/v2reportsVirusAssemblyCollectionLocation"
+          },
+          "mature_peptide_count": {
+            "type": "integer"
+          },
+          "mol_type": {
+            "type": "string"
+          },
+          "nucleotide": {
+            "$ref": "#/components/schemas/v2reportsSeqRangeSetFasta"
+          },
+          "nucleotide_completeness": {
+            "type": "string"
+          },
+          "protein_count": {
+            "type": "integer"
+          },
+          "purpose_of_sampling": {
+            "$ref": "#/components/schemas/v2reportsPurposeOfSampling"
+          },
+          "release_date": {
+            "type": "string"
+          },
+          "segment": {
+            "type": "string"
+          },
+          "source_database": {
+            "type": "string"
+          },
+          "sra_accessions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "submitter": {
+            "$ref": "#/components/schemas/v2reportsVirusAssemblySubmitterInfo"
+          },
+          "update_date": {
+            "type": "string"
+          },
+          "virus": {
+            "$ref": "#/components/schemas/v2reportsOrganism"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsVirusAssemblyCollectionLocation": {
+        "properties": {
+          "geographic_location": {
+            "type": "string"
+          },
+          "geographic_region": {
+            "type": "string"
+          },
+          "usa_state": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsVirusAssemblyCompleteness": {
+        "default": "UNKNOWN",
+        "enum": [
+          "UNKNOWN",
+          "COMPLETE",
+          "PARTIAL"
+        ],
+        "type": "string"
+      },
+      "v2reportsVirusAssemblySubmitterInfo": {
+        "properties": {
+          "affiliation": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "names": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsVirusDataReportPage": {
+        "properties": {
+          "next_page_token": {
+            "type": "string"
+          },
+          "reports": {
+            "items": {
+              "$ref": "#/components/schemas/v2reportsVirusAssembly"
+            },
+            "type": "array"
+          },
+          "total_count": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsWGSInfo": {
+        "properties": {
+          "master_wgs_url": {
+            "type": "string"
+          },
+          "wgs_contigs_url": {
+            "type": "string"
+          },
+          "wgs_project_accession": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsWarning": {
+        "properties": {
+          "gene_warning_code": {
+            "$ref": "#/components/schemas/v2reportsWarningGeneWarningCode"
+          },
+          "message": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "replaced_id": {
+            "$ref": "#/components/schemas/v2reportsWarningReplacedId"
+          },
+          "unrecognized_identifier": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2reportsWarningGeneWarningCode": {
+        "default": "UNKNOWN_GENE_WARNING_CODE",
+        "enum": [
+          "UNKNOWN_GENE_WARNING_CODE",
+          "ACCESSION_VERSION_MISMATCH",
+          "REPLACED_GENE_ID",
+          "DISCONTINUED_GENE_ID",
+          "UNRECOGNIZED_GENE_ID",
+          "UNRECOGNIZED_GENE_SYMBOL",
+          "UNRECOGNIZED_ACCESSION",
+          "UNRECOGNIZED_TAX_TOKEN",
+          "NO_GENE_ANNOTATION_FOUND",
+          "ABOVE_SPECIES_TAXON"
+        ],
+        "type": "string"
+      },
+      "v2reportsWarningReplacedId": {
+        "properties": {
+          "requested": {
+            "type": "string"
+          },
+          "returned": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      }
+    }
+  },
+  "paths": {
+    "/gene/id/{gene_ids}/dataset_report": {
+      "get": {
+        "operationId": "gene_dataset_reports_by_id",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "returned_content",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2GeneDatasetReportsRequestContentType"
+            }
+          },
+          {
+            "in": "path",
+            "name": "gene_ids",
+            "required": true,
+            "schema": {
+              "items": {
+                "type": "integer"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "table_fields",
+            "required": false,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "table_format",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "include_tabular_header",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2IncludeTabularHeader"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_token",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "types",
+            "required": false,
+            "schema": {
+              "items": {
+                "$ref": "#/components/schemas/v2GeneType"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sort.field",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sort.direction",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2SortDirection"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2reportsGeneDataReportPage"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2reportsGeneDataReportPage"
+                }
+              },
+              "text/tab-separated-values": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Gene"
+        ]
+      }
+    },
+    "/gene/id/{gene_id}/orthologs": {
+      "get": {
+        "operationId": "gene_orthologs_by_id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "gene_id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "returned_content",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2OrthologRequestContentType"
+            }
+          },
+          {
+            "in": "query",
+            "name": "taxon_filter",
+            "required": false,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_token",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2reportsGeneDataReportPage"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Gene"
+        ]
+      }
+    },
+    "/genome/accession/{accessions}/dataset_report": {
+      "get": {
+        "operationId": "genome_dataset_report",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "accessions",
+            "required": true,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.reference_only",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.assembly_source",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2AssemblyDatasetDescriptorsFilterAssemblySource",
+              "default": "all"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.has_annotation",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.exclude_paired_reports",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.exclude_atypical",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.assembly_version",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2AssemblyDatasetDescriptorsFilterAssemblyVersion",
+              "default": "current"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.assembly_level",
+            "required": false,
+            "schema": {
+              "items": {
+                "$ref": "#/components/schemas/v2reportsAssemblyLevel"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.first_release_date",
+            "required": false,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.last_release_date",
+            "required": false,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.search_text",
+            "required": false,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.is_metagenome_derived",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2AssemblyDatasetDescriptorsFilterMetagenomeDerivedFilter"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.is_type_material",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.is_ictv_exemplar",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.exclude_multi_isolate",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.type_material_category",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2AssemblyDatasetDescriptorsFilterTypeMaterialCategory"
+            }
+          },
+          {
+            "in": "query",
+            "name": "table_fields",
+            "required": false,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "returned_content",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2AssemblyDatasetReportsRequestContentType"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_token",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sort.field",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sort.direction",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2SortDirection"
+            }
+          },
+          {
+            "in": "query",
+            "name": "include_tabular_header",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2IncludeTabularHeader"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2reportsAssemblyDataReportPage"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2reportsAssemblyDataReportPage"
+                }
+              },
+              "text/tab-separated-values": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Genome"
+        ]
+      }
+    },
+    "/genome/accession/{accession}/annotation_report": {
+      "get": {
+        "operationId": "genome_annotation_report",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "accession",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "annotation_ids",
+            "required": false,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "symbols",
+            "required": false,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "locations",
+            "required": false,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "gene_types",
+            "required": false,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "search_text",
+            "required": false,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sort.field",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sort.direction",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2SortDirection"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "table_format",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2GenomeAnnotationRequestGenomeAnnotationTableFormat"
+            }
+          },
+          {
+            "in": "query",
+            "name": "include_tabular_header",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2IncludeTabularHeader"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_token",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2reportsGenomeAnnotationReportPage"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2reportsGenomeAnnotationReportPage"
+                }
+              },
+              "text/tab-separated-values": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Genome"
+        ]
+      }
+    },
+    "/genome/accession/{accession}/sequence_reports": {
+      "get": {
+        "operationId": "genome_sequence_report",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "accession",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "chromosomes",
+            "required": false,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "role_filters",
+            "required": false,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "table_fields",
+            "required": false,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "count_assembly_unplaced",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_token",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "include_tabular_header",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2IncludeTabularHeader"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2SequenceReportPage"
+                }
+              },
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2SequenceReportPage"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2SequenceReportPage"
+                }
+              },
+              "text/tab-separated-values": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Genome"
+        ]
+      }
+    },
+    "/genome/assembly_name/{assembly_names}/dataset_report": {
+      "get": {
+        "operationId": "genome_dataset_reports_by_assembly_name",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "assembly_names",
+            "required": true,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.reference_only",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.assembly_source",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2AssemblyDatasetDescriptorsFilterAssemblySource",
+              "default": "all"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.has_annotation",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.exclude_paired_reports",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.exclude_atypical",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.assembly_version",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2AssemblyDatasetDescriptorsFilterAssemblyVersion",
+              "default": "current"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.assembly_level",
+            "required": false,
+            "schema": {
+              "items": {
+                "$ref": "#/components/schemas/v2reportsAssemblyLevel"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.first_release_date",
+            "required": false,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.last_release_date",
+            "required": false,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.search_text",
+            "required": false,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.is_metagenome_derived",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2AssemblyDatasetDescriptorsFilterMetagenomeDerivedFilter"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.is_type_material",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.is_ictv_exemplar",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.exclude_multi_isolate",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.type_material_category",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2AssemblyDatasetDescriptorsFilterTypeMaterialCategory"
+            }
+          },
+          {
+            "in": "query",
+            "name": "tax_exact_match",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "table_fields",
+            "required": false,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "returned_content",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2AssemblyDatasetReportsRequestContentType"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_token",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sort.field",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sort.direction",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2SortDirection"
+            }
+          },
+          {
+            "in": "query",
+            "name": "include_tabular_header",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2IncludeTabularHeader"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2reportsAssemblyDataReportPage"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2reportsAssemblyDataReportPage"
+                }
+              },
+              "text/tab-separated-values": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Genome"
+        ]
+      }
+    },
+    "/genome/bioproject/{bioprojects}/dataset_report": {
+      "get": {
+        "operationId": "genome_dataset_reports_by_bioproject",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "bioprojects",
+            "required": true,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.reference_only",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.assembly_source",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2AssemblyDatasetDescriptorsFilterAssemblySource",
+              "default": "all"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.has_annotation",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.exclude_paired_reports",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.exclude_atypical",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.assembly_version",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2AssemblyDatasetDescriptorsFilterAssemblyVersion",
+              "default": "current"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.assembly_level",
+            "required": false,
+            "schema": {
+              "items": {
+                "$ref": "#/components/schemas/v2reportsAssemblyLevel"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.first_release_date",
+            "required": false,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.last_release_date",
+            "required": false,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.search_text",
+            "required": false,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.is_metagenome_derived",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2AssemblyDatasetDescriptorsFilterMetagenomeDerivedFilter"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.is_type_material",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.is_ictv_exemplar",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.exclude_multi_isolate",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.type_material_category",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2AssemblyDatasetDescriptorsFilterTypeMaterialCategory"
+            }
+          },
+          {
+            "in": "query",
+            "name": "tax_exact_match",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "table_fields",
+            "required": false,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "returned_content",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2AssemblyDatasetReportsRequestContentType"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_token",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sort.field",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sort.direction",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2SortDirection"
+            }
+          },
+          {
+            "in": "query",
+            "name": "include_tabular_header",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2IncludeTabularHeader"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2reportsAssemblyDataReportPage"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2reportsAssemblyDataReportPage"
+                }
+              },
+              "text/tab-separated-values": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Genome"
+        ]
+      }
+    },
+    "/genome/biosample/{biosample_ids}/dataset_report": {
+      "get": {
+        "operationId": "genome_dataset_reports_by_biosample_id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "biosample_ids",
+            "required": true,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.reference_only",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.assembly_source",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2AssemblyDatasetDescriptorsFilterAssemblySource",
+              "default": "all"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.has_annotation",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.exclude_paired_reports",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.exclude_atypical",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.assembly_version",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2AssemblyDatasetDescriptorsFilterAssemblyVersion",
+              "default": "current"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.assembly_level",
+            "required": false,
+            "schema": {
+              "items": {
+                "$ref": "#/components/schemas/v2reportsAssemblyLevel"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.first_release_date",
+            "required": false,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.last_release_date",
+            "required": false,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.search_text",
+            "required": false,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.is_metagenome_derived",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2AssemblyDatasetDescriptorsFilterMetagenomeDerivedFilter"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.is_type_material",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.is_ictv_exemplar",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.exclude_multi_isolate",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.type_material_category",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2AssemblyDatasetDescriptorsFilterTypeMaterialCategory"
+            }
+          },
+          {
+            "in": "query",
+            "name": "tax_exact_match",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "table_fields",
+            "required": false,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "returned_content",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2AssemblyDatasetReportsRequestContentType"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_token",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sort.field",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sort.direction",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2SortDirection"
+            }
+          },
+          {
+            "in": "query",
+            "name": "include_tabular_header",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2IncludeTabularHeader"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2reportsAssemblyDataReportPage"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2reportsAssemblyDataReportPage"
+                }
+              },
+              "text/tab-separated-values": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Genome"
+        ]
+      }
+    },
+    "/genome/taxon/{taxons}/dataset_report": {
+      "get": {
+        "operationId": "genome_dataset_reports_by_taxon",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "taxons",
+            "required": true,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.reference_only",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.assembly_source",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2AssemblyDatasetDescriptorsFilterAssemblySource",
+              "default": "all"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.has_annotation",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.exclude_paired_reports",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.exclude_atypical",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.assembly_version",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2AssemblyDatasetDescriptorsFilterAssemblyVersion",
+              "default": "current"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.assembly_level",
+            "required": false,
+            "schema": {
+              "items": {
+                "$ref": "#/components/schemas/v2reportsAssemblyLevel"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.first_release_date",
+            "required": false,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.last_release_date",
+            "required": false,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.search_text",
+            "required": false,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.is_metagenome_derived",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2AssemblyDatasetDescriptorsFilterMetagenomeDerivedFilter"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.is_type_material",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.is_ictv_exemplar",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.exclude_multi_isolate",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters.type_material_category",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2AssemblyDatasetDescriptorsFilterTypeMaterialCategory"
+            }
+          },
+          {
+            "in": "query",
+            "name": "tax_exact_match",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "table_fields",
+            "required": false,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "returned_content",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2AssemblyDatasetReportsRequestContentType"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_token",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sort.field",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sort.direction",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2SortDirection"
+            }
+          },
+          {
+            "in": "query",
+            "name": "include_tabular_header",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2IncludeTabularHeader"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2reportsAssemblyDataReportPage"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2reportsAssemblyDataReportPage"
+                }
+              },
+              "text/tab-separated-values": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Genome"
+        ]
+      }
+    },
+    "/taxonomy/taxon/{taxons}/dataset_report": {
+      "get": {
+        "operationId": "taxonomy_data_report",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "taxons",
+            "required": true,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "returned_content",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2TaxonomyMetadataRequestContentType"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "include_tabular_header",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2IncludeTabularHeader"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_token",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "table_format",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2TaxonomyMetadataRequestTableFormat"
+            }
+          },
+          {
+            "in": "query",
+            "name": "children",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "ranks",
+            "required": false,
+            "schema": {
+              "items": {
+                "$ref": "#/components/schemas/v2reportsRankType"
+              },
+              "type": "array"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2reportsTaxonomyDataReportPage"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2reportsTaxonomyDataReportPage"
+                }
+              },
+              "text/tab-separated-values": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Taxonomy"
+        ]
+      }
+    },
+    "/taxonomy/taxon/{taxons}/name_report": {
+      "get": {
+        "operationId": "taxonomy_names",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "taxons",
+            "required": true,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_token",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "children",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "ranks",
+            "required": false,
+            "schema": {
+              "items": {
+                "$ref": "#/components/schemas/v2reportsRankType"
+              },
+              "type": "array"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2reportsTaxonomyNamesDataReportPage"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Taxonomy"
+        ]
+      }
+    },
+    "/virus/accession/{accessions}/dataset_report": {
+      "get": {
+        "operationId": "virus_reports_by_acessions",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "accessions",
+            "required": true,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filter.refseq_only",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filter.annotated_only",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filter.released_since",
+            "required": false,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filter.updated_since",
+            "required": false,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filter.host",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filter.pangolin_classification",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filter.geo_location",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filter.usa_state",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filter.complete_only",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "returned_content",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/v2VirusDataReportRequestContentType"
+            }
+          },
+          {
+            "in": "query",
+            "name": "table_fields",
+            "required": false,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_token",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2reportsVirusDataReportPage"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2reportsVirusDataReportPage"
+                }
+              },
+              "text/tab-separated-values": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Virus"
+        ]
+      }
+    }
+  },
+  "retrieved_date": "2026-10-11",
+  "source_sha256": "3f573d3bf03f65485cfdc9c70a022eda0f53f3fadacc705d749036cc3cd23ce0",
+  "source_url": "https://www.ncbi.nlm.nih.gov/datasets/docs/v2/openapi3/openapi3.docs.yaml"
+}

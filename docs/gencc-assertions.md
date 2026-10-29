@@ -1,0 +1,15 @@
+# GenCC gene–disease assertions
+
+Use `get` with a qualified human gene and `sections: ["gencc"]`. The source section returns a versioned GenCC submission export projected onto that exact gene symbol. Identity acquisition and other sources remain subject to their own [permissions](source-licenses.md); a permissive GenCC export does not authorize a held identity provider.
+
+Each record retains its SGC identifier/version, source HGNC gene, disease, inheritance, submitting organization, classification, submission date, notes and report references. Distinct submissions and versions remain separate. Conflicting classifications are retained without computing consensus, causal assignment, clinical validity or patient eligibility. A source-reported HGNC identifier does not repair an unresolved identity from another source. Linked reports are not automatically acquired.
+
+The current route explicitly requests `format=new`; legacy UUID exports are rejected. All 31 documented/observed columns are required, with unique headers and complete rows. Required assertion identifiers and labels are checked throughout the entire export, including unrelated genes and rows after earlier matches. Extra columns remain source data. Malformed, duplicate or resource-limited exports return failures without evidence IDs or healthy cache entries. A valid no-match result means no matching assertion in this downloaded snapshot.
+
+The returned coverage reports validated export rows and matching rows. Every matching assertion is retained; the former 25-assertion cap is removed. The ordinary output budget can still truncate delivered content. Follow any evidence resource links to recover acquired data, subject to storage/scope/expiry limits. This is distinct from retrieval of linked publications or a complete biomedical evidence search. The UTF-8 export hash binds downloaded content; an exact release version is unreported.
+
+CSV validation uses one dedicated worker with one outstanding operation. Cancellation retains its admission until parsing finishes. The fixed new-format GET route permits at most 32 MiB, while other provider responses retain their existing 24 MB bound. Exports exceeding 100,000 rows or the byte budget fail explicitly. Parsing, hashing and full-file validation run off the event loop.
+
+The official [download guide](https://thegencc.org/download) documents the new format, the legacy retirement date and download quotas. Gene-level result caching/coalescing avoids repeating identical reads, but distinct uncached genes can still require separate downloads; no shared export cache or quota exemption is claimed. Operators should respect the published download limit and treat source-rate failures as unavailable evidence.
+
+The official [terms](https://thegencc.org/terms) dedicate GenCC data to CC0. Preserve GenCC and submitter attribution. This eligibility covers the submission export; OMIM content is excluded from that download and linked reports have separate rights. Live source-wide health, independent scientific verification and clinical use are not established by the deterministic fixtures.

@@ -1,0 +1,5 @@
+PATIENT_ID	SAMPLE_ID	CANCER_TYPE
+P1	S1	Breast Cancer
+P2	S2	Breast Cancer
+P3	S3	Breast Cancer
+P4	S4	Breast Cancer

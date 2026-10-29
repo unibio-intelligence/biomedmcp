@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "clinical-trials-mcp"
+version = "0.0.1"
+description = "Clinical Trials MCP Server - Access to ClinicalTrials.gov database"
+authors = [{name = "UniBio Intelligence"}]
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+dependencies = [
+    "fastmcp>=4.0.2,<5.0.0",
+    "requests>=2.31.0",
+    "jsonschema>=4.18",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+]
+
+[tool.setuptools.package-data]
+clinical_trials_mcp = ["contracts.json"]
+
+[project.urls]
+Repository = "https://github.com/unibio-intelligence/biomedmcp"

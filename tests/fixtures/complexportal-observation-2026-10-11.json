@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "url": "https://www.ebi.ac.uk/intact/complex-ws/search/P15056?first=0&number=25",
+  "observed_at": "2026-10-11T20:45:05.060267+00:00",
+  "sha256": "68621229dcb6b3eb1981133b373fe767474edbb6fcf90a4604784eebf810180f",
+  "bytes": 186368,
+  "source": "complexportal",
+  "data_license": "CC0-1.0",
+  "contract_documentation": [
+    "https://www.ebi.ac.uk/intact/complex-ws/search/",
+    "https://www.ebi.ac.uk/intact/complex-ws/complex-simplified/"
+  ],
+  "scope": "One public free-text search observation, not a pinned release, experimental measurement or live-health qualification."
+}

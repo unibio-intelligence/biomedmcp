@@ -1,0 +1,22 @@
+.git
+.venv
+**/.venv
+**/__pycache__
+**/.pytest_cache
+**/.ruff_cache
+**/node_modules
+**/.git
+.env
+.env.*
+**/.env
+**/.env.*
+**/*.duckdb
+**/*.parquet
+**/*.pem
+**/*.key
+dist
+build
+distribution
+
+# Do not package local upstream research checkouts.
+vendor
