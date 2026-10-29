@@ -1,6 +1,6 @@
 # Antibody Registry retained adapter
 
-Generated from biomedmcp.examples. From the public runtime root, refresh with uv run --frozen python scripts/catalog.py.
+Examples use the public BioMedMCP tools and their typed JSON arguments.
 
 Use the biomedmcp server and its canonical tools. Retained adapters are implementation packages; their internal tools are not separate public MCP mounts.
 

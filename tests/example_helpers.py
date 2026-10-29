@@ -10,22 +10,22 @@ from urllib.parse import parse_qs
 import httpx
 import pytest
 from gtex_helpers import annotation, association, dataset, expression, gene, page, sample, service, tissue
-from native_helpers import BRAF, JATS, PUBMED
+from native_helpers import JATS, PUBMED
 
 GENES = {
     "BRCA1": ("672", "ENSG00000012048"),
-    "BRAF": ("673", "ENSG00000157764"),
-    "ERBB2": ("2064", "ENSG00000141736"),
+    "PCSK9": ("255738", "ENSG00000169174"),
+    "LDLR": ("3949", "ENSG00000130164"),
     "Trp53": ("22059", "ENSMUSG00000059552"),
 }
-IMATINIB = {"_id": "KTUFNOKKBVMGRW-UHFFFAOYSA-N", "chebi": {"name": "imatinib"}}
-MELANOMA = {"_id": "MONDO:0005105", "mondo": {"mondo": "MONDO:0005105", "label": "melanoma"}}
+EZETIMIBE = {"_id": "OLNTVTPDXPETLC-XPWALMASSA-N", "chebi": {"name": "ezetimibe"}}
+FAMILIAL_HYPERCHOLESTEROLEMIA = {"_id": "MONDO:0007750", "mondo": {"mondo": "MONDO:0007750", "label": "familial hypercholesterolemia"}}
 EPMC_ROW = {
     "id": "123",
     "source": "MED",
     "pmcid": "PMC123",
-    "title": "Synthetic BRAF study",
-    "abstractText": "Measured KRAS resistance in melanoma",
+    "title": "Synthetic PCSK9 study",
+    "abstractText": "Measured PCSK9 LDL cholesterol in familial hypercholesterolemia",
     "firstPublicationDate": "2024-03-12",
     "isOpenAccess": "Y",
 }
@@ -53,10 +53,17 @@ class ExampleHTTP:
     def __call__(self, request):
         self.requests.append(request)
         host, path, params = request.url.host, request.url.path, request.url.params
-        variant = {**deepcopy(BRAF), "dbsnp": {"rsid": "rs113488022"}}
+        variant = {
+            "_id": "chr1:g.55505647G>T",
+            "dbnsfp": {"genename": "PCSK9", "hgvsp": "p.Arg46Leu"},
+            "snpeff": {"ann": [{"genename": "PCSK9", "hgvs_p": "p.Arg46Leu",
+                                  "feature_id": "NM_174936.4", "hgvs_c": "c.137G>T"}]},
+            "hg38": {"start": 55039974}, "dbsnp": {"rsid": "rs11591147"},
+            "clinvar": {"rcv": [{"clinical_significance": "Benign"}]},
+        }
         if host == "mygene.info" and path == "/v3/query" and request.method == "POST":
             body = parse_qs(request.content.decode())
-            assert body["q"] == ["BRAF,ERBB2"]
+            assert body["q"] == ["PCSK9,LDLR"]
             assert body["scopes"] == ["symbol"] and body["species"] == ["9606"]
             data = [
                 {
@@ -67,11 +74,11 @@ class ExampleHTTP:
                     "entrezgene": int(GENES[symbol][0]),
                     "ensembl": {"gene": GENES[symbol][1]},
                 }
-                for symbol in ("BRAF", "ERBB2")
+                for symbol in ("PCSK9", "LDLR")
             ]
         elif host == "mygene.info" and path == "/v3/query":
             query = params.get("q", "")
-            symbol = "ERBB2" if query == "HER2" else query
+            symbol = "LDLR" if query == "LDL receptor" else query
             assert symbol in GENES, query
             identifier, ensembl = GENES[symbol]
             species = int(params.get("species", "9606"))
@@ -94,15 +101,15 @@ class ExampleHTTP:
             if path == "/api/v2/":
                 return httpx.Response(200, json=service())
             if path.endswith("/reference/gene"):
-                data = page([gene("ERBB2", "ENSG00000141736.13")])
+                data = page([gene("LDLR", "ENSG00000130164.13")])
             elif path.endswith(("/reference/transcript", "/reference/exon")):
-                assert params["gencodeId"] == "ENSG00000141736.13"
+                assert params["gencodeId"] == "ENSG00000130164.13"
                 data = page(
                     [
                         {
                             **annotation(exon=path.endswith("exon")),
-                            "gencodeId": "ENSG00000141736.13",
-                            "geneSymbol": "ERBB2",
+                            "gencodeId": "ENSG00000130164.13",
+                            "geneSymbol": "LDLR",
                         }
                     ]
                 )
@@ -127,7 +134,7 @@ class ExampleHTTP:
                         "/association/singleTissueSqtl",
                     )
                 ), path
-                assert params.get("gencodeId") == "ENSG00000141736.13"
+                assert params.get("gencodeId") == "ENSG00000130164.13"
                 if path.endswith(
                     (
                         "/expression/geneExpression",
@@ -135,19 +142,19 @@ class ExampleHTTP:
                         "/association/singleTissueSqtl",
                     )
                 ):
-                    assert params.get("tissueSiteDetailId") == "Breast_Mammary_Tissue"
+                    assert params.get("tissueSiteDetailId") == "Liver"
                 row = (
                     association(
-                        "ERBB2",
-                        "ENSG00000141736.13",
-                        "Breast_Mammary_Tissue",
+                        "LDLR",
+                        "ENSG00000130164.13",
+                        "Liver",
                         splicing=path.endswith("singleTissueSqtl"),
                     )
                     if path.endswith(("singleTissueEqtl", "singleTissueSqtl"))
                     else expression(
-                        "ERBB2",
-                        "ENSG00000141736.13",
-                        "Breast_Mammary_Tissue",
+                        "LDLR",
+                        "ENSG00000130164.13",
+                        "Liver",
                         detailed=path.endswith("geneExpression"),
                     )
                 )
@@ -157,36 +164,36 @@ class ExampleHTTP:
             )
         elif host == "mychem.info":
             if path.endswith("/query"):
-                assert params["q"] == "imatinib"
-                data = {"hits": [IMATINIB], "total": 1}
+                assert params["q"] == "ezetimibe"
+                data = {"hits": [EZETIMIBE], "total": 1}
             else:
-                assert path.endswith("/chem/" + IMATINIB["_id"]), path
-                data = IMATINIB
+                assert path.endswith("/chem/" + EZETIMIBE["_id"]), path
+                data = EZETIMIBE
         elif host == "mydisease.info":
             if path.endswith("/query"):
-                assert params["q"] == "melanoma"
-                data = {"hits": [MELANOMA], "total": 1}
+                assert params["q"] == "familial hypercholesterolemia"
+                data = {"hits": [FAMILIAL_HYPERCHOLESTEROLEMIA], "total": 1}
             else:
-                assert path.endswith("/disease/MONDO:0005105"), path
-                data = MELANOMA
-        elif host == "rest.uniprot.org" and path == "/uniprotkb/P15056":
+                assert path.endswith("/disease/MONDO:0007750"), path
+                data = FAMILIAL_HYPERCHOLESTEROLEMIA
+        elif host == "rest.uniprot.org" and path == "/uniprotkb/Q8NBP7":
             assert params["format"] == "json" and "sequence" in params["fields"].split(",")
             data = {
-                "primaryAccession": "P15056",
-                "sequence": {"value": "A" * 599 + "V" + "A" * 100, "length": 700},
-                "genes": [{"geneName": {"value": "BRAF"}}],
+                "primaryAccession": "Q8NBP7",
+                "sequence": {"value": "A" * 45 + "R" + "A" * 646, "length": 692},
+                "genes": [{"geneName": {"value": "PCSK9"}}],
                 "organism": {"taxonId": 9606, "scientificName": "Homo sapiens"},
             }
         elif host == "rest.uniprot.org" and path.endswith("/search"):
             assert "organism_id:9606" in params["query"]
             insulin = "insulin" in params["query"]
-            sequence = "A" * 599 + "V" + "A" * 100
+            sequence = "A" * 45 + "R" + "A" * 646
             data = {
                 "results": [
                     {
-                        "primaryAccession": "P01308" if insulin else "P15056",
+                        "primaryAccession": "P01308" if insulin else "Q8NBP7",
                         "sequence": {"value": sequence, "length": len(sequence)},
-                        "genes": [{"geneName": {"value": "INS" if insulin else "BRAF"}}],
+                        "genes": [{"geneName": {"value": "INS" if insulin else "PCSK9"}}],
                         "organism": {"taxonId": 9606, "scientificName": "Homo sapiens"},
                         "uniProtKBCrossReferences": [],
                     }
@@ -197,8 +204,8 @@ class ExampleHTTP:
             from opentargets_helpers import profile, project
 
             body = json.loads(request.content)
-            assert body["variables"]["ensemblId"] == "ENSG00000141736"
-            fixture = profile("ENSG00000141736", "ERBB2", rows=[target_association()])
+            assert body["variables"]["ensemblId"] == "ENSG00000130164"
+            fixture = profile("ENSG00000130164", "LDLR", rows=[target_association()])
             data = project(
                 {
                     "data": {
@@ -208,9 +215,9 @@ class ExampleHTTP:
                 body["query"],
             )
         elif host == "api.fda.gov":
-            assert "imatinib" in params["search"]
+            assert "ezetimibe" in params["search"]
             data = {
-                "results": [{"id": "synthetic-regulatory-record", "openfda": {"generic_name": ["imatinib"]}}]
+                "results": [{"id": "synthetic-regulatory-record", "openfda": {"generic_name": ["ezetimibe"]}}]
             }
             if path == "/drug/label.json":
                 data["results"][0].update(id="12345678-1234-1234-1234-123456789abc",
@@ -222,19 +229,19 @@ class ExampleHTTP:
                 archive.writestr(
                     "products.txt",
                     "Ingredient~Trade_Name~Appl_No~Product_No~DF;Route~Applicant~Strength~TE_Code~Approval_Date~RLD~RS\n"
-                    "IMATINIB~SYNTHETIC~000001~001~TABLET;ORAL~SYNTHETIC~100MG~AB~Jan 1, 2025~Yes~No\n",
+                    "EZETIMIBE~SYNTHETIC~000001~001~TABLET;ORAL~SYNTHETIC~100MG~AB~Jan 1, 2025~Yes~No\n",
                 )
             return httpx.Response(200, content=buffer.getvalue())
         elif host == "api.monarchinitiative.org":
-            assert params.get("subject") == "MONDO:0005105" or params.get("object") == "MONDO:0005105"
-            phenotype = params.get("subject") == "MONDO:0005105"
+            assert params.get("subject") == "MONDO:0007750" or params.get("object") == "MONDO:0007750"
+            phenotype = params.get("subject") == "MONDO:0007750"
             model = params.get("predicate") == "biolink:model_of"
             data = {
                 "items": [
                     {
                         "id": "synthetic-association",
-                        "subject": "MONDO:0005105" if phenotype else "MGI:1" if model else "HGNC:1097",
-                        "object": "HP:0001250" if phenotype else "MONDO:0005105",
+                        "subject": "MONDO:0007750" if phenotype else "MGI:1" if model else "HGNC:1097",
+                        "object": "HP:0001250" if phenotype else "MONDO:0007750",
                         "subject_category": "biolink:Disease"
                         if phenotype
                         else "biolink:Genotype"
@@ -268,7 +275,7 @@ class ExampleHTTP:
                 }
             else:
                 assert params["query"] in {
-                    '("melanoma") AND type:Pathway AND species:"Homo sapiens"',
+                    '("familial hypercholesterolemia") AND type:Pathway AND species:"Homo sapiens"',
                     '("apoptosis") AND type:Pathway AND species:"Homo sapiens"',
                 }
                 data = {
@@ -295,22 +302,22 @@ class ExampleHTTP:
                     "speciesName": "Homo sapiens",
                 }
             else:
-                assert path == "/ContentService/data/mapping/UniProt/BRAF/pathways", path
+                assert path == "/ContentService/data/mapping/UniProt/PCSK9/pathways", path
                 assert params["species"] == "9606"
                 data = [
                     {
                         "stId": "R-HSA-109581",
-                        "displayName": "Synthetic BRAF pathway",
+                        "displayName": "Synthetic PCSK9 pathway",
                         "schemaClass": "Pathway",
                     }
                 ]
         elif host == "www.proteinatlas.org":
-            assert path == "/ENSG00000141736.xml" and params["format"] == "xml"
+            assert path == "/ENSG00000130164.xml" and params["format"] == "xml"
             return httpx.Response(
                 200,
                 text='<proteinAtlas schemaVersion="3.0"><entry version="25" '
-                'url="https://v25.proteinatlas.org/ENSG00000141736"><name>ERBB2</name>'
-                '<identifier id="ENSG00000141736" db="Ensembl" version="109" '
+                'url="https://v25.proteinatlas.org/ENSG00000130164"><name>LDLR</name>'
+                '<identifier id="ENSG00000130164" db="Ensembl" version="109" '
                 'assembly="GRCh38.p13" gencodeVersion="43"/></entry></proteinAtlas>',
             )
         elif host == "rest.ensembl.org":
@@ -327,13 +334,13 @@ class ExampleHTTP:
             data = json.loads((Path(__file__).parent / "fixtures/pdb-entry-4hhb-2026-10-11.json").read_text())
         elif host == "www.surechembl.org":
             assert path == "/api/search/content" and request.method == "POST"
-            assert params["query"] == "imatinib"
+            assert params["query"] == "ezetimibe"
             data = {
                 "status": "OK",
                 "data": {
                     "type": "CONTENT",
                     "results": {
-                        "query": "imatinib",
+                        "query": "ezetimibe",
                         "total_hits": 1,
                         "documents": [
                             {
@@ -365,6 +372,7 @@ class ExampleHTTP:
 
             body = json.loads(request.content)
             data = population()
+            data["data"]["variant"].update(variant_id="1-55039974-G-T", chrom="1", pos=55039974, ref="G")
             assert data["data"]["variant"]["variant_id"] == body["variables"]["id"]
         elif host == "civicdb.org":
             from civic_helpers import response
@@ -373,28 +381,42 @@ class ExampleHTTP:
         elif host == "www.cbioportal.org":
             assert "/molecular-profiles/study_mutations/mutations/fetch" in path
             assert json.loads(request.content)["sampleListId"] == "study_all"
-            data = [{"proteinChange": "V600E", "sampleId": "synthetic"}]
+            data = [{"proteinChange": "R46L", "sampleId": "synthetic"}]
         elif host == "eutils.ncbi.nlm.nih.gov":
             if params.get("db") == "clinvar":
                 from clinvar_helpers import variant as clinvar_variant
 
                 assert params["retmode"] == "json"
                 if path.endswith("/esearch.fcgi"):
-                    data = {"esearchresult": {"idlist": ["13961"], "count": "1"}}
+                    data = {"esearchresult": {"idlist": ["2878"], "count": "1"}}
                 else:
-                    assert path.endswith("/esummary.fcgi") and params["id"] == "13961"
-                    data = {"result": {"uids": ["13961"], "13961": clinvar_variant()}}
+                    assert path.endswith("/esummary.fcgi") and params["id"] == "2878"
+                    record = clinvar_variant()
+                    record.update(uid="2878", accession_version="VCV000002878.1")
+                    record["variation_set"] = [{
+                        "variation_name": "NM_174936.4(PCSK9):c.137G>T (p.Arg46Leu)",
+                        "variation_xrefs": [{"db_source": "dbSNP", "db_id": "11591147"}],
+                        "canonical_spdi": "NC_000001.11:55039973:G:T",
+                        "variation_loc": [
+                            {"assembly_name": "GRCh38", "chr": "1", "start": "55039974", "stop": "55039974"},
+                            {"assembly_name": "GRCh37", "chr": "1", "start": "55505647", "stop": "55505647"},
+                        ],
+                    }]
+                    record["germline_classification"] = {"description": "Benign", "review_status": "synthetic fixture"}
+                    record.pop("oncogenicity_classification", None)
+                    record.pop("clinical_impact_classification", None)
+                    data = {"result": {"uids": ["2878"], "2878": record}}
             elif path.endswith("/esearch.fcgi"):
                 data = {"esearchresult": {"idlist": ["123"], "count": "1"}}
             elif params.get("rettype") == "fasta":
                 assert (
-                    params["id"] == "NM_004333.6"
+                    params["id"] == "NM_174936.4"
                     and params["seq_start"] == "1"
                     and params["seq_stop"] == "100"
                 )
-                return httpx.Response(200, text=">NM_004333.6 synthetic fixture\n" + "A" * 100 + "\n")
+                return httpx.Response(200, text=">NM_174936.4 synthetic fixture\n" + "A" * 100 + "\n")
             elif path.endswith("/esummary.fcgi"):
-                data = {"result": {"uids": ["123"], "123": {"uid": "123", "accessionversion": "NM_004333.6"}}}
+                data = {"result": {"uids": ["123"], "123": {"uid": "123", "accessionversion": "NM_174936.4"}}}
             else:
                 assert params["db"] == "pubmed" and params["id"] == "123"
                 return httpx.Response(200, text=PUBMED.replace("Retracted Publication", "Journal Article"))
@@ -495,7 +517,7 @@ class ExampleHTTP:
         elif host == "www.ebi.ac.uk" and "interpro" in path:
             data = {"count": 0, "results": [], "next": None, "previous": None}
         elif host == "www.ncbi.nlm.nih.gov" and "pubtator" in path:
-            data = {"results": [{"pmid": "123", "title": "Synthetic BRAF study", "date": "2024-03-12"}]}
+            data = {"results": [{"pmid": "123", "title": "Synthetic PCSK9 study", "date": "2024-03-12"}]}
         elif host == "clinicaltrials.gov":
             from clinical_trials_helpers import documented_request, study
 
@@ -512,7 +534,7 @@ class ExampleHTTP:
                 data = study(identifier)
         elif host == "biit.cs.ut.ee":
             body = json.loads(request.content)
-            assert body["organism"] == "hsapiens" and body["query"] == ["BRAF", "KRAS", "TP53"]
+            assert body["organism"] == "hsapiens" and body["query"] == ["PCSK9", "KRAS", "TP53"]
             data = {"result": [{"native": "GO:0000001", "p_value": 0.01}], "meta": {}}
         else:
             pytest.fail("Example attempted unqualified HTTP: " + request.method + " " + str(request.url))

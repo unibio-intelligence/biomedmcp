@@ -1,59 +1,76 @@
 # biomedmcp
 
-Search biomedical literature, read accessible full-text papers, inspect variant evidence and explore genes, drugs and clinical trials through one MCP interface. The same tools are available through Python and a JSON CLI.
+Build a cited evidence notebook for a biomedical research question. BioMedMCP
+retrieves source records, keeps their identities and limitations visible, and
+lets an agent collect a bounded dossier before following individual leads.
 
-## Get started
+<!-- mcp-name: io.github.unibio-intelligence/biomedmcp -->
 
-**Connect an MCP client:** use `https://biomedmcp.unibiointelligence.com/mcp` as a Streamable HTTP endpoint. Availability and sign-in depend on the hosted service. See the [connection guide](docs/connect.md) for local setup and troubleshooting.
+## Start with a research question
 
-**Run locally:** install Python 3.13+ and [uv](https://docs.astral.sh/uv/), then run from this repository:
+Try this with your MCP client:
+
+> Build an evidence notebook on LDL-receptor biology and cholesterol lowering.
+> Start with a human LDLR target dossier, inspect tissue expression, then find
+> PCSK9 genetic studies. Separate observations, intervention results and open
+> questions. Cite the records you read and identify any unavailable sources.
+
+Connect to `https://biomedmcp.unibiointelligence.com/mcp` using Streamable HTTP.
+The hosted service controls sign-in and access. For a local server, install the
+Python distribution or build from this checkout; see [connection options](https://github.com/unibio-intelligence/biomedmcp/blob/main/docs/connect.md).
+
+## Run the same investigation locally
+
+Use Python 3.13+ in an activated virtual environment:
 
 ```sh
-uv sync --frozen
-UBI_PROFILE=local uv run --frozen biomedmcp literature_search '{"query":"BRAF V600E melanoma","filters":{"source":"pubmed"}}'
+python -m pip install biomedmcp==0.2.2
+UBI_PROFILE=local biomedmcp research '{"workflow":"target_dossier","focus":"LDLR","species":9606}'
 ```
 
-The release also includes a single Python wheel with all adapters bundled. Install it in a Python 3.13+ environment with `uv pip install ./biomedmcp-0.2.1-py3-none-any.whl`; third-party dependencies are resolved automatically.
+The single Python distribution includes all source adapters. From a source
+checkout, `uv sync --frozen` installs the locked environment; prefix commands
+with `uv run --frozen` when using it.
 
-To start a local MCP server:
-
-```sh
-UBI_PROFILE=local uv run --frozen biomedmcp-server --transport http --host 127.0.0.1 --port 8000
-```
-
-Connect your client to `http://127.0.0.1:8000/mcp`.
-
-## What you can do
-
-| Goal | Tool |
-| --- | --- |
-| Find papers, with optional source, date and ranking controls | `literature_search` |
-| Read accessible article text and tables in pages of up to 100 lines | `get` with `entity: "article"` and `sections: ["fulltext"]` |
-| Look up ClinVar or CIViC assertions for a variant | `variant_evidence` |
-| Search clinical trials | `trial_search` |
-| Explore genes, proteins, drugs, diseases and pathways | `search`, `get`, `resolve`, `relate` |
-| Build a focused research dossier | `research` |
-| Analyze an installed public study | `study_analysis` |
-
-Try asking your agent to “find recent BRAF V600E melanoma papers,” “compare ClinVar evidence for BRAF V600E and V600K,” or “retrieve the tables from this PMC article.” Use the [call examples](docs/examples.md) for exact arguments and [investigations](docs/investigations.md) for longer workflows.
-
-<details>
-<summary>CLI examples</summary>
+These focused calls can fill gaps in the notebook:
 
 <!-- public-call-examples:start -->
 ```sh
-UBI_PROFILE=local uv run biomedmcp get '{"entity":"gene","id":"ERBB2","species":9606,"sections":["expression"]}'
-UBI_PROFILE=local uv run biomedmcp literature_search '{"query":"BRAF","filters":{"source":"pubmed","date_from":"2024-01-01"}}'
-UBI_PROFILE=local uv run biomedmcp variant_evidence '{"id":"BRAF V600E"}'
+UBI_PROFILE=local biomedmcp get '{"entity":"gene","id":"LDLR","species":9606,"sections":["expression"]}'
+UBI_PROFILE=local biomedmcp literature_search '{"query":"PCSK9","filters":{"source":"pubmed","date_from":"2024-01-01"}}'
+UBI_PROFILE=local biomedmcp variant_evidence '{"id":"PCSK9 R46L"}'
 ```
 <!-- public-call-examples:end -->
 
-</details>
+Review each response's source, species, identifiers and outcome before combining
+records. A partial or unavailable section remains a gap in the notebook. Follow
+returned continuation and recovery actions to inspect material beyond the preview.
 
-## Available data and results
+## Choose the next question
 
-Some sources require a key or an installed dataset. Check [source access](docs/source-access.md), or run `uv run --frozen biomedmcp diagnose` when setup is uncertain. Keep keys in environment variables or client secret storage.
+| Research task | Where to start |
+| --- | --- |
+| Separate target observations from causal claims | [Evidence investigations](https://github.com/unibio-intelligence/biomedmcp/blob/main/docs/investigations.md) |
+| Inspect an allele without conflating transcript or genome build | [Typed call examples](https://github.com/unibio-intelligence/biomedmcp/blob/main/docs/examples.md) |
+| Read a paper's accessible text and tables | `get` with `entity: "article"` and `sections: ["fulltext"]` |
+| Examine registered studies | `trial_search`; inspect each study's submitted record |
+| Reproduce a local analysis | [Synthetic study walkthrough](https://github.com/unibio-intelligence/biomedmcp/blob/main/docs/studies.md) |
 
-Follow `next_cursor` and returned continuation links to read more. An unavailable source does not mean no evidence exists; results may be partial. Full-text access depends on the article. See [result handling](docs/output-contracts.md) for details.
+## Connect a local agent
 
-Integration code is licensed under [Apache-2.0](LICENSE). Provider data has its own [terms](docs/source-licenses.md). See [release notes](CHANGELOG.md) and [contributing](CONTRIBUTING.md).
+```sh
+UBI_PROFILE=local biomedmcp-server --transport http --host 127.0.0.1 --port 8000
+```
+
+Use `http://127.0.0.1:8000/mcp`, or configure a stdio client using the
+[connection guide](https://github.com/unibio-intelligence/biomedmcp/blob/main/docs/connect.md). The [call reference](https://github.com/unibio-intelligence/biomedmcp/blob/main/docs/examples.md) covers
+exact JSON arguments; [result handling](https://github.com/unibio-intelligence/biomedmcp/blob/main/docs/output-contracts.md) explains partial
+results and evidence boundaries.
+
+Some sources need a key or installed dataset. Run `biomedmcp diagnose` and consult
+[source access](https://github.com/unibio-intelligence/biomedmcp/blob/main/docs/source-access.md). Keep credentials in environment variables
+or client secret storage. Source failures do not establish absence of evidence.
+
+The integration code uses [Apache-2.0](https://github.com/unibio-intelligence/biomedmcp/blob/main/LICENSE). Retrieved data retains its
+[source terms](https://github.com/unibio-intelligence/biomedmcp/blob/main/docs/source-licenses.md). See [notices](https://github.com/unibio-intelligence/biomedmcp/blob/main/NOTICE.md),
+[release notes](https://github.com/unibio-intelligence/biomedmcp/blob/main/CHANGELOG.md) and [contributing](https://github.com/unibio-intelligence/biomedmcp/blob/main/CONTRIBUTING.md).

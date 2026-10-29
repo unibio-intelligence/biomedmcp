@@ -5,7 +5,7 @@ Call `capabilities` with `{"source":"gnomad"}` to inspect the
 `variant_evidence`, for example:
 
 ```json
-{"id":"chr7:140753336:A:T","assembly":"grch38","sections":["population"]}
+{"id":"chr1:55039974:G:T","assembly":"grch38","sections":["population"]}
 ```
 
 The population section identifies one human GRCh38 chromosome, position,

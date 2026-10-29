@@ -1,6 +1,6 @@
 # openFDA retained adapter
 
-Generated from biomedmcp.examples. From the public runtime root, refresh with uv run --frozen python scripts/catalog.py.
+Examples use the public BioMedMCP tools and their typed JSON arguments.
 
 Use the biomedmcp server and its canonical tools. Retained adapters are implementation packages; their internal tools are not separate public MCP mounts.
 
@@ -14,14 +14,14 @@ These examples pass schemas and preflight and execute through MCP against mocked
 
 Follow advertised provider continuation for further acquisition. If the result advertises an evidence recovery URI, use its bounded ranges to read acquired data omitted from the preview; see [evidence recovery](../../../docs/evidence-resources.md). Snapshot scope, expiry and source rights still apply.
 
-## Submitted imatinib labeling records
+## Submitted ezetimibe labeling records
 
 ```json
 {
   "tool": "get",
   "arguments": {
     "entity": "drug",
-    "id": "imatinib",
+    "id": "ezetimibe",
     "sections": [
       "label"
     ]
@@ -29,14 +29,14 @@ Follow advertised provider continuation for further acquisition. If the result a
 }
 ```
 
-## Reported imatinib adverse-event records
+## Reported ezetimibe adverse-event records
 
 ```json
 {
   "tool": "get",
   "arguments": {
     "entity": "drug",
-    "id": "imatinib",
+    "id": "ezetimibe",
     "sections": [
       "safety"
     ]
@@ -44,14 +44,14 @@ Follow advertised provider continuation for further acquisition. If the result a
 }
 ```
 
-## Imatinib reported adverse-event discovery
+## Ezetimibe reported adverse-event discovery
 
 ```json
 {
   "tool": "search",
   "arguments": {
     "entity": "adverse-event",
-    "query": "imatinib"
+    "query": "ezetimibe"
   }
 }
 ```

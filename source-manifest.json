@@ -8,6 +8,10 @@
       "executable": false,
       "sha256": "c1ed0ffe8c1c1dcfecf48758614ebe35f1da10862a3ed805e7bb84cbbdde22fb"
     },
+    ".github/workflows/registries.yml": {
+      "executable": false,
+      "sha256": "56037912b346b54fdf4a7c0c532b01e4b684fd2187e3053078a375fff68a5b43"
+    },
     ".github/workflows/release.yml": {
       "executable": false,
       "sha256": "1122aa7be03a473d11b5e5d21049ca66a7278802c0c353dfeb58c086054d484d"
@@ -18,7 +22,7 @@
     },
     "CHANGELOG.md": {
       "executable": false,
-      "sha256": "2a06ffd4c2c38ba4706c5d1d3f9f91abb872c89fccde35a39513162f50c5873e"
+      "sha256": "9c8451f6004723f220abd5bce015f75c684ab8f734231ca77b405c64e5cf36a6"
     },
     "CONTRIBUTING.md": {
       "executable": false,
@@ -26,7 +30,7 @@
     },
     "Dockerfile": {
       "executable": false,
-      "sha256": "df81b54d7c80bbd81ec6dd1cfe1a962cbc5d8a021ff427cb658a5c059757f05f"
+      "sha256": "62fa3277dd418cce8b68ce27855e0b568f50aa888d3dbf99adaac1f3a9b65e6d"
     },
     "LICENSE": {
       "executable": false,
@@ -34,11 +38,11 @@
     },
     "NOTICE.md": {
       "executable": false,
-      "sha256": "aeeeab7b64698b84e7a9a751659d83dbb5afcd5fef7345a8bb4784f1ba59124d"
+      "sha256": "65bcb3c2adc27781b773d9fd897a251a6855e8351155a50d30af5c2c30155fbb"
     },
     "README.md": {
       "executable": false,
-      "sha256": "54f053376b551f3c3f762b71d6a49032e163f34a93260c4d6ed9e3599ed3eab6"
+      "sha256": "fdf6320d17c48647d5bf2eec68e2f0cd97f185b6183db07e68612af767657569"
     },
     "docs/adapter-catalog.json": {
       "executable": false,
@@ -46,7 +50,7 @@
     },
     "docs/agent-evaluation.json": {
       "executable": false,
-      "sha256": "c80525fe36caa2284c6648e971109f1e0ef8e8ad61dbf41c3212869317953db4"
+      "sha256": "49a0a03624c6d685804b901fab8f4f076a6fc5240ceed41ec0e440bc1e2c0d52"
     },
     "docs/annotation-aggregators.md": {
       "executable": false,
@@ -54,7 +58,7 @@
     },
     "docs/capability-readiness.json": {
       "executable": false,
-      "sha256": "9056b2fae53f6d9fc494255722a30fdaa16486533b03d50e54e09da4e773e44b"
+      "sha256": "e8c3a12a4dfa5b73c45280f46861ad0709be77a76b80a57af0f52c48d3d38d7f"
     },
     "docs/ci-governance.md": {
       "executable": false,
@@ -70,11 +74,11 @@
     },
     "docs/complex-membership.md": {
       "executable": false,
-      "sha256": "9d0a51236055844108f0a19d4d8b79ae09b96a3778cc93434e4913ce219a936c"
+      "sha256": "90325517eafa475d5049dba793bdbb9506b8d87cdc3c93d0ecd3d240faeabd90"
     },
     "docs/connect.md": {
       "executable": false,
-      "sha256": "af4bb215c40d79029091adee0236d9594b566707ac0903c73cb9b713779bd592"
+      "sha256": "8dfa16559faad82f9265d27e4acea12a60acf9ac4056520e838f73b0207001a1"
     },
     "docs/evidence-resources.md": {
       "executable": false,
@@ -82,11 +86,11 @@
     },
     "docs/examples.md": {
       "executable": false,
-      "sha256": "77ff40f2ca2cb73e1ce5be05ae105480c1b7eaa5c70716ed54b18a567836186f"
+      "sha256": "5c94a87aa48d9ec3d82c5b51de2b0d62ee58fbf37838c6eaa4599e8e82d3c94e"
     },
     "docs/expression-records.md": {
       "executable": false,
-      "sha256": "16ccdc094d19b54ad92bb185946a8286766b61f6adb479ed2442f2e48fab9e63"
+      "sha256": "0735c31396b49fd96bfc6157cf8e815cf19820acfe481c8bd0b94dfd7600daab"
     },
     "docs/gencc-assertions.md": {
       "executable": false,
@@ -94,7 +98,7 @@
     },
     "docs/gnomad-responses.md": {
       "executable": false,
-      "sha256": "954ebc763bc588334b64399f09351bf9620f0973c47299b37f2087fdb700bd66"
+      "sha256": "83ce44561fa7ce9e786ebb42be7244ddf01b005e571cb442e8c74473de8afca9"
     },
     "docs/gwas-associations.md": {
       "executable": false,
@@ -106,11 +110,11 @@
     },
     "docs/interpro-matches.md": {
       "executable": false,
-      "sha256": "7e0afee0bcbcd71e52c37a1753a5b6ebd17ceaace913c0564d531fd7880f87ce"
+      "sha256": "74c3a037d4f8ded810daf838bca18423041e9f2d3cc19eae11021f08334a9a0b"
     },
     "docs/investigations.md": {
       "executable": false,
-      "sha256": "a2cf7f744c28747b58d7a930953296be8d235b2a1503c00d49eea5c36914e637"
+      "sha256": "a65c7fa33174ce96d254e4a5aea31e4b20340b3a36f48ea4dcc71b2ddf831a7d"
     },
     "docs/live-qualification.md": {
       "executable": false,
@@ -118,11 +122,11 @@
     },
     "docs/locked-dependencies.json": {
       "executable": false,
-      "sha256": "d21d67d3b32a5f5fe17706861c4dcef518833c2bde9d1fac5db3e91be2548c88"
+      "sha256": "fe0b745583b02dfdf5dd8903e5f1ccbd695873e086e77fcd2c8ebbd55711dc0f"
     },
     "docs/mcp-catalog-budget.json": {
       "executable": false,
-      "sha256": "f39504e1811f65b994beea15d9064f74d2b2fa42664df85500d276dcef5c8855"
+      "sha256": "4bf97ec9cbadc7a8c070e9b8ba8695c078a8732b8f1493edf3d74468fcd90e3f"
     },
     "docs/native-python-architecture.md": {
       "executable": false,
@@ -138,11 +142,11 @@
     },
     "docs/open-evidence.md": {
       "executable": false,
-      "sha256": "6ca34f57515c304898ee5e17a6b095a3fd2b47e75abcf4a7f20b4992d1e2fe2e"
+      "sha256": "de4e5f6d7ca5914394c8cb094a5458b22e06d0d1dd01ef3ad12f63baf4f6d726"
     },
     "docs/opentargets-evidence.md": {
       "executable": false,
-      "sha256": "1d370c95a95aef1ca0b4ead8b340757feafb60ebe15eccda15d4c39b9574d1a0"
+      "sha256": "38e97e746d4dbd2a150887cbfd982f4e60993dc4377fbb9c9ca6d80ef51039a7"
     },
     "docs/operation-ownership.json": {
       "executable": false,
@@ -154,7 +158,7 @@
     },
     "docs/output-contracts.md": {
       "executable": false,
-      "sha256": "e42631e27237a25d584b09d8ccd46b6e7cef8361764c988f6042e5186e8bb04a"
+      "sha256": "915345897e23a126b196c312b9c1705215dd7c68c007308ad566209baad8ff97"
     },
     "docs/pdb.md": {
       "executable": false,
@@ -166,11 +170,11 @@
     },
     "docs/python-dependency-inventory.json": {
       "executable": false,
-      "sha256": "acdf7589edac3117cde0db76abefebf0460ee42e5469c3aaa3ec9349c26d57e9"
+      "sha256": "227114a0f1e67afe03609acc1708f3f290ef93602f912e81d3d313868e509d7b"
     },
     "docs/qtl-records.md": {
       "executable": false,
-      "sha256": "6793ca9927c955e2ba81d61a6a0a4b20d7211990eaeca1427c7c4dab4c838fa7"
+      "sha256": "c1d672320361ddc71bfed8fb5411069a5254288a13f5963c1ccd4e7fbbdcd7bf"
     },
     "docs/reactome-contracts.md": {
       "executable": false,
@@ -230,7 +234,7 @@
     },
     "docs/study-resource-benchmark.md": {
       "executable": false,
-      "sha256": "928930d2c869c0e8a01a866861077bc699aceda710b55846ccb4e8ae522165ad"
+      "sha256": "4d42606db779c53c6bb0063decc0dd8347fb63f6e2372929b292a3d7379eac67"
     },
     "docs/study-resources.md": {
       "executable": false,
@@ -250,11 +254,11 @@
     },
     "docs/variant-population-records.md": {
       "executable": false,
-      "sha256": "6b7627dc67a43282bfa307686c1a91d3a8e77ec5c12f8bbf876fb56a6cddca93"
+      "sha256": "f2a069ec800ae26c629fa9ec4f09cecd8714604073c5f3ea7ecc3d80b4b8b30c"
     },
     "pyproject.toml": {
       "executable": false,
-      "sha256": "bdc96a25c0a0e3fe6975843266a7a90a9c858aeb6d9a095e45ed28dd8aa63b5d"
+      "sha256": "73a00df1ce9b33d2d6b8582ef7f1995cff2bc45bc77f2d2600af78bb1839d621"
     },
     "scripts/adapter-catalog.py": {
       "executable": true,
@@ -274,7 +278,7 @@
     },
     "scripts/catalog.py": {
       "executable": true,
-      "sha256": "b17d0c0e88c26a85566709dfc85b0fb5ae19f09e1700024ff084845fbdc07f6d"
+      "sha256": "9ca42c95b9d2f4c23e9be9f64c348e9fc9eca7bb28aec8e7a43c9445331b97c3"
     },
     "scripts/check-governance.py": {
       "executable": true,
@@ -294,7 +298,7 @@
     },
     "scripts/evaluate-agents.py": {
       "executable": true,
-      "sha256": "965f12a232441938e30028b8af57e7aafc08aa24dff4654c6f6c5b84aae33852"
+      "sha256": "3537b4c685b6b954b2870b2fc64931b8112b93bbed70fff87c2cefcd80f39782"
     },
     "scripts/generate-study-resource-fixture.py": {
       "executable": true,
@@ -354,7 +358,7 @@
     },
     "server.json": {
       "executable": false,
-      "sha256": "e9065a2386ab78019752fdf0d5aef4ec5b1958526d66f52537b8526d080bb883"
+      "sha256": "5d540010c2a363a77af960ccf536b4ca96e0ac5e1bd3bc3b1ce06717c03a62bf"
     },
     "servers/python/antibody-registry/LICENSE": {
       "executable": false,
@@ -362,7 +366,7 @@
     },
     "servers/python/antibody-registry/README.md": {
       "executable": false,
-      "sha256": "4593d52e0d746a181b15965ab0d2a0d8f4fcb566ddca9d70ed489cac79915b4b"
+      "sha256": "02b87f5f19b0f4a5449aeb014eada1a9209cc3311440449cb485cea450d53987"
     },
     "servers/python/antibody-registry/antibody_registry/__init__.py": {
       "executable": false,
@@ -390,7 +394,7 @@
     },
     "servers/python/bio-ontology-mcp/README.md": {
       "executable": false,
-      "sha256": "7f0ff863db0db81445cf518fa15081268381cf0c5e5b96e318697468c8bf2bfc"
+      "sha256": "c9c57edd565de427b45f1e854356bb3d4a9882b316888ac188cb20a7b6ff192c"
     },
     "servers/python/bio-ontology-mcp/pyproject.toml": {
       "executable": false,
@@ -418,7 +422,7 @@
     },
     "servers/python/chembl-mcp/README.md": {
       "executable": false,
-      "sha256": "2ccec4b63535f306594ac1216e79de798c7b677773c3ae0c14d9ecd2c097fb42"
+      "sha256": "b943950025ad640d0a1a254525c7efaef77cfac08c4d2a8a9b3f18d094bbb6d2"
     },
     "servers/python/chembl-mcp/chembl_mcp/__init__.py": {
       "executable": false,
@@ -442,7 +446,7 @@
     },
     "servers/python/clinical-trials-mcp/README.md": {
       "executable": false,
-      "sha256": "82ba50f3243b56b8f26ffae4433af663280a472bfd5acd22b353f164dafd77ac"
+      "sha256": "9f90e49828e07a8ce20f2db54e5d08e99d681d1f4c716938b5c070a17b573272"
     },
     "servers/python/clinical-trials-mcp/clinical_trials_mcp/__init__.py": {
       "executable": false,
@@ -506,7 +510,7 @@
     },
     "servers/python/ensembl-mcp/README.md": {
       "executable": false,
-      "sha256": "cab7ef6c949c26b316b120fa3e192b7e5371861190051a9e0d7dba9f7ce1fd67"
+      "sha256": "b156ceff7ea1ea7d80d214eb317f024ec54957ae8fee7511eb2342a08bea7f58"
     },
     "servers/python/ensembl-mcp/ensembl_mcp/__init__.py": {
       "executable": false,
@@ -530,7 +534,7 @@
     },
     "servers/python/gtex/README.md": {
       "executable": false,
-      "sha256": "a240c75164427e5aa940111bba9208eeced5e7a915076b290685dab76c69e86b"
+      "sha256": "10a9cbe2907edf1826b3b62dcd673b625f2305aca50370fe487419e26c183983"
     },
     "servers/python/gtex/pyproject.toml": {
       "executable": false,
@@ -594,7 +598,7 @@
     },
     "servers/python/mychem/README.md": {
       "executable": false,
-      "sha256": "527cfc7e898b09acc4fd1ec6e6716e906bc635489dda7cfa6ef1bf6e6c6ca93f"
+      "sha256": "a62c1178f57b26d612a69518cd4084f1cc4582ef9e1335e032a836c954fdbc12"
     },
     "servers/python/mychem/pyproject.toml": {
       "executable": false,
@@ -738,7 +742,7 @@
     },
     "servers/python/mydisease/README.md": {
       "executable": false,
-      "sha256": "f65efdc5dd243d98797917f9014cdddd897be231085a09504054a06d79cdf366"
+      "sha256": "ff11c4c80fcbe68ed23aa2eb87a00333a6e35f687d863dabf22a49ac15e5b93e"
     },
     "servers/python/mydisease/pyproject.toml": {
       "executable": false,
@@ -902,7 +906,7 @@
     },
     "servers/python/mygene/README.md": {
       "executable": false,
-      "sha256": "7e451b1b28b3490e871ec9786c574c7846bb9cc27be74a1ad8280d476cea1aa7"
+      "sha256": "0f4a8a60f38982e9e74908908af18252e775e3d1adcb73cfcb3fd91b19a8e1ff"
     },
     "servers/python/mygene/pyproject.toml": {
       "executable": false,
@@ -1054,7 +1058,7 @@
     },
     "servers/python/ncbi-mcp/README.md": {
       "executable": false,
-      "sha256": "14720ba764cbcdd735054f914aaf5db01974c860f4027deb409a940ac0a03fae"
+      "sha256": "a223dfc511e99552f7de9c15ec5c6c65d47cd13e91418227a05073e171b7dddc"
     },
     "servers/python/ncbi-mcp/ncbi_mcp/__init__.py": {
       "executable": false,
@@ -1102,7 +1106,7 @@
     },
     "servers/python/openfda-mcp/README.md": {
       "executable": false,
-      "sha256": "4d4e4b7e1db7db91d7d25f937b110fbe62811c4fdfbd5136d0b71c2022395006"
+      "sha256": "7f282be4fe5a7f61720f8922338d5d392fce8a4589dd9ef586a4debbb006ad9b"
     },
     "servers/python/openfda-mcp/openfda_mcp/__init__.py": {
       "executable": false,
@@ -1134,7 +1138,7 @@
     },
     "servers/python/opentargets/README.md": {
       "executable": false,
-      "sha256": "504285df43ffebf4c59b97a4d0a1240a57022a9301d76869e3a947c56f2b93ba"
+      "sha256": "74e2e62b7f2387823a167a28ed0a230778d6a490732cd310ef0903d2dede93d1"
     },
     "servers/python/opentargets/examples/disease_to_drug.py": {
       "executable": false,
@@ -1326,7 +1330,7 @@
     },
     "servers/python/pdb-mcp/README.md": {
       "executable": false,
-      "sha256": "39e4e76c033b9df484158f2ccfc3aff0365f6f7c12c6f314de858108c31fab4f"
+      "sha256": "23329a3a21f139913bfd642384b0a24faca6f252aeedb40e042f70edfbd31ac4"
     },
     "servers/python/pdb-mcp/pdb_mcp/__init__.py": {
       "executable": false,
@@ -1354,7 +1358,7 @@
     },
     "servers/python/protein-atlas-mcp/README.md": {
       "executable": false,
-      "sha256": "c6ff893d98b79fd68ca54c9d95c1f93b9773d9fa143135e23b06fd6df3c15f45"
+      "sha256": "3cc4ca66322669834969c5738ff32e6a0ef98a8ebedb4ce7b6d98f24e006526d"
     },
     "servers/python/protein-atlas-mcp/protein_atlas_mcp/__init__.py": {
       "executable": false,
@@ -1374,7 +1378,7 @@
     },
     "servers/python/reactome-mcp/README.md": {
       "executable": false,
-      "sha256": "32b091ded95600563fd1f8e32ecce52646d44407097f5f953bffada9fa1504e4"
+      "sha256": "3b7968b5ddccd17705901e6c93a77071e0d71dbb2bca9fda14e79378bb1e409d"
     },
     "servers/python/reactome-mcp/pyproject.toml": {
       "executable": false,
@@ -1398,7 +1402,7 @@
     },
     "servers/python/surechembl-mcp/README.md": {
       "executable": false,
-      "sha256": "19da8cb01903e350273117d101335a72487f161ae0bcdc3e1ee9878e700ee00a"
+      "sha256": "52be07229ae1e51b122d7b91f6dc026f8d63b62aeef8fdc60ee1989cb8f73459"
     },
     "servers/python/surechembl-mcp/pyproject.toml": {
       "executable": false,
@@ -1422,7 +1426,7 @@
     },
     "servers/python/uniprot-mcp/README.md": {
       "executable": false,
-      "sha256": "7cb3ba7b995c787cb6bce63531c592a3099ec5d58b330f3f1113782a7f6cb064"
+      "sha256": "aad83b1f74122b017ef11bc61d2d83def387704e7e26fbb7d26b832f0cbafe04"
     },
     "servers/python/uniprot-mcp/pyproject.toml": {
       "executable": false,
@@ -1446,7 +1450,7 @@
     },
     "src/biomedmcp/__init__.py": {
       "executable": false,
-      "sha256": "a8a65c3643626d49617d02075d820f1bd345ad97052ac59e6641f65e3305e1ab"
+      "sha256": "96a865ea67c4bf7585e3e3e3dbfaeca0e2639036acaabe50b5c91202116b9f2d"
     },
     "src/biomedmcp/adapters.py": {
       "executable": false,
@@ -1462,7 +1466,7 @@
     },
     "src/biomedmcp/canary.py": {
       "executable": false,
-      "sha256": "e39128229c23e97b095d2e24cc3e9d050c26af1f93ec1c348540e3e8c4a0fa17"
+      "sha256": "57fcc9fc2727b141ef1d5663afed264e30b2a9201412536940361cfbf8eac5d4"
     },
     "src/biomedmcp/charts.py": {
       "executable": false,
@@ -1470,7 +1474,7 @@
     },
     "src/biomedmcp/cli.py": {
       "executable": false,
-      "sha256": "2a94515e31a861ad5efaac6ffe876f9bf32cd47e005d98171a83c09009368327"
+      "sha256": "e6ebc67cf5ab004a217cd27fbe01cdb36c0ace74b04b7c39dce46b3ef7158623"
     },
     "src/biomedmcp/content_boundary.py": {
       "executable": false,
@@ -1542,7 +1546,7 @@
     },
     "src/biomedmcp/examples.py": {
       "executable": false,
-      "sha256": "566cb1b8c09ea6d9704b18a99e03b2a269f9273722a9d3713680eb1156f82db1"
+      "sha256": "fb276822f6496572e7b4fa896dd500c28952dfc3cfc76914b24c3f0c55a57656"
     },
     "src/biomedmcp/expression_records.py": {
       "executable": false,
@@ -1586,11 +1590,11 @@
     },
     "src/biomedmcp/mcp/server.py": {
       "executable": false,
-      "sha256": "cc24770c896c770cce9d420ca5da27c256e4d4e597ae2e154e40eceb19bd8977"
+      "sha256": "7a975d9bf16b9bcd705ebb25eb03eefea73e8c36758c32e8c898c39639d9ca75"
     },
     "src/biomedmcp/native/__init__.py": {
       "executable": false,
-      "sha256": "da1b7aeb3bf0d830d1be7edb6d1e0fc87b6b53dbe7b08a8ffda495d17455a8da"
+      "sha256": "fd68875f15c179315e2a7842f14d8f842fb64ccc8c04afdfb71a63bf0b8089cf"
     },
     "src/biomedmcp/native/alphamissense.py": {
       "executable": false,
@@ -1750,11 +1754,11 @@
     },
     "src/biomedmcp/offline-qualification.json": {
       "executable": false,
-      "sha256": "dac59050112d870fc2f7a6970f73ea9e8dda7dc19acd99dc689b4a32846d524d"
+      "sha256": "dec6580f0c3e9f1b20c202dfd9ab46140928a580dbfdef8022926ceac3ba449a"
     },
     "src/biomedmcp/onboarding.py": {
       "executable": false,
-      "sha256": "5ce559255ddbdc1f11fb162f852753b24f15505f3f54cba23c5cb057765a6acf"
+      "sha256": "4f91896c1fd88e825101531504cb773e69e8ad861218a7013f23fbf7f569e681"
     },
     "src/biomedmcp/output_contracts.py": {
       "executable": false,
@@ -1876,6 +1880,10 @@
       "executable": false,
       "sha256": "3afadcfab86976e3d20e769dd7024b38048c2444491f819c7803ac168b485f75"
     },
+    "tests/NOTICE.md": {
+      "executable": false,
+      "sha256": "fc54ab86096b95e84f848bda2685868fed9465d31cf55ab5d82ae3b22d8bea70"
+    },
     "tests/civic_helpers.py": {
       "executable": false,
       "sha256": "5058eaeabd69edd83535bd7c97513a5d644e85b9240f8c2e641802f6f13ba7e4"
@@ -1902,7 +1910,7 @@
     },
     "tests/example_helpers.py": {
       "executable": false,
-      "sha256": "12f16c0c380e7e5fb3e5d3b34f84419ec3e1062cb5e682e26f72292e02f5cee0"
+      "sha256": "9fdcd6f6723871f6f5603fc31ba1569c832d8ce53c7b10fef063523a924744a6"
     },
     "tests/fixtures/civic-schema-2026-10-09.json": {
       "executable": false,
@@ -2234,7 +2242,7 @@
     },
     "tests/test_live_canary.py": {
       "executable": false,
-      "sha256": "230e803718b35cce455db9e86d52bc6a3731c0adb573890338a2764a889bd345"
+      "sha256": "e87a850e1465e0df160107fe306dd7fb1dafdf0dd97d0114b299427c918b0a10"
     },
     "tests/test_live_contract_regressions.py": {
       "executable": false,
@@ -2294,7 +2302,7 @@
     },
     "tests/test_onboarding_workflows.py": {
       "executable": false,
-      "sha256": "ce9b26ba4589fe43c2f00084090cb09847639210df721b4bb3d2004dcee01387"
+      "sha256": "440fa308180c84f60c55fee280161fcb2642034bc869c79b84835368b689438d"
     },
     "tests/test_open_citation_graph.py": {
       "executable": false,
@@ -2354,7 +2362,7 @@
     },
     "tests/test_public_examples.py": {
       "executable": false,
-      "sha256": "c39ded2101207c8826e52574144ad8498a38ea67bf4fd44f542630a01b9c5e45"
+      "sha256": "2376dcc2e20f2589b16d8fbb0c26c4567eea1772b23a06dacbd5a038841c15f2"
     },
     "tests/test_public_links.py": {
       "executable": false,
@@ -2387,6 +2395,10 @@
     "tests/test_record_schema_resources.py": {
       "executable": false,
       "sha256": "d7a1fb33d83d3482b82ce2c98439a14769601c1a3c58fca1d72c6ae934eaea18"
+    },
+    "tests/test_registry_distribution.py": {
+      "executable": false,
+      "sha256": "cace2e3796b0e4bf6ff0d162c7b8f4e47f7d2e5bb201026bf66854c86e45af4e"
     },
     "tests/test_release_artifacts.py": {
       "executable": false,
@@ -2610,10 +2622,10 @@
     },
     "uv.lock": {
       "executable": false,
-      "sha256": "b7c76149c87bd1fc5f76197a5c3c66b4d4d43a6350d441c04debe951fdef98be"
+      "sha256": "bd9ab03fe2d1ea8e169d9432ba3b82275333debd38eb7c9b67febb7e13d2cda6"
     }
   },
   "format": 1,
   "publication_ready": true,
-  "tree_sha256": "de8d383f4b4ada36dc19cdbd39cdb6135a7b7b46fb908fb1c474f5653ebced3d"
+  "tree_sha256": "28dd50390cd81a74fec8dd0236eb6dd25dd9547f86ee0a41490b239cba20ed23"
 }

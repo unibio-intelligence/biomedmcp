@@ -914,7 +914,7 @@
     },
     {
       "name": "get",
-      "description": "Read ordinary records/evidence sections; variants use variant_evidence. Sources constrain all lookups and identity dependencies. e.g. {\"entity\":\"gene\",\"id\":\"BRAF\",\"species\":9606}; biomedmcp://guide",
+      "description": "Read ordinary records/evidence sections; variants use variant_evidence. Sources constrain all lookups and identity dependencies. e.g. {\"entity\":\"gene\",\"id\":\"PCSK9\",\"species\":9606}; biomedmcp://guide",
       "input_schema": {
         "type": "object",
         "$defs": {
@@ -2676,7 +2676,7 @@
     },
     {
       "name": "literature_search",
-      "description": "Find papers with publication/topic/source filters; deduplicate evidence and retain source outcomes and opaque continuation. e.g. {\"query\":\"KRAS resistance\"}; biomedmcp://guide",
+      "description": "Find papers with publication/topic/source filters; deduplicate evidence and retain source outcomes and opaque continuation. e.g. {\"query\":\"PCSK9 LDL cholesterol\"}; biomedmcp://guide",
       "input_schema": {
         "type": "object",
         "$defs": {
@@ -3477,7 +3477,7 @@
     },
     {
       "name": "trial_search",
-      "description": "Find public clinical trials using disease/intervention and trial-specific filters. Does not determine individual clinical eligibility. e.g. {\"query\":\"melanoma\",\"filters\":{\"status\":\"RECRUITING\"}}; biomedmcp://guide",
+      "description": "Find public clinical trials using disease/intervention and trial-specific filters. Does not determine individual clinical eligibility. e.g. {\"query\":\"familial hypercholesterolemia\",\"filters\":{\"status\":\"RECRUITING\"}}; biomedmcp://guide",
       "input_schema": {
         "type": "object",
         "$defs": {
@@ -4160,7 +4160,7 @@
     },
     {
       "name": "variant_evidence",
-      "description": "Retrieve variant evidence with assembly/transcript ambiguity preserved. Defaults: ClinVar, population, CIViC. Request predictions for AlphaMissense, or eve for MIT-licensed EVE protein scores; computational predictions retain source and uncertainty. e.g. {\"id\":\"BRAF V600E\"}; biomedmcp://guide",
+      "description": "Retrieve variant evidence with assembly/transcript ambiguity preserved. Defaults: ClinVar, population, CIViC. Request predictions for AlphaMissense, or eve for MIT-licensed EVE protein scores; computational predictions retain source and uncertainty. e.g. {\"id\":\"PCSK9 R46L\"}; biomedmcp://guide",
       "input_schema": {
         "type": "object",
         "$defs": {
@@ -5290,7 +5290,7 @@
     },
     {
       "name": "resolve",
-      "description": "Resolve aliases/ambiguity before evidence joins. One exact species-qualified symbol/ID resolves; provider score alone never establishes identity. Retrieve known unambiguous identifiers directly. e.g. {\"entity\":\"gene\",\"query\":\"HER2\",\"species\":9606}; biomedmcp://guide",
+      "description": "Resolve aliases/ambiguity before evidence joins. One exact species-qualified symbol/ID resolves; provider score alone never establishes identity. Retrieve known unambiguous identifiers directly. e.g. {\"entity\":\"gene\",\"query\":\"LDL receptor\",\"species\":9606}; biomedmcp://guide",
       "input_schema": {
         "type": "object",
         "$defs": {
@@ -7200,7 +7200,7 @@
     },
     {
       "name": "research",
-      "description": "Dossiers retain citations/outcomes. Inspect capabilities and get further sections for completeness. e.g. {\"workflow\":\"target_dossier\",\"focus\":\"ERBB2\",\"species\":9606}; biomedmcp://guide",
+      "description": "Dossiers retain citations/outcomes. Inspect capabilities and get further sections for completeness. e.g. {\"workflow\":\"target_dossier\",\"focus\":\"LDLR\",\"species\":9606}; biomedmcp://guide",
       "input_schema": {
         "type": "object",
         "$defs": {
@@ -8650,7 +8650,7 @@
     },
     {
       "name": "batch",
-      "description": "Execute up to ten independent read operations with one atomic quota reservation. e.g. {\"calls\":[{\"operation\":\"get\",\"arguments\":{\"entity\":\"gene\",\"id\":\"BRAF\",\"species\":9606}}]}; biomedmcp://guide",
+      "description": "Execute up to ten independent read operations with one atomic quota reservation. e.g. {\"calls\":[{\"operation\":\"get\",\"arguments\":{\"entity\":\"gene\",\"id\":\"PCSK9\",\"species\":9606}}]}; biomedmcp://guide",
       "input_schema": {
         "type": "object",
         "$defs": {
@@ -9983,7 +9983,7 @@
     }
   ],
   "tool_count": 13,
-  "utf8_bytes": 97384,
+  "utf8_bytes": 97420,
   "tokens": null,
   "tokenizer": null,
   "measurement": "live tools/list",

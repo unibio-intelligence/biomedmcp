@@ -1,5 +1,5 @@
 {
-  "uv_lock_sha256": "b7c76149c87bd1fc5f76197a5c3c66b4d4d43a6350d441c04debe951fdef98be",
+  "uv_lock_sha256": "bd9ab03fe2d1ea8e169d9432ba3b82275333debd38eb7c9b67febb7e13d2cda6",
   "packages": [
     {
       "name": "aiofile",
@@ -77,7 +77,7 @@
     },
     {
       "name": "biomedmcp",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "license": "Apache-2.0",
       "license_files": [
         "LICENSE",
@@ -320,6 +320,14 @@
     {
       "name": "jaraco.functools",
       "version": "4.6.0",
+      "license": "MIT",
+      "license_files": [
+        "LICENSE"
+      ]
+    },
+    {
+      "name": "jeepney",
+      "version": "0.9.0",
       "license": "MIT",
       "license_files": [
         "LICENSE"
@@ -721,6 +729,14 @@
       "version": "1.18.1",
       "license": "Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.",
       "license_files": []
+    },
+    {
+      "name": "SecretStorage",
+      "version": "3.5.0",
+      "license": "BSD-3-Clause",
+      "license_files": [
+        "LICENSE"
+      ]
     },
     {
       "name": "six",

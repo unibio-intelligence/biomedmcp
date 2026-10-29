@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "uv_lock_sha256": "b7c76149c87bd1fc5f76197a5c3c66b4d4d43a6350d441c04debe951fdef98be",
+  "uv_lock_sha256": "bd9ab03fe2d1ea8e169d9432ba3b82275333debd38eb7c9b67febb7e13d2cda6",
   "lock_version": 1,
   "requires_python": ">=3.13",
   "packages": [
@@ -859,7 +859,7 @@
     },
     {
       "name": "biomedmcp",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "source": {
         "editable": "."
       }

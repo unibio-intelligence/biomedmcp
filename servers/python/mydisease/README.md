@@ -1,6 +1,6 @@
 # MyDisease.info retained adapter
 
-Generated from biomedmcp.examples. From the public runtime root, refresh with uv run --frozen python scripts/catalog.py.
+Examples use the public BioMedMCP tools and their typed JSON arguments.
 
 Use the biomedmcp server and its canonical tools. Retained adapters are implementation packages; their internal tools are not separate public MCP mounts.
 
@@ -21,7 +21,7 @@ Follow advertised provider continuation for further acquisition. If the result a
   "tool": "search",
   "arguments": {
     "entity": "disease",
-    "query": "melanoma"
+    "query": "familial hypercholesterolemia"
   }
 }
 ```
@@ -33,7 +33,7 @@ Follow advertised provider continuation for further acquisition. If the result a
   "tool": "get",
   "arguments": {
     "entity": "disease",
-    "id": "MONDO:0005105"
+    "id": "MONDO:0007750"
   }
 }
 ```

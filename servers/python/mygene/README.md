@@ -1,6 +1,6 @@
 # MyGene.info retained adapter
 
-Generated from biomedmcp.examples. From the public runtime root, refresh with uv run --frozen python scripts/catalog.py.
+Examples use the public BioMedMCP tools and their typed JSON arguments.
 
 Use the biomedmcp server and its canonical tools. Retained adapters are implementation packages; their internal tools are not separate public MCP mounts.
 
@@ -29,27 +29,27 @@ Follow advertised provider continuation for further acquisition. If the result a
 }
 ```
 
-## Human BRAF gene record
+## Human PCSK9 gene record
 
 ```json
 {
   "tool": "get",
   "arguments": {
     "entity": "gene",
-    "id": "BRAF",
+    "id": "PCSK9",
     "species": 9606
   }
 }
 ```
 
-## Resolve the human HER2 gene alias
+## Resolve the human LDL receptor gene alias
 
 ```json
 {
   "tool": "resolve",
   "arguments": {
     "entity": "gene",
-    "query": "HER2",
+    "query": "LDL receptor",
     "species": 9606
   }
 }
@@ -78,8 +78,8 @@ Follow advertised provider continuation for further acquisition. If the result a
     "operation": "map_gene_ids",
     "params": {
       "gene_ids": [
-        "BRAF",
-        "ERBB2"
+        "PCSK9",
+        "LDLR"
       ],
       "input_namespace": "symbol",
       "species": 9606

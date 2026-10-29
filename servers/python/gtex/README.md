@@ -1,6 +1,6 @@
 # GTEx retained adapter
 
-Generated from biomedmcp.examples. From the public runtime root, refresh with uv run --frozen python scripts/catalog.py.
+Examples use the public BioMedMCP tools and their typed JSON arguments.
 
 Use the biomedmcp server and its canonical tools. Retained adapters are implementation packages; their internal tools are not separate public MCP mounts.
 
@@ -14,14 +14,14 @@ These examples pass schemas and preflight and execute through MCP against mocked
 
 Follow advertised provider continuation for further acquisition. If the result advertises an evidence recovery URI, use its bounded ranges to read acquired data omitted from the preview; see [evidence recovery](../../../docs/evidence-resources.md). Snapshot scope, expiry and source rights still apply.
 
-## Human ERBB2 median expression by tissue
+## Human LDLR median expression by tissue
 
 ```json
 {
   "tool": "get",
   "arguments": {
     "entity": "gene",
-    "id": "ERBB2",
+    "id": "LDLR",
     "species": 9606,
     "sections": [
       "expression"
@@ -30,14 +30,14 @@ Follow advertised provider continuation for further acquisition. If the result a
 }
 ```
 
-## Human ERBB2 expression in breast tissue
+## Human LDLR expression in liver tissue
 
 ```json
 {
   "tool": "get",
   "arguments": {
     "entity": "gene",
-    "id": "ERBB2",
+    "id": "LDLR",
     "species": 9606,
     "sections": [
       "expression"
@@ -45,42 +45,42 @@ Follow advertised provider continuation for further acquisition. If the result a
     "section_parameters": {
       "expression": {
         "query_type": "gene_tissue",
-        "tissue_id": "Breast_Mammary_Tissue"
+        "tissue_id": "Liver"
       }
     }
   }
 }
 ```
 
-## Human ERBB2 eQTL associations in breast tissue
+## Human LDLR eQTL associations in liver tissue
 
 ```json
 {
   "tool": "get",
   "arguments": {
     "entity": "gene",
-    "id": "ERBB2",
+    "id": "LDLR",
     "species": 9606,
     "sections": [
       "eqtl"
     ],
     "section_parameters": {
       "eqtl": {
-        "tissue_id": "Breast_Mammary_Tissue"
+        "tissue_id": "Liver"
       }
     }
   }
 }
 ```
 
-## Human ERBB2 sQTL associations in breast tissue
+## Human LDLR sQTL associations in liver tissue
 
 ```json
 {
   "tool": "get",
   "arguments": {
     "entity": "gene",
-    "id": "ERBB2",
+    "id": "LDLR",
     "species": 9606,
     "sections": [
       "sqtl"
@@ -93,7 +93,7 @@ Follow advertised provider continuation for further acquisition. If the result a
     },
     "section_parameters": {
       "sqtl": {
-        "tissue_id": "Breast_Mammary_Tissue",
+        "tissue_id": "Liver",
         "p_value_threshold": 0.05,
         "limit": 10,
         "page": 0
@@ -110,7 +110,7 @@ Follow advertised provider continuation for further acquisition. If the result a
   "tool": "get",
   "arguments": {
     "entity": "gene",
-    "id": "ERBB2",
+    "id": "LDLR",
     "species": 9606,
     "sections": [
       "transcripts"
@@ -138,7 +138,7 @@ Follow advertised provider continuation for further acquisition. If the result a
   "tool": "get",
   "arguments": {
     "entity": "gene",
-    "id": "ERBB2",
+    "id": "LDLR",
     "species": 9606,
     "sections": [
       "exons"

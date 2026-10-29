@@ -102,4 +102,4 @@ The catalog budget is 98,304 compact UTF-8 bytes for 13 tools, including input a
 
 Output schemas are an optional MCP feature. The [MCP tools specification](https://modelcontextprotocol.io/specification/2025-11-25/server/tools) describes structured output validation and corresponding text content; advertising these schemas improves validation without implying that the prior absence was a protocol violation.
 
-Variant search shorthand such as `BRAF V600E` must agree with explicit `gene` and `hgvsp` filters. Conflicting identities return `invalid_parameters` before provider requests; equivalent one-letter and three-letter protein changes are accepted.
+Variant search shorthand such as `PCSK9 R46L` must agree with explicit `gene` and `hgvsp` filters. Conflicting identities return `invalid_parameters` before provider requests; equivalent one-letter and three-letter protein changes are accepted.

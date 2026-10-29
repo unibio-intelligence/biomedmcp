@@ -1,6 +1,6 @@
 # Public call examples
 
-Generated from biomedmcp.examples; run scripts/catalog.py to refresh. Examples demonstrate synthetic adapter contracts. Check [source release eligibility](source-licenses.md) before execution; unreleased integrations cannot be enabled by adding keys.
+Use these typed calls to inspect records or extend an evidence notebook. Calls are tested with synthetic provider responses; live results vary. Check [source release eligibility](source-licenses.md) before execution; unreleased integrations cannot be enabled by adding keys.
 
 ## Executable examples
 
@@ -39,14 +39,14 @@ Full text requires an accessible PMC record and article-specific rights.
 }
 ```
 
-### Imatinib compound discovery
+### Ezetimibe compound discovery
 
 ```json
 {
   "tool": "search",
   "arguments": {
     "entity": "drug",
-    "query": "imatinib",
+    "query": "ezetimibe",
     "filters": {
       "source": "mychem"
     }
@@ -54,27 +54,27 @@ Full text requires an accessible PMC record and article-specific rights.
 }
 ```
 
-### Human BRAF gene record
+### Human PCSK9 gene record
 
 ```json
 {
   "tool": "get",
   "arguments": {
     "entity": "gene",
-    "id": "BRAF",
+    "id": "PCSK9",
     "species": 9606
   }
 }
 ```
 
-### Human ERBB2 median expression by tissue
+### Human LDLR median expression by tissue
 
 ```json
 {
   "tool": "get",
   "arguments": {
     "entity": "gene",
-    "id": "ERBB2",
+    "id": "LDLR",
     "species": 9606,
     "sections": [
       "expression"
@@ -98,14 +98,14 @@ Full text requires an accessible PMC record and article-specific rights.
 }
 ```
 
-### Human ERBB2 expression in breast tissue
+### Human LDLR expression in liver tissue
 
 ```json
 {
   "tool": "get",
   "arguments": {
     "entity": "gene",
-    "id": "ERBB2",
+    "id": "LDLR",
     "species": 9606,
     "sections": [
       "expression"
@@ -113,42 +113,42 @@ Full text requires an accessible PMC record and article-specific rights.
     "section_parameters": {
       "expression": {
         "query_type": "gene_tissue",
-        "tissue_id": "Breast_Mammary_Tissue"
+        "tissue_id": "Liver"
       }
     }
   }
 }
 ```
 
-### Human ERBB2 eQTL associations in breast tissue
+### Human LDLR eQTL associations in liver tissue
 
 ```json
 {
   "tool": "get",
   "arguments": {
     "entity": "gene",
-    "id": "ERBB2",
+    "id": "LDLR",
     "species": 9606,
     "sections": [
       "eqtl"
     ],
     "section_parameters": {
       "eqtl": {
-        "tissue_id": "Breast_Mammary_Tissue"
+        "tissue_id": "Liver"
       }
     }
   }
 }
 ```
 
-### Imatinib record by provider-stable identifier
+### Ezetimibe record by provider-stable identifier
 
 ```json
 {
   "tool": "get",
   "arguments": {
     "entity": "drug",
-    "id": "KTUFNOKKBVMGRW-UHFFFAOYSA-N"
+    "id": "OLNTVTPDXPETLC-XPWALMASSA-N"
   }
 }
 ```
@@ -160,29 +160,29 @@ Full text requires an accessible PMC record and article-specific rights.
   "tool": "get",
   "arguments": {
     "entity": "disease",
-    "id": "MONDO:0005105"
+    "id": "MONDO:0007750"
   }
 }
 ```
 
-### KRAS resistance papers
+### PCSK9 LDL cholesterol papers
 
 ```json
 {
   "tool": "literature_search",
   "arguments": {
-    "query": "KRAS resistance"
+    "query": "PCSK9 LDL cholesterol"
   }
 }
 ```
 
-### BRAF papers since 2024
+### PCSK9 papers since 2024
 
 ```json
 {
   "tool": "literature_search",
   "arguments": {
-    "query": "BRAF",
+    "query": "PCSK9",
     "filters": {
       "source": "pubmed",
       "date_from": "2024-01-01"
@@ -191,13 +191,13 @@ Full text requires an accessible PMC record and article-specific rights.
 }
 ```
 
-### Open-access melanoma papers from Europe PMC
+### Open-access familial hypercholesterolemia papers from Europe PMC
 
 ```json
 {
   "tool": "literature_search",
   "arguments": {
-    "query": "melanoma",
+    "query": "familial hypercholesterolemia",
     "filters": {
       "source": "europepmc",
       "open_access": true
@@ -206,13 +206,13 @@ Full text requires an accessible PMC record and article-specific rights.
 }
 ```
 
-### Recruiting melanoma trials
+### Recruiting familial hypercholesterolemia trials
 
 ```json
 {
   "tool": "trial_search",
   "arguments": {
-    "query": "melanoma",
+    "query": "familial hypercholesterolemia",
     "filters": {
       "status": "RECRUITING"
     }
@@ -234,35 +234,35 @@ Full text requires an accessible PMC record and article-specific rights.
 }
 ```
 
-### Imatinib trial discovery
+### Ezetimibe trial discovery
 
 ```json
 {
   "tool": "trial_search",
   "arguments": {
-    "query": "imatinib"
+    "query": "ezetimibe"
   }
 }
 ```
 
-### BRAF V600E variant evidence
+### PCSK9 R46L variant evidence
 
 ```json
 {
   "tool": "variant_evidence",
   "arguments": {
-    "id": "BRAF V600E"
+    "id": "PCSK9 R46L"
   }
 }
 ```
 
-### GRCh38 BRAF variant coordinate evidence
+### GRCh38 PCSK9 variant coordinate evidence
 
 ```json
 {
   "tool": "variant_evidence",
   "arguments": {
-    "id": "chr7:140753336:A:T",
+    "id": "chr1:55039974:G:T",
     "assembly": "grch38",
     "sections": [
       "clinvar",
@@ -272,13 +272,13 @@ Full text requires an accessible PMC record and article-specific rights.
 }
 ```
 
-### Variant evidence for rs113488022
+### Variant evidence for rs11591147
 
 ```json
 {
   "tool": "variant_evidence",
   "arguments": {
-    "id": "rs113488022",
+    "id": "rs11591147",
     "sections": [
       "clinvar",
       "population"
@@ -293,7 +293,7 @@ Full text requires an accessible PMC record and article-specific rights.
 {
   "tool": "variant_evidence",
   "arguments": {
-    "id": "BRAF V600E",
+    "id": "PCSK9 R46L",
     "sections": [
       "cbioportal"
     ],
@@ -350,27 +350,27 @@ Full text requires an accessible PMC record and article-specific rights.
 }
 ```
 
-### Resolve the human HER2 gene alias
+### Resolve the human LDL receptor gene alias
 
 ```json
 {
   "tool": "resolve",
   "arguments": {
     "entity": "gene",
-    "query": "HER2",
+    "query": "LDL receptor",
     "species": 9606
   }
 }
 ```
 
-### Resolve rs113488022 before joining evidence
+### Resolve rs11591147 before joining evidence
 
 ```json
 {
   "tool": "resolve",
   "arguments": {
     "entity": "variant",
-    "query": "rs113488022"
+    "query": "rs11591147"
   }
 }
 ```
@@ -401,66 +401,66 @@ Full text requires an accessible PMC record and article-specific rights.
 }
 ```
 
-### BRAF V600E structural coverage
+### PCSK9 R46L structural coverage
 
 ```json
 {
   "tool": "relate",
   "arguments": {
     "entity": "variant",
-    "id": "BRAF V600E",
+    "id": "PCSK9 R46L",
     "relation": "structure"
   }
 }
 ```
 
-### Human BRAF article discovery with qualified identity
+### Human PCSK9 article discovery with qualified identity
 
 ```json
 {
   "tool": "relate",
   "arguments": {
     "entity": "gene",
-    "id": "BRAF",
+    "id": "PCSK9",
     "relation": "articles",
     "species": 9606
   }
 }
 ```
 
-### Bounded human ERBB2 target dossier
+### Bounded human LDLR target dossier
 
 ```json
 {
   "tool": "research",
   "arguments": {
     "workflow": "target_dossier",
-    "focus": "ERBB2",
+    "focus": "LDLR",
     "species": 9606
   }
 }
 ```
 
-### Bounded imatinib drug review
+### Bounded ezetimibe drug review
 
 ```json
 {
   "tool": "research",
   "arguments": {
     "workflow": "drug_review",
-    "focus": "imatinib"
+    "focus": "ezetimibe"
   }
 }
 ```
 
-### Bounded melanoma disease landscape
+### Bounded familial hypercholesterolemia disease landscape
 
 ```json
 {
   "tool": "research",
   "arguments": {
     "workflow": "disease_landscape",
-    "focus": "MONDO:0005105"
+    "focus": "MONDO:0007750"
   }
 }
 ```
@@ -491,7 +491,7 @@ Full text requires an accessible PMC record and article-specific rights.
     "operation": "gene_set",
     "params": {
       "genes": [
-        "BRAF",
+        "PCSK9",
         "KRAS",
         "TP53"
       ],
@@ -511,7 +511,7 @@ Full text requires an accessible PMC record and article-specific rights.
     "operation": "get",
     "params": {
       "database": "genbank",
-      "accession": "NM_004333.6",
+      "accession": "NM_174936.4",
       "sequence": true,
       "start": 1,
       "stop": 100
@@ -531,7 +531,7 @@ Full text requires an accessible PMC record and article-specific rights.
         "operation": "get",
         "arguments": {
           "entity": "gene",
-          "id": "BRAF",
+          "id": "PCSK9",
           "species": 9606
         }
       }
@@ -550,7 +550,7 @@ Full text requires an accessible PMC record and article-specific rights.
       {
         "operation": "trial_search",
         "arguments": {
-          "query": "melanoma"
+          "query": "familial hypercholesterolemia"
         }
       }
     ]
@@ -568,7 +568,7 @@ Full text requires an accessible PMC record and article-specific rights.
       {
         "operation": "resolve",
         "arguments": {
-          "query": "HER2",
+          "query": "LDL receptor",
           "entity": "gene",
           "species": 9606
         }
@@ -936,14 +936,14 @@ Full text requires an accessible PMC record and article-specific rights.
 }
 ```
 
-### Human ERBB2 sQTL associations in breast tissue
+### Human LDLR sQTL associations in liver tissue
 
 ```json
 {
   "tool": "get",
   "arguments": {
     "entity": "gene",
-    "id": "ERBB2",
+    "id": "LDLR",
     "species": 9606,
     "sections": [
       "sqtl"
@@ -956,7 +956,7 @@ Full text requires an accessible PMC record and article-specific rights.
     },
     "section_parameters": {
       "sqtl": {
-        "tissue_id": "Breast_Mammary_Tissue",
+        "tissue_id": "Liver",
         "p_value_threshold": 0.05,
         "limit": 10,
         "page": 0
@@ -1021,7 +1021,7 @@ Full text requires an accessible PMC record and article-specific rights.
   "tool": "get",
   "arguments": {
     "entity": "gene",
-    "id": "ERBB2",
+    "id": "LDLR",
     "species": 9606,
     "sections": [
       "transcripts"
@@ -1049,7 +1049,7 @@ Full text requires an accessible PMC record and article-specific rights.
   "tool": "get",
   "arguments": {
     "entity": "gene",
-    "id": "ERBB2",
+    "id": "LDLR",
     "species": 9606,
     "sections": [
       "exons"
@@ -1104,7 +1104,7 @@ Full text requires an accessible PMC record and article-specific rights.
 {
   "tool": "trial_search",
   "arguments": {
-    "query": "melanoma AND AREA[LocationCity]Boston",
+    "query": "familial hypercholesterolemia AND AREA[LocationCity]Boston",
     "filters": {
       "status": "RECRUITING"
     }
@@ -1187,8 +1187,8 @@ Full text requires an accessible PMC record and article-specific rights.
     "operation": "map_gene_ids",
     "params": {
       "gene_ids": [
-        "BRAF",
-        "ERBB2"
+        "PCSK9",
+        "LDLR"
       ],
       "input_namespace": "symbol",
       "species": 9606
@@ -1204,19 +1204,19 @@ Full text requires an accessible PMC record and article-specific rights.
   "tool": "search",
   "arguments": {
     "entity": "disease",
-    "query": "melanoma"
+    "query": "familial hypercholesterolemia"
   }
 }
 ```
 
-### Human BRAF protein by UniProt accession
+### Human PCSK9 protein by UniProt accession
 
 ```json
 {
   "tool": "get",
   "arguments": {
     "entity": "protein",
-    "id": "P15056"
+    "id": "Q8NBP7"
   }
 }
 ```
@@ -1245,14 +1245,14 @@ Full text requires an accessible PMC record and article-specific rights.
 }
 ```
 
-### Pathway membership for a qualified human BRAF gene
+### Pathway membership for a qualified human PCSK9 gene
 
 ```json
 {
   "tool": "get",
   "arguments": {
     "entity": "gene",
-    "id": "BRAF",
+    "id": "PCSK9",
     "species": 9606,
     "sections": [
       "pathways"
@@ -1261,14 +1261,14 @@ Full text requires an accessible PMC record and article-specific rights.
 }
 ```
 
-### Human ERBB2 target evidence and source disease associations
+### Human LDLR target evidence and source disease associations
 
 ```json
 {
   "tool": "get",
   "arguments": {
     "entity": "gene",
-    "id": "ERBB2",
+    "id": "LDLR",
     "species": 9606,
     "sections": [
       "target_evidence",
@@ -1279,14 +1279,14 @@ Full text requires an accessible PMC record and article-specific rights.
 }
 ```
 
-### Human Protein Atlas source annotations for qualified ERBB2
+### Human Protein Atlas source annotations for qualified LDLR
 
 ```json
 {
   "tool": "get",
   "arguments": {
     "entity": "gene",
-    "id": "ERBB2",
+    "id": "LDLR",
     "species": 9606,
     "sections": [
       "hpa"
@@ -1295,14 +1295,14 @@ Full text requires an accessible PMC record and article-specific rights.
 }
 ```
 
-### Submitted imatinib labeling records
+### Submitted ezetimibe labeling records
 
 ```json
 {
   "tool": "get",
   "arguments": {
     "entity": "drug",
-    "id": "imatinib",
+    "id": "ezetimibe",
     "sections": [
       "label"
     ]
@@ -1310,14 +1310,14 @@ Full text requires an accessible PMC record and article-specific rights.
 }
 ```
 
-### Reported imatinib adverse-event records
+### Reported ezetimibe adverse-event records
 
 ```json
 {
   "tool": "get",
   "arguments": {
     "entity": "drug",
-    "id": "imatinib",
+    "id": "ezetimibe",
     "sections": [
       "safety"
     ]
@@ -1325,26 +1325,26 @@ Full text requires an accessible PMC record and article-specific rights.
 }
 ```
 
-### Imatinib reported adverse-event discovery
+### Ezetimibe reported adverse-event discovery
 
 ```json
 {
   "tool": "search",
   "arguments": {
     "entity": "adverse-event",
-    "query": "imatinib"
+    "query": "ezetimibe"
   }
 }
 ```
 
-### SureChEMBL patent chemistry discovery for imatinib
+### SureChEMBL patent chemistry discovery for ezetimibe
 
 ```json
 {
   "tool": "search",
   "arguments": {
     "entity": "patent",
-    "query": "imatinib"
+    "query": "ezetimibe"
   }
 }
 ```

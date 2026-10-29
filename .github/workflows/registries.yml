@@ -1,0 +1,115 @@
+name: Publish package and MCP registries
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version already published through the GitHub release workflow
+        required: true
+      python:
+        description: Publish the Python wheel and source archive
+        type: boolean
+        default: true
+      container:
+        description: Publish the versioned Linux AMD64 container
+        type: boolean
+        default: true
+      mcp:
+        description: Publish the MCP Registry entry after packages are public
+        type: boolean
+        default: true
+permissions:
+  contents: read
+concurrency:
+  group: registry-release-${{ inputs.version }}
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.repository == 'unibio-intelligence/biomedmcp' && github.event.repository.private == false
+    runs-on: ubuntu-latest
+    environment: registry-release
+    timeout-minutes: 45
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    env:
+      RELEASE_VERSION: ${{ inputs.version }}
+      IMAGE: ghcr.io/unibio-intelligence/biomedmcp
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - name: Require the matching completed GitHub release and source commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os, re, tomllib
+          from pathlib import Path
+          version = os.environ["RELEASE_VERSION"]
+          if not re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+", version):
+              raise SystemExit("Use the reviewed stable source version")
+          if tomllib.loads(Path("pyproject.toml").read_text())["project"]["version"] != version:
+              raise SystemExit("Source package version differs")
+          if json.loads(Path("server.json").read_text())["version"] != version:
+              raise SystemExit("MCP Registry version differs")
+          PY
+          gh release view "v$RELEASE_VERSION" --json isDraft,tagName > "$RUNNER_TEMP/release.json"
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          release = json.loads((Path(os.environ["RUNNER_TEMP"]) / "release.json").read_text())
+          if release["isDraft"] or release["tagName"] != "v" + os.environ["RELEASE_VERSION"]:
+              raise SystemExit("A completed matching GitHub release is required")
+          PY
+          git fetch --no-tags --depth=1 origin "refs/tags/v$RELEASE_VERSION:refs/tags/v$RELEASE_VERSION"
+          test "$(git rev-parse HEAD)" = "$(git rev-parse "refs/tags/v$RELEASE_VERSION^{commit}")"
+      - name: Build the reviewed source distributions
+        if: inputs.python
+        run: |
+          set -euo pipefail
+          docker build --target test -t biomedmcp-registry-build .
+          mkdir -p dist
+          export SOURCE_DATE_EPOCH="$(git show -s --format=%ct HEAD)"
+          docker run --rm -e SOURCE_DATE_EPOCH -v "$PWD/dist:/dist" biomedmcp-registry-build uv build --out-dir /dist
+          docker run --rm --network none -v "$PWD/dist:/dist:ro" biomedmcp-registry-build uv run --frozen --no-sync python scripts/check-wheel.py --wheels /dist
+      - name: Publish Python distributions using PyPI Trusted Publishing
+        if: inputs.python
+        uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086
+        with:
+          packages-dir: dist/
+      - name: Authenticate to the container registry
+        if: inputs.container
+        env:
+          GHCR_TOKEN: ${{ github.token }}
+        run: printf '%s' "$GHCR_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
+      - name: Publish a new versioned Linux AMD64 image
+        if: inputs.container
+        run: |
+          set -euo pipefail
+          if docker manifest inspect "$IMAGE:$RELEASE_VERSION" > "$RUNNER_TEMP/prior-image.json" 2> "$RUNNER_TEMP/prior-image-error.txt"; then
+            echo "Version tag already exists. Verify its digest and rerun with container publishing disabled; never overwrite a released version." >&2
+            exit 1
+          elif ! grep -Eqi 'manifest unknown|no such manifest' "$RUNNER_TEMP/prior-image-error.txt"; then
+            cat "$RUNNER_TEMP/prior-image-error.txt" >&2
+            exit 1
+          fi
+          docker buildx build --platform linux/amd64 --target runtime \
+            --label "org.opencontainers.image.version=$RELEASE_VERSION" \
+            --label "org.opencontainers.image.revision=$GITHUB_SHA" \
+            --tag "$IMAGE:$RELEASE_VERSION" --push .
+      - name: Download the pinned MCP publisher
+        if: inputs.mcp
+        run: |
+          set -euo pipefail
+          curl --fail --location --silent --show-error \
+            https://github.com/modelcontextprotocol/registry/releases/download/v1.8.1/mcp-publisher_linux_amd64.tar.gz \
+            --output "$RUNNER_TEMP/mcp-publisher.tar.gz"
+          echo "a06c9096dcb9727c13555b6be26c7effa707b01f06a4c561ba7a3635443cf2cc  $RUNNER_TEMP/mcp-publisher.tar.gz" | sha256sum --check
+          tar xzf "$RUNNER_TEMP/mcp-publisher.tar.gz" -C "$RUNNER_TEMP" mcp-publisher
+      - name: Publish the verified MCP Registry entry
+        if: inputs.mcp
+        run: |
+          set -euo pipefail
+          "$RUNNER_TEMP/mcp-publisher" validate
+          "$RUNNER_TEMP/mcp-publisher" login github-oidc
+          "$RUNNER_TEMP/mcp-publisher" publish
