@@ -1,6 +1,6 @@
 [project]
 name = "biomedmcp"
-version = "0.2.3"
+version = "0.2.4"
 description = "biomedmcp biomedical research MCP and CLI"
 readme = "README.md"
 authors = [{name = "UniBio Intelligence"}]

@@ -91,8 +91,8 @@ async def test_all_thirteen_tools_advertise_self_contained_output_schemas(server
 @pytest.mark.parametrize("outcome", ["data", "empty", "partial", "ambiguous", "unavailable", "error"])
 async def test_scientific_outcomes_validate_and_preserve_wire_semantics(server, outcome):
     async with Client(server) as client:
-        tool = next(tool for tool in await client.list_tools() if tool.name == "get")
-        result = await client.call_tool_mcp("get", {"entity": "protein", "id": outcome})
+        tool = next(tool for tool in await client.list_tools() if tool.name == "get_record")
+        result = await client.call_tool_mcp("get_record", {"entity": "protein", "id": outcome})
     value = wire(result)
     jsonschema.validate(value, tool.output_schema)
     assert value["schema_version"] == "1.0" and value["outcome"] == outcome
@@ -103,8 +103,8 @@ async def test_scientific_outcomes_validate_and_preserve_wire_semantics(server, 
 @pytest.mark.parametrize("code", ["source_unavailable", "source_rate_limited", "operation_timeout"])
 async def test_raised_errors_keep_code_retryability_correction_and_text(server, code):
     async with Client(server) as client:
-        tool = next(tool for tool in await client.list_tools() if tool.name == "get")
-        result = await client.call_tool_mcp("get", {"entity": "protein", "id": "raise-" + code})
+        tool = next(tool for tool in await client.list_tools() if tool.name == "get_record")
+        result = await client.call_tool_mcp("get_record", {"entity": "protein", "id": "raise-" + code})
     value = wire(result)
     jsonschema.validate(value, tool.output_schema)
     assert result.is_error and value["outcome"] == "error"
@@ -116,10 +116,10 @@ async def test_raised_errors_keep_code_retryability_correction_and_text(server, 
 @pytest.mark.parametrize(
     "name,args",
     [
-        ("get", {"entity": SENTINEL, "id": "data"}),
-        ("capabilities", {"entity": SENTINEL}),
-        ("quota", {SENTINEL: SENTINEL}),
-        ("batch", {"calls": SENTINEL}),
+        ("get_record", {"entity": SENTINEL, "id": "data"}),
+        ("get_capabilities", {"entity": SENTINEL}),
+        ("get_quota", {SENTINEL: SENTINEL}),
+        ("run_batch", {"calls": SENTINEL}),
     ],
 )
 async def test_validation_errors_are_structured_and_never_echo_input(server, name, args, caplog):
@@ -136,7 +136,7 @@ async def test_validation_errors_are_structured_and_never_echo_input(server, nam
 @pytest.mark.asyncio
 async def test_unexpected_exception_is_sanitized_before_sdk_logging(server, caplog):
     async with Client(server) as client:
-        result = await client.call_tool_mcp("get", {"entity": "protein", "id": "unexpected"})
+        result = await client.call_tool_mcp("get_record", {"entity": "protein", "id": "unexpected"})
     value = wire(result)
     assert result.is_error and value["error"]["code"] == "internal_error"
     assert SENTINEL not in json.dumps(value) + caplog.text
@@ -145,12 +145,12 @@ async def test_unexpected_exception_is_sanitized_before_sdk_logging(server, capl
 @pytest.mark.asyncio
 async def test_invalid_output_fails_safely_and_batch_keeps_successful_peer(server, caplog):
     async with Client(server) as client:
-        result = await client.call_tool_mcp("get", {"entity": "protein", "id": "invalid-output"})
+        result = await client.call_tool_mcp("get_record", {"entity": "protein", "id": "invalid-output"})
         batch = await client.call_tool_mcp(
-            "batch",
+            "run_batch",
             {
                 "calls": [
-                    {"operation": "get", "arguments": {"entity": "protein", "id": id_}}
+                    {"operation": "get_record", "arguments": {"entity": "protein", "id": id_}}
                     for id_ in ["data", "invalid-output"]
                 ]
             },
@@ -164,7 +164,7 @@ async def test_invalid_output_fails_safely_and_batch_keeps_successful_peer(serve
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("name", ["capabilities", "quota"])
+@pytest.mark.parametrize("name", ["get_capabilities", "get_quota"])
 async def test_utility_outputs_satisfy_advertised_versioned_contract(server, name):
     async with Client(server) as client:
         tool = next(tool for tool in await client.list_tools() if tool.name == name)
@@ -213,10 +213,12 @@ async def test_native_http_statuses_preserve_safe_classification(monkeypatch, st
     ],
 )
 async def test_versioned_batch_status_and_each_item_schema(server, ids, outcome, is_error):
-    args = {"calls": [{"operation": "get", "arguments": {"entity": "protein", "id": id_}} for id_ in ids]}
+    args = {
+        "calls": [{"operation": "get_record", "arguments": {"entity": "protein", "id": id_}} for id_ in ids]
+    }
     async with Client(server) as client:
-        tool = next(tool for tool in await client.list_tools() if tool.name == "batch")
-        result = await client.call_tool_mcp("batch", args)
+        tool = next(tool for tool in await client.list_tools() if tool.name == "run_batch")
+        result = await client.call_tool_mcp("run_batch", args)
     value = wire(result)
     jsonschema.validate(value, tool.output_schema)
     assert value["schema_version"] == "1.0" and value["outcome"] == outcome
@@ -261,7 +263,7 @@ def test_cli_main_errors_are_safe_json_and_exit_two(monkeypatch, capsys, failure
         raise failure
 
     monkeypatch.setattr(cli, "execute", fail)
-    monkeypatch.setattr("sys.argv", ["biomedmcp", "quota"])
+    monkeypatch.setattr("sys.argv", ["biomedmcp", "get_quota"])
     with pytest.raises(SystemExit) as caught:
         cli.main()
     captured = capsys.readouterr()
@@ -308,8 +310,8 @@ async def test_local_and_remote_cli_keep_identical_scientific_envelopes(
 ):
     monkeypatch.setattr(cli, "ResearchService", lambda **kwargs: Service())
     arguments = {"entity": "protein", "id": outcome}
-    local = await cli.execute("get", arguments, state_dir=tmp_path / "state")
-    remote = await cli.execute("get", arguments, url=http_endpoint)
+    local = await cli.execute("get_record", arguments, state_dir=tmp_path / "state")
+    remote = await cli.execute("get_record", arguments, url=http_endpoint)
     from biomedmcp.receipts import verify_receipt
 
     assert verify_receipt(local) and verify_receipt(remote)
@@ -326,7 +328,9 @@ async def test_local_and_remote_cli_keep_identical_scientific_envelopes(
 @pytest.mark.asyncio
 async def test_remote_cli_preserves_controlled_raised_error(http_endpoint):
     with pytest.raises(ResearchError) as caught:
-        await cli.execute("get", {"entity": "protein", "id": "raise-source_rate_limited"}, url=http_endpoint)
+        await cli.execute(
+            "get_record", {"entity": "protein", "id": "raise-source_rate_limited"}, url=http_endpoint
+        )
     assert caught.value.code == "source_rate_limited" and caught.value.retryable
     assert "Wait" in caught.value.correction
 
@@ -349,7 +353,7 @@ async def test_real_remote_cli_process_json_exit_contract(http_endpoint, id_, co
         sys.executable,
         "-c",
         "from biomedmcp.cli import main; main()",
-        "get",
+        "get_record",
         json.dumps({"entity": "protein", "id": id_}),
         "--url",
         http_endpoint,
@@ -367,3 +371,51 @@ async def test_real_remote_cli_process_json_exit_contract(http_endpoint, id_, co
         assert value["error"]["retryable"] and value["error"]["correction"]
     else:
         assert value["outcome"] == id_
+
+
+def test_resolve_advertises_a_strictly_looser_schema_than_it_enforces():
+    from biomedmcp.output_contracts import _output_schema, output_schema
+
+    advertised, enforced = output_schema("resolve_entity"), _output_schema("resolve_entity")
+    assert "TrialRecord" in enforced["$defs"] and "TrialRecord" not in advertised["$defs"]
+    assert "LiteratureRecord" not in advertised["$defs"]
+
+    def without_receipt(schema):
+        return {**schema, "$defs": {**schema["$defs"], "EvidenceReceipt": {}}}
+
+    # A malformed typed trial record from the exact-ID passthrough is still rejected.
+    result = {
+        "schema_version": "1.0",
+        "content_policy": "data_only",
+        "outcome": "data",
+        "sections": {"record": {"outcome": "data", "data": {"record_type": "trial"}}},
+        "receipt": {},
+    }
+    jsonschema.validate(result, without_receipt(advertised))
+    with pytest.raises(jsonschema.ValidationError):
+        jsonschema.validate(result, without_receipt(enforced))
+
+
+def test_batch_envelope_leaves_item_contracts_to_each_tool():
+    from biomedmcp.output_contracts import output_schema
+
+    schema = output_schema("run_batch")
+    assert "ResearchResult" not in schema.get("$defs", {}) and "LiteratureRecord" not in schema.get(
+        "$defs", {}
+    )
+    jsonschema.validate(
+        {
+            "schema_version": "1.0",
+            "outcome": "data",
+            "results": [{"schema_version": "1.0", "outcome": "empty"}],
+        },
+        schema,
+    )
+
+
+@pytest.mark.asyncio
+async def test_result_schema_resource_names_the_record_tool(server):
+    async with Client(server) as client:
+        contents = await client.read_resource("biomedmcp://schemas/result")
+    schema = json.loads(contents[0].text)
+    assert schema["$defs"]["EvidenceReceipt"]["properties"]["operation"] == {"const": "get_record"}

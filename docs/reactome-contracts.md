@@ -18,7 +18,7 @@ Use `query_source(source="reactome",operation="get_pathway_diagram",params={"pat
 
 For `svg` or `png`, the result supplies an external provider asset URL, observed media type, acquired byte count and SHA-256. It checks media/signature and bounded SVG syntax without executing source text or claiming full image/rendering validity. No image bytes or provider instructions become a service action. The current asset URL is mutable; downloading it later is not guaranteed to reproduce the acquired bytes. JSON and image acquisition stop at four million decoded bytes; unavailable large assets are not missing scientific evidence. SVG DTD/entities, excessive depth/elements and malformed signatures fail safely.
 
-Unconsumed species, disease and interaction-class filters were removed from retained adapter schemas. Core pathway tasks remain owned by `search` and `get`; diagram retrieval is the distinct advanced operation. Internal static interaction reads use the documented interactor endpoint and report acquired-page counts, without inventing a total, regulatory classification or species filter. No duplicate public interaction route is introduced.
+Unconsumed species, disease and interaction-class filters were removed from retained adapter schemas. Core pathway tasks remain owned by `search_records` and `get_record`; diagram retrieval is the distinct advanced operation. Internal static interaction reads use the documented interactor endpoint and report acquired-page counts, without inventing a total, regulatory classification or species filter. No duplicate public interaction route is introduced.
 
 ## Qualification boundary
 

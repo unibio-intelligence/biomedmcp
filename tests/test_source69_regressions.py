@@ -37,7 +37,7 @@ async def test_actual_mcp_pathway_review_accepts_namespaced_references_and_docum
 
     monkeypatch.setattr(service.providers.literature, "search_source", no_papers)
     async with Client(create_server(service=service)) as client:
-        result = await client.call_tool_mcp("research", {"workflow": "pathway_review", "focus": PID})
+        result = await client.call_tool_mcp("build_dossier", {"workflow": "pathway_review", "focus": PID})
     value = result.structured_content
     assert value["sections"]["genes"]["outcome"] == value["sections"]["events"]["outcome"] == "data"
     assert value["sections"]["genes"]["data"]["participants"][0] == participant
@@ -94,7 +94,7 @@ async def test_trial_relevance_uses_bounded_candidate_window_and_retains_overflo
         transport, "AsyncClient", lambda **kwargs: original(transport=httpx.MockTransport(respond))
     )
     async with Client(create_server(service=ResearchService())) as client:
-        result = await client.call_tool_mcp("trial_search", {"query": "melanoma", "limit": 2})
+        result = await client.call_tool_mcp("search_trials", {"query": "melanoma", "limit": 2})
         value = result.structured_content
         assert not result.is_error and len(value["records"]) == 2
         assert {r["title"] for r in value["records"]} == {
@@ -104,7 +104,7 @@ async def test_trial_relevance_uses_bounded_candidate_window_and_retains_overflo
         assert value["next_cursor"] and verify_receipt(value)
         assert value["query"]["execution"]["sort_scope"] == "window"
         continuation = await client.call_tool_mcp(
-            "trial_search", {"query": "melanoma", "limit": 2, "cursor": value["next_cursor"]}
+            "search_trials", {"query": "melanoma", "limit": 2, "cursor": value["next_cursor"]}
         )
     assert len(calls) == 1 and len(continuation.structured_content["records"]) == 2
     assert not {

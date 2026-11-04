@@ -1,3 +1,3 @@
 """Ubi-owned scientific services. No executable or transport bridge is required."""
 
-REVISION = "biomedmcp/0.2.3"
+REVISION = "biomedmcp/0.2.4"

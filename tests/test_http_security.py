@@ -38,7 +38,7 @@ async def test_host_origin_policy_for_all_http_apps(monkeypatch, method, host, o
     params = (
         {"protocolVersion": "2025-11-25", "capabilities": {}, "clientInfo": {"name": "test", "version": "1"}}
         if method == "initialize"
-        else {"name": "capabilities", "arguments": {}}
+        else {"name": "get_capabilities", "arguments": {}}
     )
     async with (
         app.router.lifespan_context(app),

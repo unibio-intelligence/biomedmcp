@@ -31,7 +31,7 @@ async def call_population(monkeypatch, payload, *, identifier="chr7:140753336:A:
     service = ResearchService()
     async with Client(create_server(service=service)) as client:
         result = await client.call_tool_mcp(
-            "variant_evidence",
+            "get_variant_evidence",
             {
                 "id": identifier,
                 "assembly": assembly,

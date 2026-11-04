@@ -238,9 +238,21 @@ async def test_actual_mcp_invalid_result_is_uncached_then_success_has_provenance
     )
     args = {"entity": "gwas", "query": "BRAF"} if mode == "search" else {"entity": "gwas", "id": "123"}
     async with Client(create_server(service=ResearchService())) as client:
-        failed = (await client.call_tool(mode, args, raise_on_error=False)).structured_content
-        good = (await client.call_tool(mode, args, raise_on_error=False)).structured_content
-        cached = (await client.call_tool(mode, args, raise_on_error=False)).structured_content
+        failed = (
+            await client.call_tool(
+                {"search": "search_records"}.get(mode, "get_record"), args, raise_on_error=False
+            )
+        ).structured_content
+        good = (
+            await client.call_tool(
+                {"search": "search_records"}.get(mode, "get_record"), args, raise_on_error=False
+            )
+        ).structured_content
+        cached = (
+            await client.call_tool(
+                {"search": "search_records"}.get(mode, "get_record"), args, raise_on_error=False
+            )
+        ).structured_content
     assert failed["outcome"] == "error"
     assert next(iter(failed["sections"].values()))["error"]["code"] == "invalid_source_response"
     assert good["outcome"] == cached["outcome"] == "data" and len(calls) == 2
@@ -265,11 +277,11 @@ async def test_actual_variant_gwas_followup_is_canonical_and_executable(monkeypa
     async with Client(create_server(service=ResearchService())) as client:
         result = (
             await client.call_tool(
-                "variant_evidence",
+                "get_variant_evidence",
                 {"id": "rs7412", "sections": ["gwas"], "section_parameters": {"gwas": {"limit": 1}}},
             )
         ).structured_content
-        action = next(a for a in result["next_actions"] if a["tool"] == "variant_evidence")
+        action = next(a for a in result["next_actions"] if a["tool"] == "get_variant_evidence")
         continued = (await client.call_tool(action["tool"], action["arguments"])).structured_content
     assert [r["id"] for r in result["sections"]["gwas"]["data"]["records"]] == ["123"]
     assert [r["id"] for r in continued["sections"]["gwas"]["data"]["records"]] == ["124"]
@@ -317,7 +329,7 @@ async def test_actual_mcp_conflicting_p_values_remain_partial_and_uncached(monke
     monkeypatch.setattr(
         transport, "AsyncClient", lambda **kwargs: real(transport=httpx.MockTransport(handler))
     )
-    operation = "search" if mode == "search" else "get"
+    operation = "search_records" if mode == "search" else "get_record"
     args = (
         {"entity": "gwas", "query": "BRAF", "filters": {"p_value": 1e-12}}
         if mode == "search"
@@ -361,7 +373,9 @@ async def test_actual_mcp_observed_zero_total_is_attributed_empty(monkeypatch):
         ),
     )
     async with Client(create_server(service=ResearchService())) as client:
-        result = (await client.call_tool("search", {"entity": "gwas", "query": "BRAF"})).structured_content
+        result = (
+            await client.call_tool("search_records", {"entity": "gwas", "query": "BRAF"})
+        ).structured_content
     assert result["outcome"] == "empty" and result["records"] == []
     assert result["sections"]["gwas"]["outcome"] == "empty" and result["provenance"][0]["sources"] == ["gwas"]
 
@@ -418,7 +432,7 @@ async def test_last_supported_variant_page_keeps_valid_evidence(monkeypatch, num
     async with Client(create_server(service=ResearchService())) as client:
         result = (
             await client.call_tool(
-                "variant_evidence",
+                "get_variant_evidence",
                 {
                     "id": "rs7412",
                     "sections": ["gwas"],
@@ -451,7 +465,7 @@ async def test_penultimate_variant_page_action_reaches_last_supported_page(monke
     async with Client(create_server(service=ResearchService())) as client:
         first = (
             await client.call_tool(
-                "variant_evidence",
+                "get_variant_evidence",
                 {
                     "id": "rs7412",
                     "sections": ["gwas"],
@@ -459,7 +473,7 @@ async def test_penultimate_variant_page_action_reaches_last_supported_page(monke
                 },
             )
         ).structured_content
-        action = next(a for a in first["next_actions"] if a["tool"] == "variant_evidence")
+        action = next(a for a in first["next_actions"] if a["tool"] == "get_variant_evidence")
         last = (await client.call_tool(action["tool"], action["arguments"])).structured_content
     assert action["arguments"]["section_parameters"]["gwas"]["page"] == 100000
     assert last["outcome"] == "partial" and last["next_actions"] == []

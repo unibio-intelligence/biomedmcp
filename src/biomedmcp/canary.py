@@ -38,10 +38,10 @@ class CanaryCase:
 
 
 CASES = (
-    CanaryCase("gene", "get", {"entity": "gene", "id": "PCSK9"}, ("mygene",)),
+    CanaryCase("gene", "get_record", {"entity": "gene", "id": "PCSK9"}, ("mygene",)),
     CanaryCase(
         "gtex-expression",
-        "get",
+        "get_record",
         {
             "entity": "gene",
             "id": "PCSK9",
@@ -52,7 +52,7 @@ CASES = (
     ),
     CanaryCase(
         "gtex-eqtl",
-        "get",
+        "get_record",
         {
             "entity": "gene",
             "id": "PCSK9",
@@ -65,7 +65,7 @@ CASES = (
     ),
     CanaryCase(
         "gtex-sqtl",
-        "get",
+        "get_record",
         {
             "entity": "gene",
             "id": "PCSK9",
@@ -78,7 +78,7 @@ CASES = (
     ),
     CanaryCase(
         "opentargets",
-        "get",
+        "get_record",
         {
             "entity": "gene",
             "id": "PCSK9",
@@ -88,7 +88,7 @@ CASES = (
     ),
     CanaryCase(
         "literature",
-        "literature_search",
+        "search_literature",
         {
             "query": "PCSK9 familial hypercholesterolemia",
             "filters": {"source": "pubmed"},
@@ -99,7 +99,7 @@ CASES = (
     ),
     CanaryCase(
         "trials",
-        "trial_search",
+        "search_trials",
         {
             "query": "familial hypercholesterolemia",
             "filters": {"source": "clinical-trials", "status": "RECRUITING"},
@@ -120,7 +120,7 @@ CASES = (
     ),
     CanaryCase(
         "protein",
-        "get",
+        "get_record",
         {
             "entity": "protein",
             "id": "Q8NBP7",
@@ -130,7 +130,7 @@ CASES = (
     ),
     CanaryCase(
         "variant",
-        "variant_evidence",
+        "get_variant_evidence",
         {
             "id": "chr1:55039974:G:T",
             "assembly": "grch38",

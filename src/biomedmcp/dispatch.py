@@ -54,13 +54,13 @@ async def prepare(service, operation, arguments, *, scope):
     except ValidationError as exc:
         error = invalid_parameters(exc)
         if (
-            operation == "get"
+            operation == "get_record"
             and isinstance(arguments, dict)
             and arguments.get("entity") == "gene"
             and isinstance(arguments.get("sections"), list)
             and "annotations" in arguments["sections"]
         ):
-            error.correction = 'Gene ontology annotations use get(entity="gene",id=...,sections=["go"]). Other gene sections are listed by capabilities(entity="gene").'
+            error.correction = 'Gene ontology annotations use get_record(entity="gene",id=...,sections=["go"]). Other gene sections are listed by get_capabilities(entity="gene").'
         raise error from None
     except KeyError:
         raise invalid_parameters() from None
@@ -85,7 +85,9 @@ async def execute(service, operation, arguments, *, scope):
 
 
 async def _bounded_execute(service, operation, arguments, *, scope):
-    budget = remaining_budget(COMPOSED_TIMEOUT if operation in {"batch", "research"} else REQUEST_TIMEOUT)
+    budget = remaining_budget(
+        COMPOSED_TIMEOUT if operation in {"run_batch", "build_dossier"} else REQUEST_TIMEOUT
+    )
     deadline = time.monotonic() + budget
     token = operation_deadline.set(deadline)
     try:
@@ -103,14 +105,14 @@ async def _bounded_execute(service, operation, arguments, *, scope):
 
 async def _execute(service, operation, arguments, *, scope):
     utility = validate_utility(operation, arguments)
-    if operation == "quota":
+    if operation == "get_quota":
         return {
             "schema_version": "1.0",
             "enabled": False,
             "profile": "local",
             "message": "Hosted quota requires --url.",
         }
-    if operation == "capabilities":
+    if operation == "get_capabilities":
         if utility.diagnose:
             if utility.entity is not None:
                 raise invalid_parameters()
@@ -118,7 +120,7 @@ async def _execute(service, operation, arguments, *, scope):
 
             return public_capabilities(await diagnose(service, source=utility.source))
         return public_capabilities(await service.capabilities(source=utility.source, entity=utility.entity))
-    if operation == "batch":
+    if operation == "run_batch":
         prepared = []
         # Every request is validated before any provider is contacted.
         for index, request in enumerate(utility.calls):

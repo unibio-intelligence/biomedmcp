@@ -104,7 +104,7 @@ def create_server(*, service=None, settings=None, ledger=None, boundary=None, cr
         dereference_schemas=False,
         auth=build_auth(settings),
         lifespan=lifespan,
-        instructions="Public biomedical research. Use literature_search, trial_search, variant_evidence and study_analysis for their scientific tasks. Use search/get for remaining records, research for declared dossiers, and capabilities for distinct advanced source schemas. Preserve source, species, release and section outcomes. A provider failure is not evidence of absence. Private lake, project imports, durable compute and modeling belong to Ubi platform. "
+        instructions="Public biomedical research. Use search_literature, search_trials, get_variant_evidence and analyze_study for their scientific tasks. Use search_records/get_record for remaining records, find_related for linked records, build_dossier for declared dossiers, and get_capabilities for sections, workflows and source operation schemas. Preserve source, species, release and section outcomes. A provider failure is not evidence of absence. Private lake, project imports, durable compute and modeling belong to Ubi platform. "
         + SOURCE_POLICY,
     )
     server.http_trusted_hosts, server.http_trusted_origins = trust_policy(settings)
@@ -143,7 +143,7 @@ def create_server(*, service=None, settings=None, ledger=None, boundary=None, cr
                 )
 
     from ..output_contracts import output_schema
-    from ..public_catalog import DESCRIPTIONS, MODELS, schema
+    from ..public_catalog import DESCRIPTIONS, MODELS, TITLES, schema
     from ..utility_contracts import UTILITY_MODELS, validate_utility
     from .catalog_tool import CatalogTool
 
@@ -159,16 +159,16 @@ def create_server(*, service=None, settings=None, ledger=None, boundary=None, cr
 
     async def invoke_public(name, arguments):
         utility = validate_utility(name, arguments)
-        if name == "quota":
+        if name == "get_quota":
             value = await ledger.snapshot(current_context(settings.resource).account_id)
             return {**value, "schema_version": "1.0"}
-        if name == "capabilities":
+        if name == "get_capabilities":
             context = current_context(settings.resource)
             admission = getattr(boundary, "admit_public_read", None)
             if admission is not None:
                 await admission(context)
             return await dispatch(research_service(), name, arguments, scope=context.cache_scope)
-        if name == "batch":
+        if name == "run_batch":
             calls = [call.model_dump(mode="json") for call in utility.calls]
             return await run(
                 name,
@@ -184,20 +184,22 @@ def create_server(*, service=None, settings=None, ledger=None, boundary=None, cr
         )
 
     utility_descriptions = {
-        "batch": "Execute up to ten independent read operations with one atomic quota reservation.",
-        "capabilities": "Inspect enabled sources, workflows, sections or an advanced operation's exact schema.",
-        "quota": "Inspect current research allowance and reset times; sign in for higher limits.",
+        "run_batch": "Run up to ten independent read calls in parallel with one quota reservation; each result keeps its own outcome. build_dossier and utilities are not batchable.",
+        "get_capabilities": "List enabled sources, entity sections, dossier workflows and source operations with exact parameter schemas. Narrow with source or entity; diagnose=true probes source health. Examples: biomedmcp://guide.",
+        "get_quota": "Show remaining research allowance and reset times; signed-in accounts get higher limits.",
     }
+    utility_titles = {"run_batch": "Run batched reads", "get_capabilities": "Inspect get_capabilities", "get_quota": "Check quota"}
     for name in (*MODELS, *UTILITY_MODELS):
         server.add_tool(
             CatalogTool(
                 name=name,
+                title=TITLES.get(name) or utility_titles[name],
                 description=DESCRIPTIONS[name]
                 if name in MODELS
                 else example_description(utility_descriptions[name], name),
                 parameters=schema(name),
                 output_schema=output_schema(name),
-                annotations=LOCAL_READ if name in {"capabilities", "quota"} else READ,
+                annotations=LOCAL_READ if name in {"get_capabilities", "get_quota"} else READ,
                 runner=invoke_catalog,
             )
         )
@@ -213,7 +215,7 @@ def create_server(*, service=None, settings=None, ledger=None, boundary=None, cr
 
     def guide_text():
         return (
-            "Use the named scientific task tools for papers, trials, variant evidence and study analysis; search/get cover remaining records. Resolve ambiguity before joining biological records. For deeper source functionality inspect capabilities. Research bundles preserve partial failures. Use Ubi platform for curated lake joins, projects, imports, jobs and modeling.\n\n"
+            "Use the named scientific task tools for papers (search_literature), trials (search_trials), variant evidence (get_variant_evidence) and study analysis (analyze_study); search_records/get_record cover remaining records. Resolve ambiguity with resolve_entity before joining biological records. For deeper source functionality inspect get_capabilities. Dossiers (build_dossier) preserve partial failures. Use Ubi platform for curated lake joins, projects, imports, jobs and modeling.\n\n"
             + SOURCE_POLICY
             + "\n\nSelected typed scientific records have optional schemas at biomedmcp://schemas/records/{family}, where family is literature, trial, variant, expression or study. Read a schema when validating those records; schema availability does not grant source permissions or establish provider health."
             + "\n\n"
@@ -226,7 +228,7 @@ def create_server(*, service=None, settings=None, ledger=None, boundary=None, cr
 
     @server.resource("biomedmcp://schemas/result")
     async def result_schema() -> dict:
-        return static_output("resource_result_schema", lambda: output_schema("get"))
+        return static_output("resource_result_schema", lambda: output_schema("get_record"))
 
     @server.resource("biomedmcp://schemas/evidence")
     async def evidence_schema() -> dict:
@@ -279,7 +281,7 @@ def create_server(*, service=None, settings=None, ledger=None, boundary=None, cr
             arguments = by_id("target-dossier").arguments
             arguments["focus"] = gene
             return (
-                "Call research with arguments "
+                "Call build_dossier with arguments "
                 + json.dumps(arguments)
                 + "; distinguish curated assertions, predictions, observational evidence and unavailable sources."
             )

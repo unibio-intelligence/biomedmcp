@@ -158,10 +158,10 @@ async def test_actual_mcp_exposes_derived_schema_and_preserves_patient_receipt(s
     install()
     monkeypatch.setenv("UBI_PROFILE", "local")
     async with Client(create_server(service=ResearchService())) as client:
-        discovery = await client.call_tool("capabilities", {"source": "study"})
+        discovery = await client.call_tool("get_capabilities", {"source": "study"})
         assert "study_derived" in discovery.structured_content["record_schemas"]
         response = await client.call_tool(
-            "study_analysis",
+            "analyze_study",
             {
                 "analysis": "compare",
                 "study": "ubi_synthetic",
@@ -240,7 +240,7 @@ async def test_large_typed_cohort_recovers_original_sample_identities_and_counts
     monkeypatch.setenv("UBI_PROFILE", "local")
     async with Client(create_server(service=ResearchService())) as client:
         response = await client.call_tool(
-            "study_analysis", {"analysis": "mutation_cohort", "study": "ubi_synthetic", "gene": "TP53"}
+            "analyze_study", {"analysis": "mutation_cohort", "study": "ubi_synthetic", "gene": "TP53"}
         )
         section = response.structured_content["sections"]["study"]
         data = section["data"]

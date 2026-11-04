@@ -61,7 +61,7 @@ async def test_mcp_diagnosis_keeps_thirteen_tools_and_never_contacts_sources(mon
     monkeypatch.setenv("UBI_PROFILE", "local")
     async with Client(create_server(service=ResearchService())) as client:
         assert len(await client.list_tools()) == 13
-        result = await client.call_tool("capabilities", {"source": "gtex", "diagnose": True})
+        result = await client.call_tool("get_capabilities", {"source": "gtex", "diagnose": True})
     row = result.structured_content["diagnosis"][0]
     assert row["source"] == "gtex" and row["health"] == "not_probed"
 
@@ -305,7 +305,7 @@ def test_actual_demo_cli_subprocess_reports_measured_mutation_denominator(tmp_pa
             sys.executable,
             "-c",
             PERMISSION_BOOTSTRAP + "from biomedmcp.cli import main; main()",
-            "study_analysis",
+            "analyze_study",
             '{"analysis":"gene_profile","study":"ubi_synthetic","gene":"TP53"}',
         ],
         capture_output=True,

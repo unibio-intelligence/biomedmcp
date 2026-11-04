@@ -1,7 +1,7 @@
 [
   {
     "primitive": "search/gene",
-    "tool": "search",
+    "tool": "search_records",
     "sources": [
       "mygene"
     ],
@@ -9,7 +9,7 @@
   },
   {
     "primitive": "search/variant",
-    "tool": "search",
+    "tool": "search_records",
     "sources": [
       "myvariant"
     ],
@@ -17,7 +17,7 @@
   },
   {
     "primitive": "search/article",
-    "tool": "literature_search",
+    "tool": "search_literature",
     "sources": [
       "pubmed",
       "europepmc",
@@ -28,7 +28,7 @@
   },
   {
     "primitive": "search/author",
-    "tool": "search",
+    "tool": "search_records",
     "sources": [
       "openalex"
     ],
@@ -36,7 +36,7 @@
   },
   {
     "primitive": "search/trial",
-    "tool": "trial_search",
+    "tool": "search_trials",
     "sources": [
       "clinical-trials",
       "nci"
@@ -45,7 +45,7 @@
   },
   {
     "primitive": "search/drug",
-    "tool": "search",
+    "tool": "search_records",
     "sources": [
       "mychem",
       "ema",
@@ -55,7 +55,7 @@
   },
   {
     "primitive": "search/disease",
-    "tool": "search",
+    "tool": "search_records",
     "sources": [
       "mydisease"
     ],
@@ -63,7 +63,7 @@
   },
   {
     "primitive": "search/phenotype",
-    "tool": "search",
+    "tool": "search_records",
     "sources": [
       "ols"
     ],
@@ -71,7 +71,7 @@
   },
   {
     "primitive": "search/protein",
-    "tool": "search",
+    "tool": "search_records",
     "sources": [
       "uniprot"
     ],
@@ -79,7 +79,7 @@
   },
   {
     "primitive": "search/pathway",
-    "tool": "search",
+    "tool": "search_records",
     "sources": [
       "reactome"
     ],
@@ -87,7 +87,7 @@
   },
   {
     "primitive": "search/pgx",
-    "tool": "search",
+    "tool": "search_records",
     "sources": [
       "cpic"
     ],
@@ -95,7 +95,7 @@
   },
   {
     "primitive": "search/gwas",
-    "tool": "search",
+    "tool": "search_records",
     "sources": [
       "gwas"
     ],
@@ -103,7 +103,7 @@
   },
   {
     "primitive": "search/diagnostic",
-    "tool": "search",
+    "tool": "search_records",
     "sources": [
       "gtr",
       "fda-devices",
@@ -112,8 +112,8 @@
     "handler": "ResearchService.search"
   },
   {
-    "primitive": "search/adverse-event",
-    "tool": "search",
+    "primitive": "search/adverse_event",
+    "tool": "search_records",
     "sources": [
       "openfda"
     ],
@@ -121,7 +121,7 @@
   },
   {
     "primitive": "search/study",
-    "tool": "search",
+    "tool": "search_records",
     "sources": [
       "study"
     ],
@@ -129,7 +129,7 @@
   },
   {
     "primitive": "search/patent",
-    "tool": "search",
+    "tool": "search_records",
     "sources": [
       "surechembl"
     ],
@@ -137,7 +137,7 @@
   },
   {
     "primitive": "get/gene/record",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "mygene"
     ],
@@ -146,7 +146,7 @@
   },
   {
     "primitive": "get/gene/go",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "mygene"
     ],
@@ -155,7 +155,7 @@
   },
   {
     "primitive": "get/gene/pathways",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "reactome"
     ],
@@ -166,7 +166,7 @@
   },
   {
     "primitive": "get/gene/protein",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "uniprot"
     ],
@@ -177,7 +177,7 @@
   },
   {
     "primitive": "get/gene/expression",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "gtex"
     ],
@@ -189,7 +189,7 @@
   },
   {
     "primitive": "get/gene/eqtl",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "gtex"
     ],
@@ -201,7 +201,7 @@
   },
   {
     "primitive": "get/gene/sqtl",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "gtex"
     ],
@@ -213,7 +213,7 @@
   },
   {
     "primitive": "get/gene/transcripts",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "gtex"
     ],
@@ -225,7 +225,7 @@
   },
   {
     "primitive": "get/gene/exons",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "gtex"
     ],
@@ -237,7 +237,7 @@
   },
   {
     "primitive": "get/gene/target_evidence",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "opentargets"
     ],
@@ -248,7 +248,7 @@
   },
   {
     "primitive": "get/gene/diseases",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "opentargets"
     ],
@@ -259,7 +259,7 @@
   },
   {
     "primitive": "get/gene/druggability",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "opentargets"
     ],
@@ -270,7 +270,7 @@
   },
   {
     "primitive": "get/gene/genetics",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "opentargets"
     ],
@@ -281,7 +281,7 @@
   },
   {
     "primitive": "get/gene/hpa",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "protein-atlas"
     ],
@@ -292,7 +292,7 @@
   },
   {
     "primitive": "get/gene/interactions",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "string"
     ],
@@ -303,7 +303,7 @@
   },
   {
     "primitive": "get/gene/civic",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "civic"
     ],
@@ -314,7 +314,7 @@
   },
   {
     "primitive": "get/gene/clingen",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "clingen"
     ],
@@ -325,7 +325,7 @@
   },
   {
     "primitive": "get/gene/gencc",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "gencc"
     ],
@@ -336,7 +336,7 @@
   },
   {
     "primitive": "get/gene/constraint",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "gnomad"
     ],
@@ -347,7 +347,7 @@
   },
   {
     "primitive": "get/gene/disgenet",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "disgenet"
     ],
@@ -358,7 +358,7 @@
   },
   {
     "primitive": "get/gene/funding",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "nih-reporter"
     ],
@@ -369,7 +369,7 @@
   },
   {
     "primitive": "get/gene/diagnostics",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "gtr"
     ],
@@ -380,7 +380,7 @@
   },
   {
     "primitive": "get/variant/record",
-    "tool": "variant_evidence",
+    "tool": "get_variant_evidence",
     "sources": [
       "myvariant"
     ],
@@ -389,7 +389,7 @@
   },
   {
     "primitive": "get/variant/conservation",
-    "tool": "variant_evidence",
+    "tool": "get_variant_evidence",
     "sources": [
       "myvariant"
     ],
@@ -400,7 +400,7 @@
   },
   {
     "primitive": "get/variant/cosmic",
-    "tool": "variant_evidence",
+    "tool": "get_variant_evidence",
     "sources": [
       "myvariant"
     ],
@@ -411,7 +411,7 @@
   },
   {
     "primitive": "get/variant/cgi",
-    "tool": "variant_evidence",
+    "tool": "get_variant_evidence",
     "sources": [
       "myvariant"
     ],
@@ -422,7 +422,7 @@
   },
   {
     "primitive": "get/variant/predictions",
-    "tool": "variant_evidence",
+    "tool": "get_variant_evidence",
     "sources": [
       "alphamissense"
     ],
@@ -431,7 +431,7 @@
   },
   {
     "primitive": "get/variant/eve",
-    "tool": "variant_evidence",
+    "tool": "get_variant_evidence",
     "sources": [
       "eve"
     ],
@@ -442,7 +442,7 @@
   },
   {
     "primitive": "get/variant/clinvar",
-    "tool": "variant_evidence",
+    "tool": "get_variant_evidence",
     "sources": [
       "ncbi"
     ],
@@ -451,7 +451,7 @@
   },
   {
     "primitive": "get/variant/population",
-    "tool": "variant_evidence",
+    "tool": "get_variant_evidence",
     "sources": [
       "gnomad"
     ],
@@ -462,7 +462,7 @@
   },
   {
     "primitive": "get/variant/civic",
-    "tool": "variant_evidence",
+    "tool": "get_variant_evidence",
     "sources": [
       "civic"
     ],
@@ -474,7 +474,7 @@
   },
   {
     "primitive": "get/variant/cbioportal",
-    "tool": "variant_evidence",
+    "tool": "get_variant_evidence",
     "sources": [
       "cbioportal"
     ],
@@ -486,7 +486,7 @@
   },
   {
     "primitive": "get/variant/gwas",
-    "tool": "variant_evidence",
+    "tool": "get_variant_evidence",
     "sources": [
       "gwas"
     ],
@@ -495,7 +495,7 @@
   },
   {
     "primitive": "get/variant/oncokb",
-    "tool": "variant_evidence",
+    "tool": "get_variant_evidence",
     "sources": [
       "oncokb"
     ],
@@ -504,7 +504,7 @@
   },
   {
     "primitive": "get/variant/hotspots",
-    "tool": "variant_evidence",
+    "tool": "get_variant_evidence",
     "sources": [
       "cancerhotspots"
     ],
@@ -513,7 +513,7 @@
   },
   {
     "primitive": "get/article/record",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "pubmed"
     ],
@@ -522,7 +522,7 @@
   },
   {
     "primitive": "get/article/annotations",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "pubtator"
     ],
@@ -531,7 +531,7 @@
   },
   {
     "primitive": "get/article/fulltext",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "europepmc"
     ],
@@ -540,7 +540,7 @@
   },
   {
     "primitive": "get/article/assets",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "europepmc"
     ],
@@ -549,7 +549,7 @@
   },
   {
     "primitive": "get/article/indexing",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "pubmed"
     ],
@@ -558,7 +558,7 @@
   },
   {
     "primitive": "get/author/record",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "openalex"
     ],
@@ -567,7 +567,7 @@
   },
   {
     "primitive": "get/trial/record",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "clinical-trials"
     ],
@@ -576,7 +576,7 @@
   },
   {
     "primitive": "get/trial/eligibility",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "clinical-trials"
     ],
@@ -585,7 +585,7 @@
   },
   {
     "primitive": "get/trial/contacts",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "clinical-trials"
     ],
@@ -594,7 +594,7 @@
   },
   {
     "primitive": "get/trial/locations",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "clinical-trials"
     ],
@@ -603,7 +603,7 @@
   },
   {
     "primitive": "get/trial/outcomes",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "clinical-trials"
     ],
@@ -612,7 +612,7 @@
   },
   {
     "primitive": "get/trial/arms",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "clinical-trials"
     ],
@@ -621,7 +621,7 @@
   },
   {
     "primitive": "get/trial/references",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "clinical-trials"
     ],
@@ -630,7 +630,7 @@
   },
   {
     "primitive": "get/drug/record",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "mychem"
     ],
@@ -639,7 +639,7 @@
   },
   {
     "primitive": "get/drug/label",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "openfda"
     ],
@@ -648,7 +648,7 @@
   },
   {
     "primitive": "get/drug/regulatory",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "openfda"
     ],
@@ -657,7 +657,7 @@
   },
   {
     "primitive": "get/drug/safety",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "openfda"
     ],
@@ -666,7 +666,7 @@
   },
   {
     "primitive": "get/drug/shortage",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "openfda"
     ],
@@ -675,7 +675,7 @@
   },
   {
     "primitive": "get/drug/targets",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "mychem"
     ],
@@ -684,7 +684,7 @@
   },
   {
     "primitive": "get/drug/indications",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "mychem"
     ],
@@ -693,7 +693,7 @@
   },
   {
     "primitive": "get/drug/interactions",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "mychem"
     ],
@@ -702,7 +702,7 @@
   },
   {
     "primitive": "get/drug/civic",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "civic"
     ],
@@ -713,7 +713,7 @@
   },
   {
     "primitive": "get/drug/approvals",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "orange-book"
     ],
@@ -722,7 +722,7 @@
   },
   {
     "primitive": "get/disease/record",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "mydisease"
     ],
@@ -731,7 +731,7 @@
   },
   {
     "primitive": "get/disease/genes",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "monarch"
     ],
@@ -740,7 +740,7 @@
   },
   {
     "primitive": "get/disease/phenotypes",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "monarch"
     ],
@@ -749,7 +749,7 @@
   },
   {
     "primitive": "get/disease/models",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "monarch"
     ],
@@ -758,7 +758,7 @@
   },
   {
     "primitive": "get/disease/variants",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "mydisease"
     ],
@@ -767,7 +767,7 @@
   },
   {
     "primitive": "get/disease/prevalence",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "mydisease"
     ],
@@ -776,7 +776,7 @@
   },
   {
     "primitive": "get/disease/survival",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "mydisease"
     ],
@@ -785,7 +785,7 @@
   },
   {
     "primitive": "get/disease/clinical_features",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "mydisease"
     ],
@@ -794,7 +794,7 @@
   },
   {
     "primitive": "get/disease/pathways",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "reactome"
     ],
@@ -805,7 +805,7 @@
   },
   {
     "primitive": "get/disease/diagnostics",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "gtr"
     ],
@@ -814,7 +814,7 @@
   },
   {
     "primitive": "get/disease/funding",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "nih-reporter"
     ],
@@ -823,7 +823,7 @@
   },
   {
     "primitive": "get/disease/civic",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "civic"
     ],
@@ -834,7 +834,7 @@
   },
   {
     "primitive": "get/disease/disgenet",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "disgenet"
     ],
@@ -843,7 +843,7 @@
   },
   {
     "primitive": "get/phenotype/record",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "ols"
     ],
@@ -852,7 +852,7 @@
   },
   {
     "primitive": "get/protein/record",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "uniprot"
     ],
@@ -861,7 +861,7 @@
   },
   {
     "primitive": "get/protein/domains",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "interpro"
     ],
@@ -872,7 +872,7 @@
   },
   {
     "primitive": "get/protein/interactions",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "string"
     ],
@@ -881,7 +881,7 @@
   },
   {
     "primitive": "get/protein/complexes",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "complexportal"
     ],
@@ -892,7 +892,7 @@
   },
   {
     "primitive": "get/protein/structures",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "uniprot"
     ],
@@ -901,7 +901,7 @@
   },
   {
     "primitive": "get/pathway/record",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "reactome"
     ],
@@ -910,7 +910,7 @@
   },
   {
     "primitive": "get/pathway/genes",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "reactome"
     ],
@@ -919,7 +919,7 @@
   },
   {
     "primitive": "get/pathway/events",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "reactome"
     ],
@@ -928,7 +928,7 @@
   },
   {
     "primitive": "get/pgx/record",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "cpic"
     ],
@@ -937,7 +937,7 @@
   },
   {
     "primitive": "get/pgx/interactions",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "cpic"
     ],
@@ -946,7 +946,7 @@
   },
   {
     "primitive": "get/pgx/recommendations",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "cpic"
     ],
@@ -955,7 +955,7 @@
   },
   {
     "primitive": "get/pgx/frequencies",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "cpic"
     ],
@@ -964,7 +964,7 @@
   },
   {
     "primitive": "get/pgx/guidelines",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "cpic"
     ],
@@ -973,7 +973,7 @@
   },
   {
     "primitive": "get/gwas/record",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "gwas"
     ],
@@ -982,7 +982,7 @@
   },
   {
     "primitive": "get/diagnostic/record",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "gtr"
     ],
@@ -991,7 +991,7 @@
   },
   {
     "primitive": "get/diagnostic/genes",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "gtr"
     ],
@@ -1000,7 +1000,7 @@
   },
   {
     "primitive": "get/diagnostic/conditions",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "gtr"
     ],
@@ -1009,7 +1009,7 @@
   },
   {
     "primitive": "get/diagnostic/methods",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "gtr"
     ],
@@ -1018,7 +1018,7 @@
   },
   {
     "primitive": "get/diagnostic/regulatory",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "fda-devices"
     ],
@@ -1026,8 +1026,8 @@
     "handler": "ResearchService.get"
   },
   {
-    "primitive": "get/adverse-event/record",
-    "tool": "get",
+    "primitive": "get/adverse_event/record",
+    "tool": "get_record",
     "sources": [
       "openfda"
     ],
@@ -1035,8 +1035,8 @@
     "handler": "ResearchService.get"
   },
   {
-    "primitive": "get/adverse-event/reactions",
-    "tool": "get",
+    "primitive": "get/adverse_event/reactions",
+    "tool": "get_record",
     "sources": [
       "openfda"
     ],
@@ -1044,8 +1044,8 @@
     "handler": "ResearchService.get"
   },
   {
-    "primitive": "get/adverse-event/outcomes",
-    "tool": "get",
+    "primitive": "get/adverse_event/outcomes",
+    "tool": "get_record",
     "sources": [
       "openfda"
     ],
@@ -1053,8 +1053,8 @@
     "handler": "ResearchService.get"
   },
   {
-    "primitive": "get/adverse-event/concomitant",
-    "tool": "get",
+    "primitive": "get/adverse_event/concomitant",
+    "tool": "get_record",
     "sources": [
       "openfda"
     ],
@@ -1062,8 +1062,8 @@
     "handler": "ResearchService.get"
   },
   {
-    "primitive": "get/adverse-event/guidance",
-    "tool": "get",
+    "primitive": "get/adverse_event/guidance",
+    "tool": "get_record",
     "sources": [
       "openfda"
     ],
@@ -1072,7 +1072,7 @@
   },
   {
     "primitive": "get/study/record",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "study"
     ],
@@ -1081,7 +1081,7 @@
   },
   {
     "primitive": "get/patent/record",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "patents"
     ],
@@ -1090,7 +1090,7 @@
   },
   {
     "primitive": "get/patent/biblio",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "patents"
     ],
@@ -1099,7 +1099,7 @@
   },
   {
     "primitive": "get/patent/family",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "patents"
     ],
@@ -1108,7 +1108,7 @@
   },
   {
     "primitive": "get/patent/claims",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "patents"
     ],
@@ -1117,7 +1117,7 @@
   },
   {
     "primitive": "get/patent/citations",
-    "tool": "get",
+    "tool": "get_record",
     "sources": [
       "patents"
     ],
@@ -1126,72 +1126,72 @@
   },
   {
     "primitive": "relate/gene/articles",
-    "tool": "relate",
+    "tool": "find_related",
     "handler": "ResearchService.relate"
   },
   {
     "primitive": "relate/gene/trials",
-    "tool": "relate",
+    "tool": "find_related",
     "handler": "ResearchService.relate"
   },
   {
     "primitive": "relate/drug/articles",
-    "tool": "relate",
+    "tool": "find_related",
     "handler": "ResearchService.relate"
   },
   {
     "primitive": "relate/drug/trials",
-    "tool": "relate",
+    "tool": "find_related",
     "handler": "ResearchService.relate"
   },
   {
     "primitive": "relate/disease/articles",
-    "tool": "relate",
+    "tool": "find_related",
     "handler": "ResearchService.relate"
   },
   {
     "primitive": "relate/disease/trials",
-    "tool": "relate",
+    "tool": "find_related",
     "handler": "ResearchService.relate"
   },
   {
     "primitive": "relate/variant/articles",
-    "tool": "relate",
+    "tool": "find_related",
     "handler": "ResearchService.relate"
   },
   {
     "primitive": "relate/variant/structure",
-    "tool": "relate",
+    "tool": "find_related",
     "handler": "ResearchService.relate"
   },
   {
     "primitive": "relate/article/citations",
-    "tool": "relate",
+    "tool": "find_related",
     "handler": "ResearchService.relate"
   },
   {
     "primitive": "relate/article/references",
-    "tool": "relate",
+    "tool": "find_related",
     "handler": "ResearchService.relate"
   },
   {
     "primitive": "relate/article/recommendations",
-    "tool": "relate",
+    "tool": "find_related",
     "handler": "ResearchService.relate"
   },
   {
     "primitive": "relate/article/authors",
-    "tool": "relate",
+    "tool": "find_related",
     "handler": "ResearchService.relate"
   },
   {
     "primitive": "relate/article/entities",
-    "tool": "relate",
+    "tool": "find_related",
     "handler": "ResearchService.relate"
   },
   {
     "primitive": "relate/author/articles",
-    "tool": "relate",
+    "tool": "find_related",
     "handler": "ResearchService.relate"
   },
   {
@@ -1676,7 +1676,7 @@
   },
   {
     "primitive": "source/study/co_occurrence",
-    "tool": "study_analysis",
+    "tool": "analyze_study",
     "sources": [
       "study"
     ],
@@ -1684,7 +1684,7 @@
   },
   {
     "primitive": "source/study/cohort",
-    "tool": "study_analysis",
+    "tool": "analyze_study",
     "sources": [
       "study"
     ],
@@ -1692,7 +1692,7 @@
   },
   {
     "primitive": "source/study/compare",
-    "tool": "study_analysis",
+    "tool": "analyze_study",
     "sources": [
       "study"
     ],
@@ -1700,7 +1700,7 @@
   },
   {
     "primitive": "source/study/filter",
-    "tool": "study_analysis",
+    "tool": "analyze_study",
     "sources": [
       "study"
     ],
@@ -1708,7 +1708,7 @@
   },
   {
     "primitive": "source/study/query",
-    "tool": "study_analysis",
+    "tool": "analyze_study",
     "sources": [
       "study"
     ],
@@ -1716,7 +1716,7 @@
   },
   {
     "primitive": "source/study/survival",
-    "tool": "study_analysis",
+    "tool": "analyze_study",
     "sources": [
       "study"
     ],
@@ -1724,7 +1724,7 @@
   },
   {
     "primitive": "source/study/top_mutated",
-    "tool": "study_analysis",
+    "tool": "analyze_study",
     "sources": [
       "study"
     ],
@@ -1860,70 +1860,70 @@
   },
   {
     "primitive": "workflow/target_dossier",
-    "tool": "research",
+    "tool": "build_dossier",
     "public_workflow": "target_dossier",
     "retired_alias": false,
     "handler": "ResearchService.research"
   },
   {
     "primitive": "workflow/variant_evidence",
-    "tool": "research",
+    "tool": "build_dossier",
     "public_workflow": "variant_dossier",
     "retired_alias": false,
     "handler": "ResearchService.research"
   },
   {
     "primitive": "workflow/drug_review",
-    "tool": "research",
+    "tool": "build_dossier",
     "public_workflow": "drug_review",
     "retired_alias": false,
     "handler": "ResearchService.research"
   },
   {
     "primitive": "workflow/disease_landscape",
-    "tool": "research",
+    "tool": "build_dossier",
     "public_workflow": "disease_landscape",
     "retired_alias": false,
     "handler": "ResearchService.research"
   },
   {
     "primitive": "workflow/literature_review",
-    "tool": "literature_search",
+    "tool": "search_literature",
     "public_workflow": "literature_review",
     "retired_alias": true,
     "handler": "ResearchService.research"
   },
   {
     "primitive": "workflow/pathway_review",
-    "tool": "research",
+    "tool": "build_dossier",
     "public_workflow": "pathway_review",
     "retired_alias": false,
     "handler": "ResearchService.research"
   },
   {
     "primitive": "workflow/negative_evidence",
-    "tool": "research",
+    "tool": "build_dossier",
     "public_workflow": "negative_evidence",
     "retired_alias": false,
     "handler": "ResearchService.research"
   },
   {
     "primitive": "workflow/study_summary",
-    "tool": "search",
+    "tool": "search_records",
     "public_workflow": "study_summary",
     "retired_alias": true,
     "handler": "ResearchService.research"
   },
   {
     "primitive": "workflow/patent_landscape",
-    "tool": "search",
+    "tool": "search_records",
     "public_workflow": "patent_landscape",
     "retired_alias": true,
     "handler": "ResearchService.research"
   },
   {
     "primitive": "workflow/model_input_bundle",
-    "tool": "research",
+    "tool": "build_dossier",
     "public_workflow": "model_input_bundle",
     "retired_alias": false,
     "handler": "ResearchService.research"

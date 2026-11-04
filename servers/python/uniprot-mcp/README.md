@@ -2,23 +2,23 @@
 
 Examples use the public BioMedMCP tools and their typed JSON arguments.
 
-Use the biomedmcp server and its canonical tools. Retained adapters are implementation packages; their internal tools are not separate public MCP mounts.
+Connect to the biomedmcp server and use its tools. This package runs inside that server; it is not a separate MCP server.
 
-Use search(entity=protein) with an explicit taxonomy ID and get(entity=protein) with an exact UniProt accession. Sequences, features and cross-references belong to the returned record and projection.
+Use search_records(entity=protein) with an explicit taxonomy ID and get_record(entity=protein) with an exact UniProt accession. Sequences, features and cross-references belong to the returned record and projection.
 
-Declared advanced operations: `analyze_evolution`, `compare_proteins`.
+Advanced operations: `analyze_evolution`, `compare_proteins`.
 
-Inspect capabilities for this source to obtain the exact current parameter schemas. Follow the public search cursor with unchanged filters. A known accession identifies a specific protein record; isoform sequence/feature coordinates must stay qualified to that isoform. Taxonomy acquisition belongs to the NCBI source route.
+Run get_capabilities for this source to see its current parameters. Follow the public search cursor with unchanged filters. A known accession identifies a specific protein record; isoform sequence/feature coordinates must stay qualified to that isoform. Taxonomy acquisition belongs to the NCBI source route.
 
-These examples pass schemas and preflight and execute through MCP against mocked provider responses. They do not establish live source health or comprehensive scientific qualification. Selected response, accession, field projection and pagination contracts are fixture-qualified. Protein annotations and cross-references do not prove a variant mechanism or an experimental interaction. Distinct comparison/evolution operations require their own interpretation and broader qualification.
+The examples are tested through MCP against mock responses; live results may differ. Selected response, accession, field projection and pagination contracts are fixture-qualified. Protein annotations and cross-references do not prove a variant mechanism or an experimental interaction. Distinct comparison/evolution operations require their own interpretation and broader qualification.
 
-Follow advertised provider continuation for further acquisition. If the result advertises an evidence recovery URI, use its bounded ranges to read acquired data omitted from the preview; see [evidence recovery](../../../docs/evidence-resources.md). Snapshot scope, expiry and source rights still apply.
+To get more results, follow the continuation in the response. If a result includes an evidence recovery URI, use it to read data left out of the preview; see [evidence recovery](../../../docs/evidence-resources.md). Recovered data expires and is subject to the source's terms.
 
 ## Human insulin protein discovery
 
 ```json
 {
-  "tool": "search",
+  "tool": "search_records",
   "arguments": {
     "entity": "protein",
     "query": "insulin",
@@ -33,7 +33,7 @@ Follow advertised provider continuation for further acquisition. If the result a
 
 ```json
 {
-  "tool": "get",
+  "tool": "get_record",
   "arguments": {
     "entity": "protein",
     "id": "Q8NBP7"

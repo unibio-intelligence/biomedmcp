@@ -133,7 +133,7 @@ async def test_ambiguous_gene_stops_all_enrichment_joins():
 async def test_resolve_recognizes_each_exact_gene_namespace(identity):
     result = await execute(
         ResearchService(adapters=GeneAdapters()),
-        "resolve",
+        "resolve_entity",
         {"entity": "gene", "query": identity},
         scope="public",
     )
@@ -146,14 +146,14 @@ async def test_mouse_followup_validates_and_keeps_species_through_enrichment():
     adapters = GeneAdapters([MOUSE])
     service = ResearchService(adapters=adapters)
     resolved = await execute(
-        service, "resolve", {"entity": "gene", "query": "Trp53", "species": 10090}, scope="public"
+        service, "resolve_entity", {"entity": "gene", "query": "Trp53", "species": 10090}, scope="public"
     )
     action = resolved.next_actions[0]
     assert action["arguments"]["species"] == 10090
     ADAPTERS[action["tool"]].validate_python(action["arguments"])
     await prepare(service, action["tool"], action["arguments"], scope="public")
     args = {**action["arguments"], "sections": ["protein"]}
-    result = await execute(service, "get", args, scope="public")
+    result = await execute(service, "get_record", args, scope="public")
     assert result.outcome == "data"
     assert adapters.calls[-1][2]["query"] == "gene_exact:Trp53 AND organism_id:10090"
 
@@ -250,7 +250,7 @@ async def test_mouse_discovery_qualifies_taxonomy_and_keeps_continuation_query(m
     monkeypatch.setattr(service.providers, "search", search)
     result = await execute(
         service,
-        "relate",
+        "find_related",
         {"entity": "gene", "id": "22059", "relation": "articles", "species": 10090},
         scope="public",
     )
@@ -286,7 +286,7 @@ async def test_mouse_relation_metadata_and_mcp_continuation_do_not_claim_a_human
     async with Client(create_server(service=service)) as client:
         first = (
             await client.call_tool(
-                "relate",
+                "find_related",
                 {"entity": "gene", "id": "22059", "relation": "articles", "species": 10090, "limit": 2},
             )
         ).data
@@ -296,7 +296,7 @@ async def test_mouse_relation_metadata_and_mcp_continuation_do_not_claim_a_human
         assert first["next_cursor"]
         later = (
             await client.call_tool(
-                "literature_search",
+                "search_literature",
                 {
                     "query": first["query"]["query"],
                     "limit": first["query"]["limit"],
@@ -323,7 +323,7 @@ async def test_search_keeps_supported_species_metadata(monkeypatch, entity, spec
     arguments = {"entity": entity, "query": "Trp53"}
     if species is not None:
         arguments["filters"] = {"species": species}
-    result = await execute(service, "search", arguments, scope="public")
+    result = await execute(service, "search_records", arguments, scope="public")
     assert result.query["filters"]["species"] == (species or 9606)
 
 
@@ -334,7 +334,7 @@ async def test_nonhuman_trials_fail_preflight_without_any_provider():
     with pytest.raises(ResearchError) as caught:
         await execute(
             service,
-            "relate",
+            "find_related",
             {"entity": "gene", "id": "22059", "relation": "trials", "species": 10090},
             scope="public",
         )
@@ -344,7 +344,7 @@ async def test_nonhuman_trials_fail_preflight_without_any_provider():
 @pytest.mark.asyncio
 async def test_untyped_mouse_followups_keep_scope_and_pass_preflight():
     service = ResearchService(adapters=GeneAdapters([MOUSE]))
-    result = await execute(service, "resolve", {"query": "Trp53", "species": 10090}, scope="public")
+    result = await execute(service, "resolve_entity", {"query": "Trp53", "species": 10090}, scope="public")
     assert {a["arguments"]["entity"] for a in result.next_actions} == {"gene", "protein"}
     for action in result.next_actions:
         assert action["arguments"]["species"] == 10090
@@ -364,7 +364,7 @@ async def test_gene_dossier_reuses_one_identity_for_enrichment_and_literature(mo
     monkeypatch.setattr(service.providers, "search", search)
     result = await execute(
         service,
-        "research",
+        "build_dossier",
         {"workflow": "target_dossier", "focus": "673", "sections": ["protein"]},
         scope="public",
     )
@@ -400,11 +400,11 @@ async def test_variant_resolution_and_relations_preserve_explicit_build(monkeypa
     monkeypatch.setattr(service.providers.variants, "resolve", variant)
     monkeypatch.setattr(service.providers.literature, "search_source", papers)
     args = {"entity": "variant", "query": "chr7:140453136:A:T", "assembly": "grch37"}
-    resolved = await execute(service, "resolve", args, scope="public")
+    resolved = await execute(service, "resolve_entity", args, scope="public")
     assert resolved.query["assembly"] == "grch37"
     related = await execute(
         service,
-        "relate",
+        "find_related",
         {"entity": "variant", "id": args["query"], "relation": "articles", "assembly": "grch37"},
         scope="public",
     )
@@ -453,12 +453,14 @@ async def test_mouse_generated_action_executes_through_mcp_without_changing_spec
     service = ResearchService(adapters=GeneAdapters([MOUSE]))
     async with Client(create_server(service=service)) as client:
         resolved = (
-            await client.call_tool("resolve", {"entity": "gene", "query": "Trp53", "species": 10090})
+            await client.call_tool("resolve_entity", {"entity": "gene", "query": "Trp53", "species": 10090})
         ).data
         action = resolved["next_actions"][0]
         record = (await client.call_tool(action["tool"], action["arguments"])).data
         assert record["sections"]["record"]["data"]["qualified_identity"]["species"] == 10090
-        enriched = (await client.call_tool("get", {**action["arguments"], "sections": ["protein"]})).data
+        enriched = (
+            await client.call_tool("get_record", {**action["arguments"], "sections": ["protein"]})
+        ).data
         assert enriched["query"]["qualified_identity"]["species"] == 10090
     assert service.adapters.calls[-1][2]["query"] == "gene_exact:Trp53 AND organism_id:10090"
 

@@ -317,7 +317,7 @@ async def test_one_public_dispatch_groups_source_work_without_logging_scope_or_i
     runtime, sink = observed
     result = await execute(
         ResearchService(adapters=GeneAdapters(), runtime=runtime),
-        "get",
+        "get_record",
         {"entity": "gene", "id": "673", "sections": ["protein"]},
         scope="private-account-sentinel",
     )

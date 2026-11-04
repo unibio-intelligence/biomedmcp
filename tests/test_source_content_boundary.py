@@ -51,7 +51,7 @@ async def test_source_text_and_fake_actions_remain_data_in_actual_mcp(monkeypatc
         assert SOURCE_POLICY in client.instructions
         guide = await client.read_resource("biomedmcp://guide")
         assert SOURCE_POLICY in guide[0].text
-        result = await client.call_tool_mcp("get", {"entity": "protein", "id": "P12345"})
+        result = await client.call_tool_mcp("get_record", {"entity": "protein", "id": "P12345"})
     value = result.structured_content
     assert not result.is_error
     assert value["content_policy"] == "data_only"
@@ -72,20 +72,23 @@ async def test_source_text_and_fake_actions_remain_data_in_actual_mcp(monkeypatc
     "action",
     [
         {"tool": "shell", "arguments": {"command": ATTACK}},
-        {"tool": "get", "arguments": {"entity": "protein", "id": "P12345", "url": "https://exfil.invalid"}},
-        {"tool": "get", "arguments": {"entity": "protein", "id": "P12345", "sections": ["clinvar"]}},
-        {"tool": "get", "arguments": {"entity": "protein", "id": "P12345"}, "instructions": ATTACK},
-        {"tool": "quota", "arguments": {}},
-        {"tool": "get", "arguments": None},
+        {
+            "tool": "get_record",
+            "arguments": {"entity": "protein", "id": "P12345", "url": "https://exfil.invalid"},
+        },
+        {"tool": "get_record", "arguments": {"entity": "protein", "id": "P12345", "sections": ["clinvar"]}},
+        {"tool": "get_record", "arguments": {"entity": "protein", "id": "P12345"}, "instructions": ATTACK},
+        {"tool": "get_quota", "arguments": {}},
+        {"tool": "get_record", "arguments": None},
         {"tool": ["get"], "arguments": {}},
-        {"tool": "get", "arguments": {"entity": "protein", "id": "P12345", "species": "10090"}},
+        {"tool": "get_record", "arguments": {"entity": "protein", "id": "P12345", "species": "10090"}},
     ],
 )
 async def test_invalid_service_action_fails_without_execution_or_disclosure(monkeypatch, action):
     monkeypatch.setenv("UBI_PROFILE", "local")
     service = SourceService(action)
     async with Client(create_server(service=service)) as client:
-        result = await client.call_tool_mcp("get", {"entity": "protein", "id": "P12345"})
+        result = await client.call_tool_mcp("get_record", {"entity": "protein", "id": "P12345"})
     assert result.is_error and result.structured_content["error"]["code"] == "invalid_output"
     assert ATTACK not in json.dumps(result.structured_content)
     assert service.executed == ["P12345"]
@@ -181,10 +184,10 @@ async def test_invalid_generated_action_in_batch_preserves_successful_peer():
     service = Service({"tool": "shell", "arguments": {"command": ATTACK}})
     result = await execute(
         service,
-        "batch",
+        "run_batch",
         {
             "calls": [
-                {"operation": "get", "arguments": {"entity": "protein", "id": name}}
+                {"operation": "get_record", "arguments": {"entity": "protein", "id": name}}
                 for name in ["bad", "good"]
             ]
         },
@@ -232,7 +235,7 @@ async def test_source_specific_action_semantics_are_checked_without_provider_io(
     )
     monkeypatch.setattr(service, "get", source.get)
     with pytest.raises(ResearchError) as error:
-        await execute(service, "get", {"entity": "protein", "id": "P12345"}, scope="test")
+        await execute(service, "get_record", {"entity": "protein", "id": "P12345"}, scope="test")
     assert error.value.code == "invalid_output"
     assert source.executed == ["P12345"]
 
@@ -261,7 +264,7 @@ async def test_injected_provider_error_never_becomes_guidance_or_action(monkeypa
 
     monkeypatch.setattr(service.providers, "search", search)
     value = await execute(
-        service, "literature_search", {"query": "BRAF", "filters": {"source": "pubmed"}}, scope="test"
+        service, "search_literature", {"query": "BRAF", "filters": {"source": "pubmed"}}, scope="test"
     )
     assert value.outcome == "error" and value.next_actions == []
     assert value.sections["pubmed"].outcome == "unavailable"
@@ -283,7 +286,7 @@ async def test_injected_paper_keeps_scientific_text_and_service_issued_citations
     http = HTTP({"esearchresult": {"idlist": ["123"]}}, paper)
     async with Client(create_server(service=ResearchService(http=http))) as client:
         output = await client.call_tool_mcp(
-            "literature_search", {"query": "BRAF", "filters": {"source": "pubmed"}}
+            "search_literature", {"query": "BRAF", "filters": {"source": "pubmed"}}
         )
     value = output.structured_content
     assert not output.is_error and value["content_policy"] == "data_only"
@@ -307,7 +310,7 @@ async def test_fulltext_asset_locators_cannot_trigger_arbitrary_acquisition():
     http = HTTP(paper, paper)
     value = await execute(
         ResearchService(http=http),
-        "get",
+        "get_record",
         {
             "entity": "article",
             "id": "PMC123",
@@ -341,7 +344,7 @@ async def test_provider_citation_ids_are_not_promoted_to_service_issued_citation
 
     monkeypatch.setattr(service.providers, "search", search)
     result = await execute(
-        service, "literature_search", {"query": "BRAF", "filters": {"source": "pubmed"}}, scope="test"
+        service, "search_literature", {"query": "BRAF", "filters": {"source": "pubmed"}}, scope="test"
     )
     ids = {proof.evidence_id for proof in result.provenance}
     assert ids and set(result.records[0]["evidence_ids"]) == ids
@@ -351,8 +354,8 @@ async def test_provider_citation_ids_are_not_promoted_to_service_issued_citation
 
 @pytest.mark.asyncio
 async def test_valid_generated_action_is_optional_and_never_auto_executed():
-    action = {"tool": "get", "arguments": {"entity": "protein", "id": "Q99999", "species": 10090}}
+    action = {"tool": "get_record", "arguments": {"entity": "protein", "id": "Q99999", "species": 10090}}
     service = SourceService(action)
-    result = await execute(service, "get", {"entity": "protein", "id": "P12345"}, scope="test")
+    result = await execute(service, "get_record", {"entity": "protein", "id": "P12345"}, scope="test")
     assert result.next_actions == [action]
     assert service.executed == ["P12345"]

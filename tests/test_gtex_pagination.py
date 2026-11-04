@@ -113,7 +113,7 @@ async def test_provider_pages_have_executable_identity_preserving_get_actions(pa
     }
     params = {} if section == "expression" else {"tissue_id": "Thyroid", "p_value_threshold": 0.05}
     async with Client(create_server(service=research)) as client:
-        first = (await client.call_tool("get", arguments(section, **params))).data
+        first = (await client.call_tool("get_record", arguments(section, **params))).data
         assert first["outcome"] == "data", first
         observed = first["sections"][section]["data"]["data"]
         assert (
@@ -123,7 +123,7 @@ async def test_provider_pages_have_executable_identity_preserving_get_actions(pa
         import jsonschema
 
         jsonschema.validate(action["arguments"], schema(action["tool"]))
-        assert action["tool"] == "get"
+        assert action["tool"] == "get_record"
         assert action["arguments"]["source_versions"] == {"gtex": "gtex_v10"}
         assert action["arguments"]["section_parameters"][section]["page"] == 1
         last = (await client.call_tool(action["tool"], action["arguments"])).data
@@ -150,7 +150,7 @@ async def test_entirely_filtered_windows_reach_later_evidence_without_false_abse
     async with Client(create_server(service=research)) as client:
         result = (
             await client.call_tool(
-                "get", arguments("eqtl", tissue_id="Thyroid", limit=1, p_value_threshold=0.05)
+                "get_record", arguments("eqtl", tissue_id="Thyroid", limit=1, p_value_threshold=0.05)
             )
         ).data
         if filtered_pages == 3:
@@ -171,7 +171,9 @@ async def test_partial_filtering_preserves_raw_coverage_and_next_page(paged_gtex
     state["pages"][endpoint] = {0: page([{**association(), "pValue": 0.5}, association()], total=3, size=2)}
     async with Client(create_server(service=research)) as client:
         result = (
-            await client.call_tool("get", arguments("eqtl", tissue_id="Thyroid", p_value_threshold=0.05))
+            await client.call_tool(
+                "get_record", arguments("eqtl", tissue_id="Thyroid", p_value_threshold=0.05)
+            )
         ).data
     data = result["sections"]["eqtl"]["data"]
     assert qtl_source_rows(data["data"]) == [association()]
@@ -216,7 +218,7 @@ async def test_large_requested_limit_never_hides_rows_between_provider_pages(pag
         1: page(rows[25:], total=26, size=25, index=1),
     }
     async with Client(create_server(service=research)) as client:
-        first = (await client.call_tool("get", arguments(limit=100))).data
+        first = (await client.call_tool("get_record", arguments(limit=100))).data
         assert len(first["sections"]["expression"]["data"]["data"]) == 25
         action = first["next_actions"][0]
         last = (await client.call_tool(action["tool"], action["arguments"])).data
@@ -233,7 +235,7 @@ async def test_provider_failure_is_not_an_exhausted_empty_page(paged_gtex, caplo
     state["fail_page"] = 1
     async with Client(create_server(service=research)) as client:
         result = (
-            await client.call_tool_mcp("get", arguments("eqtl", tissue_id="Thyroid", limit=1))
+            await client.call_tool_mcp("get_record", arguments("eqtl", tissue_id="Thyroid", limit=1))
         ).structured_content
     assert result["outcome"] == "error", result
     output = capsys.readouterr()
@@ -250,7 +252,7 @@ async def test_recovery_uses_the_qualified_gene_without_unrelated_parent_sources
     request = arguments(limit=1)
     request.update(id="673", sections=["record", "expression"], sources=["gtex", "mygene"])
     async with Client(create_server(service=research)) as client:
-        result = (await client.call_tool("get", request)).data
+        result = (await client.call_tool("get_record", request)).data
         assert result["outcome"] == "data", result
         action = result["next_actions"][0]
         assert action["arguments"]["id"] == GENCODE
@@ -272,9 +274,9 @@ async def test_cached_window_and_a_new_client_keep_the_same_continuation(paged_g
     request.pop("source_versions")
     server = create_server(service=research)
     async with Client(server) as client:
-        first = (await client.call_tool("get", request)).data
+        first = (await client.call_tool("get_record", request)).data
         count = len(state["requests"])
-        cached = (await client.call_tool("get", request)).data
+        cached = (await client.call_tool("get_record", request)).data
     assert len(state["requests"]) == count
     assert cached["provenance"][0]["cached"] and cached["next_actions"] == first["next_actions"]
     action = cached["next_actions"][0]
@@ -303,7 +305,7 @@ async def test_metasoft_filter_explicitly_uses_meta_p(paged_gtex):
     async with Client(create_server(service=research)) as client:
         result = (
             await client.call_tool(
-                "get",
+                "get_record",
                 arguments(
                     "eqtl",
                     tissue_id="Thyroid",
@@ -325,7 +327,7 @@ async def test_calculated_nonsignificant_qtl_is_retained_as_measurement(paged_gt
     async with Client(create_server(service=research)) as client:
         result = (
             await client.call_tool(
-                "get",
+                "get_record",
                 arguments(
                     "eqtl",
                     tissue_id="Thyroid",
@@ -360,7 +362,7 @@ async def test_provider_cannot_ignore_requested_page_budget(paged_gtex):
     research, state = paged_gtex
     state["pages"]["/expression/medianGeneExpression"] = {0: page([expression()], size=250)}
     async with Client(create_server(service=research)) as client:
-        result = (await client.call_tool_mcp("get", arguments(limit=2))).structured_content
+        result = (await client.call_tool_mcp("get_record", arguments(limit=2))).structured_content
     assert result["outcome"] == "error"
     assert result["next_actions"] == []
 
@@ -369,7 +371,7 @@ async def test_explicit_empty_final_window_is_distinct_from_filtered_incomplete_
     research, state = paged_gtex
     state["pages"]["/association/singleTissueEqtl"] = {0: page([], size=2)}
     async with Client(create_server(service=research)) as client:
-        result = (await client.call_tool("get", arguments("eqtl", tissue_id="Thyroid"))).data
+        result = (await client.call_tool("get_record", arguments("eqtl", tissue_id="Thyroid"))).data
     assert result["outcome"] == "empty", result
     assert result["next_actions"] == []
     assert result["sections"]["eqtl"]["data"]["coverage"]["accessible_window_exhausted"]
@@ -381,7 +383,9 @@ async def test_provider_page_window_exhaustion_is_not_unrecoverable_absence(page
         100000: page([expression()], total=100002, size=1, index=100000),
     }
     async with Client(create_server(service=research)) as client:
-        result = (await client.call_tool_mcp("get", arguments(page=100000, limit=1))).structured_content
+        result = (
+            await client.call_tool_mcp("get_record", arguments(page=100000, limit=1))
+        ).structured_content
     assert result["outcome"] == "partial"
     assert result["next_actions"] == []
     data = result["sections"]["expression"]["data"]
@@ -399,7 +403,7 @@ async def test_smaller_provider_cap_is_preserved_as_the_continuation_page_width(
         1: page([expression(tissue="Liver")], total=2, size=1, index=1),
     }
     async with Client(create_server(service=research)) as client:
-        first = (await client.call_tool("get", arguments(limit=2))).data
+        first = (await client.call_tool("get_record", arguments(limit=2))).data
         action = first["next_actions"][0]
         assert action["arguments"]["section_parameters"]["expression"]["limit"] == 1
         last = (await client.call_tool(action["tool"], action["arguments"])).data
@@ -434,7 +438,7 @@ async def test_page_limit_keeps_source_values_and_coverage(paged_gtex, section, 
     parameters = {"tissue_id": "Thyroid"} if section in {"eqtl", "sqtl"} else {}
     async with Client(create_server(service=research)) as client:
         result = (
-            await client.call_tool("get", arguments(section, page=100000, limit=1, **parameters))
+            await client.call_tool("get_record", arguments(section, page=100000, limit=1, **parameters))
         ).structured_content
     assert result["outcome"] == "partial" and result["next_actions"] == []
     data = result["sections"][section]["data"]

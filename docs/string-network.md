@@ -1,6 +1,6 @@
 # STRING functional networks
 
-Use `get` with a species-qualified gene identifier and `sections: ["interactions"]`.
+Use `get_record` with a species-qualified gene identifier and `sections: ["interactions"]`.
 Gene identity is qualified before acquisition; the canonical gene symbol and
 requested species are retained in the result. The STRING `network` request
 explicitly selects a functional network with up to ten added neighbors.
@@ -16,18 +16,15 @@ unreported; it is never replaced with zero.
 Null/object/error payloads, missing edge identity, wrong species and invalid
 scores fail the interaction section with `invalid_source_response`. A malformed
 edge invalidates the complete collection, including edges beyond the displayed
-row bound. A failed section has no scientific evidence ID and does not prevent
-other successful sections from being returned. Failed responses are retried on
-a subsequent request rather than cached as successful empty results.
+row bound. Other successful sections are still returned. Failed responses are
+not cached, so the next request tries again.
 
-An explicit empty collection is a valid empty network for this request, not
-evidence that a biological association is absent. The live provider release is
-unpinned. More than 25 returned edges trigger precise omission metadata and
-bounded evidence resources; use the supplied recovery URI to retrieve the
-omitted edges with the same evidence identifiers and no new provider request.
+An empty network means STRING returned no edges for this request, not that no
+association exists. The STRING release is not pinned. If more than 25 edges are
+returned, the rest are listed as omitted; use the recovery URI to fetch them
+without a new STRING request.
 
 These semantics follow the [STRING API contract](https://string-db.org/help/api/).
 The [offline regressions](../tests/test_string_network.py) exercise selected
 response shapes, qualified human/mouse requests, partial results, retries,
-cache provenance and recovery through the actual MCP client boundary. They do
-not establish current live provider health or real model task correctness.
+cache provenance and recovery through the actual MCP client boundary.

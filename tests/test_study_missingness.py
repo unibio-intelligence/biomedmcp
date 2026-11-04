@@ -146,7 +146,7 @@ async def test_public_study_filter_reports_unavailable_not_healthy_zero(study):
     install()
     result = await execute(
         ResearchService(),
-        "study_analysis",
+        "analyze_study",
         {
             "analysis": "filter_cohort",
             "study": "ubi_synthetic",

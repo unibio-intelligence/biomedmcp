@@ -127,13 +127,13 @@ async def test_search_flattens_entries_and_preserves_provider_continuation(react
     state["payloads"][SEARCH_PATH] = search
     async with Client(create_server(service=ResearchService())) as client:
         first = (
-            await client.call_tool("search", {"entity": "pathway", "query": "apoptosis", "limit": 1})
+            await client.call_tool("search_records", {"entity": "pathway", "query": "apoptosis", "limit": 1})
         ).structured_content
         assert first["records"][0]["id"] == PID
         assert first["next_cursor"] and verify_receipt(first)
         second = (
             await client.call_tool(
-                "search",
+                "search_records",
                 {"entity": "pathway", "query": "apoptosis", "limit": 1, "cursor": first["next_cursor"]},
             )
         ).structured_content
@@ -183,7 +183,7 @@ async def test_public_gene_membership_uses_mapping_and_preserves_mouse_species(r
     async with Client(create_server(service=ResearchService())) as client:
         result = (
             await client.call_tool(
-                "get", {"entity": "gene", "id": "Erbb2", "species": 10090, "sections": ["pathways"]}
+                "get_record", {"entity": "gene", "id": "Erbb2", "species": 10090, "sections": ["pathways"]}
             )
         ).structured_content
     assert result["outcome"] == "data", result
@@ -197,7 +197,7 @@ async def test_pathway_events_include_subpathways_and_reactions(reactome_http):
     reactome_http["payloads"][f"/ContentService/data/pathway/{PID}/containedEvents"] = [PATHWAY, REACTION]
     async with Client(create_server(service=ResearchService())) as client:
         result = (
-            await client.call_tool("get", {"entity": "pathway", "id": PID, "sections": ["events"]})
+            await client.call_tool("get_record", {"entity": "pathway", "id": PID, "sections": ["events"]})
         ).structured_content
     assert result["sections"]["events"]["data"]["hierarchy"] == [PATHWAY, REACTION]
 
@@ -263,10 +263,10 @@ async def test_malformed_or_foreign_search_window_cannot_be_empty_or_cached(reac
     service = ResearchService()
     args = {"entity": "pathway", "query": "apoptosis", "limit": 1}
     async with Client(create_server(service=service)) as client:
-        failed = (await client.call_tool_mcp("search", args)).structured_content
+        failed = (await client.call_tool_mcp("search_records", args)).structured_content
         assert failed["outcome"] == "error" and not failed["provenance"], failed
         reactome_http["payloads"][SEARCH_PATH] = {**SEARCH, "hitCount": 1}
-        fixed = (await client.call_tool("search", args)).structured_content
+        fixed = (await client.call_tool("search_records", args)).structured_content
     assert fixed["outcome"] == "data" and fixed["records"][0]["id"] == PID
     assert len(reactome_http["requests"]) == 4 and verify_receipt(fixed)
 
@@ -275,7 +275,7 @@ async def test_explicit_zero_search_retains_no_matches(reactome_http):
     reactome_http["payloads"][SEARCH_PATH] = {"entries": [], "hitCount": 0}
     async with Client(create_server(service=ResearchService())) as client:
         result = (
-            await client.call_tool("search", {"entity": "pathway", "query": "synthetic-zero"})
+            await client.call_tool("search_records", {"entity": "pathway", "query": "synthetic-zero"})
         ).structured_content
     assert result["outcome"] == "empty" and result["records"] == [] and result["next_cursor"] is None
     assert verify_receipt(result)
@@ -302,13 +302,13 @@ async def test_public_pathway_partial_then_valid_retry_keeps_successful_events(r
     state["payloads"][f"/ContentService/data/participants/{PID}"] = {"error": "synthetic-failed-participants"}
     args = {"entity": "pathway", "id": PID, "sections": ["record", "genes", "events"]}
     async with Client(create_server(service=ResearchService())) as client:
-        failed = (await client.call_tool("get", args)).structured_content
+        failed = (await client.call_tool("get_record", args)).structured_content
         assert failed["outcome"] == "partial" and failed["sections"]["events"]["data"]["hierarchy"] == [
             REACTION
         ]
         assert failed["sections"]["genes"]["outcome"] == "error"
         state["payloads"][f"/ContentService/data/participants/{PID}"] = [PARTICIPANT]
-        fixed = (await client.call_tool("get", args)).structured_content
+        fixed = (await client.call_tool("get_record", args)).structured_content
     assert fixed["outcome"] == "data" and fixed["sections"]["genes"]["data"]["participants"] == [PARTICIPANT]
     assert verify_receipt(failed) and verify_receipt(fixed)
     assert [r.url.path for r in state["requests"]].count(f"/ContentService/data/participants/{PID}") == 2
@@ -472,7 +472,7 @@ async def test_wrong_species_membership_rejects_human_mouse_join(reactome_http):
     async with Client(create_server(service=ResearchService())) as client:
         result = (
             await client.call_tool_mcp(
-                "get", {"entity": "gene", "id": "Erbb2", "species": 10090, "sections": ["pathways"]}
+                "get_record", {"entity": "gene", "id": "Erbb2", "species": 10090, "sections": ["pathways"]}
             )
         ).structured_content
     assert (

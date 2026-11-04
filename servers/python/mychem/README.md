@@ -2,23 +2,23 @@
 
 Examples use the public BioMedMCP tools and their typed JSON arguments.
 
-Use the biomedmcp server and its canonical tools. Retained adapters are implementation packages; their internal tools are not separate public MCP mounts.
+Connect to the biomedmcp server and use its tools. This package runs inside that server; it is not a separate MCP server.
 
-Discover drug identities with search(entity=drug), then retrieve a provider-stable record using get(entity=drug). Inspect identifier mapping and reported ADMET annotation schemas through capabilities; chemical computations are not advertised.
+Discover drug identities with search_records(entity=drug), then retrieve a provider-stable record using get_record(entity=drug). Inspect identifier mapping and reported ADMET annotation schemas through get_capabilities; chemical computations are not advertised.
 
-Declared advanced operations: `get_admet_properties`, `map_identifiers`.
+Advanced operations: `get_admet_properties`, `map_identifiers`.
 
-Inspect capabilities for this source to obtain the exact current parameter schemas. Names can be ambiguous. Preserve the returned identifier and separate chemical structures, source assertions and clinical indications when joining records.
+Run get_capabilities for this source to see its current parameters. Names can be ambiguous. Preserve the returned identifier and separate chemical structures, source assertions and clinical indications when joining records.
 
-These examples pass schemas and preflight and execute through MCP against mocked provider responses. They do not establish live source health or comprehensive scientific qualification. Reported source annotations do not establish comparable efficacy, safety or clinical suitability. Missing ADMET modalities are unavailable. This mixed annotation source is eligible under the source policy with SIDER and UMLS content excluded. Source-specific rights and attribution still apply; examples establish fixture routing, not live qualification.
+The examples are tested through MCP against mock responses; live results may differ. Reported source annotations do not establish comparable efficacy, safety or clinical suitability. Missing ADMET modalities are unavailable. This mixed annotation source is eligible under the source policy with SIDER and UMLS content excluded. Source-specific rights and attribution still apply; examples establish fixture routing, not live qualification.
 
-Follow advertised provider continuation for further acquisition. If the result advertises an evidence recovery URI, use its bounded ranges to read acquired data omitted from the preview; see [evidence recovery](../../../docs/evidence-resources.md). Snapshot scope, expiry and source rights still apply.
+To get more results, follow the continuation in the response. If a result includes an evidence recovery URI, use it to read data left out of the preview; see [evidence recovery](../../../docs/evidence-resources.md). Recovered data expires and is subject to the source's terms.
 
 ## Ezetimibe compound discovery
 
 ```json
 {
-  "tool": "search",
+  "tool": "search_records",
   "arguments": {
     "entity": "drug",
     "query": "ezetimibe",
@@ -33,7 +33,7 @@ Follow advertised provider continuation for further acquisition. If the result a
 
 ```json
 {
-  "tool": "get",
+  "tool": "get_record",
   "arguments": {
     "entity": "drug",
     "id": "OLNTVTPDXPETLC-XPWALMASSA-N"

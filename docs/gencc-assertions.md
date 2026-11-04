@@ -1,6 +1,6 @@
 # GenCC gene–disease assertions
 
-Use `get` with a qualified human gene and `sections: ["gencc"]`. The source section returns a versioned GenCC submission export projected onto that exact gene symbol. Identity acquisition and other sources remain subject to their own [permissions](source-licenses.md); a permissive GenCC export does not authorize a held identity provider.
+Use `get_record` with a qualified human gene and `sections: ["gencc"]`. The source section returns a versioned GenCC submission export projected onto that exact gene symbol. Identity acquisition and other sources remain subject to their own [permissions](source-licenses.md); a permissive GenCC export does not authorize a held identity provider.
 
 Each record retains its SGC identifier/version, source HGNC gene, disease, inheritance, submitting organization, classification, submission date, notes and report references. Distinct submissions and versions remain separate. Conflicting classifications are retained without computing consensus, causal assignment, clinical validity or patient eligibility. A source-reported HGNC identifier does not repair an unresolved identity from another source. Linked reports are not automatically acquired.
 

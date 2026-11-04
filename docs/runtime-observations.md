@@ -1,6 +1,6 @@
 # Runtime observations
 
-The public runtime records logical source work separately from callers waiting for shared work. These observations describe this process; they do not establish provider health, clinical correctness or production service objectives.
+The public runtime records logical source work separately from callers waiting for shared work. They describe this process only, not provider health or service-level targets.
 
 `provider_result` is one terminal event for each admitted or refused logical source flight. It is emitted after scientific classification and cache completion/failure. Its `outcome` agrees with evidence-section semantics: `data`, `empty`, `ambiguous` and `partial` stay distinct. Infrastructure/provider failures are `unavailable`; abandoned work is `cancelled`. An unavailable secondary section cannot produce a terminal `completed` success. A failed cache read/write retains its own error and cache state.
 

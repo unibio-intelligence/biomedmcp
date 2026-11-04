@@ -5,7 +5,7 @@ Use these typed calls to inspect records or extend an evidence notebook. Calls a
 ## Executable examples
 
 These calls demonstrate routing against synthetic test fixtures; live access and evidence availability are not guaranteed.
-Study examples require an installed verified study: ubi_synthetic is the deterministic fixture, not clinical evidence. Substitute an installed study ID from capabilities.
+Study examples require an installed verified study: ubi_synthetic is the deterministic fixture, not clinical evidence. Substitute an installed study ID from get_capabilities.
 The cBioPortal example requires a real molecular-profile/sample-list pair for the intended population; study_mutations/study_all are fixture identifiers.
 Full text requires an accessible PMC record and article-specific rights.
 
@@ -13,7 +13,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "search",
+  "tool": "search_records",
   "arguments": {
     "entity": "gene",
     "query": "BRCA1",
@@ -28,7 +28,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "search",
+  "tool": "search_records",
   "arguments": {
     "entity": "protein",
     "query": "insulin",
@@ -43,7 +43,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "search",
+  "tool": "search_records",
   "arguments": {
     "entity": "drug",
     "query": "ezetimibe",
@@ -58,7 +58,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "get",
+  "tool": "get_record",
   "arguments": {
     "entity": "gene",
     "id": "PCSK9",
@@ -71,7 +71,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "get",
+  "tool": "get_record",
   "arguments": {
     "entity": "gene",
     "id": "LDLR",
@@ -87,7 +87,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "get",
+  "tool": "get_record",
   "arguments": {
     "entity": "article",
     "id": "PMID:123",
@@ -102,7 +102,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "get",
+  "tool": "get_record",
   "arguments": {
     "entity": "gene",
     "id": "LDLR",
@@ -124,7 +124,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "get",
+  "tool": "get_record",
   "arguments": {
     "entity": "gene",
     "id": "LDLR",
@@ -145,7 +145,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "get",
+  "tool": "get_record",
   "arguments": {
     "entity": "drug",
     "id": "OLNTVTPDXPETLC-XPWALMASSA-N"
@@ -157,7 +157,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "get",
+  "tool": "get_record",
   "arguments": {
     "entity": "disease",
     "id": "MONDO:0007750"
@@ -169,7 +169,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "literature_search",
+  "tool": "search_literature",
   "arguments": {
     "query": "PCSK9 LDL cholesterol"
   }
@@ -180,7 +180,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "literature_search",
+  "tool": "search_literature",
   "arguments": {
     "query": "PCSK9",
     "filters": {
@@ -195,7 +195,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "literature_search",
+  "tool": "search_literature",
   "arguments": {
     "query": "familial hypercholesterolemia",
     "filters": {
@@ -210,7 +210,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "trial_search",
+  "tool": "search_trials",
   "arguments": {
     "query": "familial hypercholesterolemia",
     "filters": {
@@ -224,7 +224,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "trial_search",
+  "tool": "search_trials",
   "arguments": {
     "query": "breast cancer",
     "filters": {
@@ -238,7 +238,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "trial_search",
+  "tool": "search_trials",
   "arguments": {
     "query": "ezetimibe"
   }
@@ -249,7 +249,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "variant_evidence",
+  "tool": "get_variant_evidence",
   "arguments": {
     "id": "PCSK9 R46L"
   }
@@ -260,7 +260,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "variant_evidence",
+  "tool": "get_variant_evidence",
   "arguments": {
     "id": "chr1:55039974:G:T",
     "assembly": "grch38",
@@ -276,7 +276,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "variant_evidence",
+  "tool": "get_variant_evidence",
   "arguments": {
     "id": "rs11591147",
     "sections": [
@@ -291,7 +291,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "variant_evidence",
+  "tool": "get_variant_evidence",
   "arguments": {
     "id": "PCSK9 R46L",
     "sections": [
@@ -311,7 +311,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "study_analysis",
+  "tool": "analyze_study",
   "arguments": {
     "analysis": "gene_profile",
     "study": "ubi_synthetic",
@@ -324,7 +324,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "study_analysis",
+  "tool": "analyze_study",
   "arguments": {
     "analysis": "survival",
     "study": "ubi_synthetic",
@@ -338,7 +338,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "study_analysis",
+  "tool": "analyze_study",
   "arguments": {
     "analysis": "co_occurrence",
     "study": "ubi_synthetic",
@@ -354,7 +354,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "resolve",
+  "tool": "resolve_entity",
   "arguments": {
     "entity": "gene",
     "query": "LDL receptor",
@@ -367,7 +367,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "resolve",
+  "tool": "resolve_entity",
   "arguments": {
     "entity": "variant",
     "query": "rs11591147"
@@ -379,7 +379,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "resolve",
+  "tool": "resolve_entity",
   "arguments": {
     "entity": "gene",
     "query": "Trp53",
@@ -392,7 +392,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "relate",
+  "tool": "find_related",
   "arguments": {
     "entity": "article",
     "id": "PMID:123",
@@ -405,7 +405,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "relate",
+  "tool": "find_related",
   "arguments": {
     "entity": "variant",
     "id": "PCSK9 R46L",
@@ -418,7 +418,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "relate",
+  "tool": "find_related",
   "arguments": {
     "entity": "gene",
     "id": "PCSK9",
@@ -432,7 +432,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "research",
+  "tool": "build_dossier",
   "arguments": {
     "workflow": "target_dossier",
     "focus": "LDLR",
@@ -445,7 +445,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "research",
+  "tool": "build_dossier",
   "arguments": {
     "workflow": "drug_review",
     "focus": "ezetimibe"
@@ -457,7 +457,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "research",
+  "tool": "build_dossier",
   "arguments": {
     "workflow": "disease_landscape",
     "focus": "MONDO:0007750"
@@ -524,11 +524,11 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "batch",
+  "tool": "run_batch",
   "arguments": {
     "calls": [
       {
-        "operation": "get",
+        "operation": "get_record",
         "arguments": {
           "entity": "gene",
           "id": "PCSK9",
@@ -544,11 +544,11 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "batch",
+  "tool": "run_batch",
   "arguments": {
     "calls": [
       {
-        "operation": "trial_search",
+        "operation": "search_trials",
         "arguments": {
           "query": "familial hypercholesterolemia"
         }
@@ -562,11 +562,11 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "batch",
+  "tool": "run_batch",
   "arguments": {
     "calls": [
       {
-        "operation": "resolve",
+        "operation": "resolve_entity",
         "arguments": {
           "query": "LDL receptor",
           "entity": "gene",
@@ -582,7 +582,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "capabilities",
+  "tool": "get_capabilities",
   "arguments": {}
 }
 ```
@@ -591,7 +591,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "capabilities",
+  "tool": "get_capabilities",
   "arguments": {
     "source": "gtex"
   }
@@ -602,7 +602,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "capabilities",
+  "tool": "get_capabilities",
   "arguments": {
     "entity": "variant"
   }
@@ -613,7 +613,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "quota",
+  "tool": "get_quota",
   "arguments": {}
 }
 ```
@@ -705,7 +705,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "batch",
+  "tool": "run_batch",
   "arguments": {
     "calls": [
       {
@@ -940,7 +940,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "get",
+  "tool": "get_record",
   "arguments": {
     "entity": "gene",
     "id": "LDLR",
@@ -1018,7 +1018,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "get",
+  "tool": "get_record",
   "arguments": {
     "entity": "gene",
     "id": "LDLR",
@@ -1046,7 +1046,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "get",
+  "tool": "get_record",
   "arguments": {
     "entity": "gene",
     "id": "LDLR",
@@ -1074,7 +1074,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "get",
+  "tool": "get_record",
   "arguments": {
     "entity": "trial",
     "id": "NCT04368728"
@@ -1086,7 +1086,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "get",
+  "tool": "get_record",
   "arguments": {
     "entity": "trial",
     "id": "NCT04368728",
@@ -1102,7 +1102,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "trial_search",
+  "tool": "search_trials",
   "arguments": {
     "query": "familial hypercholesterolemia AND AREA[LocationCity]Boston",
     "filters": {
@@ -1116,7 +1116,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "trial_search",
+  "tool": "search_trials",
   "arguments": {
     "query": "COVID-19 AND AREA[HasResults]true",
     "filters": {
@@ -1130,7 +1130,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "trial_search",
+  "tool": "search_trials",
   "arguments": {
     "query": "leukemia AND AREA[StdAge]CHILD"
   }
@@ -1201,7 +1201,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "search",
+  "tool": "search_records",
   "arguments": {
     "entity": "disease",
     "query": "familial hypercholesterolemia"
@@ -1213,7 +1213,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "get",
+  "tool": "get_record",
   "arguments": {
     "entity": "protein",
     "id": "Q8NBP7"
@@ -1225,7 +1225,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "search",
+  "tool": "search_records",
   "arguments": {
     "entity": "pathway",
     "query": "apoptosis"
@@ -1237,7 +1237,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "get",
+  "tool": "get_record",
   "arguments": {
     "entity": "pathway",
     "id": "R-HSA-109581"
@@ -1249,7 +1249,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "get",
+  "tool": "get_record",
   "arguments": {
     "entity": "gene",
     "id": "PCSK9",
@@ -1265,7 +1265,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "get",
+  "tool": "get_record",
   "arguments": {
     "entity": "gene",
     "id": "LDLR",
@@ -1283,7 +1283,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "get",
+  "tool": "get_record",
   "arguments": {
     "entity": "gene",
     "id": "LDLR",
@@ -1299,7 +1299,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "get",
+  "tool": "get_record",
   "arguments": {
     "entity": "drug",
     "id": "ezetimibe",
@@ -1314,7 +1314,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "get",
+  "tool": "get_record",
   "arguments": {
     "entity": "drug",
     "id": "ezetimibe",
@@ -1329,9 +1329,9 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "search",
+  "tool": "search_records",
   "arguments": {
-    "entity": "adverse-event",
+    "entity": "adverse_event",
     "query": "ezetimibe"
   }
 }
@@ -1341,7 +1341,7 @@ Full text requires an accessible PMC record and article-specific rights.
 
 ```json
 {
-  "tool": "search",
+  "tool": "search_records",
   "arguments": {
     "entity": "patent",
     "query": "ezetimibe"

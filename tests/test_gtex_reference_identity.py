@@ -78,17 +78,17 @@ async def test_canonical_annotation_windows_execute_and_resume(references, secti
     state["responses"][(endpoint, 0)] = page(rows[:1], size=1, total=2)
     state["responses"][(endpoint, 1)] = page(rows[1:], size=1, total=2, index=1)
     async with Client(create_server(service=research)) as client:
-        first = (await client.call_tool("get", request(section, limit=1))).data
+        first = (await client.call_tool("get_record", request(section, limit=1))).data
         assert first["outcome"] == "data", first
         assert first["sections"][section]["data"]["data"] == rows[:1]
         assert first["provenance"][0]["source_version"] == "gtex_v10"
         identity = first["sections"][section]["data"]["gene_identity"]
         assert identity["gencode_id"] == GENCODE
         action = first["next_actions"][0]
-        jsonschema.validate(action["arguments"], schema("get"))
+        jsonschema.validate(action["arguments"], schema("get_record"))
         assert action["arguments"]["id"] == GENCODE
         assert action["arguments"]["source_versions"] == {"gtex": "gtex_v10"}
-        last = (await client.call_tool("get", action["arguments"])).data
+        last = (await client.call_tool("get_record", action["arguments"])).data
     assert last["sections"][section]["data"]["data"] == rows[1:]
     assert last["next_actions"] == []
     reads = [r for r in state["requests"] if r.url.path.endswith(endpoint)]
@@ -146,7 +146,7 @@ async def test_wrong_annotation_identity_or_coordinate_semantics_fail(references
     endpoint = "/reference/transcript" if section == "transcripts" else "/reference/exon"
     state["responses"][(endpoint, 0)] = page([{**annotation(exon=section == "exons"), field: value}], size=2)
     async with Client(create_server(service=research)) as client:
-        result = (await client.call_tool_mcp("get", request(section))).structured_content
+        result = (await client.call_tool_mcp("get_record", request(section))).structured_content
     assert result["outcome"] == "error", result
     assert result["provenance"] == [] and result["next_actions"] == []
 
@@ -170,7 +170,7 @@ async def test_rsid_is_qualified_before_qtl_join(references, section, mode):
     if section == "sqtl" and mode == "dynamic":
         params["phenotype_id"] = "chr7:100:200:clu_1"
     async with Client(create_server(service=research)) as client:
-        result = (await client.call_tool("get", request(section, **params))).data
+        result = (await client.call_tool("get_record", request(section, **params))).data
     assert result["outcome"] == "data", result
     identity = result["sections"][section]["data"]["variant_identity"]
     assert identity["variant_id"] == VARIANT and identity["snp_id"] == "rs113488022"
@@ -198,7 +198,9 @@ async def test_unavailable_ambiguous_incomplete_or_failed_variant_stops_join(
     state["responses"][("/dataset/variant", 0)] = payload
     async with Client(create_server(service=research)) as client:
         result = (
-            await client.call_tool_mcp("get", request("eqtl", tissue_id="Thyroid", variant_id="rs113488022"))
+            await client.call_tool_mcp(
+                "get_record", request("eqtl", tissue_id="Thyroid", variant_id="rs113488022")
+            )
         ).structured_content
     assert result["outcome"] == "error", result
     assert not any("/association/" in r.url.path for r in state["requests"])
@@ -239,7 +241,7 @@ async def test_invalid_or_wrong_build_qtl_identifier_fails_preflight_without_io(
     research, state = references
     async with Client(create_server(service=research)) as client:
         with pytest.raises(ToolError):
-            await client.call_tool("get", request("eqtl", tissue_id="Thyroid", variant_id=identifier))
+            await client.call_tool("get_record", request("eqtl", tissue_id="Thyroid", variant_id=identifier))
     assert state["requests"] == []
 
 
@@ -250,13 +252,13 @@ async def test_annotation_missingness_failure_and_nonhuman_scope(references, sec
     server = create_server(service=research)
     async with Client(server) as client:
         with pytest.raises(ToolError):
-            await client.call_tool("get", {**request(section), "species": 10090})
+            await client.call_tool("get_record", {**request(section), "species": 10090})
         assert state["requests"] == []
         state["responses"][(endpoint, 0)] = 503
-        failed = (await client.call_tool_mcp("get", request(section))).structured_content
+        failed = (await client.call_tool_mcp("get_record", request(section))).structured_content
         assert failed["outcome"] == "error"
         state["responses"][(endpoint, 0)] = page([], size=2)
-        empty = (await client.call_tool_mcp("get", request(section))).structured_content
+        empty = (await client.call_tool_mcp("get_record", request(section))).structured_content
         assert empty["outcome"] == "empty"
         assert empty["next_actions"] == []
 
@@ -274,7 +276,7 @@ async def test_annotation_release_v8_is_pinned_even_when_provider_defaults_to_v1
     )
     arguments = {**request(section), "source_versions": {"gtex": "gtex_v8"}}
     async with Client(create_server(service=research)) as client:
-        result = (await client.call_tool("get", arguments)).data
+        result = (await client.call_tool("get_record", arguments)).data
     assert result["outcome"] == "data", result
     assert result["provenance"][0]["source_version"] == "gtex_v8"
     read = state["requests"][-1]
@@ -295,14 +297,14 @@ async def test_rsid_recovery_uses_qualified_coordinate_and_preserves_filters(ref
         "eqtl", tissue_id="Thyroid", variant_id="rs113488022", limit=1, p_value_threshold=0.05
     )
     async with Client(create_server(service=research)) as client:
-        first = (await client.call_tool("get", arguments)).data
+        first = (await client.call_tool("get_record", arguments)).data
         count = len(state["requests"])
-        cached = (await client.call_tool("get", arguments)).data
+        cached = (await client.call_tool("get_record", arguments)).data
         assert len(state["requests"]) == count
         assert cached["provenance"][0]["cached"]
         action = cached["next_actions"][0]
         assert action == first["next_actions"][0]
-        jsonschema.validate(action["arguments"], schema("get"))
+        jsonschema.validate(action["arguments"], schema("get_record"))
         assert action["arguments"]["section_parameters"]["eqtl"] == {
             "tissue_id": "Thyroid",
             "analysis_mode": "gene_associations",
@@ -312,7 +314,7 @@ async def test_rsid_recovery_uses_qualified_coordinate_and_preserves_filters(ref
             "page": 1,
         }
     async with Client(create_server(service=research)) as client:
-        last = (await client.call_tool("get", action["arguments"])).data
+        last = (await client.call_tool("get_record", action["arguments"])).data
     assert last["outcome"] == "data" and last["next_actions"] == []
     references_read = [r for r in state["requests"] if r.url.path.endswith("/dataset/variant")]
     assert references_read[0].url.params["snpId"] == "rs113488022"
@@ -355,7 +357,7 @@ async def test_metasoft_uses_the_cohort_variant_mapping(references):
     async with Client(create_server(service=research)) as client:
         result = (
             await client.call_tool(
-                "get",
+                "get_record",
                 request("eqtl", tissue_id="Thyroid", analysis_mode="metasoft", variant_id="rs113488022"),
             )
         ).data
@@ -370,7 +372,7 @@ async def test_exon_identity_and_transcript_ordinals_are_validated(references, f
     research, state = references
     state["responses"][("/reference/exon", 0)] = page([{**annotation(exon=True), field: value}], size=2)
     async with Client(create_server(service=research)) as client:
-        result = (await client.call_tool_mcp("get", request("exons"))).structured_content
+        result = (await client.call_tool_mcp("get_record", request("exons"))).structured_content
     assert result["outcome"] == "error", result
 
 
@@ -400,7 +402,7 @@ async def test_annotation_reads_share_gene_identity_and_preserve_primary_record_
         "sources": ["mygene", "gtex"],
     }
     async with Client(create_server(service=research)) as client:
-        result = (await client.call_tool_mcp("get", arguments)).structured_content
+        result = (await client.call_tool_mcp("get_record", arguments)).structured_content
     assert result["outcome"] == "partial", result
     assert result["sections"]["record"]["outcome"] == "data"
     assert result["sections"][section]["outcome"] == "unavailable"

@@ -229,7 +229,7 @@ async def test_real_public_permission_dispatch_has_no_myvariant_identity_depende
     assert service._get_plan(req) == {"predictions": ("alphamissense", ["uniprot"])}
     value = (
         await execute(
-            service, "variant_evidence", {"id": "BRAF V2E", "sections": ["predictions"]}, scope="test"
+            service, "get_variant_evidence", {"id": "BRAF V2E", "sections": ["predictions"]}, scope="test"
         )
     ).model_dump(mode="json")
     assert value["outcome"] == "data" and verify_receipt(value)

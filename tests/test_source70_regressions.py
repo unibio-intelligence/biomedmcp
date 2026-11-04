@@ -18,7 +18,7 @@ async def test_conflicting_variant_shorthand_is_rejected_before_acquisition(filt
     with pytest.raises(ResearchError) as caught:
         await execute(
             ResearchService(http=http),
-            "search",
+            "search_records",
             {
                 "entity": "variant",
                 "query": "BRAF V600E",
@@ -33,7 +33,7 @@ async def test_equivalent_explicit_variant_filters_preserve_identity():
     http = HTTP({"total": 1, "hits": [BRAF]})
     result = await execute(
         ResearchService(http=http),
-        "search",
+        "search_records",
         {
             "entity": "variant",
             "query": "BRAF V600E",
@@ -71,7 +71,7 @@ async def test_pathway_name_scope_rejected_before_even_empty_discovery(
         if dispatch:
             await execute(
                 service,
-                "research",
+                "build_dossier",
                 {
                     "workflow": "pathway_review",
                     "focus": "Synthetic pathway",
@@ -83,7 +83,8 @@ async def test_pathway_name_scope_rejected_before_even_empty_discovery(
             await service.research("pathway_review", "Synthetic pathway", scope="test", **arguments)
     assert (
         caught.value.code
-        == ("invalid_parameters" if dispatch and "section_parameters" in arguments else code)
+        # The public schema enumerates dossier sections and section options.
+        == ("invalid_parameters" if dispatch and {"sections", "section_parameters"} & set(arguments) else code)
         and not calls
     )
 
@@ -109,7 +110,9 @@ async def test_pathway_relevance_precedes_excerpt_and_nested_recovery_is_exact(
         return page_payload(rows, raw_count=2, exhausted=True)
 
     monkeypatch.setattr(service.providers.literature, "search_source", papers)
-    result = await execute(service, "research", {"workflow": "pathway_review", "focus": PID}, scope="test")
+    result = await execute(
+        service, "build_dossier", {"workflow": "pathway_review", "focus": PID}, scope="test"
+    )
     data = result.sections["literature"].data
     assert len(data["records"]) == 1 and data["records"][0]["pmid"] == "100"
     assert len(data["records"][0]["abstract"]) == 500
@@ -148,7 +151,9 @@ async def test_both_nested_research_sections_preserve_pending_recovery(monkeypat
     monkeypatch.setattr(service, "get", base)
     monkeypatch.setattr(service, "search", summary)
     monkeypatch.setattr(service, "relate", summary)
-    result = await execute(service, "research", {"workflow": "drug_review", "focus": "drug"}, scope="test")
+    result = await execute(
+        service, "build_dossier", {"workflow": "drug_review", "focus": "drug"}, scope="test"
+    )
     for name in ("literature", "related_trials"):
         recovery = result.sections[name].data["query"]["output_omissions"]["composed_recovery"]
         value = await service.read_evidence(recovery["uri"], scope="test")
@@ -183,7 +188,7 @@ def test_error_constraints_discover_schema_once_and_generic_errors_never_do(monk
         assert calls == []
         for _ in range(2):
             with pytest.raises(ResearchError) as caught:
-                validate_utility("batch", {"calls": []})
+                validate_utility("run_batch", {"calls": []})
             assert caught.value.as_dict()["fields"] == {"$.calls": "too_short"}
         assert calls and len(calls) == len(set(calls))
     finally:
@@ -209,6 +214,6 @@ async def test_pathway_name_does_not_resolve_from_incomplete_window(monkeypatch,
     monkeypatch.setattr(service, "search", search)
     monkeypatch.setattr(service, "get", forbidden)
     result = await execute(
-        service, "research", {"workflow": "pathway_review", "focus": "Synthetic pathway"}, scope="test"
+        service, "build_dossier", {"workflow": "pathway_review", "focus": "Synthetic pathway"}, scope="test"
     )
     assert result.outcome == "ambiguous"

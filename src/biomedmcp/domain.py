@@ -300,28 +300,28 @@ class ResearchService:
         if source == "opentargets" and operation == "query_genetics" and params.get("gene_id"):
             raise ResearchError(
                 "canonical_route_required",
-                'Gene genetics uses get(entity="gene",sections=["genetics"]). Advanced genetics selects a variant, study or credible-set identity.',
+                'Gene genetics uses get_record(entity="gene",sections=["genetics"]). Advanced genetics selects a variant, study or credible-set identity.',
             )
         if operation not in ADVANCED.get(source, set()):
             routes = []
             for kind, owner in RECORD_OWNER.items():
                 if owner == source:
-                    routes.append(f'get(entity="{kind}",id=...,sections=["record"])')
+                    routes.append(f'get_record(entity="{kind}",id=...,sections=["record"])')
             for kind, sources in SEARCH_SOURCES.items():
                 if source in sources:
                     tool = (
-                        "literature_search"
+                        "search_literature"
                         if kind == "article"
-                        else "trial_search"
+                        else "search_trials"
                         if kind == "trial"
-                        else "search"
+                        else "search_records"
                     )
                     selector = "" if kind in {"article", "trial"} else f'entity="{kind}",'
                     routes.append(f"{tool}({selector}query=...)")
-            guidance = "; ".join(routes) or "Inspect the section routes in capabilities."
+            guidance = "; ".join(routes) or "Inspect the section routes in get_capabilities."
             raise ResearchError(
                 "canonical_route_required",
-                f'{source}/{operation} is not a public advanced operation. Canonical routes: {guidance}. capabilities(source="{source}") lists section routes and distinct advanced operations.',
+                f'{source}/{operation} is not a public advanced operation. Canonical routes: {guidance}. get_capabilities(source="{source}") lists section routes and distinct advanced operations.',
             )
         # NCBI common sequence aliases are deliberately absent. All three
         # sequence/repository databases use this single parameterized route.
@@ -1039,7 +1039,7 @@ class ResearchService:
         if len(names) != len(set(names)):
             raise ResearchError("duplicate_section", "Select each section once.")
         if "all" in names:
-            raise ResearchError("unbounded_sections", "Select explicit sections from capabilities.")
+            raise ResearchError("unbounded_sections", "Select explicit sections from get_capabilities.")
         for name in names:
             if name in ALIASES.get(entity, {}):
                 raise ResearchError(
@@ -1277,7 +1277,7 @@ class ResearchService:
                 identifier(
                     request.id,
                     r"R-[A-Z]{3}-[1-9][0-9]*",
-                    "Use a Reactome stable pathway ID; research(pathway_review) also accepts an exact pathway name.",
+                    "Use a Reactome stable pathway ID; build_dossier(pathway_review) also accepts an exact pathway name.",
                 )
                 await self.adapters.validate(
                     "reactome",
@@ -1752,14 +1752,14 @@ class ResearchService:
         if relation in self._sections(entity.value):
             raise ResearchError(
                 "canonical_route_required",
-                f'Use get(entity="{entity.value}",id=...,sections=["{relation}"]); entity sections are not duplicated as relations.',
+                f'Use get_record(entity="{entity.value}",id=...,sections=["{relation}"]); entity sections are not duplicated as relations.',
             )
         if relation not in RELATIONS.get(entity.value, []):
             raise ResearchError(
                 "unknown_relation",
                 f"Valid {entity.value} relations: "
                 + (", ".join(RELATIONS.get(entity.value, [])) or "none")
-                + f'. Inspect capabilities(entity="{entity.value}").',
+                + f'. Inspect get_capabilities(entity="{entity.value}").',
             )
         if not 1 <= limit <= 25 or not id or len(id) > 512:
             raise ResearchError("invalid_parameters", "Invalid bounded relation request.")
@@ -1967,7 +1967,7 @@ class ResearchService:
         _plan_only=False,
     ):
         if workflow not in WORKFLOWS:
-            raise ResearchError("unknown_workflow", "Inspect capabilities for supported research workflows.")
+            raise ResearchError("unknown_workflow", "Inspect get_capabilities for supported research workflows.")
         entity, defaults = WORKFLOWS[workflow]
         requested_focus = focus
         if assembly and entity != "variant":
@@ -2171,7 +2171,7 @@ class ResearchService:
             if taxon_proof:
                 papers.provenance.append(taxon_proof)
             result.sections["literature"] = await compose_evidence(
-                papers, store=self.evidence, scope=scope, operation="literature_search"
+                papers, store=self.evidence, scope=scope, operation="search_literature"
             )
             result.provenance.extend(papers.provenance)
             result.truncated |= papers.truncated
@@ -2194,7 +2194,9 @@ class ResearchService:
                 )
                 result.sections[
                     "related_articles" if entity == "variant" else "related_trials"
-                ] = await compose_evidence(related, store=self.evidence, scope=scope, operation="relate")
+                ] = await compose_evidence(
+                    related, store=self.evidence, scope=scope, operation="find_related"
+                )
                 result.provenance.extend(related.provenance)
                 result.truncated |= related.truncated
             except (ResearchError, TimeoutError):
@@ -2237,7 +2239,7 @@ class ResearchService:
         from .source_policy import source_names
 
         if source and source not in source_names():
-            raise ResearchError("unsupported_source", "Choose a source listed by capabilities.")
+            raise ResearchError("unsupported_source", "Choose a source listed by get_capabilities.")
         if (source == "study" or (source is None and entity is None)) and self.source_availability("study")[
             0
         ]:
@@ -2423,5 +2425,5 @@ class ResearchService:
                     - {"article-content"}
                 )
             ],
-            "routing": "search/get own entity acquisition, relate owns graph traversal, research composes these, batch repeats them. query_source exposes only distinct advanced operations. GenBank/GEO/SRA share ncbi-records with an explicit database selector. No provider servers are mounted or separately exposed.",
+            "routing": "search_records/get_record own entity acquisition, find_related owns graph traversal, build_dossier composes these, run_batch repeats them. query_source exposes only distinct advanced operations. GenBank/GEO/SRA share ncbi-records with an explicit database selector. No provider servers are mounted or separately exposed.",
         }

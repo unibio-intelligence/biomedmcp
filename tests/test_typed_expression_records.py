@@ -132,10 +132,10 @@ async def test_actual_mcp_discriminated_schema_and_receipt_preserve_measurement_
     state["pages"]["/expression/medianGeneExpression"] = {0: page([original])}
     args = {"entity": "gene", "id": GENCODE, "sources": ["gtex"], "sections": ["expression"]}
     async with Client(create_server(service=service)) as client:
-        schema = (await client.call_tool_mcp("capabilities", {"source": "gtex"})).structured_content[
+        schema = (await client.call_tool_mcp("get_capabilities", {"source": "gtex"})).structured_content[
             "record_schemas"
         ]["expression"]
-        result = await client.call_tool_mcp("get", args)
+        result = await client.call_tool_mcp("get_record", args)
     assert not result.is_error
     value = result.structured_content
     assert json.loads(result.content[0].text) == value and verify_receipt(value)
@@ -161,7 +161,7 @@ async def test_bounded_series_recovers_exact_supplied_values_without_another_req
         },
     }
     async with Client(create_server(service=service)) as client:
-        value = (await client.call_tool_mcp("get", args)).structured_content
+        value = (await client.call_tool_mcp("get_record", args)).structured_content
         section = value["sections"]["expression"]
         assert section["truncated"] and verify_receipt(value)
         row = section["data"]["data"][0]
@@ -181,13 +181,13 @@ async def test_failed_contract_has_no_evidence_and_valid_retry_can_be_cached(pag
     state["pages"]["/expression/medianGeneExpression"] = {0: page([{**raw, "participant_count": 2}])}
     args = {"entity": "gene", "id": GENCODE, "sources": ["gtex"], "sections": ["expression"]}
     async with Client(create_server(service=service)) as client:
-        failure = (await client.call_tool_mcp("get", args)).structured_content
+        failure = (await client.call_tool_mcp("get_record", args)).structured_content
         section = failure["sections"]["expression"]
         assert section["data"] is None and section["evidence_ids"] == []
         assert section["error"]["code"] == "invalid_source_response" and failure["provenance"] == []
         state["pages"]["/expression/medianGeneExpression"][0] = page([deepcopy(raw)])
-        success = (await client.call_tool_mcp("get", args)).structured_content
-        cached = (await client.call_tool_mcp("get", args)).structured_content
+        success = (await client.call_tool_mcp("get_record", args)).structured_content
+        cached = (await client.call_tool_mcp("get_record", args)).structured_content
     assert success["outcome"] == cached["outcome"] == "data"
     assert cached["provenance"][0]["cached"]
     assert len([x for x in state["requests"] if x.url.path.endswith("/expression/medianGeneExpression")]) == 2

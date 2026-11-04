@@ -1,6 +1,6 @@
 # Variant population measurements
 
-Call `capabilities` with `{"source":"gnomad"}` to inspect the
+Call `get_capabilities` with `{"source":"gnomad"}` to inspect the
 `variant_population` field schema. Retrieve measurements through
 `variant_evidence`, for example:
 

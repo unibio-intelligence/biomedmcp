@@ -11,7 +11,7 @@ from fastmcp import Client
 
 from biomedmcp.examples import ADAPTER_READMES, adapter_readme, guide_examples, readme_examples
 from biomedmcp.mcp.server import create_server
-from biomedmcp.output_contracts import CATALOG_BYTE_BUDGET
+from biomedmcp.output_contracts import CATALOG_BYTE_BUDGET, MODEL_VISIBLE_BYTE_BUDGET
 from biomedmcp.public_catalog import operation_map
 
 
@@ -20,6 +20,11 @@ async def artifacts(root):
     async with Client(create_server()) as client:
         tools = [tool.model_dump(mode="json", exclude_none=True) for tool in await client.list_tools()]
     raw = json.dumps(tools, separators=(",", ":"), sort_keys=True).encode()
+    visible = json.dumps(
+        [{key: value for key, value in tool.items() if key != "output_schema"} for tool in tools],
+        separators=(",", ":"),
+        sort_keys=True,
+    ).encode()
     report = {
         "tools": tools,
         "tool_count": len(tools),
@@ -28,11 +33,17 @@ async def artifacts(root):
         "tokenizer": None,
         "measurement": "live tools/list",
         "byte_budget": CATALOG_BYTE_BUDGET,
-        "budget_decision": "96 KiB bounds the 13-tool catalog with self-contained evidence-receipt schemas. Client/model token and task impact remains unqualified. Selected literature and trial registry metadata is typed; other inner scientific record coverage remains open. Equivalent nullable shorthand and omission of redundant annotations preserve constraints. FastMCP retains self-contained local definitions, with no external schema references.",
+        "model_visible_utf8_bytes": len(visible),
+        "model_visible_byte_budget": MODEL_VISIBLE_BYTE_BUDGET,
+        "budget_decision": "96 KiB bounds the 13-tool catalog with self-contained evidence-receipt schemas; 40 KiB bounds the model-visible part (names, titles, descriptions, input schemas and annotations). Claude tool definitions and default Codex function tools omit output schemas; Codex code mode renders them into TypeScript declarations. Parameter descriptions are short so repeated fields stay cheap. run_batch advertises only its envelope because each item is validated against its own tool schema; resolve_entity advertises a strictly looser schema without typed record families, which the server still enforces. Task impact remains unqualified. Selected literature and trial registry metadata is typed; other inner scientific record coverage remains open. Equivalent nullable shorthand and omission of redundant annotations preserve constraints. FastMCP retains self-contained local definitions, with no external schema references.",
     }
     if len(raw) > CATALOG_BYTE_BUDGET:
         raise RuntimeError(
             f"The live catalog ({len(raw)} bytes) exceeds the {CATALOG_BYTE_BUDGET}-byte discovery budget"
+        )
+    if len(visible) > MODEL_VISIBLE_BYTE_BUDGET:
+        raise RuntimeError(
+            f"Model-visible tool definitions ({len(visible)} bytes) exceed the {MODEL_VISIBLE_BYTE_BUDGET}-byte budget"
         )
     try:
         import tiktoken

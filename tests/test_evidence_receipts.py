@@ -43,11 +43,11 @@ async def test_real_mcp_receipt_binds_normalized_fulltext_and_delivered_lines(mo
     monkeypatch.setenv("UBI_PROFILE", "local")
     http = HTTP(JATS)
     async with Client(create_server(service=ResearchService(http=http))) as client:
-        result = await client.call_tool_mcp("get", fulltext())
+        result = await client.call_tool_mcp("get_record", fulltext())
     assert not result.is_error
     value = result.structured_content
     record = receipt(value)
-    assert record["operation"] == "get" and record["request"]["species"] == 9606
+    assert record["operation"] == "get_record" and record["request"]["species"] == 9606
     assert record["request"]["section_parameters"]["fulltext"] == {"view": "lines", "start": 1, "end": 100}
     assert record["sources"] == ["europepmc"]
     assert record["implementation"].startswith("biomedmcp/") and record["schema_version"] == "1.0"
@@ -55,15 +55,15 @@ async def test_real_mcp_receipt_binds_normalized_fulltext_and_delivered_lines(mo
     assert value["provenance"][0]["source_version"] is None
     assert record["completed_at"] >= value["provenance"][0]["retrieved_at"]
     assert json.loads(result.content[0].text) == value
-    jsonschema.validate(value, output_schema("get"))
+    jsonschema.validate(value, output_schema("get_record"))
 
 
 @pytest.mark.asyncio
 async def test_cached_window_keeps_original_retrieval_time_and_canonical_request_hash():
     http = HTTP(JATS)
     service = ResearchService(http=http)
-    first = (await execute(service, "get", fulltext(), scope="local")).model_dump(mode="json")
-    second = (await execute(service, "get", fulltext(), scope="local")).model_dump(mode="json")
+    first = (await execute(service, "get_record", fulltext(), scope="local")).model_dump(mode="json")
+    second = (await execute(service, "get_record", fulltext(), scope="local")).model_dump(mode="json")
     left, right = receipt(first), receipt(second)
     assert left["request_sha256"] == right["request_sha256"]
     assert first["provenance"][0]["retrieved_at"] == second["provenance"][0]["retrieved_at"]
@@ -74,21 +74,21 @@ async def test_cached_window_keeps_original_retrieval_time_and_canonical_request
 @pytest.mark.asyncio
 async def test_batch_receipts_keep_each_request_and_participation_separate(monkeypatch):
     monkeypatch.setenv("UBI_PROFILE", "local")
-    calls = [{"operation": "get", "arguments": fulltext(i)} for i in ["PMC123", "PMC456"]]
+    calls = [{"operation": "get_record", "arguments": fulltext(i)} for i in ["PMC123", "PMC456"]]
     async with Client(create_server(service=ResearchService(http=HTTP(JATS, JATS)))) as client:
-        result = await client.call_tool_mcp("batch", {"calls": calls})
+        result = await client.call_tool_mcp("run_batch", {"calls": calls})
     assert not result.is_error
     values = result.structured_content["results"]
     assert [receipt(v)["request"]["id"] for v in values] == ["PMC123", "PMC456"]
     assert receipt(values[0])["request_sha256"] != receipt(values[1])["request_sha256"]
     assert all(receipt(v)["sources"] == ["europepmc"] for v in values)
-    jsonschema.validate(result.structured_content, output_schema("batch"))
+    jsonschema.validate(result.structured_content, output_schema("run_batch"))
 
 
 @pytest.mark.asyncio
 async def test_failed_acquisition_is_participation_but_never_absence():
     http = HTTP(ResearchError("source_unavailable", "Synthetic outage", retryable=True))
-    value = (await execute(ResearchService(http=http), "get", {**fulltext(), "sources": ["europepmc"]}, scope="local")).model_dump(
+    value = (await execute(ResearchService(http=http), "get_record", {**fulltext(), "sources": ["europepmc"]}, scope="local")).model_dump(
         mode="json"
     )
     assert value["outcome"] == "error"
@@ -128,7 +128,7 @@ async def test_verification_detects_identity_missingness_and_request_tampering()
     value = (
         await execute(
             ResultService(example_result()),
-            "get",
+            "get_record",
             {"entity": "protein", "id": "P12345"},
             scope="account-must-not-be-exported",
         )
@@ -156,7 +156,7 @@ async def test_hashes_safe_links_and_final_budgeted_payload():
         "lots": [str(i) + "x" * 3500 for i in range(80)],
     }
     value = (
-        await execute(ResultService(result), "get", {"entity": "protein", "id": "P12345"}, scope="local")
+        await execute(ResultService(result), "get_record", {"entity": "protein", "id": "P12345"}, scope="local")
     ).model_dump(mode="json")
     assert value["truncated"] and value["sections"]["record"]["truncated"] and value["rejected_links"]
     assert len(json.dumps(value, ensure_ascii=False).encode()) <= 120000
@@ -167,8 +167,8 @@ async def test_hashes_safe_links_and_final_budgeted_payload():
 async def test_local_cli_emits_receipt_contract(monkeypatch, tmp_path):
     http = HTTP(JATS)
     monkeypatch.setattr(cli, "ResearchService", lambda **kwargs: ResearchService(http=http, **kwargs))
-    result = await cli.execute("get", fulltext(), state_dir=tmp_path / "state")
-    assert receipt(result)["operation"] == "get" and receipt(result)["sources"] == ["europepmc"]
+    result = await cli.execute("get_record", fulltext(), state_dir=tmp_path / "state")
+    assert receipt(result)["operation"] == "get_record" and receipt(result)["sources"] == ["europepmc"]
 
 
 @pytest.mark.asyncio
@@ -177,7 +177,7 @@ async def test_known_secret_is_redacted_before_request_hashing(monkeypatch):
     value = (
         await execute(
             ResultService(example_result()),
-            "get",
+            "get_record",
             {"entity": "protein", "id": "known-synthetic-secret"},
             scope="local",
         )
@@ -207,7 +207,7 @@ async def test_large_request_keeps_digest_without_unbounded_export():
 async def test_schema_rejects_missing_malformed_receipts_and_false_replay_claims():
     value = (
         await execute(
-            ResultService(example_result()), "get", {"entity": "protein", "id": "P12345"}, scope="local"
+            ResultService(example_result()), "get_record", {"entity": "protein", "id": "P12345"}, scope="local"
         )
     ).model_dump(mode="json")
     for bad in [
@@ -217,9 +217,9 @@ async def test_schema_rejects_missing_malformed_receipts_and_false_replay_claims
         {**value["receipt"], "reproduction": "exact"},
     ]:
         with pytest.raises(jsonschema.ValidationError):
-            jsonschema.validate({**value, "receipt": bad}, output_schema("get"))
+            jsonschema.validate({**value, "receipt": bad}, output_schema("get_record"))
     with pytest.raises(jsonschema.ValidationError):
-        jsonschema.validate({k: v for k, v in value.items() if k != "receipt"}, output_schema("get"))
+        jsonschema.validate({k: v for k, v in value.items() if k != "receipt"}, output_schema("get_record"))
 
 
 @pytest.mark.asyncio
@@ -248,7 +248,7 @@ async def test_runtime_observation_includes_identity_dependency_and_excludes_pro
 
     value = await execute(
         Dependencies(example_result()),
-        "get",
+        "get_record",
         {"entity": "gene", "id": "BRAF", "sections": ["expression"]},
         scope="local",
     )
@@ -279,10 +279,10 @@ async def test_concurrent_batch_participants_do_not_leak_between_items():
 
     result = await execute(
         Concurrent(),
-        "batch",
+        "run_batch",
         {
             "calls": [
-                {"operation": "get", "arguments": {"entity": "protein", "id": source}}
+                {"operation": "get_record", "arguments": {"entity": "protein", "id": source}}
                 for source in ["gtex", "uniprot"]
             ]
         },
@@ -295,15 +295,15 @@ async def test_concurrent_batch_participants_do_not_leak_between_items():
 @pytest.mark.parametrize(
     "operation",
     [
-        "search",
-        "get",
-        "literature_search",
-        "trial_search",
-        "variant_evidence",
-        "study_analysis",
-        "resolve",
-        "relate",
-        "research",
+        "search_records",
+        "get_record",
+        "search_literature",
+        "search_trials",
+        "get_variant_evidence",
+        "analyze_study",
+        "resolve_entity",
+        "find_related",
+        "build_dossier",
         "query_source",
     ],
 )
@@ -318,9 +318,9 @@ async def test_every_scientific_public_operation_keeps_its_task_identity(operati
                 if not kwargs.get("_plan_only"):
                     result = example_result()
                     result.entity = {
-                        "trial_search": Entity.trial,
-                        "variant_evidence": Entity.variant,
-                        "study_analysis": None,
+                        "search_trials": Entity.trial,
+                        "get_variant_evidence": Entity.variant,
+                        "analyze_study": None,
                     }.get(operation, result.entity)
                     return result
 
@@ -341,11 +341,11 @@ async def test_changed_receipt_metadata_invalidates_delivered_result_digest():
 
     value = (
         await execute(
-            ResultService(example_result()), "get", {"entity": "protein", "id": "P12345"}, scope="local"
+            ResultService(example_result()), "get_record", {"entity": "protein", "id": "P12345"}, scope="local"
         )
     ).model_dump(mode="json")
     for key, replacement in [
-        ("operation", "resolve"),
+        ("operation", "resolve_entity"),
         ("sources", ["other"]),
         ("completed_at", "2026-01-01T00:00:00Z"),
         ("implementation", "biomedmcp/0.1.0"),
@@ -360,11 +360,11 @@ async def test_changed_receipt_metadata_invalidates_delivered_result_digest():
 async def test_equivalent_default_requests_have_identical_normalized_request_hashes():
     service = ResultService(example_result())
     base = {"entity": "protein", "id": "P12345"}
-    first = receipt(await execute(service, "get", base, scope="one"))
+    first = receipt(await execute(service, "get_record", base, scope="one"))
     second = receipt(
         await execute(
             service,
-            "get",
+            "get_record",
             {**base, "species": 9606, "freshness": "cached_if_fresh", "sections": []},
             scope="two",
         )

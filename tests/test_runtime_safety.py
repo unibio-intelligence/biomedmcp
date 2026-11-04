@@ -144,19 +144,19 @@ async def test_public_mcp_surface_and_account_context(monkeypatch):
     async with Client(server) as client:
         tools = await client.list_tools()
         assert {t.name for t in tools} == {
-            "literature_search",
-            "trial_search",
-            "variant_evidence",
-            "study_analysis",
-            "search",
-            "get",
-            "resolve",
-            "relate",
-            "research",
-            "batch",
-            "capabilities",
+            "search_literature",
+            "search_trials",
+            "get_variant_evidence",
+            "analyze_study",
+            "search_records",
+            "get_record",
+            "resolve_entity",
+            "find_related",
+            "build_dossier",
+            "run_batch",
+            "get_capabilities",
             "query_source",
-            "quota",
+            "get_quota",
         }
         assert all(t.annotations.read_only_hint for t in tools)
-        assert (await client.call_tool("capabilities", {})).data["product"] == "biomedmcp"
+        assert (await client.call_tool("get_capabilities", {})).data["product"] == "biomedmcp"

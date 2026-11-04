@@ -24,16 +24,16 @@ from biomedmcp.trial_records import rank_trials
 
 async def test_batch_success_and_indexed_validation_before_any_acquisition():
     service = ResearchService(adapters=Adapters())
-    args = {"calls": [{"operation": "get", "arguments": {"entity": "gene", "id": "BRAF"}}]}
-    result = await execute(service, "batch", args, scope="test")
+    args = {"calls": [{"operation": "get_record", "arguments": {"entity": "gene", "id": "BRAF"}}]}
+    result = await execute(service, "run_batch", args, scope="test")
     assert result["outcome"] == "data"
     assert verify_receipt(result["results"][0])
     service = ResearchService(adapters=Adapters())
     args["calls"].append(
-        {"operation": "search", "arguments": {"entity": "gene", "query": "BRAF", "limit": 0}}
+        {"operation": "search_records", "arguments": {"entity": "gene", "query": "BRAF", "limit": 0}}
     )
     with pytest.raises(ResearchError) as caught:
-        await execute(service, "batch", args, scope="test")
+        await execute(service, "run_batch", args, scope="test")
     assert caught.value.as_dict()["fields"] == {"$.calls[1].arguments.limit": "greater_than_equal"}
     assert not service.adapters.calls
 
@@ -43,7 +43,7 @@ async def test_mcp_batch_errors_expose_schema_paths_but_not_unknown_keys(monkeyp
     async with Client(create_server(service=ResearchService(adapters=Adapters()))) as client:
         value = (
             await client.call_tool_mcp(
-                "batch", {"calls": [{"operation": "get", "credential-sentinel": "secret"}]}
+                "run_batch", {"calls": [{"operation": "get_record", "credential-sentinel": "secret"}]}
             )
         ).structured_content
     assert "$.calls[0].arguments" in value["error"]["fields"]
@@ -69,7 +69,7 @@ async def test_civic_rsid_resolves_one_conjunctive_annotation_and_tracks_depende
     variant = {**deepcopy(BRAF), "dbsnp": {"rsid": "rs113488022"}}
     service = ResearchService(http=HTTP({"total": 1, "hits": [variant]}, response()))
     value = await execute(
-        service, "variant_evidence", {"id": "rs113488022", "sections": ["civic"]}, scope="test"
+        service, "get_variant_evidence", {"id": "rs113488022", "sections": ["civic"]}, scope="test"
     )
     assert value.sections["civic"].outcome == "data"
     assert set(value.provenance[0].sources) == {"civic", "myvariant"}
@@ -93,13 +93,13 @@ async def test_relations_and_section_dependencies_are_discoverable():
     from biomedmcp.contracts import Entity
 
     service = ResearchService(adapters=Adapters())
-    capability = await execute(service, "capabilities", {}, scope="test")
+    capability = await execute(service, "get_capabilities", {}, scope="test")
     assert "references" in capability["relations"]["article"]
-    drug = await execute(service, "capabilities", {"entity": "drug"}, scope="test")
+    drug = await execute(service, "get_capabilities", {"entity": "drug"}, scope="test")
     assert drug["section_dependencies"]["label"] == ["openfda"]
     with pytest.raises(ResearchError, match="articles, trials"):
         await service.relate(Entity.gene, "KRAS", "interacts_with", scope="test")
-    with pytest.raises(ResearchError, match=r'get\(entity="protein"'):
+    with pytest.raises(ResearchError, match=r'get_record\(entity="protein"'):
         await execute(
             service,
             "query_source",
@@ -112,7 +112,7 @@ async def test_gene_annotations_have_field_error_and_canonical_guidance():
     with pytest.raises(ResearchError) as caught:
         await execute(
             ResearchService(),
-            "get",
+            "get_record",
             {"entity": "gene", "id": "KRAS", "sections": ["annotations"]},
             scope="test",
         )
@@ -129,7 +129,7 @@ async def test_label_automatically_selects_openfda(monkeypatch):
 
     monkeypatch.setattr(service.providers, "fda", fda)
     result = await execute(
-        service, "get", {"entity": "drug", "id": "pembrolizumab", "sections": ["label"]}, scope="test"
+        service, "get_record", {"entity": "drug", "id": "pembrolizumab", "sections": ["label"]}, scope="test"
     )
     assert result.outcome == "data" and result.provenance[0].source == "openfda"
     assert calls == [("drug/label", 'openfda.generic_name:"pembrolizumab"')]
@@ -154,7 +154,9 @@ async def test_pathway_sections_use_current_retained_contract_and_filter_comenti
         return page_payload(rows, raw_count=2, exhausted=True)
 
     monkeypatch.setattr(service.providers.literature, "search_source", papers)
-    result = await execute(service, "research", {"workflow": "pathway_review", "focus": PID}, scope="test")
+    result = await execute(
+        service, "build_dossier", {"workflow": "pathway_review", "focus": PID}, scope="test"
+    )
     assert result.sections["genes"].outcome == result.sections["events"].outcome == "data"
     assert {r["pmid"] for r in result.sections["literature"].data["records"]} == {"1"}
     assert result.sections["literature"].data["query"]["relevance_filter"]["filtered_weak_comentions"] == 1
@@ -173,7 +175,7 @@ async def test_default_study_is_verified_and_clearly_synthetic(monkeypatch):
     monkeypatch.delenv("UBI_PUBLIC_STUDY_MANIFEST", raising=False)
     result = await execute(
         ResearchService(),
-        "study_analysis",
+        "analyze_study",
         {"analysis": "gene_profile", "study": "ubi_synthetic", "gene": "TP53"},
         scope="test",
     )
@@ -199,7 +201,7 @@ async def test_summary_preserves_limit_and_exact_recovery_for_large_records(monk
 
     monkeypatch.setattr(service.providers, "search", search)
     result = await execute(
-        service, "search", {"entity": "adverse-event", "query": "test", "limit": 1}, scope="test"
+        service, "search_records", {"entity": "adverse_event", "query": "test", "limit": 1}, scope="test"
     )
     value = result.model_dump(mode="json")
     assert len(result.records) == 1 and len(json.dumps(value)) < 30000
@@ -211,14 +213,14 @@ async def test_summary_preserves_limit_and_exact_recovery_for_large_records(monk
 async def test_empty_searches_agree_but_failures_never_become_empty():
     author = await execute(
         ResearchService(http=HTTP({"meta": {"count": 0}, "results": []})),
-        "search",
+        "search_records",
         {"entity": "author", "query": "no-name"},
         scope="test",
     )
     assert author.outcome == "empty"
     failure = await execute(
         ResearchService(http=HTTP(ResearchError("source_rate_limited", "Limited"))),
-        "search",
+        "search_records",
         {"entity": "author", "query": "no-name"},
         scope="test",
     )
@@ -235,7 +237,7 @@ async def test_alias_ambiguity_explains_rule_and_top_candidate(monkeypatch):
         }
 
     monkeypatch.setattr(service.providers, "search", search)
-    result = await execute(service, "resolve", {"entity": "gene", "query": "HER2"}, scope="test")
+    result = await execute(service, "resolve_entity", {"entity": "gene", "query": "HER2"}, scope="test")
     assert result.outcome == "ambiguous" and result.records[0]["identity_match"] == "alias"
     assert result.query["resolution_policy"]["provider_score_used_for_identity"] is False
     assert result.next_actions[0]["arguments"]["id"] == "2064"

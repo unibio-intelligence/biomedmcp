@@ -313,7 +313,7 @@ async def test_repaired_route_executes_through_public_mcp(
     monkeypatch.setenv("UBI_PROFILE", "local")
     adapter = adapter_http(lambda request: httpx.Response(200, json=payload))
     async with Client(create_server(service=ResearchService(adapters=adapter))) as client:
-        capabilities = (await client.call_tool("capabilities", {"source": source})).data
+        capabilities = (await client.call_tool("get_capabilities", {"source": source})).data
         assert operation in {tool["name"] for tool in capabilities["operations"]}
         result = (
             await client.call_tool(

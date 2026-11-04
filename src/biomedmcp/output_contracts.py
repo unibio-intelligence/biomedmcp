@@ -19,6 +19,11 @@ from .scientific_records import LiteratureRecord
 from .trial_records import TrialRecord
 
 CATALOG_BYTE_BUDGET = 98304
+# Model-visible tool definitions: everything except outputSchema. Claude tool
+# definitions and default Codex function tools omit output schemas; Codex code
+# mode renders them into TypeScript declarations, so both budgets apply.
+MODEL_VISIBLE_BYTE_BUDGET = 40960
+TOOL_DESCRIPTION_BYTE_LIMIT = 1000  # Codex truncates plugin tool descriptions here.
 
 
 class ErrorInfo(StrictModel):
@@ -35,10 +40,18 @@ class ErrorResult(StrictModel):
     error: ErrorInfo
 
 
+class BatchItem(BaseModel):
+    # Dispatch validates each item against its own tool's output schema, which
+    # clients also have; the batch envelope does not repeat those schemas.
+    model_config = ConfigDict(extra="allow")
+    schema_version: Literal["1.0"] = "1.0"
+    outcome: Literal["data", "empty", "partial", "ambiguous", "unavailable", "not_applicable", "error"]
+
+
 class BatchResult(StrictModel):
     schema_version: Literal["1.0"] = "1.0"
     outcome: Literal["data", "partial", "error"]
-    results: list[ResearchResult | ErrorResult] = Field(min_length=1, max_length=10)
+    results: list[BatchItem] = Field(min_length=1, max_length=10)
 
 
 class QuotaBucket(StrictModel):
@@ -95,9 +108,18 @@ def _compact(value: Any) -> Any:
     return value
 
 
+# Typed records reach resolve_entity only through its exact-identifier get
+# passthrough. Its advertised schema omits those families (strictly looser);
+# the server still validates them.
+UNADVERTISED_RECORD_FAMILIES = {"resolve_entity"}
+# Relations return typed records, never typed section data.
+UNTYPED_SECTION_DATA = {"find_related"}
+
+
 @cache
-def _output_schema(name: str) -> dict:
-    model = {"batch": BatchResult, "capabilities": CapabilityResult, "quota": QuotaResult}.get(
+def _output_schema(name: str, advertised: bool = False) -> dict:
+    families = not (advertised and name in UNADVERTISED_RECORD_FAMILIES)
+    model = {"run_batch": BatchResult, "get_capabilities": CapabilityResult, "get_quota": QuotaResult}.get(
         name, ResearchResult
     )
     value = _compact(TypeAdapter(model | ErrorResult).json_schema())
@@ -118,18 +140,24 @@ def _output_schema(name: str) -> dict:
         result["properties"]["receipt"] = {"$ref": "#/$defs/EvidenceReceipt"}
         result.setdefault("required", []).append("receipt")
         value["$defs"]["EvidenceReceipt"].setdefault("required", []).append("reproduction")
-        if name != "batch":
+        if name != "run_batch":
             value["$defs"]["EvidenceReceipt"]["properties"]["operation"] = {"const": name}
-        if name in {"trial_search", "variant_evidence"}:
-            value["$defs"]["Entity"]["enum"] = ["trial" if name == "trial_search" else "variant"]
-        if name == "study_analysis":
+        if name in {"search_trials", "get_variant_evidence"}:
+            value["$defs"]["Entity"]["enum"] = ["trial" if name == "search_trials" else "variant"]
+        if name == "analyze_study":
             result["properties"]["entity"] = {"const": None}
             value["$defs"].pop("Entity", None)
-        if name not in {"batch", "query_source", "study_analysis"}:
+        if name not in {"run_batch", "query_source", "analyze_study"}:
             result["properties"]["source"] = {"const": None}
     # Only these public operations can return bibliographic records. Keep each
     # advertised schema self-contained without copying unreachable families.
-    if name in {"get", "resolve", "literature_search", "relate", "research", "batch"}:
+    if families and name in {
+        "get_record",
+        "resolve_entity",
+        "search_literature",
+        "find_related",
+        "build_dossier",
+    }:
         result = value["$defs"]["ResearchResult"]
         literature = _compact(LiteratureRecord.model_json_schema())
         literature.setdefault("required", []).append("record_type")
@@ -166,8 +194,9 @@ def _output_schema(name: str) -> dict:
             "then": {"$ref": "#/$defs/LiteratureRecord"},
         }
         result["properties"]["records"]["items"]["allOf"] = [tagged]
-        value["$defs"]["Section"]["properties"]["data"] = tagged
-    if name in {"trial_search", "get", "resolve", "relate", "batch"}:
+        if name not in UNTYPED_SECTION_DATA:
+            value["$defs"]["Section"]["properties"]["data"] = tagged
+    if families and name in {"search_trials", "get_record", "resolve_entity", "find_related"}:
         result = value["$defs"]["ResearchResult"]
         trial = _compact(TrialRecord.model_json_schema())
         trial.setdefault("required", []).extend(["record_type", "assertion_type", "species"])
@@ -183,8 +212,9 @@ def _output_schema(name: str) -> dict:
             "then": {"$ref": "#/$defs/TrialRecord"},
         }
         result["properties"]["records"]["items"].setdefault("allOf", []).append(tagged)
-        data = value["$defs"]["Section"]["properties"]["data"]
-        value["$defs"]["Section"]["properties"]["data"] = {"allOf": [data, tagged]}
+        if name not in UNTYPED_SECTION_DATA:
+            data = value["$defs"]["Section"]["properties"]["data"]
+            value["$defs"]["Section"]["properties"]["data"] = {"allOf": [data, tagged]}
     # Nullable enum shorthand introduces redundant type assertions. Compact
     # once more so complete quota usage fits the existing discovery budget.
     value = _compact(compact_nullable(value))
@@ -239,7 +269,7 @@ def _output_schema(name: str) -> dict:
 
 
 def output_schema(name: str) -> dict:
-    return deepcopy(_output_schema(name))
+    return deepcopy(_output_schema(name, advertised=True))
 
 
 @cache

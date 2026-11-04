@@ -107,23 +107,23 @@ async def test_canonical_dispatch_and_capabilities_offer_open_author_and_related
     )
     search = await execute(
         service,
-        "search",
+        "search_records",
         {"entity": "author", "query": "Jane", "filters": {"source": "openalex"}, "limit": 2},
         scope="one",
     )
     assert search.outcome == "data"
-    profile = await execute(service, "get", {"entity": "author", "id": "openalex:A123"}, scope="one")
+    profile = await execute(service, "get_record", {"entity": "author", "id": "openalex:A123"}, scope="one")
     assert profile.outcome == "data"
     works = await execute(
         service,
-        "relate",
+        "find_related",
         {"entity": "author", "id": "openalex:A123", "relation": "articles", "limit": 2},
         scope="one",
     )
     assert works.outcome == "data"
     related = await execute(
         service,
-        "relate",
+        "find_related",
         {"entity": "article", "id": "openalex:W1", "relation": "recommendations", "limit": 2},
         scope="one",
     )
@@ -194,7 +194,7 @@ async def test_all_unresolved_related_work_metadata_is_partial_not_evidence_of_n
     service = ResearchService(http=HTTP(seed, {"meta": {"count": 0}, "results": []}))
     result = await execute(
         service,
-        "relate",
+        "find_related",
         {"entity": "article", "id": "10.1234/test1", "relation": "recommendations", "limit": 2},
         scope="one",
     )
@@ -217,7 +217,7 @@ async def test_pmcid_uses_exact_epmc_identity_bridge_with_both_source_notices():
     service = ResearchService(http=HTTP(bridge, article(), {"meta": {"count": 1}, "results": [article(2)]}))
     result = await execute(
         service,
-        "relate",
+        "find_related",
         {"entity": "article", "id": "PMC123", "relation": "recommendations", "limit": 2},
         scope="one",
     )

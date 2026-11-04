@@ -102,7 +102,7 @@ async def test_static_resources_and_prompt_have_terminal_auth_and_output_spans(o
 
 
 async def call(client, identifier=SENTINEL):
-    return await client.call_tool_mcp("get", {"entity": "protein", "id": identifier})
+    return await client.call_tool_mcp("get_record", {"entity": "protein", "id": identifier})
 
 
 async def test_actual_mcp_has_one_terminal_after_accounting_and_output_with_source_correlation(observed):
@@ -193,16 +193,16 @@ async def test_accounting_refusal_or_failure_after_science_never_emits_request_s
 async def test_batch_retains_final_partial_outcome_and_one_outer_request(observed):
     async with Client(create_server(service=Service())) as client:
         result = await client.call_tool_mcp(
-            "batch",
+            "run_batch",
             {
                 "calls": [
-                    {"operation": "get", "arguments": {"entity": "protein", "id": identifier}}
+                    {"operation": "get_record", "arguments": {"entity": "protein", "id": identifier}}
                     for identifier in [SENTINEL, "source-unavailable"]
                 ]
             },
         )
     event = terminals(observed)[0]
-    assert len(terminals(observed)) == 1 and event["operation"] == "batch"
+    assert len(terminals(observed)) == 1 and event["operation"] == "run_batch"
     assert event["outcome"] == result.structured_content["outcome"] == "partial"
     assert event["result_error_codes"] == ["source_unavailable"]
     assert event["phase_calls"]["accounting"] == event["phase_calls"]["dispatch"] == 1
@@ -210,7 +210,7 @@ async def test_batch_retains_final_partial_outcome_and_one_outer_request(observe
 
 
 async def test_embedded_dispatch_creates_a_terminal_without_claiming_wire_delivery(observed):
-    value = await execute(Service(), "get", {"entity": "protein", "id": SENTINEL}, scope=SENTINEL)
+    value = await execute(Service(), "get_record", {"entity": "protein", "id": SENTINEL}, scope=SENTINEL)
     event = terminals(observed)[0]
     assert event["outcome"] == value.outcome and event["boundary"] == "embedded"
     assert event["output_state"] == "scientific_result_constructed" and not event["delivery_confirmed"]
@@ -219,11 +219,11 @@ async def test_embedded_dispatch_creates_a_terminal_without_claiming_wire_delive
 async def test_cli_owns_request_and_nested_dispatch_does_not_emit_another(observed, monkeypatch):
     async def command(*args, **kwargs):
         return (
-            await execute(Service(), "get", {"entity": "protein", "id": SENTINEL}, scope=SENTINEL)
+            await execute(Service(), "get_record", {"entity": "protein", "id": SENTINEL}, scope=SENTINEL)
         ).model_dump(mode="json")
 
     monkeypatch.setattr(cli, "_execute", command)
-    await cli.execute("get", {"entity": "protein", "id": SENTINEL})
+    await cli.execute("get_record", {"entity": "protein", "id": SENTINEL})
     assert len(terminals(observed)) == 1 and terminals(observed)[0]["boundary"] == "cli"
 
 
@@ -312,7 +312,7 @@ async def test_operator_sink_failure_preserves_result_and_balanced_request_metri
             raise RuntimeError(SENTINEL)
 
     monkeypatch.setattr(request_telemetry, "log", Broken())
-    result = await execute(Service(), "get", {"entity": "protein", "id": SENTINEL}, scope=SENTINEL)
+    result = await execute(Service(), "get_record", {"entity": "protein", "id": SENTINEL}, scope=SENTINEL)
     assert result.outcome == "data"
     counts = request_telemetry.metrics.snapshot()["boundaries"]["embedded"]
     assert counts["terminal"] == counts["event_sink_failures"] == 1 and counts["pending"] == 0

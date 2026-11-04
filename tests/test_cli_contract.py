@@ -32,10 +32,10 @@ async def test_cli_and_mcp_preserve_gene_identity_sections_and_provenance(monkey
         cli, "ResearchService", lambda **kwargs: ResearchService(adapters=Adapters(), **kwargs)
     )
     params = {"entity": "gene", "id": "BRAF", "sections": []}
-    local = await cli.execute("get", params)
+    local = await cli.execute("get_record", params)
     service = ResearchService(adapters=Adapters())
     async with Client(create_server(service=service)) as client:
-        hosted = (await client.call_tool("get", params)).data
+        hosted = (await client.call_tool("get_record", params)).data
     for value in (local, hosted):
         assert value["outcome"] == "data"
         assert value["sections"]["record"]["data"]["symbol"] == "BRAF"

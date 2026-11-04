@@ -60,7 +60,9 @@ async def test_public_qtl_families_keep_typed_identity_inputs_and_unknown_popula
     if section == "sqtl" and mode == "dynamic":
         extra["phenotype_id"] = raw["phenotypeId"]
     async with Client(create_server(service=service)) as client:
-        result = (await client.call_tool_mcp("get", arguments(section, mode, **extra))).structured_content
+        result = (
+            await client.call_tool_mcp("get_record", arguments(section, mode, **extra))
+        ).structured_content
     assert result["outcome"] == "data", result
     assert verify_receipt(result)
     data = result["sections"][section]["data"]
@@ -82,7 +84,9 @@ async def test_filtered_qtl_points_to_its_original_source_row(paged_gtex):
     raw = association()
     state["pages"]["/association/singleTissueEqtl"] = {0: page([{**raw, "pValue": 0.5}, raw], size=2)}
     async with Client(create_server(service=service)) as client:
-        value = (await client.call_tool("get", arguments("eqtl", p_value_threshold=0.05))).structured_content
+        value = (
+            await client.call_tool("get_record", arguments("eqtl", p_value_threshold=0.05))
+        ).structured_content
     row = value["sections"]["eqtl"]["data"]["data"][0]
     assert row["input_locator"]["row_index"] == 1
     assert row["input_locator"]["measurements"]["pValue"] == "/data/1/pValue"
@@ -97,7 +101,7 @@ async def test_skipped_qtl_pages_retain_the_actual_source_page(paged_gtex):
     }
     async with Client(create_server(service=service)) as client:
         value = (
-            await client.call_tool("get", arguments("eqtl", p_value_threshold=0.05, limit=1))
+            await client.call_tool("get_record", arguments("eqtl", p_value_threshold=0.05, limit=1))
         ).structured_content
     row = value["sections"]["eqtl"]["data"]["data"][0]
     assert row["input_locator"]["page"] == 2 and row["input_locator"]["row_index"] == 0
@@ -115,7 +119,8 @@ async def test_dynamic_splicing_retains_the_actual_qualified_gene_intron_join(pa
     async with Client(create_server(service=service)) as client:
         value = (
             await client.call_tool(
-                "get", arguments("sqtl", "dynamic", variant_id=VARIANT, phenotype_id=raw["phenotypeId"])
+                "get_record",
+                arguments("sqtl", "dynamic", variant_id=VARIANT, phenotype_id=raw["phenotypeId"]),
             )
         ).structured_content
     row = value["sections"]["sqtl"]["data"]["records"][0]
@@ -304,13 +309,13 @@ async def test_filtered_provider_annotation_cannot_spoof_a_population_or_become_
     }
     args = arguments("eqtl", p_value_threshold=0.05)
     async with Client(create_server(service=service)) as client:
-        failed = (await client.call_tool_mcp("get", args)).structured_content
+        failed = (await client.call_tool_mcp("get_record", args)).structured_content
         section = failed["sections"]["eqtl"]
         assert section["error"]["code"] == "invalid_source_response"
         assert section["data"] is None and section["evidence_ids"] == []
         assert failed["provenance"] == []
         state["pages"]["/association/singleTissueEqtl"][0] = page([association()], size=2)
-        valid = (await client.call_tool("get", args)).structured_content
+        valid = (await client.call_tool("get_record", args)).structured_content
     assert valid["outcome"] == "data"
     assert "synthetic-qtl-credential-sentinel" not in json.dumps(failed) + caplog.text
     assert len([r for r in state["requests"] if r.url.path.endswith("singleTissueEqtl")]) == 2
@@ -321,8 +326,8 @@ async def test_conflicting_acquired_associations_keep_independent_hashes_and_row
     rows = [association(), {**association(), "nes": 0.5}]
     state["pages"]["/association/singleTissueEqtl"] = {0: page(rows, size=2)}
     async with Client(create_server(service=service)) as client:
-        result = (await client.call_tool("get", arguments("eqtl"))).structured_content
-        schema = (await client.call_tool("capabilities", {"source": "gtex"})).structured_content[
+        result = (await client.call_tool("get_record", arguments("eqtl"))).structured_content
+        schema = (await client.call_tool("get_capabilities", {"source": "gtex"})).structured_content[
             "record_schemas"
         ]["qtl"]
     data = result["sections"]["eqtl"]["data"]["data"]
@@ -345,7 +350,7 @@ async def test_bounded_dynamic_arrays_recover_aligned_values_with_the_same_evide
     state["pages"]["/association/dyneqtl"] = raw
     async with Client(create_server(service=service)) as client:
         result = (
-            await client.call_tool("get", arguments("eqtl", "dynamic", variant_id=VARIANT))
+            await client.call_tool("get_record", arguments("eqtl", "dynamic", variant_id=VARIANT))
         ).structured_content
         section = result["sections"]["eqtl"]
         row = section["data"]["records"][0]
@@ -380,7 +385,7 @@ async def test_gene_association_preserves_long_source_alleles_within_the_result_
     raw["variantId"] = f"chr7_{raw['pos']}_{reference}_T_b38"
     state["pages"]["/association/singleTissueEqtl"] = {0: page([raw], size=2)}
     async with Client(create_server(service=service)) as client:
-        result = (await client.call_tool_mcp("get", arguments("eqtl"))).structured_content
+        result = (await client.call_tool_mcp("get_record", arguments("eqtl"))).structured_content
     assert result["outcome"] == "data", result
     row = result["sections"]["eqtl"]["data"]["data"][0]
     assert row["variantId"] == row["variant_identity"]["variant_id"] == raw["variantId"]

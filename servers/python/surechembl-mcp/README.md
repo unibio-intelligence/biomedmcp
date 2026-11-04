@@ -2,23 +2,23 @@
 
 Examples use the public BioMedMCP tools and their typed JSON arguments.
 
-Use the biomedmcp server and its canonical tools. Retained adapters are implementation packages; their internal tools are not separate public MCP mounts.
+Connect to the biomedmcp server and use its tools. This package runs inside that server; it is not a separate MCP server.
 
 The ordinary public patent search acquires SureChEMBL patent-chemistry discovery records. Its distinct chemistry, structure-similarity and statistics operations use query_source.
 
-Declared advanced operations: `analyze_patent_chemistry`, `get_patent_statistics`, `search_similar_structures`.
+Advanced operations: `analyze_patent_chemistry`, `get_patent_statistics`, `search_similar_structures`.
 
-Inspect capabilities for this source to obtain the exact current parameter schemas. Preserve provider patent and chemical identifiers. Public patent bibliographic retrieval uses the separate patents source and its qualified EPO access mode; a chemistry search record is not a complete patent document.
+Run get_capabilities for this source to see its current parameters. Preserve provider patent and chemical identifiers. Public patent bibliographic retrieval uses the separate patents source and its qualified EPO access mode; a chemistry search record is not a complete patent document.
 
-These examples pass schemas and preflight and execute through MCP against mocked provider responses. They do not establish live source health or comprehensive scientific qualification. Chemical mentions do not establish claim scope, biological activity, novelty or freedom to operate. These mocked routes do not establish current SureChEMBL endpoint availability, source access or exhaustive patent coverage.
+The examples are tested through MCP against mock responses; live results may differ. Chemical mentions do not establish claim scope, biological activity, novelty or freedom to operate. These mocked routes do not establish current SureChEMBL endpoint availability, source access or exhaustive patent coverage.
 
-Follow advertised provider continuation for further acquisition. If the result advertises an evidence recovery URI, use its bounded ranges to read acquired data omitted from the preview; see [evidence recovery](../../../docs/evidence-resources.md). Snapshot scope, expiry and source rights still apply.
+To get more results, follow the continuation in the response. If a result includes an evidence recovery URI, use it to read data left out of the preview; see [evidence recovery](../../../docs/evidence-resources.md). Recovered data expires and is subject to the source's terms.
 
 ## SureChEMBL patent chemistry discovery for ezetimibe
 
 ```json
 {
-  "tool": "search",
+  "tool": "search_records",
   "arguments": {
     "entity": "patent",
     "query": "ezetimibe"

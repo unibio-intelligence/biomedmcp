@@ -145,8 +145,8 @@ async def test_composed_deadline_covers_preflight_and_resets_context(monkeypatch
     with pytest.raises(ResearchError) as caught:
         await dispatch.execute(
             object(),
-            "batch",
-            {"calls": [{"operation": "get", "arguments": {"entity": "gene", "id": "BRAF"}}]},
+            "run_batch",
+            {"calls": [{"operation": "get_record", "arguments": {"entity": "gene", "id": "BRAF"}}]},
             scope="local",
         )
     assert caught.value.code == "operation_timeout"

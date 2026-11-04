@@ -28,40 +28,40 @@ EXAMPLES = (
     example(
         "gene-search",
         "Human BRCA1 gene discovery",
-        "search",
+        "search_records",
         {"entity": "gene", "query": "BRCA1", "filters": {"species": 9606}},
     ),
     example(
         "protein-search",
         "Human insulin protein discovery",
-        "search",
+        "search_records",
         {"entity": "protein", "query": "insulin", "filters": {"species": 9606}},
     ),
     example(
         "drug-search",
         "Ezetimibe compound discovery",
-        "search",
+        "search_records",
         {"entity": "drug", "query": "ezetimibe", "filters": {"source": "mychem"}},
     ),
     example(
-        "gene-record", "Human PCSK9 gene record", "get", {"entity": "gene", "id": "PCSK9", "species": 9606}
+        "gene-record", "Human PCSK9 gene record", "get_record", {"entity": "gene", "id": "PCSK9", "species": 9606}
     ),
     example(
         "gene-expression",
         "Human LDLR median expression by tissue",
-        "get",
+        "get_record",
         {"entity": "gene", "id": "LDLR", "species": 9606, "sections": ["expression"]},
     ),
     example(
         "article-fulltext",
         "Full-text outline for a qualified PMID, when accessible",
-        "get",
+        "get_record",
         {"entity": "article", "id": "PMID:123", "sections": ["fulltext"]},
     ),
     example(
         "gene-tissue",
         "Human LDLR expression in liver tissue",
-        "get",
+        "get_record",
         {
             "entity": "gene",
             "id": "LDLR",
@@ -75,7 +75,7 @@ EXAMPLES = (
     example(
         "gene-eqtl",
         "Human LDLR eQTL associations in liver tissue",
-        "get",
+        "get_record",
         {
             "entity": "gene",
             "id": "LDLR",
@@ -87,58 +87,58 @@ EXAMPLES = (
     example(
         "drug-record",
         "Ezetimibe record by provider-stable identifier",
-        "get",
+        "get_record",
         {"entity": "drug", "id": "OLNTVTPDXPETLC-XPWALMASSA-N"},
     ),
     example(
         "disease-record",
         "Melanoma record by MONDO identifier",
-        "get",
+        "get_record",
         {"entity": "disease", "id": "MONDO:0007750"},
     ),
-    example("literature-lipids", "PCSK9 LDL cholesterol papers", "literature_search", {"query": "PCSK9 LDL cholesterol"}),
+    example("literature-lipids", "PCSK9 LDL cholesterol papers", "search_literature", {"query": "PCSK9 LDL cholesterol"}),
     example(
         "literature-date",
         "PCSK9 papers since 2024",
-        "literature_search",
+        "search_literature",
         {"query": "PCSK9", "filters": {"source": "pubmed", "date_from": "2024-01-01"}},
     ),
     example(
         "literature-open",
         "Open-access familial hypercholesterolemia papers from Europe PMC",
-        "literature_search",
+        "search_literature",
         {"query": "familial hypercholesterolemia", "filters": {"source": "europepmc", "open_access": True}},
     ),
     example(
         "trial-recruiting",
         "Recruiting familial hypercholesterolemia trials",
-        "trial_search",
+        "search_trials",
         {"query": "familial hypercholesterolemia", "filters": {"status": "RECRUITING"}},
     ),
     example(
         "trial-phase",
         "Phase 3 breast-cancer trials",
-        "trial_search",
+        "search_trials",
         {"query": "breast cancer", "filters": {"phase": "PHASE3"}},
     ),
-    example("trial-ezetimibe", "Ezetimibe trial discovery", "trial_search", {"query": "ezetimibe"}),
-    example("variant-protein", "PCSK9 R46L variant evidence", "variant_evidence", {"id": "PCSK9 R46L"}),
+    example("trial-ezetimibe", "Ezetimibe trial discovery", "search_trials", {"query": "ezetimibe"}),
+    example("variant-protein", "PCSK9 R46L variant evidence", "get_variant_evidence", {"id": "PCSK9 R46L"}),
     example(
         "variant-coordinate",
         "GRCh38 PCSK9 variant coordinate evidence",
-        "variant_evidence",
+        "get_variant_evidence",
         {"id": "chr1:55039974:G:T", "assembly": "grch38", "sections": ["clinvar", "population"]},
     ),
     example(
         "variant-rsid",
         "Variant evidence for rs11591147",
-        "variant_evidence",
+        "get_variant_evidence",
         {"id": "rs11591147", "sections": ["clinvar", "population"]},
     ),
     example(
         "variant-cohort",
         "Variant evidence in an explicit cBioPortal cohort",
-        "variant_evidence",
+        "get_variant_evidence",
         {
             "id": "PCSK9 R46L",
             "sections": ["cbioportal"],
@@ -150,61 +150,61 @@ EXAMPLES = (
     example(
         "study-profile",
         "TP53 mutation frequency in the installed synthetic study",
-        "study_analysis",
+        "analyze_study",
         {"analysis": "gene_profile", "study": "ubi_synthetic", "gene": "TP53"},
     ),
     example(
         "study-survival",
         "Overall survival by TP53 mutation in the installed synthetic study",
-        "study_analysis",
+        "analyze_study",
         {"analysis": "survival", "study": "ubi_synthetic", "gene": "TP53", "endpoint": "os"},
     ),
     example(
         "study-cooccurrence",
         "TP53/KRAS co-occurrence in the installed synthetic study",
-        "study_analysis",
+        "analyze_study",
         {"analysis": "co_occurrence", "study": "ubi_synthetic", "genes": ["TP53", "KRAS"]},
     ),
     example(
         "resolve-ldl-receptor",
         "Resolve the human LDL receptor gene alias",
-        "resolve",
+        "resolve_entity",
         {"entity": "gene", "query": "LDL receptor", "species": 9606},
     ),
     example(
         "resolve-variant",
         "Resolve rs11591147 before joining evidence",
-        "resolve",
+        "resolve_entity",
         {"entity": "variant", "query": "rs11591147"},
     ),
     example(
         "resolve-mouse",
         "Resolve mouse Trp53 without changing species",
-        "resolve",
+        "resolve_entity",
         {"entity": "gene", "query": "Trp53", "species": 10090},
     ),
     example(
         "article-references",
         "References of a known PubMed article",
-        "relate",
+        "find_related",
         {"entity": "article", "id": "PMID:123", "relation": "references"},
     ),
     example(
         "variant-structure",
         "PCSK9 R46L structural coverage",
-        "relate",
+        "find_related",
         {"entity": "variant", "id": "PCSK9 R46L", "relation": "structure"},
     ),
     example(
         "gene-articles",
         "Human PCSK9 article discovery with qualified identity",
-        "relate",
+        "find_related",
         {"entity": "gene", "id": "PCSK9", "relation": "articles", "species": 9606},
     ),
     example(
         "target-dossier",
         "Bounded human LDLR target dossier",
-        "research",
+        "build_dossier",
         {
             "workflow": "target_dossier",
             "focus": "LDLR",
@@ -214,13 +214,13 @@ EXAMPLES = (
     example(
         "drug-dossier",
         "Bounded ezetimibe drug review",
-        "research",
+        "build_dossier",
         {"workflow": "drug_review", "focus": "ezetimibe"},
     ),
     example(
         "disease-dossier",
         "Bounded familial hypercholesterolemia disease landscape",
-        "research",
+        "build_dossier",
         {"workflow": "disease_landscape", "focus": "MONDO:0007750"},
     ),
     example(
@@ -262,31 +262,31 @@ EXAMPLES = (
     example(
         "batch-gene",
         "Batch a human gene record read",
-        "batch",
-        {"calls": [{"operation": "get", "arguments": {"entity": "gene", "id": "PCSK9", "species": 9606}}]},
+        "run_batch",
+        {"calls": [{"operation": "get_record", "arguments": {"entity": "gene", "id": "PCSK9", "species": 9606}}]},
     ),
     example(
         "batch-trial",
         "Batch trial discovery",
-        "batch",
-        {"calls": [{"operation": "trial_search", "arguments": {"query": "familial hypercholesterolemia"}}]},
+        "run_batch",
+        {"calls": [{"operation": "search_trials", "arguments": {"query": "familial hypercholesterolemia"}}]},
     ),
     example(
         "batch-resolve",
         "Batch human gene alias resolution",
-        "batch",
+        "run_batch",
         {
             "calls": [
-                {"operation": "resolve", "arguments": {"query": "LDL receptor", "entity": "gene", "species": 9606}}
+                {"operation": "resolve_entity", "arguments": {"query": "LDL receptor", "entity": "gene", "species": 9606}}
             ]
         },
     ),
-    example("capabilities-all", "Inspect configured capabilities", "capabilities", {}),
-    example("capabilities-gtex", "Inspect the advanced GTEx schema", "capabilities", {"source": "gtex"}),
+    example("capabilities-all", "Inspect configured capabilities", "get_capabilities", {}),
+    example("capabilities-gtex", "Inspect the advanced GTEx schema", "get_capabilities", {"source": "gtex"}),
     example(
-        "capabilities-variant", "Inspect variant evidence sections", "capabilities", {"entity": "variant"}
+        "capabilities-variant", "Inspect variant evidence sections", "get_capabilities", {"entity": "variant"}
     ),
-    example("quota", "Read the current account quota", "quota", {}),
+    example("quota", "Read the current account quota", "get_quota", {}),
     example(
         "chembl-compounds",
         "ChEMBL aspirin compound discovery",
@@ -341,7 +341,7 @@ EXAMPLES = (
     example(
         "chembl-batch",
         "Batch three distinct ChEMBL compound records",
-        "batch",
+        "run_batch",
         {
             "calls": [
                 {
@@ -499,7 +499,7 @@ EXAMPLES += (
     example(
         "gene-sqtl",
         "Human LDLR sQTL associations in liver tissue",
-        "get",
+        "get_record",
         {
             "entity": "gene",
             "id": "LDLR",
@@ -546,7 +546,7 @@ EXAMPLES += (
     example(
         "gene-transcripts",
         "Release-qualified human gene transcript annotations",
-        "get",
+        "get_record",
         {
             "entity": "gene",
             "id": "LDLR",
@@ -560,7 +560,7 @@ EXAMPLES += (
     example(
         "gene-exons",
         "Transcript-associated exons of a release-qualified human gene",
-        "get",
+        "get_record",
         {
             "entity": "gene",
             "id": "LDLR",
@@ -577,31 +577,31 @@ EXAMPLES += (
     example(
         "trial-record",
         "A known trial's protocol and posted results",
-        "get",
+        "get_record",
         {"entity": "trial", "id": "NCT04368728"},
     ),
     example(
         "trial-contacts",
         "A known trial's submitted contacts and sites",
-        "get",
+        "get_record",
         {"entity": "trial", "id": "NCT04368728", "sections": ["contacts", "locations"]},
     ),
     example(
         "trial-location",
         "Melanoma trials listing a Boston site",
-        "trial_search",
+        "search_trials",
         {"query": "familial hypercholesterolemia AND AREA[LocationCity]Boston", "filters": {"status": "RECRUITING"}},
     ),
     example(
         "trial-completed",
         "Completed COVID-19 trials with posted results",
-        "trial_search",
+        "search_trials",
         {"query": "COVID-19 AND AREA[HasResults]true", "filters": {"status": "COMPLETED"}},
     ),
     example(
         "trial-pediatric",
         "Leukemia trial discovery with child eligibility",
-        "trial_search",
+        "search_trials",
         {"query": "leukemia AND AREA[StdAge]CHILD"},
     ),
     example(
@@ -643,37 +643,37 @@ EXAMPLES += (
     example(
         "disease-search",
         "Melanoma disease identity discovery",
-        "search",
+        "search_records",
         {"entity": "disease", "query": "familial hypercholesterolemia"},
     ),
     example(
         "protein-record",
         "Human PCSK9 protein by UniProt accession",
-        "get",
+        "get_record",
         {"entity": "protein", "id": "Q8NBP7"},
     ),
     example(
         "pathway-search",
         "Human apoptosis pathway discovery",
-        "search",
+        "search_records",
         {"entity": "pathway", "query": "apoptosis"},
     ),
     example(
         "pathway-record",
         "Reactome apoptosis pathway record",
-        "get",
+        "get_record",
         {"entity": "pathway", "id": "R-HSA-109581"},
     ),
     example(
         "gene-pathways",
         "Pathway membership for a qualified human PCSK9 gene",
-        "get",
+        "get_record",
         {"entity": "gene", "id": "PCSK9", "species": 9606, "sections": ["pathways"]},
     ),
     example(
         "gene-target-evidence",
         "Human LDLR target evidence and source disease associations",
-        "get",
+        "get_record",
         {
             "entity": "gene",
             "id": "LDLR",
@@ -684,31 +684,31 @@ EXAMPLES += (
     example(
         "gene-hpa",
         "Human Protein Atlas source annotations for qualified LDLR",
-        "get",
+        "get_record",
         {"entity": "gene", "id": "LDLR", "species": 9606, "sections": ["hpa"]},
     ),
     example(
         "drug-label",
         "Submitted ezetimibe labeling records",
-        "get",
+        "get_record",
         {"entity": "drug", "id": "ezetimibe", "sections": ["label"]},
     ),
     example(
         "drug-safety",
         "Reported ezetimibe adverse-event records",
-        "get",
+        "get_record",
         {"entity": "drug", "id": "ezetimibe", "sections": ["safety"]},
     ),
     example(
         "adverse-event-search",
         "Ezetimibe reported adverse-event discovery",
-        "search",
-        {"entity": "adverse-event", "query": "ezetimibe"},
+        "search_records",
+        {"entity": "adverse_event", "query": "ezetimibe"},
     ),
     example(
         "patent-search",
         "SureChEMBL patent chemistry discovery for ezetimibe",
-        "search",
+        "search_records",
         {"entity": "patent", "query": "ezetimibe"},
     ),
     example(
@@ -825,8 +825,8 @@ ADAPTER_READMES = {
 ADAPTER_DOCUMENTATION = {
     "clinical-trials-mcp": (
         "ClinicalTrials.gov",
-        "Use trial_search for trial discovery, get(entity=trial) for known NCT records and explicit submitted protocol sections, and query_source for the two distinct comparison/statistics operations. The public surface keeps its compact tool interface; the eight retained implementation helpers are not separately mounted public aliases.",
-        "Queries use the documented Essie syntax for location, sponsor, dates, posted results or age eligibility when an ordinary trial filter is insufficient. Follow the signed trial_search cursor; query_source statistics uses its generated next_actions to retrieve another provider window with unchanged filters. Counts in separate windows are not cumulative. Identifier-only queries cannot be combined with filters because the provider ignores those filters; use get for known NCT records. To discover trials sharing a reference trial's conditions, retrieve that record first and search its actual submitted condition terms; co-condition discovery is not a validated similarity score.",
+        "Use search_trials for trial discovery, get_record(entity=trial) for known NCT records and explicit submitted protocol sections, and query_source for the two distinct comparison/statistics operations. The public surface keeps its compact tool interface; the eight retained implementation helpers are not separately mounted public aliases.",
+        "Queries use the documented Essie syntax for location, sponsor, dates, posted results or age eligibility when an ordinary trial filter is insufficient. Follow the signed search_trials cursor; query_source statistics uses its generated next_actions to retrieve another provider window with unchanged filters. Counts in separate windows are not cumulative. Identifier-only queries cannot be combined with filters because the provider ignores those filters; use get for known NCT records. To discover trials sharing a reference trial's conditions, retrieve that record first and search its actual submitted condition terms; co-condition discovery is not a validated similarity score.",
         "The adapter validates dated OpenAPI request/response schemas, exact or explicitly aliased NCT identity, nested protocol/results fields, counts and continuation before extracting evidence. Missing optional protocol modules are unavailable, not measured negative evidence. Statistics count unique study memberships per label in one bounded provider-returned window, with acquired/grouped/missing denominators and explicit completeness. A trial can have several phase or condition labels; their sum may exceed the study denominator. The window is not a representative population sample. Comparisons preserve successful peers and safe failures, retain ACTUAL versus ESTIMATED enrollment, and mark missing fields unavailable. Missing enrollment counts are unavailable; counts without an actual/estimated classification remain partial. Registry protocol endpoints and posted results do not establish comparable treatment effects, individual eligibility, current site recruitment or clinical suitability. Large nested records can be truncated; follow advertised recovery ranges for acquired data. Real agent/client and full provider qualification remain open. No claim of complete inherited functionality is made.",
         "[ClinicalTrials.gov REST API and dated OpenAPI](https://clinicaltrials.gov/api/oas/v2), [study data structure](https://clinicaltrials.gov/data-api/about-api/study-data-structure), [complex search syntax](https://clinicaltrials.gov/find-studies/constructing-complex-search-queries). Packaged contracts.json records the official source hash/date and selected endpoint schemas.",
     ),
@@ -839,7 +839,7 @@ ADAPTER_DOCUMENTATION = {
     ),
     "chembl-mcp": (
         "ChEMBL",
-        "ChEMBL acquisition retains compound structures, target identity and assay measurements. Ordinary drug identity uses the public search/get routes with MyChem; these ChEMBL operations have distinct scientific semantics.",
+        "ChEMBL acquisition retains compound structures, target identity and assay measurements. Ordinary drug identity uses search_records/get_record with MyChem; these ChEMBL operations have distinct scientific semantics.",
         "A batch uses the public batch tool and repeats canonical query_source calls; it does not expose the retained batch_compound_lookup alias.",
         "Bioactivities retain assay identity, relation, units and target; values from different assays are not automatically comparable. Rule-of-five checks describe physicochemical heuristics and do not establish efficacy, safety, ADMET or clinical suitability.",
         "[ChEMBL REST API](https://www.ebi.ac.uk/chembl/api/data/docs), [aspirin record](https://www.ebi.ac.uk/chembl/api/data/molecule/CHEMBL25.json).",
@@ -864,28 +864,28 @@ ADAPTER_DOCUMENTATION.update(
         ),
         "mychem": (
             "MyChem.info",
-            "Discover drug identities with search(entity=drug), then retrieve a provider-stable record using get(entity=drug). Inspect identifier mapping and reported ADMET annotation schemas through capabilities; chemical computations are not advertised.",
+            "Discover drug identities with search_records(entity=drug), then retrieve a provider-stable record using get_record(entity=drug). Inspect identifier mapping and reported ADMET annotation schemas through get_capabilities; chemical computations are not advertised.",
             "Names can be ambiguous. Preserve the returned identifier and separate chemical structures, source assertions and clinical indications when joining records.",
             "Reported source annotations do not establish comparable efficacy, safety or clinical suitability. Missing ADMET modalities are unavailable. This mixed annotation source is eligible under the source policy with SIDER and UMLS content excluded. Source-specific rights and attribution still apply; examples establish fixture routing, not live qualification.",
             "[MyChem.info](https://mychem.info/).",
         ),
         "mydisease": (
             "MyDisease.info",
-            "Use search(entity=disease) for discovery and get(entity=disease) with the returned qualified disease identifier. Gene and phenotype enrichment use explicit sections on the public disease record.",
+            "Use search_records(entity=disease) for discovery and get_record(entity=disease) with the returned qualified disease identifier. Gene and phenotype enrichment use explicit sections on the public disease record.",
             "Keep identifier namespaces and candidate distinctions; a shared label is not proof that two disease concepts are equivalent.",
             "Aggregated disease annotations do not establish prevalence, prognosis or a diagnostic decision. Distinct phenotype/identifier comparison methods require separate scientific qualification. Missing annotations remain unknown.",
             "[MyDisease.info](https://mydisease.info/).",
         ),
         "uniprot-mcp": (
             "UniProt",
-            "Use search(entity=protein) with an explicit taxonomy ID and get(entity=protein) with an exact UniProt accession. Sequences, features and cross-references belong to the returned record and projection.",
+            "Use search_records(entity=protein) with an explicit taxonomy ID and get_record(entity=protein) with an exact UniProt accession. Sequences, features and cross-references belong to the returned record and projection.",
             "Follow the public search cursor with unchanged filters. A known accession identifies a specific protein record; isoform sequence/feature coordinates must stay qualified to that isoform. Taxonomy acquisition belongs to the NCBI source route.",
             "Selected response, accession, field projection and pagination contracts are fixture-qualified. Protein annotations and cross-references do not prove a variant mechanism or an experimental interaction. Distinct comparison/evolution operations require their own interpretation and broader qualification.",
             "[UniProt REST API](https://www.uniprot.org/help/api_queries).",
         ),
         "reactome-mcp": (
             "Reactome",
-            "Use search(entity=pathway) for human pathway discovery, get(entity=pathway) for a stable Reactome pathway ID, and get(entity=gene, sections=[pathways]) for a qualified gene's source pathway memberships.",
+            "Use search_records(entity=pathway) for human pathway discovery, get_record(entity=pathway) for a stable Reactome pathway ID, and get_record(entity=gene, sections=[pathways]) for a qualified gene's source pathway memberships.",
             "Reactome stable IDs carry an organism prefix. The ordinary retained search currently uses Homo sapiens; it does not offer an arbitrary species filter. A pathway diagram has its distinct query_source operation.",
             "Membership is a source annotation, not proof of pathway activity in a tissue or perturbation. Selected gene-membership list responses are validated; the full search/detail/diagram provider contracts and scientific coverage remain separately qualified work.",
             "[Reactome Content Service](https://reactome.org/ContentService/).",
@@ -899,14 +899,14 @@ ADAPTER_DOCUMENTATION.update(
         ),
         "protein-atlas-mcp": (
             "Human Protein Atlas",
-            "Use get(entity=gene, sections=[hpa]) with an explicit human gene identity. The service resolves the gene to its Ensembl identifier before requesting the source XML annotations.",
-            "The public hpa section retains source annotations. Inspect capabilities for localization and expression-profile review schemas; antibody-information acquisition is unavailable.",
+            "Use get_record(entity=gene, sections=[hpa]) with an explicit human gene identity. The service resolves the gene to its Ensembl identifier before requesting the source XML annotations.",
+            "The public hpa section retains source annotations. Inspect get_capabilities for localization and expression-profile review schemas; antibody-information acquisition is unavailable.",
             "Single-gene XML is checked for one matching Ensembl identity and required entry/schema/annotation version metadata before caching; this is not full XSD or assay validation. The source release, Ensembl/GENCODE annotation build and whole-document UTF-8 hash remain distinct. XML selectors are explicitly unapplied and comparisons retain successful peers with separate failures, without normalized measurements or derived reliability scores. Do not infer numeric units, assay coverage, tissue-specific negatives or validated specificity from missing annotations. Large compressible XML can be recovered through advertised bounded ranges within unchanged stored-snapshot and response ceilings; decoded size/structure, scope, expiry and storage limits still apply. Broader XML interpretation, TSV antibody acquisition and advanced scientific workflows remain unqualified.",
             "[Human Protein Atlas data downloads and formats](https://www.proteinatlas.org/about/download).",
         ),
         "openfda-mcp": (
             "openFDA",
-            "Use get(entity=drug) with explicit label or safety sections and search(entity=adverse-event) for reported drug events. Recall acquisition is the distinct advanced operation.",
+            "Use get_record(entity=drug) with explicit label or safety sections and search_records(entity=adverse_event) for reported drug events. Recall acquisition is the distinct advanced operation.",
             "Preserve each submitted source record and its provenance. Name-based discovery can require identity review before combining labels or reports.",
             "Spontaneous reports have no exposure denominator and do not establish event incidence or drug causality. Submitted labels and recall records do not establish individual clinical suitability; optional missing fields remain unknown. The examples qualify routing, not complete provider response semantics.",
             "[openFDA API documentation](https://open.fda.gov/apis/).",
@@ -959,12 +959,7 @@ def by_id(identifier):
 
 def description(base, operation):
     # One full call keeps discovery compact; all calls remain in the guide.
-    return (
-        base
-        + " e.g. "
-        + for_operation(operation)[0].arguments_json
-        + "; biomedmcp://guide"
-    )
+    return base + " e.g. " + for_operation(operation)[0].arguments_json
 
 
 def guide_examples():
@@ -972,7 +967,7 @@ def guide_examples():
         "## Executable examples",
         "",
         "These calls demonstrate routing against synthetic test fixtures; live access and evidence availability are not guaranteed.",
-        "Study examples require an installed verified study: ubi_synthetic is the deterministic fixture, not clinical evidence. Substitute an installed study ID from capabilities.",
+        "Study examples require an installed verified study: ubi_synthetic is the deterministic fixture, not clinical evidence. Substitute an installed study ID from get_capabilities.",
         "The cBioPortal example requires a real molecular-profile/sample-list pair for the intended population; study_mutations/study_all are fixture identifiers.",
         "Full text requires an accessible PMC record and article-specific rights.",
         "",
@@ -1010,20 +1005,20 @@ def adapter_readme(package):
         "",
         "Examples use the public BioMedMCP tools and their typed JSON arguments.",
         "",
-        "Use the biomedmcp server and its canonical tools. Retained adapters are implementation packages; their internal tools are not separate public MCP mounts.",
+        "Connect to the biomedmcp server and use its tools. This package runs inside that server; it is not a separate MCP server.",
         "",
         introduction,
         "",
-        "Declared advanced operations: "
+        "Advanced operations: "
         + ", ".join("`" + operation + "`" for operation in sorted(ADVANCED[source]))
         + ".",
         "",
-        "Inspect capabilities for this source to obtain the exact current parameter schemas. " + usage,
+        "Run get_capabilities for this source to see its current parameters. " + usage,
         "",
-        "These examples pass schemas and preflight and execute through MCP against mocked provider responses. They do not establish live source health or comprehensive scientific qualification. "
+        "The examples are tested through MCP against mock responses; live results may differ. "
         + limitations,
         "",
-        "Follow advertised provider continuation for further acquisition. If the result advertises an evidence recovery URI, use its bounded ranges to read acquired data omitted from the preview; see [evidence recovery](../../../docs/evidence-resources.md). Snapshot scope, expiry and source rights still apply.",
+        "To get more results, follow the continuation in the response. If a result includes an evidence recovery URI, use it to read data left out of the preview; see [evidence recovery](../../../docs/evidence-resources.md). Recovered data expires and is subject to the source's terms.",
         "",
     ]
     for identifier in identifiers:

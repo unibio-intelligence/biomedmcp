@@ -2,17 +2,17 @@
 
 Examples use the public BioMedMCP tools and their typed JSON arguments.
 
-Use the biomedmcp server and its canonical tools. Retained adapters are implementation packages; their internal tools are not separate public MCP mounts.
+Connect to the biomedmcp server and use its tools. This package runs inside that server; it is not a separate MCP server.
 
 The BioPortal source exposes ontology discovery, class pages, exact class information and mapping assertions through query_source. Ordinary phenotype term discovery uses the public phenotype route.
 
-Declared advanced operations: `get_class_info`, `get_mappings`, `get_ontology_classes`, `search_ontologies`.
+Advanced operations: `get_class_info`, `get_mappings`, `get_ontology_classes`, `search_ontologies`.
 
-Inspect capabilities for this source to obtain the exact current parameter schemas. Configure BIOONTOLOGY_API_KEY outside tool arguments. The adapter uses the Authorization header. Preserve ontology acronym, exact class URI, mapping source/process and provider continuation; missing process attribution remains explicit.
+Run get_capabilities for this source to see its current parameters. Configure BIOONTOLOGY_API_KEY outside tool arguments. The adapter uses the Authorization header. Preserve ontology acronym, exact class URI, mapping source/process and provider continuation; missing process attribution remains explicit.
 
-These examples pass schemas and preflight and execute through MCP against mocked provider responses. They do not establish live source health or comprehensive scientific qualification. Mapping assertions do not imply biological equivalence. The class example uses one exact GO URI and a synthetic credential only in offline tests; it does not establish live credential validity, ontology release pinning or comprehensive coverage.
+The examples are tested through MCP against mock responses; live results may differ. Mapping assertions do not imply biological equivalence. The class example uses one exact GO URI and a synthetic credential only in offline tests; it does not establish live credential validity, ontology release pinning or comprehensive coverage.
 
-Follow advertised provider continuation for further acquisition. If the result advertises an evidence recovery URI, use its bounded ranges to read acquired data omitted from the preview; see [evidence recovery](../../../docs/evidence-resources.md). Snapshot scope, expiry and source rights still apply.
+To get more results, follow the continuation in the response. If a result includes an evidence recovery URI, use it to read data left out of the preview; see [evidence recovery](../../../docs/evidence-resources.md). Recovered data expires and is subject to the source's terms.
 
 ## BioPortal Gene Ontology class by its exact URI
 

@@ -75,7 +75,7 @@ async def test_doi_mismatch_stops_before_graph_acquisition():
 @pytest.mark.parametrize("relation", ["citations", "references"])
 async def test_real_released_dispatch_never_calls_semantic_scholar(relation):
     service = ResearchService(http=HTTP(response(relation)))
-    result = await dispatch(service, "relate", {"entity": "article", "id": "123", "relation": relation}, scope="test")
+    result = await dispatch(service, "find_related", {"entity": "article", "id": "123", "relation": relation}, scope="test")
     assert result.outcome == "data"
     assert result.provenance[0].source == "europepmc"
     assert all("semanticscholar" not in call[1] for call in service.providers.http.calls)
@@ -86,7 +86,7 @@ async def test_removed_source_only_ids_are_rejected():
     service = ResearchService(http=HTTP())
     for identifier, relation in [("a" * 40, "recommendations"), ("a" * 40, "citations")]:
         with pytest.raises(ResearchError) as error:
-            await dispatch(service, "relate", {"entity": "article", "id": identifier,
+            await dispatch(service, "find_related", {"entity": "article", "id": identifier,
                                                "relation": relation}, scope="test")
         assert error.value.code == "invalid_identifier"
     assert not service.providers.http.calls

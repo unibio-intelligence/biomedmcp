@@ -1,5 +1,17 @@
 # Release notes
 
+## 0.2.4
+
+- Rename all 13 MCP tools and CLI operations to verb-object names, such as
+  `get` to `get_record`, `capabilities` to `get_capabilities`, `batch` to
+  `run_batch` and `quota` to `get_quota`. Old names are rejected; update
+  client prompts and scripts. Source IDs and `query_source` operations are
+  unchanged.
+- The adverse-event entity is now `adverse_event`.
+- Add tool titles and shorter routing descriptions. `build_dossier` sections
+  are listed in its schema, and an unknown section fails validation.
+- Follow-up actions returned in results use the new tool names.
+
 ## 0.2.3
 
 - Add Python package, container and MCP Registry installation routes.

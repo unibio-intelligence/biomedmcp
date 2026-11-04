@@ -109,7 +109,7 @@ async def test_actual_mcp_repeated_patient_comparison_has_one_inferential_unit(s
     install()
     async with Client(create_server(service=ResearchService())) as client:
         response = await client.call_tool(
-            "study_analysis",
+            "analyze_study",
             {
                 "analysis": "compare",
                 "study": "ubi_synthetic",

@@ -223,16 +223,16 @@ RELATE = {"entity": "variant", "id": "BRAF V600E", "relation": "structure"}
 async def test_actual_mcp_invalid_source_uncached_then_valid_cache_and_provenance(mcp_boundary):
     client, responses, calls, _ = mcp_boundary
     responses.extend([{}, body()])
-    bad = (await client.call_tool_mcp("get", GET)).structured_content
+    bad = (await client.call_tool_mcp("get_record", GET)).structured_content
     assert (
         bad["outcome"] == "error" and bad["sections"]["domains"]["error"]["code"] == "invalid_source_response"
     )
     assert bad["provenance"] == []
-    good = (await client.call_tool_mcp("get", GET)).structured_content
+    good = (await client.call_tool_mcp("get_record", GET)).structured_content
     assert good["sections"]["domains"]["data"]["records"][0]["metadata"]["accession"] == "IPR000719"
     assert good["provenance"][0]["sources"] == ["interpro", "uniprot"]
     assert good["provenance"][0]["source_version"] == "110.0"
-    cached = (await client.call_tool_mcp("get", GET)).structured_content
+    cached = (await client.call_tool_mcp("get_record", GET)).structured_content
     assert cached["provenance"][0]["cached"] is True
     assert len([r for r in calls if r.url.host == "www.ebi.ac.uk"]) == 2
 
@@ -243,11 +243,11 @@ async def test_actual_mcp_scoped_cursor_reaches_later_entry_without_prefix_repla
     from biomedmcp.errors import ResearchError
 
     responses.extend([body(count=2, after="NEXT"), body([entry(accession="IPR001245")], count=2)])
-    first = (await client.call_tool_mcp("get", GET)).structured_content
+    first = (await client.call_tool_mcp("get_record", GET)).structured_content
     assert first["outcome"] == "partial"
     action = first["next_actions"][0]
     assert "NEXT" not in str(first)
-    assert action["tool"] == "get" and action["arguments"]["id"] == "P15056"
+    assert action["tool"] == "get_record" and action["arguments"]["id"] == "P15056"
     for changes in [
         {"id": "P04637"},
         {"species": 10090},
@@ -286,7 +286,7 @@ async def test_actual_variant_relation_retains_primary_evidence_when_interpro_fa
     )
     responses.extend([value, value])
     for _ in range(2):
-        result = (await client.call_tool_mcp("relate", RELATE)).structured_content
+        result = (await client.call_tool_mcp("find_related", RELATE)).structured_content
         assert result["outcome"] == "partial"
         data = result["sections"]["structure"]["data"]
         assert data["protein"]["accession"] == "P15056" and data["structures"][0]["pdb_id"] == "1ABC"
@@ -307,7 +307,7 @@ async def test_actual_variant_scans_later_pages_and_preserves_non_domain_entry_t
             body([entry(accession="IPR001245", kind="family")], count=2),
         ]
     )
-    value = (await client.call_tool_mcp("relate", RELATE)).structured_content
+    value = (await client.call_tool_mcp("find_related", RELATE)).structured_content
     data = value["sections"]["structure"]["data"]
     assert value["outcome"] == "data" and data["domains"] == []
     assert data["interpro_matches"][0]["entry_type"] == "family"
@@ -374,7 +374,7 @@ async def test_actual_mcp_valid_empty_is_source_confined_with_verified_identity(
         if status == 200
         else httpx.Response(204, headers={"InterPro-Version": "110.0"})
     )
-    result = (await client.call_tool_mcp("get", GET)).structured_content
+    result = (await client.call_tool_mcp("get_record", GET)).structured_content
     assert result["outcome"] == "empty"
     data = result["sections"]["domains"]["data"]
     assert data["records"] == [] and data["protein_identity"] == IDENTITY
@@ -391,11 +391,11 @@ async def test_actual_mcp_bounded_variant_scan_continues_after_prefix(mcp_bounda
         rows = [entry(accession=f"IPR{i:06}") for i in range(page * 25 + 1, page * 25 + 26)]
         responses.append(body(rows, count=101, after=f"N{page}"))
     responses.append(body([entry(accession="IPR000101")], count=101))
-    first = (await client.call_tool_mcp("relate", RELATE)).structured_content
+    first = (await client.call_tool_mcp("find_related", RELATE)).structured_content
     assert first["outcome"] == "partial"
     assert first["sections"]["structure"]["data"]["interpro_coverage"]["acquired_entries"] == 100
     action = first["next_actions"][0]
-    assert action["tool"] == "get" and action["arguments"]["id"] == "P15056"
+    assert action["tool"] == "get_record" and action["arguments"]["id"] == "P15056"
 
     def exposes_provider_control(value):
         if isinstance(value, dict):
@@ -428,7 +428,7 @@ async def test_actual_mcp_bounded_variant_scan_continues_after_prefix(mcp_bounda
 async def test_actual_mcp_later_malformed_page_keeps_acquired_overlap_and_unassessed_coverage(mcp_boundary):
     client, responses, _, _ = mcp_boundary
     responses.extend([body(count=2, after="NEXT"), {}])
-    result = (await client.call_tool_mcp("relate", RELATE)).structured_content
+    result = (await client.call_tool_mcp("find_related", RELATE)).structured_content
     data = result["sections"]["structure"]["data"]
     assert result["outcome"] == "partial" and data["domains"][0]["accession"] == "IPR000719"
     assert (
@@ -445,7 +445,7 @@ async def test_actual_mcp_invalid_or_expired_cursor_state_fails_before_http(mcp_
     from biomedmcp.runtime import digest
 
     responses.append(body(count=3, after="NEXT"))
-    first = (await client.call_tool_mcp("get", GET)).structured_content
+    first = (await client.call_tool_mcp("get_record", GET)).structured_content
     arguments = first["next_actions"][0]["arguments"]
     cursor = arguments["section_parameters"]["domains"]["cursor"]
     key = "interpro-page:" + digest(cursor)
@@ -465,7 +465,7 @@ async def test_actual_mcp_invalid_or_expired_cursor_state_fails_before_http(mcp_
             state["limit"] = 999
         await service.runtime.cache.put(key, state, 3600)
     before = len(calls)
-    bad = (await client.call_tool_mcp("get", arguments)).structured_content
+    bad = (await client.call_tool_mcp("get_record", arguments)).structured_content
     assert bad["outcome"] == "error" and bad["error"]["code"] == (
         "expired_cursor" if mutation == "missing" else "cache_invalid_data"
     )
@@ -481,7 +481,7 @@ async def test_cursor_storage_limit_does_not_erase_partial_coverage(mcp_boundary
 
     monkeypatch.setattr(service.runtime.cache, "put", put)
     responses.append(body(count=2, after="NEXT"))
-    value = (await client.call_tool_mcp("get", GET)).structured_content
+    value = (await client.call_tool_mcp("get_record", GET)).structured_content
     assert value["outcome"] == "partial" and value["next_actions"] == []
     assert value["sections"]["domains"]["data"]["coverage"]["continuation_status"] == "storage_limit"
     assert any("unassessed" in warning for warning in value["sections"]["domains"]["warnings"])
@@ -489,7 +489,7 @@ async def test_cursor_storage_limit_does_not_erase_partial_coverage(mcp_boundary
 
 async def test_explicit_sources_cannot_bypass_protein_identity(mcp_boundary):
     client, _, calls, _ = mcp_boundary
-    value = (await client.call_tool_mcp("get", GET | {"sources": ["interpro"]})).structured_content
+    value = (await client.call_tool_mcp("get_record", GET | {"sources": ["interpro"]})).structured_content
     assert value["error"]["code"] == "source_plan_conflict" and calls == []
 
 
@@ -509,7 +509,7 @@ async def test_canonical_isoform_and_nonhuman_preflight_are_explicit(mcp_boundar
     client, _, calls, service = mcp_boundary
     from biomedmcp.contracts import GetRequest
 
-    value = (await client.call_tool_mcp("get", GET | {"id": "P15056-2"})).structured_content
+    value = (await client.call_tool_mcp("get_record", GET | {"id": "P15056-2"})).structured_content
     assert value["error"]["code"] == "invalid_identifier" and calls == []
     await service.get(GetRequest(**(GET | {"species": 10090})), scope="local", _plan_only=True)
 

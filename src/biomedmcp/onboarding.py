@@ -10,19 +10,19 @@ INVESTIGATIONS = (
         "id": "target",
         "question": "Which observations belong in an LDL-receptor evidence notebook?",
         "steps": ["target-dossier", "gene-tissue", "gene-eqtl"],
-        "interpretation": "Read the qualified gene/allele identity, expression units/tissue/release, association direction and each section's outcome. Inspect the separate expression/QTL schemas with capabilities for source=gtex. Distinguish posterior probabilities, p-values and standard errors, and paired values from unknown participant counts. Preserve prefilter source pointers, qualified intron joins, provenance, disagreements and recovery. Observational expression/QTL associations do not establish causal target validation; missing sections prevent a complete conclusion.",
+        "interpretation": "Check the gene and allele identity, the expression units, tissue and release, the direction of each association, and whether each section succeeded. Keep posterior probabilities, p-values and standard errors apart, and don't assume a participant count that is not reported. Run get_capabilities for source=gtex to see the expression and QTL record fields. Expression and QTL associations are observational: they do not validate a target. If a section is missing, the conclusion is incomplete.",
     },
     {
         "id": "variant",
         "question": "How can I keep a PCSK9 allele claim separate from gene-level evidence?",
         "steps": ["variant-protein", "variant-structure", "gene-articles"],
-        "interpretation": "Confirm allele/transcript/build equivalence before combining assertions. Structural coverage is a sequence mapping, not proof of an experimental residue effect. Gene co-mention papers are discovery leads; inspect experiment/species/variant scope before citing support. Preserve source assertions independently.",
+        "interpretation": "Before combining results, confirm they refer to the same allele, transcript and genome build. A structure covering the residue is a sequence mapping, not evidence of an experimental effect. Papers that mention the gene are leads: check the experiment, species and variant before citing them. Keep each source's claims separate.",
     },
     {
         "id": "study",
         "question": "Can I reproduce the analysis before using my own study?",
         "steps": ["study-profile", "study-survival", "study-cooccurrence"],
-        "interpretation": "Report clinical-study samples separately from mutation-assayed samples, unique mutant samples and mutation events. Use the assay-evaluable denominator, preserve calculation inputs, exclusions and patient grouping, and distinguish missing measurement from measured negative. Inspect capabilities with source=study for the derived record schemas; preserve unavailable inference, source selectors and truncation/recovery. A request's species default does not establish study species or assembly. These synthetic results demonstrate mechanics only; they are not real clinical evidence or validated statistical conclusions for a real study.",
+        "interpretation": "Count study samples, mutation-tested samples, mutated samples and mutation events separately. Use the tested samples as the denominator, keep the inputs, exclusions and patient grouping, and don't count a missing measurement as a negative result. Run get_capabilities for source=study to see the record fields. The request's default species does not tell you the study's species or genome assembly. The demo data is synthetic: it shows how the tools work, not real clinical findings.",
     },
 )
 
@@ -31,7 +31,7 @@ def investigations_markdown():
     rows = [
         "# Example investigations",
         "",
-        "Use these workflows to organize a research notebook and make its evidence gaps explicit. Calls are tested with synthetic provider responses; outputs and source availability vary. Check [source release eligibility](source-licenses.md) before execution; keys cannot enable unreleased integrations. Live coverage and scientific adjudication remain separate. Known identifiers can be used directly without mandatory discovery calls. For study examples install the [synthetic demo](studies.md) first.",
+        "Each workflow answers one research question in a few calls and explains how to read the results. The calls are tested against mock responses, so live results may differ. If you already know an identifier, use it directly. Some sources are not released, and a key cannot turn them on; see [source release eligibility](source-licenses.md). For the study example, install the [synthetic demo](studies.md) first.",
         "",
     ]
     for item in INVESTIGATIONS:
@@ -46,7 +46,7 @@ def investigations_markdown():
             "",
             item["interpretation"],
             "",
-            "Keep the JSON results, evidence IDs, source releases and continuation actions with your answer. An error or partial result requires a qualified alternative, continuation or an explicit limitation.",
+            "Save the JSON results, evidence IDs and source releases with your answer. If a call fails or returns partial results, continue it, try another source, or state the gap.",
             "",
         ]
     return "\n".join(rows)
@@ -56,31 +56,31 @@ def matrix_markdown():
     rows = [
         "# Source credentials and access",
         "",
-        "Generated from current source policy. Set secrets in the server/operator environment or client secret storage; never pass them as scientific tool arguments. Hosted users ask the operator to configure source access. Restart processes after changing source credentials. Environment presence does not verify credentials, rights, live availability or scientific coverage.",
+        "Most sources need no key. For those that do, set the key as an environment variable where the server runs, or in your client's secret storage, then restart the server. Never put keys in tool arguments. On a hosted server, ask whoever runs it to set up keys. Setting a variable does not check that the key works, that you have rights to the data, or that the source is reachable.",
         "",
-        "Local users may supply supported keys in their own process environment or client secret storage. Shared hosted per-user keys require a separately implemented platform secret boundary; never switch users by changing server-wide environment variables. `UBI_LICENSED_SOURCES` and keys cannot override an unreleased source. Review the [source license inventory](source-licenses.md); source eligibility and integration-code licensing are separate.",
+        "Per-user keys on a shared hosted server need secret storage that this package does not provide; never switch users by changing server-wide environment variables. A source marked **Not released** stays off even with a key or `UBI_LICENSED_SOURCES`. Available sources still have data terms; check them in the [source license inventory](source-licenses.md) before reusing data.",
         "",
-        "| Source | Required environment | Optional environment | Source release / access policy |",
+        "| Source | Required environment | Optional environment | Status |",
         "| --- | --- | --- | --- |",
     ]
     for name in source_names():
         value = policy(name)
         required = ", ".join(f"`{key}`" for key in value["required_environment"]) or "None"
         optional = ", ".join(f"`{key}`" for key in value["optional_environment"]) or "None"
-        access = (
-            value["license_review"]["release_status"]
-            + "; "
-            + value["access_policy"]
-            + (f"; `UBI_LICENSED_SOURCES` includes `{name}`" if value["access_attestation"] else "")
-        )
         if name == "depmap":
-            access = (
-                "Retained route unavailable; use a separately released qualified platform data capability"
-            )
-        rows.append(f"| `{name}` | {required} | {optional} | {access} |")
+            status = "Not available in this release"
+        elif value["license_review"]["release_status"] != "eligible":
+            status = "Not released"
+        elif name == "study":
+            status = "Available after you install a checksummed study release"
+        elif value["required_environment"]:
+            status = "Available with your provider key"
+        else:
+            status = "Available"
+        rows.append(f"| `{name}` | {required} | {optional} | {status} |")
     rows += [
         "",
-        'Use `biomedmcp diagnose \'{"source":"bio-ontology"}\'` to distinguish missing settings from import failure and qualification evidence. The [connection guide](connect.md) and [study guide](studies.md) provide recovery steps.',
+        'To check a source\'s setup, run `biomedmcp diagnose \'{"source":"bio-ontology"}\'`. It tells you whether a setting is missing or the source failed to load. For fixes, see the [connection guide](connect.md) and [study guide](studies.md).',
         "",
     ]
     return "\n".join(rows)

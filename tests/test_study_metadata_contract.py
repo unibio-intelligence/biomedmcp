@@ -126,17 +126,17 @@ async def test_public_search_get_schema_and_receipts_share_the_verified_metadata
     installed(study)
     monkeypatch.setenv("UBI_PROFILE", "local")
     async with Client(create_server(service=ResearchService())) as client:
-        caps = (await client.call_tool_mcp("capabilities", {"source": "study"})).structured_content
+        caps = (await client.call_tool_mcp("get_capabilities", {"source": "study"})).structured_content
         schema = caps["record_schemas"]["study_metadata"]
         jsonschema.Draft202012Validator.check_schema(schema)
-        found = await client.call_tool_mcp("search", {"entity": "study", "query": "ubi_synthetic"})
+        found = await client.call_tool_mcp("search_records", {"entity": "study", "query": "ubi_synthetic"})
         assert not found.is_error
         result = found.structured_content
         assert verify_receipt(result)
         rows = result["records"]
         assert len(rows) == 1
         jsonschema.validate(rows[0], schema)
-        fetched = await client.call_tool_mcp("get", {"entity": "study", "id": "ubi_synthetic"})
+        fetched = await client.call_tool_mcp("get_record", {"entity": "study", "id": "ubi_synthetic"})
         assert not fetched.is_error and verify_receipt(fetched.structured_content)
         section = fetched.structured_content["sections"]["record"]["data"]
         jsonschema.validate(section, schema)

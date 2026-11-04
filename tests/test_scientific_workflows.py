@@ -42,11 +42,11 @@ async def test_invalid_late_batch_item_prevents_all_outbound_requests(arguments)
     with pytest.raises((ResearchError, ValueError)):
         await execute(
             service,
-            "batch",
+            "run_batch",
             {
                 "calls": [
-                    {"operation": "get", "arguments": {"entity": "gene", "id": "BRAF"}},
-                    {"operation": "get", "arguments": arguments},
+                    {"operation": "get_record", "arguments": {"entity": "gene", "id": "BRAF"}},
+                    {"operation": "get_record", "arguments": arguments},
                 ]
             },
             scope="alice",
@@ -60,10 +60,10 @@ async def test_duplicate_query_source_in_batch_rejected_before_any_provider():
     with pytest.raises(ResearchError, match="not a public advanced"):
         await execute(
             service,
-            "batch",
+            "run_batch",
             {
                 "calls": [
-                    {"operation": "get", "arguments": {"entity": "gene", "id": "BRAF"}},
+                    {"operation": "get_record", "arguments": {"entity": "gene", "id": "BRAF"}},
                     {
                         "operation": "query_source",
                         "arguments": {
@@ -187,5 +187,5 @@ async def test_cli_and_mcp_need_no_subprocess_even_for_capabilities(monkeypatch)
         raise AssertionError("Executable launch forbidden")
 
     monkeypatch.setattr(asyncio, "create_subprocess_exec", forbidden)
-    result = await cli_execute("capabilities", {"entity": "article"})
+    result = await cli_execute("get_capabilities", {"entity": "article"})
     assert "pubmed" in result["search_sources"]

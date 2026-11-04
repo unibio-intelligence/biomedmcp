@@ -252,9 +252,9 @@ class NativeProviders:
                     manufacturer=filters.get("manufacturer"),
                 )
             return await self.ncbi_summary("gtr", query, limit, offset)
-        if entity == "adverse-event":
+        if entity == "adverse_event":
             return await self.fda("drug/event", f'patient.drug.medicinalproduct:"{query}"', limit, offset)
-        raise ResearchError("unsupported_search", "Inspect capabilities for supported entity searches.")
+        raise ResearchError("unsupported_search", "Inspect get_capabilities for supported entity searches.")
 
     async def ncbi_summary(self, database, query, limit=10, offset=0):
         result = await self.literature.eutils(
@@ -472,7 +472,7 @@ class NativeProviders:
             return await self.ncbi_summary(
                 "gtr", identifier(value, r"(?:GTR)?\d+(?:\.\d+)?", "Use a GTR test accession.")
             )
-        if entity == "adverse-event":
+        if entity == "adverse_event":
             return await self.fda(
                 "drug/event",
                 f'safetyreportid:"{identifier(value, r"[0-9]+", "Use a FAERS safety report ID.")}"',
@@ -495,7 +495,7 @@ class NativeProviders:
             if not study:
                 raise ResearchError("study_unavailable", "Study is not an installed verified release.")
             return study_metadata_record(study)
-        raise ResearchError("unsupported_get", "Inspect capabilities for supported entity reads.")
+        raise ResearchError("unsupported_get", "Inspect get_capabilities for supported entity reads.")
 
     async def section(self, entity, value, name, request, context, source=None):
         params = request.section_parameters.get(name, {})
@@ -869,7 +869,7 @@ class NativeProviders:
                 )
             data = await self.record("diagnostic", value)
             return [{k: v for k, v in row.items() if k in {"uid", "name", name}} for row in data]
-        if entity == "adverse-event":
+        if entity == "adverse_event":
             data = await once(context, ("faers", value), lambda: self.record(entity, value))
             rows = []
             for row in data:

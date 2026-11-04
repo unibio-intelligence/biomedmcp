@@ -2,23 +2,23 @@
 
 Examples use the public BioMedMCP tools and their typed JSON arguments.
 
-Use the biomedmcp server and its canonical tools. Retained adapters are implementation packages; their internal tools are not separate public MCP mounts.
+Connect to the biomedmcp server and use its tools. This package runs inside that server; it is not a separate MCP server.
 
-Use get(entity=drug) with explicit label or safety sections and search(entity=adverse-event) for reported drug events. Recall acquisition is the distinct advanced operation.
+Use get_record(entity=drug) with explicit label or safety sections and search_records(entity=adverse_event) for reported drug events. Recall acquisition is the distinct advanced operation.
 
-Declared advanced operations: `search_recalls`.
+Advanced operations: `search_recalls`.
 
-Inspect capabilities for this source to obtain the exact current parameter schemas. Preserve each submitted source record and its provenance. Name-based discovery can require identity review before combining labels or reports.
+Run get_capabilities for this source to see its current parameters. Preserve each submitted source record and its provenance. Name-based discovery can require identity review before combining labels or reports.
 
-These examples pass schemas and preflight and execute through MCP against mocked provider responses. They do not establish live source health or comprehensive scientific qualification. Spontaneous reports have no exposure denominator and do not establish event incidence or drug causality. Submitted labels and recall records do not establish individual clinical suitability; optional missing fields remain unknown. The examples qualify routing, not complete provider response semantics.
+The examples are tested through MCP against mock responses; live results may differ. Spontaneous reports have no exposure denominator and do not establish event incidence or drug causality. Submitted labels and recall records do not establish individual clinical suitability; optional missing fields remain unknown. The examples qualify routing, not complete provider response semantics.
 
-Follow advertised provider continuation for further acquisition. If the result advertises an evidence recovery URI, use its bounded ranges to read acquired data omitted from the preview; see [evidence recovery](../../../docs/evidence-resources.md). Snapshot scope, expiry and source rights still apply.
+To get more results, follow the continuation in the response. If a result includes an evidence recovery URI, use it to read data left out of the preview; see [evidence recovery](../../../docs/evidence-resources.md). Recovered data expires and is subject to the source's terms.
 
 ## Submitted ezetimibe labeling records
 
 ```json
 {
-  "tool": "get",
+  "tool": "get_record",
   "arguments": {
     "entity": "drug",
     "id": "ezetimibe",
@@ -33,7 +33,7 @@ Follow advertised provider continuation for further acquisition. If the result a
 
 ```json
 {
-  "tool": "get",
+  "tool": "get_record",
   "arguments": {
     "entity": "drug",
     "id": "ezetimibe",
@@ -48,9 +48,9 @@ Follow advertised provider continuation for further acquisition. If the result a
 
 ```json
 {
-  "tool": "search",
+  "tool": "search_records",
   "arguments": {
-    "entity": "adverse-event",
+    "entity": "adverse_event",
     "query": "ezetimibe"
   }
 }

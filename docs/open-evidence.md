@@ -25,9 +25,8 @@ unnormalized coordinates.
 {"tool":"variant_evidence","arguments":{"id":"chr1:55039974:G:T","assembly":"grch38","sections":["clinvar","population","civic"]}}
 ```
 
-Population and CIViC remain separate sources with their own identity and
-availability checks. Protein identifiers may still need a held aggregator for
-population resolution. ClinVar does not unlock other mixed annotation fields.
+Population and CIViC are separate sources with their own checks. Population
+lookups from a protein identifier may need an aggregator that is not released.
 
 Article citations and references use
 [Europe PMC's public REST service](https://europepmc.org/RestfulWebService)
@@ -44,8 +43,8 @@ permissive license for all Europe PMC content.
 The response reports source total, returned count and whether more indexed
 edges exist. It returns the first bounded window, up to 25 items, not an
 exhaustive graph. Unlinked bibliography entries remain unresolved references,
-without invented article identifiers. Missing source links do not establish
-that no citation exists; citations do not establish scientific agreement.
+without invented article identifiers. A missing link does not mean no citation
+exists, and a citation does not mean the papers agree.
 
 Author search and records now use [OpenAlex](https://help.openalex.org/api/), with
 source-qualified `openalex:A…` identifiers. Author `articles` relations return the
@@ -53,12 +52,10 @@ first bounded work window; name matches are candidates, not verified people.
 Article `recommendations` accepts PMID, PMCID, DOI or `openalex:W…` and projects
 OpenAlex's `related_works` metadata in source order. These are topic-based discovery
 suggestions, not summaries or scientific support.
-PMCID inputs first require an exact Europe PMC identity and a confirmed DOI/PMID bridge; both source notices are retained.
-Bibliographic OpenAlex metadata is CC0; abstracts, full text and content downloads are not
-part of this projection. Basic calls need no key. An optional operator
-`OPENALEX_API_KEY` is read only at the wire boundary and improves provider capacity;
-it is never a tool parameter. No paid plan, account creation or full-text download
-is initiated. Shared research limits, cache and provider pacing still apply.
+PMCID inputs are first matched to a DOI or PMID through Europe PMC.
+Bibliographic OpenAlex metadata is CC0; abstracts, full text and downloads are not
+included. Basic calls need no key. An optional `OPENALEX_API_KEY`, set on the
+server, gives more provider capacity; it is never a tool parameter.
 
 ```json
 {"tool":"search","arguments":{"entity":"author","query":"Jennifer Doudna","filters":{"source":"openalex"},"limit":3}}
@@ -68,12 +65,11 @@ is initiated. Shared research limits, cache and provider pacing still apply.
 
 Drug `label` reads return SPL identifiers, version/effective date, product metadata,
 manufacturer-submitted label prose (including indications, warnings and dosage),
-and an official label link. The initial view selects one matching SPL record,
-with explicit coverage rather than an all-manufacturer/latest-label claim.
-Text is preserved before caching and can be recovered
-through bounded evidence resources. HTML tables, images and attachment downloads
-are outside this projection. A listing does not establish FDA approval, current
-distributed labeling or individual clinical suitability. Preserve source notices.
+and an official label link. The first view shows one matching SPL record; it is
+not necessarily the latest label or the only manufacturer's label. Full text can be
+recovered through evidence resources. HTML tables, images and attachments are not
+included. A label listing does not confirm FDA approval, current labeling or
+suitability for a patient.
 
 `variant_evidence` with `sections=["predictions"]` now returns **AlphaMissense**
 precomputed predictions under CC BY 4.0. Gene/protein-change inputs use an exact
@@ -81,11 +77,10 @@ reviewed human UniProt sequence matched to the official AlphaFold DB score file;
 the response retains the sequence version and score-file hash. Genomic, rsID and
 accession HGVS inputs use Ensembl VEP's AlphaMissense projection, preserving each
 allele/transcript context and the observed Ensembl service release. An rsID can
-identify several alternate alleles. No mean or maximum is substituted for these
-contexts. The exact AlphaMissense dataset release is not reported by VEP; that
-limit remains explicit. Scores are research predictions, not clinical diagnoses
-or patient-risk estimates. Non-missense or unavailable predictions stay explicit.
-Restricted mixed aggregator bundles and other algorithms remain outside this route.
+identify several alternate alleles; scores are not averaged across them. VEP does
+not report the exact AlphaMissense dataset release. Scores are research
+predictions, not clinical diagnoses or patient-risk estimates. Non-missense or
+unavailable predictions are reported as such.
 
 ```json
 {"tool":"variant_evidence","arguments":{"id":"PCSK9 R46L","sections":["predictions"]}}
@@ -94,10 +89,10 @@ Restricted mixed aggregator bundles and other algorithms remain outside this rou
 
 Semantic Scholar acquisition, TLDR sections, source discovery and credentials have
 been removed. Use the released literature sources and OpenAlex author/work routes.
-See `capabilities` for coverage and [connection instructions](connect.md).
+See `get_capabilities` for coverage and [connection instructions](connect.md).
 
 ## Additional predictor scores
 
 Request `variant_evidence` with `sections: ["eve"]` and a gene/protein substitution such as `PCSK9 R46L` for original EVE ASM scores. The [EVE publisher licenses all site data under MIT](https://evemodel.org/download/bulk); returned evidence includes its full copyright/permission notice, uncertainty, source 75%-retained classification, canonical protein identity and artifact hash. Coverage depends on EVE's supplied proteins and positions; genomic mapping is not inferred. AlphaMissense remains available through `sections: ["predictions"]`. Scores from these distinct models are not combined.
 
-Credential-free public predictor results can be reused across anonymous requests to the same server resource for one day. Personal-key results, signed-in/private data, saved-evidence grants and other operations keep their own scopes. Explicit `fresh` acquisition bypasses the result cache; upstream latency can vary.
+Public predictor results are cached for one day and shared across anonymous requests to the same server. Results from personal keys or signed-in requests are not shared. Set `freshness` to `fresh` to bypass the cache.

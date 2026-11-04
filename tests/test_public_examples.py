@@ -161,7 +161,7 @@ async def test_each_public_example_passes_schema_preflight_and_actual_mcp_execut
         ADAPTERS[item.operation].validate_python(item.arguments)
         await prepare(service, item.operation, item.arguments, scope="example-test")
         assert router.requests == []
-    elif item.operation == "batch":
+    elif item.operation == "run_batch":
         for call in item.arguments["calls"]:
             await prepare(service, call["operation"], call["arguments"], scope="example-test")
         assert router.requests == []
@@ -169,9 +169,9 @@ async def test_each_public_example_passes_schema_preflight_and_actual_mcp_execut
         tools = {tool.name: tool for tool in await client.list_tools()}
         jsonschema.validate(item.arguments, tools[item.operation].input_schema)
         result = (await client.call_tool(item.operation, item.arguments)).data
-    if item.operation in {"capabilities", "quota"}:
+    if item.operation in {"get_capabilities", "get_quota"}:
         assert router.requests == [] and isinstance(result, dict)
-    elif item.operation == "batch":
+    elif item.operation == "run_batch":
         assert all(item["outcome"] in {"data", "ambiguous"} for item in result["results"]), result
         assert EXPECTED_HOSTS[item.id] <= {request.url.host for request in router.requests}
     else:
@@ -179,7 +179,7 @@ async def test_each_public_example_passes_schema_preflight_and_actual_mcp_execut
             result
         )
         assert not any(section.get("error") for section in result["sections"].values()), result
-        if item.operation == "study_analysis":
+        if item.operation == "analyze_study":
             assert router.requests == []
             assert result["provenance"][0]["source"] == "study"
         else:
@@ -260,7 +260,7 @@ async def test_each_public_example_passes_schema_preflight_and_actual_mcp_execut
 
 def test_descriptions_and_generated_docs_share_the_complete_registry():
     assert len({item.id for item in EXAMPLES}) == len(EXAMPLES)
-    assert {item.operation for item in EXAMPLES} == {*ADAPTERS, "batch", "capabilities", "quota"}
+    assert {item.operation for item in EXAMPLES} == {*ADAPTERS, "run_batch", "get_capabilities", "get_quota"}
     for operation, description in DESCRIPTIONS.items():
         assert for_operation(operation)[0].arguments_json in description
     root = Path(__file__).resolve().parents[1]
@@ -312,5 +312,5 @@ async def test_target_prompt_uses_shared_arguments_and_executes_them(example_ser
         text = prompt.messages[0].content.text
         arguments, _ = json.JSONDecoder().raw_decode(text.split("arguments ", 1)[1])
         assert arguments == by_id("target-dossier").arguments
-        result = (await client.call_tool("research", arguments)).data
+        result = (await client.call_tool("build_dossier", arguments)).data
     assert result["outcome"] == "data"

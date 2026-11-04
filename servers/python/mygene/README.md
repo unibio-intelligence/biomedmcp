@@ -2,23 +2,23 @@
 
 Examples use the public BioMedMCP tools and their typed JSON arguments.
 
-Use the biomedmcp server and its canonical tools. Retained adapters are implementation packages; their internal tools are not separate public MCP mounts.
+Connect to the biomedmcp server and use its tools. This package runs inside that server; it is not a separate MCP server.
 
 Use search and resolve for gene discovery and get for known genes. Keep one explicit taxonomy ID through follow-up enrichment. map_gene_ids is the distinct batch mapping operation for up to 25 inputs in one declared namespace and species.
 
-Declared advanced operations: `compare_genes`, `map_gene_ids`.
+Advanced operations: `compare_genes`, `map_gene_ids`.
 
-Inspect capabilities for this source to obtain the exact current parameter schemas. Resolve ambiguity before joining evidence. Mapping accepts symbol, entrezgene or ensembl.gene and retains each input's qualified candidates; it does not choose a species from the spelling of a symbol.
+Run get_capabilities for this source to see its current parameters. Resolve ambiguity before joining evidence. Mapping accepts symbol, entrezgene or ensembl.gene and retains each input's qualified candidates; it does not choose a species from the spelling of a symbol.
 
-These examples pass schemas and preflight and execute through MCP against mocked provider responses. They do not establish live source health or comprehensive scientific qualification. Mapping failures, wrong-species rows and absent provider responses are not evidence of absence. Provider annotation coverage and ontology assertions require source-specific interpretation. The former standalone 1,000-gene batch and export helpers are not public routes.
+The examples are tested through MCP against mock responses; live results may differ. Mapping failures, wrong-species rows and absent provider responses are not evidence of absence. Provider annotation coverage and ontology assertions require source-specific interpretation. The former standalone 1,000-gene batch and export helpers are not public routes.
 
-Follow advertised provider continuation for further acquisition. If the result advertises an evidence recovery URI, use its bounded ranges to read acquired data omitted from the preview; see [evidence recovery](../../../docs/evidence-resources.md). Snapshot scope, expiry and source rights still apply.
+To get more results, follow the continuation in the response. If a result includes an evidence recovery URI, use it to read data left out of the preview; see [evidence recovery](../../../docs/evidence-resources.md). Recovered data expires and is subject to the source's terms.
 
 ## Human BRCA1 gene discovery
 
 ```json
 {
-  "tool": "search",
+  "tool": "search_records",
   "arguments": {
     "entity": "gene",
     "query": "BRCA1",
@@ -33,7 +33,7 @@ Follow advertised provider continuation for further acquisition. If the result a
 
 ```json
 {
-  "tool": "get",
+  "tool": "get_record",
   "arguments": {
     "entity": "gene",
     "id": "PCSK9",
@@ -46,7 +46,7 @@ Follow advertised provider continuation for further acquisition. If the result a
 
 ```json
 {
-  "tool": "resolve",
+  "tool": "resolve_entity",
   "arguments": {
     "entity": "gene",
     "query": "LDL receptor",
@@ -59,7 +59,7 @@ Follow advertised provider continuation for further acquisition. If the result a
 
 ```json
 {
-  "tool": "resolve",
+  "tool": "resolve_entity",
   "arguments": {
     "entity": "gene",
     "query": "Trp53",

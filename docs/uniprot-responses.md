@@ -51,8 +51,7 @@ validated before extraction; valid ECO-only evidence remains supported.
 Exact-entry responses retain the observed `x-uniprot-release` header. The source
 body cannot supply or overwrite that release. Mixed observed releases remain
 per-record with a warning; no aggregate release is invented when a header is
-missing or inputs disagree. An observed release is not a reproducible replay pin.
-Source53 invalidates older cached science and continuations.
+missing or inputs disagree. Rerunning a request may return newer data. Cached results and continuations from before source53 no longer work.
 
 The source53 additions in `tests/test_uniprot_annotations.py` and the earlier
 `tests/test_uniprot_responses.py` pass native and Docker contract qualification.

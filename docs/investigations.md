@@ -1,39 +1,39 @@
 # Example investigations
 
-Use these workflows to organize a research notebook and make its evidence gaps explicit. Calls are tested with synthetic provider responses; outputs and source availability vary. Check [source release eligibility](source-licenses.md) before execution; keys cannot enable unreleased integrations. Live coverage and scientific adjudication remain separate. Known identifiers can be used directly without mandatory discovery calls. For study examples install the [synthetic demo](studies.md) first.
+Each workflow answers one research question in a few calls and explains how to read the results. The calls are tested against mock responses, so live results may differ. If you already know an identifier, use it directly. Some sources are not released, and a key cannot turn them on; see [source release eligibility](source-licenses.md). For the study example, install the [synthetic demo](studies.md) first.
 
 ## Which observations belong in an LDL-receptor evidence notebook?
 
 ```sh
-UBI_PROFILE=local biomedmcp research '{"workflow":"target_dossier","focus":"LDLR","species":9606}'
-UBI_PROFILE=local biomedmcp get '{"entity":"gene","id":"LDLR","species":9606,"sections":["expression"],"section_parameters":{"expression":{"query_type":"gene_tissue","tissue_id":"Liver"}}}'
-UBI_PROFILE=local biomedmcp get '{"entity":"gene","id":"LDLR","species":9606,"sections":["eqtl"],"section_parameters":{"eqtl":{"tissue_id":"Liver"}}}'
+UBI_PROFILE=local biomedmcp build_dossier '{"workflow":"target_dossier","focus":"LDLR","species":9606}'
+UBI_PROFILE=local biomedmcp get_record '{"entity":"gene","id":"LDLR","species":9606,"sections":["expression"],"section_parameters":{"expression":{"query_type":"gene_tissue","tissue_id":"Liver"}}}'
+UBI_PROFILE=local biomedmcp get_record '{"entity":"gene","id":"LDLR","species":9606,"sections":["eqtl"],"section_parameters":{"eqtl":{"tissue_id":"Liver"}}}'
 ```
 
-Read the qualified gene/allele identity, expression units/tissue/release, association direction and each section's outcome. Inspect the separate expression/QTL schemas with capabilities for source=gtex. Distinguish posterior probabilities, p-values and standard errors, and paired values from unknown participant counts. Preserve prefilter source pointers, qualified intron joins, provenance, disagreements and recovery. Observational expression/QTL associations do not establish causal target validation; missing sections prevent a complete conclusion.
+Check the gene and allele identity, the expression units, tissue and release, the direction of each association, and whether each section succeeded. Keep posterior probabilities, p-values and standard errors apart, and don't assume a participant count that is not reported. Run get_capabilities for source=gtex to see the expression and QTL record fields. Expression and QTL associations are observational: they do not validate a target. If a section is missing, the conclusion is incomplete.
 
-Keep the JSON results, evidence IDs, source releases and continuation actions with your answer. An error or partial result requires a qualified alternative, continuation or an explicit limitation.
+Save the JSON results, evidence IDs and source releases with your answer. If a call fails or returns partial results, continue it, try another source, or state the gap.
 
 ## How can I keep a PCSK9 allele claim separate from gene-level evidence?
 
 ```sh
-UBI_PROFILE=local biomedmcp variant_evidence '{"id":"PCSK9 R46L"}'
-UBI_PROFILE=local biomedmcp relate '{"entity":"variant","id":"PCSK9 R46L","relation":"structure"}'
-UBI_PROFILE=local biomedmcp relate '{"entity":"gene","id":"PCSK9","relation":"articles","species":9606}'
+UBI_PROFILE=local biomedmcp get_variant_evidence '{"id":"PCSK9 R46L"}'
+UBI_PROFILE=local biomedmcp find_related '{"entity":"variant","id":"PCSK9 R46L","relation":"structure"}'
+UBI_PROFILE=local biomedmcp find_related '{"entity":"gene","id":"PCSK9","relation":"articles","species":9606}'
 ```
 
-Confirm allele/transcript/build equivalence before combining assertions. Structural coverage is a sequence mapping, not proof of an experimental residue effect. Gene co-mention papers are discovery leads; inspect experiment/species/variant scope before citing support. Preserve source assertions independently.
+Before combining results, confirm they refer to the same allele, transcript and genome build. A structure covering the residue is a sequence mapping, not evidence of an experimental effect. Papers that mention the gene are leads: check the experiment, species and variant before citing them. Keep each source's claims separate.
 
-Keep the JSON results, evidence IDs, source releases and continuation actions with your answer. An error or partial result requires a qualified alternative, continuation or an explicit limitation.
+Save the JSON results, evidence IDs and source releases with your answer. If a call fails or returns partial results, continue it, try another source, or state the gap.
 
 ## Can I reproduce the analysis before using my own study?
 
 ```sh
-UBI_PROFILE=local biomedmcp study_analysis '{"analysis":"gene_profile","study":"ubi_synthetic","gene":"TP53"}'
-UBI_PROFILE=local biomedmcp study_analysis '{"analysis":"survival","study":"ubi_synthetic","gene":"TP53","endpoint":"os"}'
-UBI_PROFILE=local biomedmcp study_analysis '{"analysis":"co_occurrence","study":"ubi_synthetic","genes":["TP53","KRAS"]}'
+UBI_PROFILE=local biomedmcp analyze_study '{"analysis":"gene_profile","study":"ubi_synthetic","gene":"TP53"}'
+UBI_PROFILE=local biomedmcp analyze_study '{"analysis":"survival","study":"ubi_synthetic","gene":"TP53","endpoint":"os"}'
+UBI_PROFILE=local biomedmcp analyze_study '{"analysis":"co_occurrence","study":"ubi_synthetic","genes":["TP53","KRAS"]}'
 ```
 
-Report clinical-study samples separately from mutation-assayed samples, unique mutant samples and mutation events. Use the assay-evaluable denominator, preserve calculation inputs, exclusions and patient grouping, and distinguish missing measurement from measured negative. Inspect capabilities with source=study for the derived record schemas; preserve unavailable inference, source selectors and truncation/recovery. A request's species default does not establish study species or assembly. These synthetic results demonstrate mechanics only; they are not real clinical evidence or validated statistical conclusions for a real study.
+Count study samples, mutation-tested samples, mutated samples and mutation events separately. Use the tested samples as the denominator, keep the inputs, exclusions and patient grouping, and don't count a missing measurement as a negative result. Run get_capabilities for source=study to see the record fields. The request's default species does not tell you the study's species or genome assembly. The demo data is synthetic: it shows how the tools work, not real clinical findings.
 
-Keep the JSON results, evidence IDs, source releases and continuation actions with your answer. An error or partial result requires a qualified alternative, continuation or an explicit limitation.
+Save the JSON results, evidence IDs and source releases with your answer. If a call fails or returns partial results, continue it, try another source, or state the gap.

@@ -1,67 +1,67 @@
 # Source credentials and access
 
-Generated from current source policy. Set secrets in the server/operator environment or client secret storage; never pass them as scientific tool arguments. Hosted users ask the operator to configure source access. Restart processes after changing source credentials. Environment presence does not verify credentials, rights, live availability or scientific coverage.
+Most sources need no key. For those that do, set the key as an environment variable where the server runs, or in your client's secret storage, then restart the server. Never put keys in tool arguments. On a hosted server, ask whoever runs it to set up keys. Setting a variable does not check that the key works, that you have rights to the data, or that the source is reachable.
 
-Local users may supply supported keys in their own process environment or client secret storage. Shared hosted per-user keys require a separately implemented platform secret boundary; never switch users by changing server-wide environment variables. `UBI_LICENSED_SOURCES` and keys cannot override an unreleased source. Review the [source license inventory](source-licenses.md); source eligibility and integration-code licensing are separate.
+Per-user keys on a shared hosted server need secret storage that this package does not provide; never switch users by changing server-wide environment variables. A source marked **Not released** stays off even with a key or `UBI_LICENSED_SOURCES`. Available sources still have data terms; check them in the [source license inventory](source-licenses.md) before reusing data.
 
-| Source | Required environment | Optional environment | Source release / access policy |
+| Source | Required environment | Optional environment | Status |
 | --- | --- | --- | --- |
-| `alphamissense` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `antibody-registry` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `bio-ontology` | `BIOONTOLOGY_API_KEY` | None | eligible; Provider credentials required; review account/access terms |
-| `cancerhotspots` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `cbioportal` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `chembl` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `civic` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `clingen` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `clinical-trials` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `complexportal` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `cpic` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `dailymed` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `depmap` | None | None | Retained route unavailable; use a separately released qualified platform data capability |
-| `disgenet` | `DISGENET_API_KEY` | None | unreleased; Explicitly qualified licensed/access mode required; `UBI_LICENSED_SOURCES` includes `disgenet` |
-| `ema` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `enrichment` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `ensembl` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `europepmc` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `eve` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `fda-devices` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `gencc` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `gnomad` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `gtex` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `gtr` | None | `NCBI_API_KEY` | eligible; No access credential required by this implementation; review source terms |
-| `gwas` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `interpro` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `litsense2` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `monarch` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `mychem` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `mydisease` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `mygene` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `myvariant` | None | None | unreleased; No access credential required by this implementation; review source terms |
-| `ncbi` | None | `NCBI_API_KEY` | eligible; No access credential required by this implementation; review source terms |
-| `ncbi-records` | None | `NCBI_API_KEY` | eligible; No access credential required by this implementation; review source terms |
-| `nci` | `NCI_API_KEY` | None | eligible; Provider credentials required; review account/access terms |
-| `nih-reporter` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `ols` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `omnipath` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `oncokb` | `ONCOKB_TOKEN` | None | unreleased; Explicitly qualified licensed/access mode required; `UBI_LICENSED_SOURCES` includes `oncokb` |
-| `openalex` | None | `OPENALEX_API_KEY` | eligible; No access credential required by this implementation; review source terms |
-| `openfda` | None | `OPENFDA_API_KEY` | eligible; No access credential required by this implementation; review source terms |
-| `opentargets` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `orange-book` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `orcid` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `patents` | `EPO_OPS_CONSUMER_KEY`, `EPO_OPS_CONSUMER_SECRET` | None | unreleased; Account terms require operator review |
-| `pdb` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `pmc` | None | `NCBI_API_KEY` | eligible; No access credential required by this implementation; review source terms |
-| `protein-atlas` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `pubmed` | None | `NCBI_API_KEY` | eligible; No access credential required by this implementation; review source terms |
-| `pubtator` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `reactome` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `string` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `study` | `UBI_PUBLIC_STUDY_DIR`, `UBI_PUBLIC_STUDY_MANIFEST` | None | eligible; Checksummed public release required |
-| `surechembl` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `uniprot` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `who` | None | None | eligible; No access credential required by this implementation; review source terms |
-| `who-ivd` | None | None | eligible; No access credential required by this implementation; review source terms |
+| `alphamissense` | None | None | Available |
+| `antibody-registry` | None | None | Available |
+| `bio-ontology` | `BIOONTOLOGY_API_KEY` | None | Available with your provider key |
+| `cancerhotspots` | None | None | Available |
+| `cbioportal` | None | None | Available |
+| `chembl` | None | None | Available |
+| `civic` | None | None | Available |
+| `clingen` | None | None | Available |
+| `clinical-trials` | None | None | Available |
+| `complexportal` | None | None | Available |
+| `cpic` | None | None | Available |
+| `dailymed` | None | None | Available |
+| `depmap` | None | None | Not available in this release |
+| `disgenet` | `DISGENET_API_KEY` | None | Not released |
+| `ema` | None | None | Available |
+| `enrichment` | None | None | Available |
+| `ensembl` | None | None | Available |
+| `europepmc` | None | None | Available |
+| `eve` | None | None | Available |
+| `fda-devices` | None | None | Available |
+| `gencc` | None | None | Available |
+| `gnomad` | None | None | Available |
+| `gtex` | None | None | Available |
+| `gtr` | None | `NCBI_API_KEY` | Available |
+| `gwas` | None | None | Available |
+| `interpro` | None | None | Available |
+| `litsense2` | None | None | Available |
+| `monarch` | None | None | Available |
+| `mychem` | None | None | Available |
+| `mydisease` | None | None | Available |
+| `mygene` | None | None | Available |
+| `myvariant` | None | None | Not released |
+| `ncbi` | None | `NCBI_API_KEY` | Available |
+| `ncbi-records` | None | `NCBI_API_KEY` | Available |
+| `nci` | `NCI_API_KEY` | None | Available with your provider key |
+| `nih-reporter` | None | None | Available |
+| `ols` | None | None | Available |
+| `omnipath` | None | None | Available |
+| `oncokb` | `ONCOKB_TOKEN` | None | Not released |
+| `openalex` | None | `OPENALEX_API_KEY` | Available |
+| `openfda` | None | `OPENFDA_API_KEY` | Available |
+| `opentargets` | None | None | Available |
+| `orange-book` | None | None | Available |
+| `orcid` | None | None | Available |
+| `patents` | `EPO_OPS_CONSUMER_KEY`, `EPO_OPS_CONSUMER_SECRET` | None | Not released |
+| `pdb` | None | None | Available |
+| `pmc` | None | `NCBI_API_KEY` | Available |
+| `protein-atlas` | None | None | Available |
+| `pubmed` | None | `NCBI_API_KEY` | Available |
+| `pubtator` | None | None | Available |
+| `reactome` | None | None | Available |
+| `string` | None | None | Available |
+| `study` | `UBI_PUBLIC_STUDY_DIR`, `UBI_PUBLIC_STUDY_MANIFEST` | None | Available after you install a checksummed study release |
+| `surechembl` | None | None | Available |
+| `uniprot` | None | None | Available |
+| `who` | None | None | Available |
+| `who-ivd` | None | None | Available |
 
-Use `biomedmcp diagnose '{"source":"bio-ontology"}'` to distinguish missing settings from import failure and qualification evidence. The [connection guide](connect.md) and [study guide](studies.md) provide recovery steps.
+To check a source's setup, run `biomedmcp diagnose '{"source":"bio-ontology"}'`. It tells you whether a setting is missing or the source failed to load. For fixes, see the [connection guide](connect.md) and [study guide](studies.md).

@@ -29,8 +29,8 @@ counts fail safely and cannot enter the healthy-result cache.
 
 Allele count (AC) and allele number (AN) are distinct measurements. Frequency
 is AC/AN only when both are known and AN is positive. AC=0 with AN>0 is
-measured zero; missing counts, AN=0, missing modalities or no indexed variant
-record cannot establish population absence. Unknown measurements produce
+measured zero. Missing counts, AN=0, missing data types or no indexed variant
+record do not mean the variant is absent from the population. Unknown measurements produce
 partial section status and retain successful peer evidence. Ancestry rows keep
 their own denominators and source IDs; rows can overlap and are not summed.
 Exome and genome counts are also not added. Joint counts are supplied by the
@@ -65,6 +65,5 @@ documents updates within version families.
 
 The checked-in official SDL/resolver fixture retains its upstream MIT license.
 Offline tests cover the selected fields, identity and denominator semantics,
-HTTP failures, and actual MCP cache/composition behavior. They do not qualify
-all gnomAD fields, live provider health, real client/model performance or
-clinical interpretation.
+HTTP failures, and actual MCP cache/composition behavior. They do not cover
+every gnomAD field, live provider health or clinical interpretation.

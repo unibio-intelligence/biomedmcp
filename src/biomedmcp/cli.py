@@ -30,8 +30,8 @@ async def _execute(operation, params, *, url=None, login=False, state_dir=None):
         if state_dir is not None:
             raise ResearchError("invalid_parameters", "Read-only diagnosis does not use a state directory.")
         params = {**params, "diagnose": True}
-        operation = "capabilities"
-    if operation == "capabilities" and params.get("diagnose") is True and not url:
+        operation = "get_capabilities"
+    if operation == "get_capabilities" and params.get("diagnose") is True and not url:
         if state_dir is not None:
             raise ResearchError("invalid_parameters", "Read-only diagnosis does not use a state directory.")
         from .dispatch import execute as dispatch
@@ -109,7 +109,7 @@ async def _execute(operation, params, *, url=None, login=False, state_dir=None):
 
     transport.configure()
     deadline = time.monotonic() + remaining_budget(
-        COMPOSED_TIMEOUT if operation in {"batch", "research"} else REQUEST_TIMEOUT
+        COMPOSED_TIMEOUT if operation in {"run_batch", "build_dossier"} else REQUEST_TIMEOUT
     )
     token = operation_deadline.set(deadline)
     try:
@@ -175,9 +175,9 @@ def main():
             "get-prompt",
             "tools",
             *MODELS,
-            "capabilities",
-            "batch",
-            "quota",
+            "get_capabilities",
+            "run_batch",
+            "get_quota",
             "diagnose",
         ],
     )

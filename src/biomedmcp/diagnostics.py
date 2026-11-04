@@ -150,7 +150,7 @@ def live_evidence(source, report=None, *, now=None):
 async def diagnose(service, *, source=None):
     known = source_names()
     if source is not None and source not in known:
-        raise ResearchError("unknown_source", "Unknown diagnostic source; inspect capabilities.")
+        raise ResearchError("unknown_source", "Unknown diagnostic source; inspect get_capabilities.")
     selected = [source] if source else known
     probe = await study_workers.run(import_probe, {name: policy(name)["module"] for name in selected})
     rows = []

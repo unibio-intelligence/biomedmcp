@@ -1,6 +1,6 @@
 # Open Targets acquisition and target evidence
 
-Use `get` for a qualified human gene with `target_evidence`, `diseases` or
+Use `get_record` for a qualified human gene with `target_evidence`, `diseases` or
 `druggability` or `genetics` sections. One qualified gene identity supplies the exact Ensembl
 selector; the returned target identifier and approved symbol must agree with
 that identity before composition or caching.
@@ -16,8 +16,8 @@ evidence. Aliases, fragments, conditional fields and merged selections retain
 their GraphQL meaning. Single-entity requests verify the source identifier even
 when the original query did not select it.
 
-An explicit empty association collection is a valid indexed result for this
-request, with an absence caveat. A null entity or malformed response is an error
+An empty association list is a valid result for this request; it does not
+prove no association exists. A null entity or malformed response is an error
 with no scientific evidence ID. Other successful gene sections survive it.
 Failed results retry on the next request; successful cache results retain their
 evidence identity. More returned records than the display bound produce exact
@@ -31,22 +31,19 @@ error and a null value. They never become empty association, indication or
 clinical-candidate collections. Nullable source fields and explicitly empty
 collections keep their distinct source meanings. Primary acquisition failures
 stop composition before optional queries and cannot establish an identity.
-Expected provider failures are sanitized before adapter logging; cancellation
-still propagates.
 
 Disease associations retain their records, provider total and first-page
 coverage. A limited first page is not exhaustive. Tractability flags and safety
-liabilities remain source annotations; they do not establish physical binding,
+liabilities are source annotations; they do not show physical binding,
 causality, clinical efficacy or the absence of risk. Nullable expression values
-stay unreported rather than becoming zero. The dated schema snapshot is an API
-structure contract, not a data release pin; live results remain time-dependent.
+stay unreported rather than becoming zero. Live results may change over time.
 
 The current provider schema omits ProbeMiner scores and TEP records. Chemical
 probe responses retain the separately reported `probesDrugsScore` without
 renaming it as ProbeMiner evidence. TEP requests report source unavailability
 before outbound access.
 
-For a source assessment, inspect `capabilities` and use `query_source` with
+For a source assessment, inspect `get_capabilities` and use `query_source` with
 `source="opentargets"`, `operation="analyze_advanced"` and
 `params={"analysis_type":"validate","entity_ids":["ENSG00000169174"]}`.
 The assessment retains clinical candidate records and reports annotation counts
@@ -91,7 +88,7 @@ that `study.target` matches the requested gene. Sample/case/control counts
 retain their study-level denominator; unreported counts remain null.
 
 Use `section_parameters={"genetics":{"limit":10,"page":0}}` to bound a gene
-window. Follow its canonical `get` continuation unchanged. It preserves the
+window. Follow its canonical `get_record` continuation unchanged. It preserves the
 original selector, species and source policy while advancing the locus page.
 Coverage describes the current window. It does not summarize earlier pages.
 
@@ -115,8 +112,8 @@ acquired comparisons and input pointers remain available for evidence recovery.
 An empty union or unavailable candidate annotations has an unreported score,
 not zero. Interaction overlap uses explicitly human, resolved Ensembl partners.
 Disease and interaction annotations are limited to each target's first 100 rows.
-This bounded candidate window cannot establish a global similarity ranking,
-biological absence, binding or clinical similarity.
+Because only these rows are compared, the results are not a global similarity
+ranking and do not show absence, binding or clinical similarity.
 
 `analysis_type="prioritize"` requires one indexed disease and 0–10 distinct
 human Ensembl targets. An empty target array discovers within the first 100
@@ -153,17 +150,15 @@ mantissa and exponent without imposing an undocumented normalization.
 Variant evidence uses the source's exact variant relation. The selected evidence
 projection does not independently qualify a genome build or allele for each
 record. Coverage applies to the current window; a terminal page cannot summarize
-earlier pages. Source data remain unpinned, and empty windows cannot establish
-biological absence.
+earlier pages. Source data are not pinned, and an empty page does not mean no
+evidence exists.
 
 The [selected offline regressions](../tests/test_opentargets_responses.py)
 and [assessment regressions](../tests/test_opentargets_assessments.py), alongside
 [partial acquisition regressions](../tests/test_opentargets_partial.py), exercise
 acquisition types, scientific counts/scores, qualified identity, selected
 assessment/comparison semantics, cache/retry, actual MCP continuation and
-recovery. These checks do not qualify all advanced composition or derived
-analyses, current live health, model scientific correctness or clinical target
-validation.
+recovery. They do not cover every advanced analysis, live provider health or clinical target validation.
 
 Variant credible-set windows also expose an executable `query_source` next action.
 They page independently from evidence: their actions clear the evidence cursor and
@@ -171,8 +166,8 @@ disable evidence acquisition, preserving the original variant and locus page siz
 The requested variant may be a locus member rather than its lead variant; each
 returned lead variant retains its own reported coordinates and alleles. Nullable
 study denominators, effects and fine-mapping measurements stay nullable. These
-source records do not establish a causal variant or independently qualify the
-requested variant's genome build. Display omissions can be recovered through
+source records do not identify a causal variant or confirm the requested
+variant's genome build. Display omissions can be recovered through
 evidence resources without contacting the provider again. Local CLI continuation
 uses the same private state directory across invocations.
 
@@ -195,5 +190,5 @@ Source totals and returned counts remain window-specific; source scores are
 reported evidence heuristics, not causal or clinical validation. Display omissions
 are recoverable without new provider calls. Local CLI processes share their
 configured private state directory; hosted replicas share their configured state
-and signing key. This qualifies selected offline contracts only, not current
-provider health, model task success or complete scientific workflow coverage.
+and signing key. Only selected cases are covered by offline tests; live provider
+health is not.

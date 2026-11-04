@@ -208,7 +208,7 @@ async def test_real_http_failures_are_safe_and_never_absence(monkeypatch, case, 
     assert "credential-sentinel" not in str(caught.value) + caplog.text
 
 
-@pytest.mark.parametrize("mode", ["search", "variant_evidence"])
+@pytest.mark.parametrize("mode", ["search_records", "get_variant_evidence"])
 async def test_actual_mcp_failure_is_uncached_and_recovery_retains_provenance(monkeypatch, mode):
     from fastmcp import Client
 
@@ -229,7 +229,7 @@ async def test_actual_mcp_failure_is_uncached_and_recovery_retains_provenance(mo
     )
     params = (
         {"entity": "variant", "query": "BRAF"}
-        if mode == "search"
+        if mode == "search_records"
         else {"id": "BRAF V600E", "sections": ["record"]}
     )
     async with Client(create_server(service=ResearchService())) as client:

@@ -105,7 +105,7 @@ async def test_discovery_bound_does_not_claim_exact_identity_or_read_partial_can
 @pytest.mark.source_permissions
 async def test_canonical_variant_task_releases_clinvar_without_myvariant():
     service = ResearchService(http=http())
-    result = await execute(service, "variant_evidence", {"id": "BRAF V600E", "sections": ["clinvar"]}, scope="test")
+    result = await execute(service, "get_variant_evidence", {"id": "BRAF V600E", "sections": ["clinvar"]}, scope="test")
     assert result.outcome == "data"
     assert result.sections["clinvar"].data["records"][0]["id"] == "VCV000013961.143"
     assert result.provenance[0].source == "ncbi"

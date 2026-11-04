@@ -96,14 +96,14 @@ async def test_actual_mcp_bad_export_not_cached_and_successful_peer_retained(mon
     service=ResearchService(adapters=GeneAdapters(),http=http)
     async with Client(create_server(service=service)) as client:
         args={'entity':'gene','id':'BRAF','sections':['record','gencc']}
-        bad=(await client.call_tool('get',args,raise_on_error=False)).structured_content
+        bad=(await client.call_tool('get_record',args,raise_on_error=False)).structured_content
         assert bad['outcome']=='partial' and bad['sections']['record']['outcome']=='data'
         assert bad['sections']['gencc']['error']['code']=='invalid_source_response'
         assert bad['sections']['gencc']['evidence_ids']==[]
-        good=(await client.call_tool('get',args,raise_on_error=False)).structured_content
+        good=(await client.call_tool('get_record',args,raise_on_error=False)).structured_content
         assert good['sections']['gencc']['outcome']=='data'
         assert good['sections']['gencc']['data']['records'][0]['sgc_id']=='SGC-1'
-        cached=(await client.call_tool('get',args,raise_on_error=False)).structured_content
+        cached=(await client.call_tool('get_record',args,raise_on_error=False)).structured_content
         assert cached['sections']['gencc']['evidence_ids']==good['sections']['gencc']['evidence_ids']
     assert len(http.calls)==2 and all(c[2]['params']=={'format':'new'} for c in http.calls)
 

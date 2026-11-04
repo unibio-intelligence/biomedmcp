@@ -178,7 +178,7 @@ class SourceAdapters:
         snapshot = await self._catalog_snapshot(source)
         if operation not in snapshot.validators:
             raise ResearchError(
-                "unknown_operation", f"Unknown operation for {source}; inspect capabilities first."
+                "unknown_operation", f"Unknown operation for {source}; inspect get_capabilities first."
             )
         try:
             snapshot.validators[operation].validate(params)

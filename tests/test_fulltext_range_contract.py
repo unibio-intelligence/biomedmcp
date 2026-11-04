@@ -44,7 +44,7 @@ INVALID = [
 @pytest.mark.parametrize("parameters", INVALID[:5])
 def test_advertised_schema_rejects_zero_or_unbounded_coordinates(parameters):
     with pytest.raises(jsonschema.ValidationError):
-        jsonschema.validate(arguments(parameters), schema("get"))
+        jsonschema.validate(arguments(parameters), schema("get_record"))
 
 
 @pytest.mark.asyncio
@@ -53,7 +53,7 @@ async def test_actual_mcp_rejects_invalid_range_before_acquisition(monkeypatch, 
     monkeypatch.setenv("UBI_PROFILE", "local")
     http = HTTP()
     async with Client(create_server(service=ResearchService(http=http))) as client:
-        result = await client.call_tool_mcp("get", arguments(parameters))
+        result = await client.call_tool_mcp("get_record", arguments(parameters))
     assert result.is_error
     assert result.structured_content["error"]["code"] == "invalid_parameters"
     assert result.structured_content["error"]["retryable"] is False
@@ -66,7 +66,7 @@ async def test_local_cli_reports_the_same_controlled_parameter_error(monkeypatch
     http = HTTP()
     monkeypatch.setattr(cli, "ResearchService", lambda **kwargs: ResearchService(http=http, **kwargs))
     with pytest.raises(ResearchError) as error:
-        await cli.execute("get", arguments(parameters), state_dir=tmp_path / "state")
+        await cli.execute("get_record", arguments(parameters), state_dir=tmp_path / "state")
     assert error.value.code == "invalid_parameters"
     assert http.calls == []
 
@@ -77,8 +77,8 @@ async def test_bad_late_batch_range_prevents_every_provider_request(monkeypatch,
     monkeypatch.setenv("UBI_PROFILE", "local")
     http = HTTP()
     calls = [
-        {"operation": "get", "arguments": {"entity": "article", "id": "123"}},
-        {"operation": "get", "arguments": arguments(parameters)},
+        {"operation": "get_record", "arguments": {"entity": "article", "id": "123"}},
+        {"operation": "get_record", "arguments": arguments(parameters)},
     ]
     with pytest.raises(ResearchError) as error:
         await execute(
@@ -90,7 +90,7 @@ async def test_bad_late_batch_range_prevents_every_provider_request(monkeypatch,
     assert error.value.code == "invalid_parameters"
     assert http.calls == []
     async with Client(create_server(service=ResearchService(http=http))) as client:
-        result = await client.call_tool_mcp("batch", {"calls": calls})
+        result = await client.call_tool_mcp("run_batch", {"calls": calls})
     assert result.is_error and result.structured_content["error"]["code"] == "invalid_parameters"
     assert http.calls == []
 
@@ -100,7 +100,13 @@ def test_cli_command_has_a_safe_json_error_and_nonzero_exit(monkeypatch, tmp_pat
     monkeypatch.setattr(cli, "ResearchService", lambda **kwargs: ResearchService(http=http, **kwargs))
     monkeypatch.setattr(
         "sys.argv",
-        ["biomedmcp", "get", json.dumps(arguments(INVALID[0])), "--state-dir", str(tmp_path / "state")],
+        [
+            "biomedmcp",
+            "get_record",
+            json.dumps(arguments(INVALID[0])),
+            "--state-dir",
+            str(tmp_path / "state"),
+        ],
     )
     logging_config = structlog.get_config()
     try:
@@ -140,13 +146,13 @@ async def test_schema_mcp_cli_and_native_preserve_inclusive_lines(
 ):
     monkeypatch.setenv("UBI_PROFILE", "local")
     request = arguments(parameters)
-    jsonschema.validate(request, schema("get"))
+    jsonschema.validate(request, schema("get_record"))
     mcp_http, cli_http, native_http = HTTP(PAPER), HTTP(PAPER), HTTP(PAPER)
     async with Client(create_server(service=ResearchService(http=mcp_http))) as client:
-        output = await client.call_tool_mcp("get", deepcopy(request))
+        output = await client.call_tool_mcp("get_record", deepcopy(request))
     assert not output.is_error
     monkeypatch.setattr(cli, "ResearchService", lambda **kwargs: ResearchService(http=cli_http, **kwargs))
-    local = await cli.execute("get", deepcopy(request), state_dir=tmp_path / "state")
+    local = await cli.execute("get_record", deepcopy(request), state_dir=tmp_path / "state")
     native = await Literature(native_http).fulltext("PMC123", view="lines", **parameters)
     for result in [output.structured_content, local]:
         assert result["outcome"] == "data"
@@ -195,7 +201,7 @@ async def test_actual_mcp_hides_invalid_article_identity_in_planning(monkeypatch
     sentinel = "10.1234/rejected-input-sentinel-" + "x" * 256
     http = HTTP()
     async with Client(create_server(service=ResearchService(http=http))) as client:
-        result = await client.call_tool_mcp("get", arguments(identifier=sentinel))
+        result = await client.call_tool_mcp("get_record", arguments(identifier=sentinel))
     assert result.is_error and result.structured_content["error"]["code"] == "invalid_parameters"
     assert sentinel not in json.dumps(result.structured_content)
     assert http.calls == []

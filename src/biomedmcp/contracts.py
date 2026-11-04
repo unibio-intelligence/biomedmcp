@@ -22,7 +22,9 @@ class StrictModel(BaseModel):
 
 
 class FulltextWindow(StrictModel):
-    view: Literal["outline", "lines", "assets"] = "outline"
+    view: Literal["outline", "lines", "assets"] = Field(
+        default="outline", description="outline lists sections; lines reads start-end; assets lists figures."
+    )
     start: int = Field(default=1, ge=1, le=100000)
     end: int = Field(default=100, ge=1, le=100000)
 
@@ -47,7 +49,7 @@ class Entity(StrEnum):
     pgx = "pgx"
     gwas = "gwas"
     diagnostic = "diagnostic"
-    adverse_event = "adverse-event"
+    adverse_event = "adverse_event"
     study = "study"
     patent = "patent"
     sequence = "sequence"
@@ -59,33 +61,37 @@ FilterText = Annotated[str, Field(min_length=1, max_length=256)]
 
 
 class SearchFilters(StrictModel):
-    gene: str | None = Field(default=None, max_length=128)
+    gene: str | None = Field(default=None, max_length=128, description="Gene symbol, e.g. PCSK9.")
     disease: list[FilterText] = Field(default_factory=list, max_length=5)
     drug: list[FilterText] = Field(default_factory=list, max_length=5)
-    source: str | None = Field(default=None, max_length=64)
-    date_from: date | None = None
-    date_to: date | None = None
-    phase: str | None = Field(default=None, max_length=32)
-    status: str | None = Field(default=None, max_length=64)
+    source: str | None = Field(default=None, max_length=64, description="One source ID; omit to query all.")
+    date_from: date | None = Field(default=None, description="YYYY-MM-DD.")
+    date_to: date | None = Field(default=None, description="YYYY-MM-DD.")
+    phase: str | None = Field(default=None, max_length=32, description="e.g. PHASE2, PHASE3.")
+    status: str | None = Field(default=None, max_length=64, description="e.g. RECRUITING, COMPLETED.")
     open_access: bool | None = None
     no_preprints: bool | None = None
     sort: Literal["relevance", "date", "citations"] | None = None
-    species: int = Field(default=9606, gt=0)
+    species: int = Field(default=9606, gt=0, description="NCBI taxon ID; 9606 is human.")
     author: list[FilterText] = Field(default_factory=list, max_length=5)
     journal: list[FilterText] = Field(default_factory=list, max_length=5)
     article_type: str | None = Field(default=None, max_length=64)
     ranking_mode: Literal["lexical", "provider", "hybrid"] | None = None
-    hgvsp: str | None = Field(default=None, max_length=128)
-    significance: str | None = Field(default=None, max_length=64)
-    consequence: str | None = Field(default=None, max_length=64)
-    max_frequency: float | None = Field(default=None, ge=0, le=1)
-    revel_min: float | None = Field(default=None, ge=0, le=1)
+    hgvsp: str | None = Field(default=None, max_length=128, description="Protein change, e.g. p.R46L.")
+    significance: str | None = Field(
+        default=None, max_length=64, description="ClinVar significance, e.g. pathogenic."
+    )
+    consequence: str | None = Field(default=None, max_length=64, description="e.g. missense_variant.")
+    max_frequency: float | None = Field(
+        default=None, ge=0, le=1, description="Maximum population allele frequency."
+    )
+    revel_min: float | None = Field(default=None, ge=0, le=1, description="Minimum REVEL score.")
     review_status: str | None = Field(default=None, max_length=64)
-    reviewed: bool | None = None
-    existence: int | None = Field(default=None, ge=1, le=5)
-    p_value: float | None = Field(default=None, gt=0, le=1)
+    reviewed: bool | None = Field(default=None, description="Swiss-Prot reviewed entries only.")
+    existence: int | None = Field(default=None, ge=1, le=5, description="UniProt protein existence level.")
+    p_value: float | None = Field(default=None, gt=0, le=1, description="Maximum association p-value.")
     trait: str | None = Field(default=None, max_length=256)
-    cpic_level: str | None = Field(default=None, max_length=32)
+    cpic_level: str | None = Field(default=None, max_length=32, description="CPIC evidence level, e.g. A.")
     region: Literal["us", "eu", "who", "all"] | None = None
     product_type: Literal["finished_pharma", "api", "vaccine"] | None = None
     manufacturer: str | None = Field(default=None, max_length=128)
@@ -132,50 +138,68 @@ class GetRequest(StrictModel):
 
 
 class ResolveRequest(StrictModel):
-    query: str = Field(min_length=1, max_length=512)
+    query: str = Field(min_length=1, max_length=512, description="Name, alias, symbol or identifier.")
     entity: Entity | None = None
-    species: int = Field(default=9606, gt=0)
-    assembly: Literal["grch37", "grch38"] | None = None
+    species: int = Field(default=9606, gt=0, description="NCBI taxon ID; 9606 is human.")
+    assembly: Literal["grch37", "grch38"] | None = Field(
+        default=None, description="Genome build for coordinate IDs."
+    )
 
 
 class RelateRequest(StrictModel):
     entity: Entity
-    id: str = Field(min_length=1, max_length=512)
+    id: str = Field(
+        min_length=1, max_length=512, description="Record ID, e.g. PCSK9, PMID:123 or openalex:A123."
+    )
     relation: str = Field(min_length=1, max_length=64)
     limit: int = Field(default=10, ge=1, le=25)
-    species: int = Field(default=9606, gt=0)
-    assembly: Literal["grch37", "grch38"] | None = None
+    species: int = Field(default=9606, gt=0, description="NCBI taxon ID; 9606 is human.")
+    assembly: Literal["grch37", "grch38"] | None = Field(
+        default=None, description="Genome build for coordinate IDs."
+    )
 
 
 class SourceRequest(StrictModel):
     source: str = Field(min_length=1, max_length=64)
-    operation: str = Field(min_length=1, max_length=128)
-    params: dict[str, Any] = Field(default_factory=dict, max_length=32)
-    freshness: Freshness = "cached_if_fresh"
+    operation: str = Field(
+        min_length=1, max_length=128, description="Operation listed by get_capabilities(source=...)."
+    )
+    params: dict[str, Any] = Field(
+        default_factory=dict, max_length=32, description="Arguments for that operation's schema."
+    )
+    freshness: Freshness = Field(default="cached_if_fresh", description="fresh bypasses the cache.")
 
 
 class WorkflowRequest(StrictModel):
     workflow: str = Field(min_length=1, max_length=64)
-    focus: str = Field(min_length=1, max_length=512)
-    sections: list[str] | None = Field(default=None, max_length=12)
+    focus: str = Field(
+        min_length=1,
+        max_length=512,
+        description="Gene symbol, drug, disease (MONDO ID or name), pathway (R-HSA ID or exact name), variant, or topic.",
+    )
+    sections: list[str] | None = Field(
+        default=None, max_length=12, description="Replace the workflow's default sections."
+    )
     section_parameters: dict[str, dict[str, Any]] | None = Field(default=None, max_length=12)
-    species: int = Field(default=9606, gt=0)
-    assembly: Literal["grch37", "grch38"] | None = None
+    species: int = Field(default=9606, gt=0, description="NCBI taxon ID; 9606 is human.")
+    assembly: Literal["grch37", "grch38"] | None = Field(
+        default=None, description="Genome build for coordinate IDs."
+    )
 
 
 class BatchCall(StrictModel):
     operation: Literal[
-        "search",
-        "get",
-        "literature_search",
-        "trial_search",
-        "variant_evidence",
-        "study_analysis",
-        "resolve",
-        "relate",
+        "search_records",
+        "get_record",
+        "search_literature",
+        "search_trials",
+        "get_variant_evidence",
+        "analyze_study",
+        "resolve_entity",
+        "find_related",
         "query_source",
     ]
-    arguments: dict[str, Any] = Field(max_length=16)
+    arguments: dict[str, Any] = Field(max_length=16, description="Arguments for that tool.")
 
 
 class VariantIdentity(StrictModel):
@@ -241,7 +265,7 @@ class EvidenceReceipt(StrictModel):
     schema_version: Literal["1.0"] = "1.0"
     implementation: str = Field(pattern=r"^biomedmcp/\d+\.\d+\.\d+$")
     operation: str = Field(
-        pattern=r"^(search|get|literature_search|trial_search|variant_evidence|study_analysis|resolve|relate|research|query_source)$"
+        pattern=r"^(search_records|get_record|search_literature|search_trials|get_variant_evidence|analyze_study|resolve_entity|find_related|build_dossier|query_source)$"
     )
     request: dict[str, Any] | None
     request_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")

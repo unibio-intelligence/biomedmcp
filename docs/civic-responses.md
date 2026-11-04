@@ -1,6 +1,6 @@
 # CIViC evidence scope and continuation
 
-Select `civic` on human gene/drug/disease `get` requests or `variant_evidence`.
+Select `civic` on human gene/drug/disease `get_record` requests or `get_variant_evidence`.
 The section accepts `limit` (1–25, default 10), an optional `collection`
 (`evidenceItems` or `assertions`), and a signed `cursor` returned in an action.
 A cursor requires the original collection and page limit. Execute the returned
@@ -34,6 +34,5 @@ runtime cache and signing key. The 1000-candidate scan bound or unavailable
 continuation storage leaves evidence explicitly partial. Source restrictions
 also apply to naming/identity dependencies.
 
-The offline tests exercise these selected contracts and actual MCP actions.
-They do not establish exhaustive provider coverage, live client compatibility
-or scientific/clinical correctness beyond the specified identity checks.
+The offline tests cover these selected cases and actual MCP actions, not
+every provider record, live clients or clinical correctness.

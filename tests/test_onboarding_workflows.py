@@ -102,5 +102,5 @@ async def test_documented_stdio_launch_discovers_the_compact_interface():
     }
     async with Client(config) as client:
         assert len(await client.list_tools()) == 13
-        result = await client.call_tool("capabilities", {"source": "gtex", "diagnose": True})
+        result = await client.call_tool("get_capabilities", {"source": "gtex", "diagnose": True})
         assert result.data["diagnosis"][0]["health"] == "not_probed"

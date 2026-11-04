@@ -154,7 +154,7 @@ async def test_pair_cursor_raw_submission_and_batch_tamper_do_no_provider_io(pro
         for tool, arguments in [
             ("query_source", invalid),
             (
-                "batch",
+                "run_batch",
                 {
                     "requests": [
                         {"tool": "query_source", "arguments": ARGS},

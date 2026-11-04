@@ -181,7 +181,7 @@ async def test_actual_mcp_preserves_conflicting_claims_with_each_window_locator(
     async with Client(create_server(service=ResearchService(http=FederatedHTTP()))) as client:
         tools = await client.list_tools()
         assert all("$defs" in tool.output_schema for tool in tools)
-        result = await client.call_tool_mcp("literature_search", {"query": "BRAF"})
+        result = await client.call_tool_mcp("search_literature", {"query": "BRAF"})
     assert not result.is_error
     value = result.structured_content
     assert len(value["records"]) == 1
@@ -199,7 +199,7 @@ async def test_actual_mcp_preserves_conflicting_claims_with_each_window_locator(
         assert identity["evidence_ids"]
         assert all(proofs[evidence]["source"] == identity["source"] for evidence in identity["evidence_ids"])
     assert verify_receipt(value)
-    jsonschema.validate(value, next(tool.output_schema for tool in tools if tool.name == "literature_search"))
+    jsonschema.validate(value, next(tool.output_schema for tool in tools if tool.name == "search_literature"))
     assert json.loads(result.content[0].text) == value
 
 
@@ -207,7 +207,7 @@ async def test_actual_mcp_preserves_conflicting_claims_with_each_window_locator(
 async def test_malformed_count_keeps_successful_peer_and_truthful_provider_failure(monkeypatch):
     monkeypatch.setenv("UBI_PROFILE", "local")
     async with Client(create_server(service=ResearchService(http=FederatedHTTP(bad_epmc=True)))) as client:
-        result = await client.call_tool_mcp("literature_search", {"query": "BRAF"})
+        result = await client.call_tool_mcp("search_literature", {"query": "BRAF"})
     value = result.structured_content
     assert not result.is_error and value["outcome"] == "partial"
     assert value["sections"]["europepmc"]["outcome"] == "error"
@@ -220,7 +220,7 @@ async def test_malformed_count_keeps_successful_peer_and_truthful_provider_failu
 async def test_article_get_links_its_typed_identities_and_claims_to_section_proof(monkeypatch):
     monkeypatch.setenv("UBI_PROFILE", "local")
     async with Client(create_server(service=ResearchService(http=HTTP(PUBMED)))) as client:
-        result = await client.call_tool_mcp("get", {"entity": "article", "id": "123"})
+        result = await client.call_tool_mcp("get_record", {"entity": "article", "id": "123"})
     assert not result.is_error
     value = result.structured_content
     section = value["sections"]["record"]
@@ -228,7 +228,7 @@ async def test_article_get_links_its_typed_identities_and_claims_to_section_proo
     for field in ["identities", "source_assertions"]:
         assert all(row["evidence_ids"] == section["evidence_ids"] for row in section["data"][field])
     assert verify_receipt(value)
-    jsonschema.validate(value, output_schema("get"))
+    jsonschema.validate(value, output_schema("get_record"))
 
 
 def test_dedup_preserves_all_namespaces_and_independent_assertions():
@@ -252,7 +252,7 @@ async def test_wire_schema_rejects_changed_typed_fields(monkeypatch):
 
     value = (
         await execute(
-            ResearchService(http=HTTP(PUBMED)), "get", {"entity": "article", "id": "123"}, scope="local"
+            ResearchService(http=HTTP(PUBMED)), "get_record", {"entity": "article", "id": "123"}, scope="local"
         )
     ).model_dump(mode="json")
     for field, replacement in [
@@ -276,4 +276,4 @@ async def test_wire_schema_rejects_changed_typed_fields(monkeypatch):
         bad = deepcopy(value)
         bad["sections"]["record"]["data"][field] = replacement
         with pytest.raises(jsonschema.ValidationError):
-            jsonschema.validate(bad, output_schema("get"))
+            jsonschema.validate(bad, output_schema("get_record"))

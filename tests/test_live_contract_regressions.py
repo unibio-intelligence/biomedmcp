@@ -36,7 +36,7 @@ async def test_mixed_pubmed_chapters_preserve_records_identities_and_provenance(
     service = ResearchService(http=HTTP({"esearchresult": {"idlist": ["123", "456"], "count": "2"}}, xml))
     result = await execute(
         service,
-        "literature_search",
+        "search_literature",
         {
             "query": "BRAF",
             "filters": {"source": "pubmed", "date_from": "2024-01-01"},
@@ -70,7 +70,7 @@ async def test_gene_workflow_uses_fixed_identity_projection_with_shipped_permiss
     service._gene_discovery_text = AsyncMock(return_value=("BRAF Homo sapiens", None))
     result = await execute(
         service,
-        "research",
+        "build_dossier",
         {
             "workflow": workflow,
             "focus": "BRAF",
@@ -93,7 +93,7 @@ async def test_gene_relation_passes_real_identity_gate_before_species_qualified_
     service.providers.literature.search_source = AsyncMock(return_value=[])
     result = await execute(
         service,
-        "relate",
+        "find_related",
         {
             "entity": "gene",
             "id": "BRAF",
@@ -130,7 +130,7 @@ async def test_disease_pathways_resolve_label_and_declare_identity_dependency():
     adapters = DiseaseAdapters()
     result = await execute(
         ResearchService(adapters=adapters),
-        "get",
+        "get_record",
         {
             "entity": "disease",
             "id": "MONDO:0005105",
@@ -158,7 +158,7 @@ async def test_disease_identity_failure_cannot_start_pathway_discovery(record):
     adapters = DiseaseAdapters(record)
     result = await execute(
         ResearchService(adapters=adapters),
-        "get",
+        "get_record",
         {
             "entity": "disease",
             "id": "MONDO:0005105",
@@ -175,7 +175,7 @@ async def test_disease_source_restriction_cannot_hide_label_acquisition():
     with pytest.raises(ResearchError, match="mydisease"):
         await execute(
             ResearchService(adapters=adapters),
-            "get",
+            "get_record",
             {
                 "entity": "disease",
                 "id": "MONDO:0005105",

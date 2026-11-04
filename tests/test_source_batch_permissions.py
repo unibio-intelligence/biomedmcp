@@ -57,7 +57,7 @@ async def test_ensembl_scoped_catalog_and_projection_survive_cache_without_annot
     calls = mock_http(monkeypatch, lambda r: httpx.Response(200, json=ASSEMBLY))
     service = ResearchService()
     async with Client(create_server(service=service)) as client:
-        capability = (await client.call_tool("capabilities", {"source": "ensembl"})).data
+        capability = (await client.call_tool("get_capabilities", {"source": "ensembl"})).data
         assert "get_genome_info" in [op["name"] for op in capability["operations"]]
         assert "get_sequences" in [op["name"] for op in capability["operations"]]
         args = {"source": "ensembl", "operation": "get_genome_info", "params": {"info_type": "assembly"}}
@@ -90,7 +90,7 @@ async def test_interpro_primary_projection_excludes_member_content_before_cache(
     async with Client(create_server(service=ResearchService())) as client:
         args = {"entity": "protein", "id": "P15056", "sections": ["domains"]}
         for _ in range(2):
-            result = (await client.call_tool("get", args)).data
+            result = (await client.call_tool("get_record", args)).data
             assert result["provenance"][0]["sources"] == ["interpro", "uniprot"]
             row = result["sections"]["domains"]["data"]["records"][0]
             assert row["metadata"]["accession"] == "IPR000719"
@@ -230,7 +230,7 @@ async def test_annotation_namespace_exclusions_survive_cache_and_evidence(monkey
     service = ResearchService()
     async with Client(create_server(service=service)) as client:
         for cached in (False, True):
-            result = (await client.call_tool("get", {
+            result = (await client.call_tool("get_record", {
                 "entity": entity, "id": identifier, "sections": ["record"],
             })).data
             assert result["outcome"] == "data"
@@ -294,14 +294,14 @@ async def test_source66_cached_annotations_and_evidence_cannot_survive_upgrade(m
             old.setattr(recovery, "REVISION", "biomedmcp/0.1.0")
             old.setattr(annotation_permissions, "projection", lambda source, value: value)
             old.setattr(biothings, "permission_projection", lambda source, value: value)
-            historic = (await client.call_tool("get", arguments)).data
-            cached = (await client.call_tool("get", arguments)).data
+            historic = (await client.call_tool("get_record", arguments)).data
+            cached = (await client.call_tool("get_record", arguments)).data
             assert cached["provenance"][0]["cached"]
             assert "restricted-sentinel" in json.dumps(cached["sections"]["record"]["data"])
             uri = historic["sections"]["record"]["recovery"]["uri"]
             assert "restricted-sentinel" in json.dumps(await service.read_evidence(uri, scope="local"))
         assert len(calls) == 1
-        fresh = (await client.call_tool("get", arguments)).data
+        fresh = (await client.call_tool("get_record", arguments)).data
         assert not fresh["provenance"][0]["cached"] and len(calls) == 2
         assert "restricted-sentinel" not in json.dumps(fresh)
         assert "Retained name" in json.dumps(fresh["sections"]["record"]["data"])

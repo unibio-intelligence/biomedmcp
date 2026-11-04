@@ -1,6 +1,6 @@
 # Study statistical methods and interpretation
 
-`study_analysis` provides bounded exploratory analyses of installed, verified public releases. These are unadjusted observational associations. They do not establish causality, treatment benefit, clinical suitability or absence of an effect. Checksums identify the input release; they do not establish scientific validity. Independent numerical qualification uses synthetic cases, not a representative real-study validation.
+`study_analysis` provides bounded exploratory analyses of installed, verified public releases. These are unadjusted observational associations: they do not show causation, treatment benefit or clinical suitability, and a null result does not rule out an effect. Checksums identify the input release, not its scientific validity. The calculations are checked against synthetic cases, not validated on real studies.
 
 ## Population, identity and repeated samples
 

@@ -27,8 +27,20 @@ from .extensions import StudyRequest
 from .native.catalog import ADVANCED, RECORD_OWNER, RELATIONS, SEARCH_SOURCES, SECTION_DEPENDENCIES, SECTIONS
 from .pagination import MAX_PROVIDER_PAGE
 
-SEARCH_TASKS = {"article": "literature_search", "trial": "trial_search"}
-GET_TASKS = {"variant": "variant_evidence"}
+SEARCH_TASKS = {"article": "search_literature", "trial": "search_trials"}
+GET_TASKS = {"variant": "get_variant_evidence"}
+# Public verb_object tool names over native primitives. Native follow-up
+# actions are translated here; superseded names are not accepted as aliases.
+PUBLIC_TOOLS = {
+    "search": "search_records",
+    "get": "get_record",
+    "resolve": "resolve_entity",
+    "relate": "find_related",
+    "research": "build_dossier",
+    "query_source": "query_source",
+    "study_analysis": "analyze_study",
+}
+NATIVE_OPERATIONS = {public: native for native, public in PUBLIC_TOOLS.items()}
 STUDY_ANALYSES = {
     "gene_profile": "query",
     "mutation_cohort": "cohort",
@@ -39,9 +51,9 @@ STUDY_ANALYSES = {
     "top_mutated": "top_mutated",
 }
 RETIRED_WORKFLOWS = {
-    "literature_review": "literature_search",
-    "patent_landscape": "search",
-    "study_summary": "search",
+    "literature_review": "search_literature",
+    "patent_landscape": "search_records",
+    "study_summary": "search_records",
 }
 WORKFLOW_NAMES = {"variant_dossier": "variant_evidence"}
 
@@ -67,12 +79,14 @@ RecordFilters = fields_model("RecordFilters", SearchFilters, ordinary_fields)
 class SearchBase(StrictModel):
     query: str = Field(min_length=1, max_length=512)
     limit: int = Field(default=10, ge=1, le=25)
-    cursor: str | None = Field(default=None, max_length=2048)
+    cursor: str | None = Field(
+        default=None, max_length=2048, description="next_cursor from the previous page."
+    )
     output: Literal["summary", "full"] = Field(
         default="summary",
-        description="Summary bounds record excerpts; full retains source fields within the response budget. Omitted evidence has recovery resources.",
+        description="summary trims excerpts; full keeps source fields. Omitted evidence stays recoverable.",
     )
-    freshness: Freshness = "cached_if_fresh"
+    freshness: Freshness = Field(default="cached_if_fresh", description="fresh bypasses the cache.")
 
 
 class LiteratureSearch(SearchBase):
@@ -114,25 +128,27 @@ RecordSearch.model_config["json_schema_extra"] = {
 
 
 class ExpressionParameters(StrictModel):
-    tissue_id: str | None = Field(default=None, max_length=128)
+    tissue_id: str | None = Field(
+        default=None, max_length=128, description="GTEx tissue, e.g. Liver; required for gene_tissue."
+    )
     query_type: Literal["gene_median", "gene_tissue"] = "gene_median"
     limit: int = Field(default=10, ge=1, le=100)
-    page: int = Field(default=0, ge=0, le=MAX_PROVIDER_PAGE)
+    page: int = Field(default=0, ge=0, le=MAX_PROVIDER_PAGE, description="Zero-based page.")
 
 
 class QTLParameters(StrictModel):
-    tissue_id: str = Field(min_length=1, max_length=128)
+    tissue_id: str = Field(min_length=1, max_length=128, description="GTEx tissue, e.g. Liver.")
     analysis_mode: Literal["gene_associations", "metasoft", "dynamic"] = "gene_associations"
     variant_id: str | None = Field(default=None, max_length=128)
     phenotype_id: str | None = Field(default=None, min_length=1, max_length=128)
     p_value_threshold: float = Field(default=0.05, gt=0, le=1)
     limit: int = Field(default=10, ge=1, le=100)
-    page: int = Field(default=0, ge=0, le=MAX_PROVIDER_PAGE)
+    page: int = Field(default=0, ge=0, le=MAX_PROVIDER_PAGE, description="Zero-based page.")
 
 
 class GeneAnnotationParameters(StrictModel):
     limit: int = Field(default=10, ge=1, le=100)
-    page: int = Field(default=0, ge=0, le=MAX_PROVIDER_PAGE)
+    page: int = Field(default=0, ge=0, le=MAX_PROVIDER_PAGE, description="Zero-based page.")
 
 
 class FulltextParameters(FulltextWindow):
@@ -145,9 +161,13 @@ class AssetParameters(StrictModel):
 
 
 class CivicParameters(StrictModel):
-    limit: int = Field(default=10, ge=1, le=25)
-    collection: Literal["evidenceItems", "assertions"] | None = None
-    cursor: str | None = Field(default=None, min_length=1, max_length=2048)
+    limit: int = Field(default=10, ge=1, le=25, description="CIViC page size; maximum 25.")
+    collection: Literal["evidenceItems", "assertions"] | None = Field(
+        default=None, description="Required with cursor."
+    )
+    cursor: str | None = Field(
+        default=None, min_length=1, max_length=2048, description="Continuation from a previous CIViC page."
+    )
 
     @model_validator(mode="after")
     def continuation_collection(self):
@@ -181,13 +201,27 @@ record_sections = tuple(sorted({"record"} | set().union(*(set(SECTIONS[k]) for k
 
 class RecordGet(StrictModel):
     entity: Literal[get_kinds]
-    id: str = Field(min_length=1, max_length=512)
-    sections: list[Literal[record_sections]] = Field(default_factory=list, max_length=12)
-    sources: list[str] = Field(default_factory=list, max_length=12)
-    species: int = Field(default=9606, gt=0)
-    source_versions: dict[str, str] = Field(default_factory=dict, max_length=8)
-    section_parameters: RecordParameters = Field(default_factory=RecordParameters)
-    freshness: Freshness = "cached_if_fresh"
+    id: str = Field(
+        min_length=1,
+        max_length=512,
+        description="Exact ID, e.g. PCSK9, PMID:123, NCT04368728, MONDO:0007750, Q8NBP7, R-HSA-109581 or an InChIKey.",
+    )
+    sections: list[Literal[record_sections]] = Field(
+        default_factory=list,
+        max_length=12,
+        description="Empty returns the base record; get_capabilities(entity=...) lists sections.",
+    )
+    sources: list[str] = Field(
+        default_factory=list, max_length=12, description="Restrict lookups to these source IDs."
+    )
+    species: int = Field(default=9606, gt=0, description="NCBI taxon ID; 9606 is human.")
+    source_versions: dict[str, str] = Field(
+        default_factory=dict, max_length=8, description="Pin releases as {source: version}."
+    )
+    section_parameters: RecordParameters = Field(
+        default_factory=RecordParameters, description="Options keyed by requested section."
+    )
+    freshness: Freshness = Field(default="cached_if_fresh", description="fresh bypasses the cache.")
 
     @model_validator(mode="after")
     def entity_sections(self):
@@ -220,8 +254,10 @@ RecordGet.model_config["json_schema_extra"] = {
 
 
 class CohortReference(StrictModel):
-    molecular_profile_id: str = Field(min_length=1, max_length=200)
-    sample_list_id: str = Field(min_length=1, max_length=200)
+    molecular_profile_id: str = Field(
+        min_length=1, max_length=200, description="cBioPortal molecular profile ID."
+    )
+    sample_list_id: str = Field(min_length=1, max_length=200, description="cBioPortal sample list ID.")
 
 
 class VariantParameters(StrictModel):
@@ -234,14 +270,24 @@ variant_sections = ("record", *SECTIONS["variant"])
 
 
 class VariantEvidence(StrictModel):
-    id: str = Field(min_length=1, max_length=512)
-    assembly: Literal["grch37", "grch38"] | None = None
+    id: str = Field(
+        min_length=1,
+        max_length=512,
+        description="rsID, gene + protein change (PCSK9 R46L), HGVS or chr:pos:ref:alt.",
+    )
+    assembly: Literal["grch37", "grch38"] | None = Field(
+        default=None, description="Genome build for coordinate IDs."
+    )
     sections: list[Literal[variant_sections]] = Field(
         default_factory=lambda: ["clinvar", "population", "civic"], max_length=12
     )
-    sources: list[str] = Field(default_factory=list, max_length=12)
-    section_parameters: VariantParameters = Field(default_factory=VariantParameters)
-    freshness: Freshness = "cached_if_fresh"
+    sources: list[str] = Field(
+        default_factory=list, max_length=12, description="Restrict lookups to these source IDs."
+    )
+    section_parameters: VariantParameters = Field(
+        default_factory=VariantParameters, description="Options keyed by requested section."
+    )
+    freshness: Freshness = Field(default="cached_if_fresh", description="fresh bypasses the cache.")
 
 
 # Each analysis has only its meaningful parameters; no arbitrary study parameter bag.
@@ -283,9 +329,19 @@ class DossierParameters(RecordParameters):
     cbioportal: CohortReference | None = None
 
 
+dossier_sections = tuple(
+    sorted({"record"} | set().union(*(set(SECTIONS[WORKFLOWS[name][0]]) for name in WORKFLOWS)))
+)
+
+
 class ResearchWorkflow(WorkflowRequest):
     workflow: Literal[workflow_names]
-    section_parameters: DossierParameters = Field(default_factory=DossierParameters)
+    sections: list[Literal[dossier_sections]] | None = Field(
+        default=None, max_length=12, description="Replace the workflow's default sections."
+    )
+    section_parameters: DossierParameters = Field(
+        default_factory=DossierParameters, description="Options keyed by requested section."
+    )
 
 
 class PublicSource(SourceRequest):
@@ -293,29 +349,44 @@ class PublicSource(SourceRequest):
 
 
 MODELS = {
-    "search": RecordSearch,
-    "get": RecordGet,
-    "literature_search": LiteratureSearch,
-    "trial_search": TrialSearch,
-    "variant_evidence": VariantEvidence,
-    "study_analysis": StudyAnalysis,
-    "resolve": ResolveRequest,
-    "relate": RelateRequest,
-    "research": ResearchWorkflow,
+    "search_records": RecordSearch,
+    "get_record": RecordGet,
+    "search_literature": LiteratureSearch,
+    "search_trials": TrialSearch,
+    "get_variant_evidence": VariantEvidence,
+    "analyze_study": StudyAnalysis,
+    "resolve_entity": ResolveRequest,
+    "find_related": RelateRequest,
+    "build_dossier": ResearchWorkflow,
     "query_source": PublicSource,
 }
 ADAPTERS = {name: TypeAdapter(model) for name, model in MODELS.items()}
+# Lead with domain keywords (clients rank deferred tools by name and
+# description), then say when to route elsewhere. Codex truncates plugin tool
+# descriptions at 1,000 bytes, including the appended example.
+TITLES = {
+    "search_records": "Search biomedical records",
+    "get_record": "Get record and evidence sections",
+    "search_literature": "Search literature",
+    "search_trials": "Search clinical trials",
+    "get_variant_evidence": "Get variant evidence",
+    "analyze_study": "Analyze genomics study",
+    "resolve_entity": "Resolve identifiers",
+    "find_related": "Find related records",
+    "build_dossier": "Build research dossier",
+    "query_source": "Query source directly",
+}
 BASE_DESCRIPTIONS = {
-    "search": "Find ordinary records with entity filters. Papers use literature_search; trials use trial_search.",
-    "get": "Read ordinary records/evidence sections; variants use variant_evidence. Sources constrain all lookups and identity dependencies.",
-    "literature_search": "Find papers with publication/topic/source filters; deduplicate evidence and retain source outcomes and opaque continuation.",
-    "trial_search": "Find public clinical trials using disease/intervention and trial-specific filters. Does not determine individual clinical eligibility.",
-    "variant_evidence": "Retrieve variant evidence with assembly/transcript ambiguity preserved. Defaults: ClinVar, population, CIViC. Request predictions for AlphaMissense, or eve for MIT-licensed EVE protein scores; computational predictions retain source and uncertainty.",
-    "study_analysis": "Analyze an installed verified public study. Bundled ubi_synthetic is an invented demo; discover installed releases with capabilities(source=study). Report clinical and assayed samples separately, unique mutant samples, events and exclusions. Preserve input hashes and denominators. Private compute uses Ubi platform.",
-    "resolve": "Resolve aliases/ambiguity before evidence joins. One exact species-qualified symbol/ID resolves; provider score alone never establishes identity. Retrieve known unambiguous identifiers directly.",
-    "relate": "Traverse an evidence relationship. Relations: gene/drug/disease: articles,trials; variant: articles,structure; article: citations,references,recommendations,authors,entities; author: articles.",
-    "research": "Dossiers retain citations/outcomes. Inspect capabilities and get further sections for completeness.",
-    "query_source": "Run advanced source operations after checking capabilities/schema. Common tasks have dedicated tools.",
+    "search_records": "Search genes, proteins, drugs, diseases, phenotypes, pathways, variants, pharmacogenomics, GWAS, diagnostics, adverse events, studies, patents or authors by text; returns IDs for get_record (variants: get_variant_evidence). Papers: search_literature. Trials: search_trials. Patent search is chemistry-linked (SureChEMBL); assignee/inventor/CPC search is query_source(source=patents).",
+    "get_record": "Fetch one record by ID with optional evidence sections, e.g. gene expression/eqtl/diseases/druggability, drug label/safety, article fulltext, trial eligibility, protein domains/structures. Variants: get_variant_evidence. List an entity's sections with get_capabilities(entity=...).",
+    "search_literature": "Search papers across PubMed, Europe PMC, PubTator and LitSense with date, author, journal, article-type and open-access filters. Deduplicates across sources and reports each source's outcome. Read abstracts or full text with get_record(entity=article).",
+    "search_trials": "Search clinical trials (ClinicalTrials.gov, NCI) by condition, intervention, phase and recruitment status. Read arms, eligibility or outcomes with get_record(entity=trial). Does not assess an individual's eligibility.",
+    "get_variant_evidence": "Get evidence for one variant (rsID, gene + protein change, HGVS or chr:pos:ref:alt). Defaults: ClinVar, gnomAD population, CIViC; add predictions (AlphaMissense), eve, cosmic, oncokb, hotspots, gwas or cbioportal. Ambiguous assembly or transcript is reported, not guessed; predictions keep source and uncertainty.",
+    "analyze_study": "Analyze an installed public cancer genomics study: gene_profile, mutation_cohort, survival, compare, co_occurrence, filter_cohort, top_mutated. List installed studies with get_capabilities(source=study); ubi_synthetic is invented demo data. Report sample denominators and exclusions. Private data analysis uses the Ubi platform.",
+    "resolve_entity": "Map a name, alias or ambiguous identifier to exact species-qualified IDs before joining evidence. Returns candidates when ambiguous; a provider match score alone is not identity. Skip when you already hold an exact ID.",
+    "find_related": "List records linked to one record. gene/drug/disease: articles, trials. variant: articles, structure. article: citations, references, recommendations, authors, entities. author: articles. Record attributes are get_record sections, not relations.",
+    "build_dossier": "Build a multi-section dossier in one call: verified identity, default record sections and top related papers, with citations and per-source outcomes. Workflows: target_dossier, model_input_bundle (gene), drug_review, disease_landscape, pathway_review, variant_dossier, negative_evidence (bounded literature check; never proves absence). Add sections with get_record.",
+    "query_source": "Run a source-specific operation that other tools do not cover, e.g. ChEMBL bioactivities, Ensembl coordinates, PDB structure quality, OmniPath interactions, NCBI Datasets genomes, ncbi-records for GenBank/GEO/SRA. Read get_capabilities(source=...) for operations and params first.",
 }
 
 DESCRIPTIONS = {name: example_description(text, name) for name, text in BASE_DESCRIPTIONS.items()}
@@ -361,33 +432,39 @@ def native_request(operation, model):
     if operation in SEARCH_TASKS.values():
         entity = next(k for k, v in SEARCH_TASKS.items() if v == operation)
         return "search", SearchRequest(entity=entity, **data)
-    if operation == "search":
+    if operation == "search_records":
         return "search", SearchRequest(**data)
-    if operation == "get":
+    if operation == "get_record":
         return "get", GetRequest(**data)
-    if operation == "variant_evidence":
+    if operation == "get_variant_evidence":
         return "get", GetRequest(entity=Entity.variant, **data)
-    if operation == "study_analysis":
+    if operation == "analyze_study":
         analysis = STUDY_ANALYSES[data.pop("analysis")]
         return "query_source", SourceRequest(source="study", operation=analysis, params=data)
-    if operation == "research":
+    if operation == "build_dossier":
         data["workflow"] = WORKFLOW_NAMES.get(data["workflow"], data["workflow"])
-        return operation, WorkflowRequest(**data)
-    return operation, model
+        return "research", WorkflowRequest(**data)
+    return NATIVE_OPERATIONS[operation], model
 
 
 def canonical_action(action):
     action = deepcopy(action)
     params = action.get("arguments", action)
-    tool = action.get("tool")
+    tool = PUBLIC_TOOLS.get(action.get("tool"), action.get("tool"))
+    if "tool" in action:
+        action["tool"] = tool
     entity = params.get("entity")
     replacement = (
-        SEARCH_TASKS.get(entity) if tool == "search" else GET_TASKS.get(entity) if tool == "get" else None
+        SEARCH_TASKS.get(entity)
+        if tool == "search_records"
+        else GET_TASKS.get(entity)
+        if tool == "get_record"
+        else None
     )
     if replacement:
         action["tool"] = replacement
         params.pop("entity", None)
-        if replacement == "variant_evidence":
+        if replacement == "get_variant_evidence":
             params.pop("species", None)
             if not params.get("source_versions"):
                 params.pop("source_versions", None)
@@ -430,7 +507,7 @@ def operation_map():
             rows.append(
                 {
                     "primitive": f"search/{kind}",
-                    "tool": SEARCH_TASKS.get(kind, "search"),
+                    "tool": SEARCH_TASKS.get(kind, "search_records"),
                     "sources": sources,
                     "handler": "ResearchService.search",
                 }
@@ -440,7 +517,7 @@ def operation_map():
             rows.append(
                 {
                     "primitive": f"get/{kind}/{section}",
-                    "tool": GET_TASKS.get(kind, "get"),
+                    "tool": GET_TASKS.get(kind, "get_record"),
                     "sources": [owner],
                     "identity_dependencies": sorted(SECTION_DEPENDENCIES.get((kind, section), set())),
                     **(
@@ -466,7 +543,7 @@ def operation_map():
             rows.append(
                 {
                     "primitive": f"relate/{kind}/{relation}",
-                    "tool": "relate",
+                    "tool": "find_related",
                     "handler": "ResearchService.relate",
                 }
             )
@@ -475,7 +552,7 @@ def operation_map():
             rows.append(
                 {
                     "primitive": f"source/{source}/{operation}",
-                    "tool": "study_analysis" if source == "study" else "query_source",
+                    "tool": "analyze_study" if source == "study" else "query_source",
                     "sources": [source],
                     "handler": "ResearchService.source",
                 }
@@ -484,7 +561,7 @@ def operation_map():
         rows.append(
             {
                 "primitive": f"workflow/{workflow}",
-                "tool": RETIRED_WORKFLOWS.get(workflow, "research"),
+                "tool": RETIRED_WORKFLOWS.get(workflow, "build_dossier"),
                 "public_workflow": "variant_dossier" if workflow == "variant_evidence" else workflow,
                 "retired_alias": workflow in RETIRED_WORKFLOWS,
                 "handler": "ResearchService.research",
@@ -510,7 +587,7 @@ def public_capabilities(value):
             "study_derived": DERIVED_RECORDS.json_schema(),
         }
         value["operations"] = []
-        value["canonical_routes"].append({"tool": "study_analysis", "analyses": list(STUDY_ANALYSES)})
+        value["canonical_routes"].append({"tool": "analyze_study", "analyses": list(STUDY_ANALYSES)})
     if value.get("source") == "gnomad":
         from .native.gnomad import VariantPopulationRecord
 
@@ -547,12 +624,12 @@ def public_capabilities(value):
         kind = value["entity"]
         names = set()
         if SEARCH_SOURCES.get(kind):
-            names.add(SEARCH_TASKS.get(kind, "search"))
+            names.add(SEARCH_TASKS.get(kind, "search_records"))
         if kind in RECORD_OWNER:
-            names.add(GET_TASKS.get(kind, "get"))
+            names.add(GET_TASKS.get(kind, "get_record"))
         value["schemas"] = {name: schema(name) for name in sorted(names)}
     value["routing"] = (
-        "Scientific tasks own literature/trial discovery, variant evidence and study analysis. Search/get cover remaining reads; relate traverses identities; research composes declared dossiers; advanced sources expose distinct operations only."
+        "Papers: search_literature. Trials: search_trials. Variants: get_variant_evidence. Installed studies: analyze_study. Other records: search_records, then get_record. Linked records: find_related. Multi-section summaries: build_dossier. Source-specific operations only: query_source."
     )
     value["tools"] = [{"name": name, "description": DESCRIPTIONS[name]} for name in MODELS]
     return value

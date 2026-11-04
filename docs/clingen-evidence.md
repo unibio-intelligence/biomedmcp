@@ -1,6 +1,6 @@
 # ClinGen identities, assertions and references
 
-Use `get` for a species-qualified gene with `sections: ["clingen"]`, or
+Use `get_record` for a species-qualified gene with `sections: ["clingen"]`, or
 `query_source` with `source: "clingen"` and one of `normalize`, `assertions`,
 `specifications` or `linked_data`. These operations provide different kinds of
 evidence; the `record_type` and request identity identify their meaning.
@@ -23,12 +23,12 @@ link does not establish identity equivalence or a measured frequency.
 
 Null/object/error payloads, missing collection/status fields, inconsistent
 identity and malformed nested records fail before caching or evidence issuance.
-An explicit empty successful collection is valid for the request, with an
-absence caveat. An unsuccessful provider status is an error even when data are
-present. Failure cannot establish biological absence. Subsequent requests retry
+An empty successful list is a valid result for this request, but it does not
+prove absence. An unsuccessful provider status is an error even when data are
+present. A failure does not mean the evidence does not exist. Subsequent requests retry
 failed acquisition; successful cached results retain their evidence identity.
-Source rendering timestamps and document versions are retained where reported,
-but the live provider release is unpinned.
+Source timestamps and document versions are kept where reported, but the
+ClinGen release is not pinned.
 
 Returned evidence beyond the display bound carries precise omission metadata
 and bounded recovery resources. Use the supplied URI to retrieve omitted

@@ -323,9 +323,9 @@ async def test_actual_mcp_retry_cache_and_recovery_preserves_scientific_fields(m
         "sections": ["record", "target_evidence", "diseases", "druggability"],
     }
     async with Client(create_server(service=ResearchService(adapters=Adapters()))) as client:
-        failed = (await client.call_tool("get", arguments)).data
-        good = (await client.call_tool("get", arguments)).data
-        cached = (await client.call_tool("get", arguments)).data
+        failed = (await client.call_tool("get_record", arguments)).data
+        good = (await client.call_tool("get_record", arguments)).data
+        cached = (await client.call_tool("get_record", arguments)).data
         assert failed["outcome"] == "partial" and failed["sections"]["record"]["outcome"] == "data"
         for name in ("target_evidence", "diseases", "druggability"):
             assert failed["sections"][name]["error"]["code"] == "invalid_source_response"

@@ -121,9 +121,9 @@ def test_import_has_no_argument_parsing_or_output_side_effects():
 def test_probe_definitions_use_owned_public_routes():
     cases = {case.name: case.operation for case in canary.CASES}
     assert len(cases) == len(canary.CASES) == 10
-    assert cases["literature"] == "literature_search"
-    assert cases["trials"] == "trial_search"
-    assert cases["variant"] == "variant_evidence"
+    assert cases["literature"] == "search_literature"
+    assert cases["trials"] == "search_trials"
+    assert cases["variant"] == "get_variant_evidence"
 
 
 def test_actual_cli_definition_check_blocks_http_and_never_claims_live_health(tmp_path):

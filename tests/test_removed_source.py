@@ -46,7 +46,7 @@ async def test_mcp_catalog_has_no_tldr_section_and_discovery_has_no_removed_sour
     monkeypatch.setenv("UBI_PROFILE", "local")
     async with Client(create_server(service=ResearchService())) as client:
         tools = await client.list_tools()
-        discovery = (await client.call_tool("capabilities", {"entity": "article"})).data
+        discovery = (await client.call_tool("get_capabilities", {"entity": "article"})).data
     assert "tldr" not in json.dumps([t.input_schema for t in tools])
     assert "semanticscholar" not in json.dumps(discovery)
 
@@ -54,7 +54,7 @@ async def test_mcp_catalog_has_no_tldr_section_and_discovery_has_no_removed_sour
 async def test_removed_author_ids_do_not_acquire_openalex_data():
     http = HTTP()
     result = await execute(
-        ResearchService(http=http), "get", {"entity": "author", "id": "s2:1234"}, scope="test"
+        ResearchService(http=http), "get_record", {"entity": "author", "id": "s2:1234"}, scope="test"
     )
     assert result.outcome == "error"
     assert result.sections["record"].error["code"] == "invalid_identifier"

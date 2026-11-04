@@ -117,8 +117,10 @@ class Enrichment(StrictModel):
 
 
 class StudyRequest(StrictModel):
-    chart: bool = False
-    study: str = Field(pattern=r"^[a-zA-Z0-9_-]{1,100}$")
+    chart: bool = Field(default=False, description="Add a declarative chart of the returned values.")
+    study: str = Field(
+        pattern=r"^[a-zA-Z0-9_-]{1,100}$", description="Installed study ID, e.g. ubi_synthetic."
+    )
     gene: str | None = Field(default=None, pattern=r"^[A-Za-z0-9_.-]{1,40}$")
     target: str | None = Field(default=None, pattern=r"^[A-Za-z0-9_.-]{1,40}$")
     type: Literal["mutations", "cna", "expression", "sv"] = "mutations"
@@ -287,7 +289,7 @@ class ExtendedSources:
             raise ResearchError("source_unavailable", reason or "Unknown source")
         model = MODELS.get(source, {}).get(operation)
         if model is None:
-            raise ResearchError("unknown_operation", "Inspect capabilities for source operations.")
+            raise ResearchError("unknown_operation", "Inspect get_capabilities for source operations.")
         request = model.model_validate(params)
         if source == "study" and operation != "list":
             if request.study not in self.studies():

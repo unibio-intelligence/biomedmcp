@@ -14,13 +14,18 @@ class NoArguments(StrictModel):
 
 class BatchRequest(StrictModel):
     calls: list[BatchCall] = Field(min_length=1, max_length=10)
-    idempotency_key: str | None = Field(default=None, min_length=1, max_length=128)
+    idempotency_key: str | None = Field(
+        default=None,
+        min_length=1,
+        max_length=128,
+        description="Reuse when retrying so quota is charged once.",
+    )
 
 
 class CapabilityRequest(StrictModel):
     source: str | None = Field(default=None, min_length=1, max_length=128)
     entity: Entity | None = None
-    diagnose: bool = Field(default=False, strict=True)
+    diagnose: bool = Field(default=False, strict=True, description="Probe live source health (slower).")
 
 
 class DiagnosisRequest(StrictModel):
@@ -36,7 +41,7 @@ class GetPromptRequest(StrictModel):
     arguments: dict[str, str] = Field(default_factory=dict, max_length=16)
 
 
-UTILITY_MODELS = {"batch": BatchRequest, "capabilities": CapabilityRequest, "quota": NoArguments}
+UTILITY_MODELS = {"run_batch": BatchRequest, "get_capabilities": CapabilityRequest, "get_quota": NoArguments}
 PROTOCOL_MODELS = {
     "tools": NoArguments,
     "resources": NoArguments,

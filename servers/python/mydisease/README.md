@@ -2,23 +2,23 @@
 
 Examples use the public BioMedMCP tools and their typed JSON arguments.
 
-Use the biomedmcp server and its canonical tools. Retained adapters are implementation packages; their internal tools are not separate public MCP mounts.
+Connect to the biomedmcp server and use its tools. This package runs inside that server; it is not a separate MCP server.
 
-Use search(entity=disease) for discovery and get(entity=disease) with the returned qualified disease identifier. Gene and phenotype enrichment use explicit sections on the public disease record.
+Use search_records(entity=disease) for discovery and get_record(entity=disease) with the returned qualified disease identifier. Gene and phenotype enrichment use explicit sections on the public disease record.
 
-Declared advanced operations: `get_gene_disease_evidence`, `get_phenotype_frequency`, `get_phenotype_similarity`, `map_disease_ids`.
+Advanced operations: `get_gene_disease_evidence`, `get_phenotype_frequency`, `get_phenotype_similarity`, `map_disease_ids`.
 
-Inspect capabilities for this source to obtain the exact current parameter schemas. Keep identifier namespaces and candidate distinctions; a shared label is not proof that two disease concepts are equivalent.
+Run get_capabilities for this source to see its current parameters. Keep identifier namespaces and candidate distinctions; a shared label is not proof that two disease concepts are equivalent.
 
-These examples pass schemas and preflight and execute through MCP against mocked provider responses. They do not establish live source health or comprehensive scientific qualification. Aggregated disease annotations do not establish prevalence, prognosis or a diagnostic decision. Distinct phenotype/identifier comparison methods require separate scientific qualification. Missing annotations remain unknown.
+The examples are tested through MCP against mock responses; live results may differ. Aggregated disease annotations do not establish prevalence, prognosis or a diagnostic decision. Distinct phenotype/identifier comparison methods require separate scientific qualification. Missing annotations remain unknown.
 
-Follow advertised provider continuation for further acquisition. If the result advertises an evidence recovery URI, use its bounded ranges to read acquired data omitted from the preview; see [evidence recovery](../../../docs/evidence-resources.md). Snapshot scope, expiry and source rights still apply.
+To get more results, follow the continuation in the response. If a result includes an evidence recovery URI, use it to read data left out of the preview; see [evidence recovery](../../../docs/evidence-resources.md). Recovered data expires and is subject to the source's terms.
 
 ## Melanoma disease identity discovery
 
 ```json
 {
-  "tool": "search",
+  "tool": "search_records",
   "arguments": {
     "entity": "disease",
     "query": "familial hypercholesterolemia"
@@ -30,7 +30,7 @@ Follow advertised provider continuation for further acquisition. If the result a
 
 ```json
 {
-  "tool": "get",
+  "tool": "get_record",
   "arguments": {
     "entity": "disease",
     "id": "MONDO:0007750"

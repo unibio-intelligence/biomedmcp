@@ -39,7 +39,7 @@ async def test_stateless_http_negotiation_and_reconnect(monkeypatch):
         for _ in range(2):
             async with Client(f"http://127.0.0.1:{port}/mcp") as client:
                 assert await client.list_tools()
-                result = await client.call_tool("capabilities", {})
+                result = await client.call_tool("get_capabilities", {})
                 assert result.data["product"] == "biomedmcp"
         async with httpx.AsyncClient() as client:
             assert (await client.get(f"http://127.0.0.1:{port}/readyz")).status_code == 200

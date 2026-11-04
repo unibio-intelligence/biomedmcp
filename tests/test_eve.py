@@ -160,9 +160,9 @@ async def test_real_mcp_dispatch_owns_optional_eve_section_without_held_provider
 
     service = ResearchService(http=http())
     v = (
-        await execute(service, "variant_evidence", {"id": "BRAF V2E", "sections": ["eve"]}, scope="test")
+        await execute(service, "get_variant_evidence", {"id": "BRAF V2E", "sections": ["eve"]}, scope="test")
     ).model_dump(mode="json")
-    validate_output("variant_evidence", v)
+    validate_output("get_variant_evidence", v)
     assert v["outcome"] == "data" and verify_receipt(v)
     assert v["provenance"][0]["source"] == "eve" and v["provenance"][0]["sources"] == ["eve", "uniprot"]
     assert v["provenance"][0]["source_version"].startswith("EVE ASM")

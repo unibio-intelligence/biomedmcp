@@ -2,17 +2,17 @@
 
 Examples use the public BioMedMCP tools and their typed JSON arguments.
 
-Use the biomedmcp server and its canonical tools. Retained adapters are implementation packages; their internal tools are not separate public MCP mounts.
+Connect to the biomedmcp server and use its tools. This package runs inside that server; it is not a separate MCP server.
 
 Use query_source for structure discovery, exact entry metadata, coordinate downloads and quality annotations. The example requests JSON entry metadata for the exact four-character PDB identifier 4HHB.
 
-Declared advanced operations: `download_structure`, `get_structure_info`, `get_structure_quality`, `search_structures`.
+Advanced operations: `download_structure`, `get_structure_info`, `get_structure_quality`, `search_structures`.
 
-Inspect capabilities for this source to obtain the exact current parameter schemas. Entry metadata and coordinate files are different acquisitions. Preserve model, chain, assembly and experimental method when interpreting coordinates; do not assume a default biological assembly or protein isoform.
+Run get_capabilities for this source to see its current parameters. Entry metadata and coordinate files are different acquisitions. Preserve model, chain, assembly and experimental method when interpreting coordinates; do not assume a default biological assembly or protein isoform.
 
-These examples pass schemas and preflight and execute through MCP against mocked provider responses. They do not establish live source health or comprehensive scientific qualification. Structure identity and coverage do not establish a variant effect, ligand affinity or comparable experimental quality. The example qualifies metadata routing; broader entry, coordinate and quality contracts remain unqualified.
+The examples are tested through MCP against mock responses; live results may differ. Structure identity and coverage do not establish a variant effect, ligand affinity or comparable experimental quality. The example qualifies metadata routing; broader entry, coordinate and quality contracts remain unqualified.
 
-Follow advertised provider continuation for further acquisition. If the result advertises an evidence recovery URI, use its bounded ranges to read acquired data omitted from the preview; see [evidence recovery](../../../docs/evidence-resources.md). Snapshot scope, expiry and source rights still apply.
+To get more results, follow the continuation in the response. If a result includes an evidence recovery URI, use it to read data left out of the preview; see [evidence recovery](../../../docs/evidence-resources.md). Recovered data expires and is subject to the source's terms.
 
 ## RCSB entry metadata for hemoglobin structure 4HHB
 

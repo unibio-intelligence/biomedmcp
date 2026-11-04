@@ -118,14 +118,14 @@ async def test_actual_mcp_concurrent_get_profile_and_cohort_preserve_science(stu
     service = ResearchService()
     async with Client(create_server(service=service)) as client:
         if warm:
-            await client.call_tool("capabilities", {"source": "study"})
+            await client.call_tool("get_capabilities", {"source": "study"})
         values = await asyncio.gather(
-            client.call_tool("get", {"entity": "study", "id": "ubi_synthetic", "sources": ["study"]}),
+            client.call_tool("get_record", {"entity": "study", "id": "ubi_synthetic", "sources": ["study"]}),
             client.call_tool(
-                "study_analysis", {"analysis": "gene_profile", "study": "ubi_synthetic", "gene": "TP53"}
+                "analyze_study", {"analysis": "gene_profile", "study": "ubi_synthetic", "gene": "TP53"}
             ),
             client.call_tool(
-                "study_analysis", {"analysis": "mutation_cohort", "study": "ubi_synthetic", "gene": "TP53"}
+                "analyze_study", {"analysis": "mutation_cohort", "study": "ubi_synthetic", "gene": "TP53"}
             ),
         )
         record, profile, cohort = [value.structured_content for value in values]
@@ -163,7 +163,7 @@ async def test_acquisition_rejects_a_release_change_without_mixing_cache_identit
     monkeypatch.setattr(service.providers, "record", blocking)
     monkeypatch.setattr(service.runtime, "invoke", recording)
     task = asyncio.create_task(
-        execute(service, "get", {"entity": "study", "id": "ubi_synthetic"}, scope="public")
+        execute(service, "get_record", {"entity": "study", "id": "ubi_synthetic"}, scope="public")
     )
     try:
         async with asyncio.timeout(3):
@@ -207,7 +207,7 @@ async def test_analysis_rejects_a_change_between_admission_and_worker_start(stud
     task = asyncio.create_task(
         execute(
             service,
-            "study_analysis",
+            "analyze_study",
             {"analysis": "gene_profile", "study": "ubi_synthetic", "gene": "TP53"},
             scope="public",
         )
@@ -249,7 +249,7 @@ async def test_failed_refresh_does_not_erase_an_inflight_verified_context(study,
 
     monkeypatch.setattr(service.providers, "record", blocking)
     task = asyncio.create_task(
-        execute(service, "get", {"entity": "study", "id": "ubi_synthetic"}, scope="public")
+        execute(service, "get_record", {"entity": "study", "id": "ubi_synthetic"}, scope="public")
     )
     try:
         async with asyncio.timeout(3):
@@ -278,7 +278,7 @@ async def test_mutation_profile_snapshot_recovers_original_class_counts(study, m
     monkeypatch.setenv("UBI_PROFILE", "local")
     async with Client(create_server(service=ResearchService())) as client:
         result = await client.call_tool(
-            "study_analysis", {"analysis": "gene_profile", "study": "ubi_synthetic", "gene": "TP53"}
+            "analyze_study", {"analysis": "gene_profile", "study": "ubi_synthetic", "gene": "TP53"}
         )
         section = result.structured_content["sections"]["study"]
         assert section["outcome"] == "data"

@@ -106,11 +106,13 @@ async def test_actual_mcp_exposes_inspectable_schema_and_receipted_measurements(
     monkeypatch.setenv("UBI_PROFILE", "local")
     service = ResearchService()
     async with Client(create_server(service=service)) as client:
-        capabilities = (await client.call_tool_mcp("capabilities", {"source": "study"})).structured_content
+        capabilities = (
+            await client.call_tool_mcp("get_capabilities", {"source": "study"})
+        ).structured_content
         schema = capabilities["record_schemas"]["study_measurements"]
         jsonschema.Draft202012Validator.check_schema(schema)
         result = await client.call_tool_mcp(
-            "study_analysis",
+            "analyze_study",
             {"analysis": "gene_profile", "study": "ubi_synthetic", "gene": "ERBB2", "type": "expression"},
         )
         assert not result.is_error
@@ -157,7 +159,7 @@ async def test_failed_measurement_contract_returns_controlled_error_and_retry_ca
     monkeypatch.setattr(module, "study_measurement_record", inconsistent)
     args = {"analysis": "gene_profile", "study": "ubi_synthetic", "gene": "ERBB2", "type": "expression"}
     async with Client(create_server(service=ResearchService())) as client:
-        failure = await client.call_tool_mcp("study_analysis", args)
+        failure = await client.call_tool_mcp("analyze_study", args)
         assert failure.is_error
         value = failure.structured_content
         assert value["outcome"] == "error"
@@ -166,7 +168,7 @@ async def test_failed_measurement_contract_returns_controlled_error_and_retry_ca
         assert value["sections"]["study"]["data"] is None
         assert "ERBB2" not in json.dumps(value["sections"]["study"]["error"])
         monkeypatch.setattr(module, "study_measurement_record", original)
-        success = await client.call_tool_mcp("study_analysis", args)
+        success = await client.call_tool_mcp("analyze_study", args)
         assert not success.is_error
         row = success.structured_content["sections"]["study"]["data"]
         assert row["record_type"] == "study_measurements" and row["measured_samples"] == 2

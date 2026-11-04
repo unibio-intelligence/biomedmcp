@@ -1,9 +1,9 @@
 # Annotation aggregators
 
-MyChem and MyDisease combine upstream annotations with different permissions. Both
-remain **held** in this distribution. Offline contract tests do not authorize
-provider retrieval or redistribution, and a personal API key does not override a
-source license. The source access policy controls release and qualified BYOK modes.
+MyChem and MyDisease combine upstream annotations with different permissions.
+Check their release status in [source licenses](source-licenses.md); a personal API
+key does not override a source license. This guide does not grant permission to
+redistribute their data.
 
 Acquisition validates query envelopes, annotation identities, bulk matches and
 explicit `notfound` records before caching. Provider HTTP bodies and exception

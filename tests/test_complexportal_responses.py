@@ -276,16 +276,16 @@ GET = {
 async def test_actual_mcp_invalid_source_uncached_valid_source_cached(mcp_boundary):
     client, responses, calls, _, _ = mcp_boundary
     responses.extend([{}, body()])
-    failed = (await client.call_tool_mcp("get", GET)).structured_content
+    failed = (await client.call_tool_mcp("get_record", GET)).structured_content
     assert (
         failed["sections"]["complexes"]["error"]["code"] == "invalid_source_response"
         and failed["provenance"] == []
     )
-    good = (await client.call_tool_mcp("get", GET)).structured_content
+    good = (await client.call_tool_mcp("get_record", GET)).structured_content
     assert good["outcome"] == "data" and good["provenance"][0]["sources"] == ["complexportal", "uniprot"]
     assert good["sections"]["complexes"]["data"]["records"][0]["record_type"] == "complex_membership"
     assert "_complexportal_state" not in str(good)
-    cached = (await client.call_tool_mcp("get", GET)).structured_content
+    cached = (await client.call_tool_mcp("get_record", GET)).structured_content
     assert cached["provenance"][0]["cached"] is True
     assert len([r for r in calls if r.url.host == "www.ebi.ac.uk"]) == 2
 
@@ -300,7 +300,7 @@ async def test_actual_mcp_filtered_and_duplicate_pages_are_executable(mcp_bounda
         ]
     )
     request = GET | {"section_parameters": {"complexes": {"limit": 1}}}
-    first = (await client.call_tool_mcp("get", request)).structured_content
+    first = (await client.call_tool_mcp("get_record", request)).structured_content
     assert first["outcome"] == "partial" and first["sections"]["complexes"]["data"]["records"] == []
     action = first["next_actions"][0]
     for change in [
@@ -344,7 +344,7 @@ async def test_actual_mcp_source_failure_retains_successful_peer_and_is_not_cach
     responses.extend([bad, bad])
     for _ in range(2):
         value = (
-            await client.call_tool_mcp("get", GET | {"sections": ["record", "complexes"]})
+            await client.call_tool_mcp("get_record", GET | {"sections": ["record", "complexes"]})
         ).structured_content
         assert value["outcome"] == "partial" and value["sections"]["record"]["outcome"] == "data"
         assert value["sections"]["complexes"]["outcome"] in {"error", "unavailable"}
@@ -359,7 +359,7 @@ async def test_actual_mcp_invalid_or_expired_cursor_state_fails_before_http(mcp_
 
     client, responses, calls, service, _ = mcp_boundary
     responses.append(body(total=3))
-    first = (await client.call_tool_mcp("get", GET)).structured_content
+    first = (await client.call_tool_mcp("get_record", GET)).structured_content
     action = first["next_actions"][0]
     cursor = action["arguments"]["section_parameters"]["complexes"]["cursor"]
     key = "complexportal-page:" + digest(cursor)
@@ -397,7 +397,7 @@ async def test_actual_mcp_mouse_membership_and_action_preserve_species(mcp_bound
             body([complex_row(complex_id="CPX-2", taxon=10090, participant_taxon=10090)], total=2),
         ]
     )
-    value = (await client.call_tool_mcp("get", GET | {"species": 10090})).structured_content
+    value = (await client.call_tool_mcp("get_record", GET | {"species": 10090})).structured_content
     assert (
         value["outcome"] == "partial"
         and value["sections"]["complexes"]["data"]["records"][0]["species"] == 10090
@@ -421,7 +421,7 @@ async def test_actual_mcp_mouse_membership_and_action_preserve_species(mcp_bound
 )
 async def test_actual_mcp_invalid_plan_fails_before_provider_io(mcp_boundary, arguments):
     client, _, calls, _, _ = mcp_boundary
-    value = (await client.call_tool_mcp("get", arguments)).structured_content
+    value = (await client.call_tool_mcp("get_record", arguments)).structured_content
     assert value["outcome"] == "error" and calls == []
 
 
@@ -440,7 +440,9 @@ async def test_actual_mcp_final_scan_window_preserves_unassessed_remainder(mcp_b
     )
     responses.append(body([complex_row(complex_id="CPX-2")], total=1001))
     value = (
-        await client.call_tool_mcp("get", GET | {"section_parameters": {"complexes": {"cursor": cursor}}})
+        await client.call_tool_mcp(
+            "get_record", GET | {"section_parameters": {"complexes": {"cursor": cursor}}}
+        )
     ).structured_content
     data = value["sections"]["complexes"]["data"]
     assert value["outcome"] == "partial" and value["next_actions"] == []
@@ -459,7 +461,7 @@ async def test_actual_mcp_state_write_failure_keeps_evidence_and_partial_coverag
 
     monkeypatch.setattr(service.runtime.cache, "put", put)
     responses.append(body(total=2))
-    value = (await client.call_tool_mcp("get", GET)).structured_content
+    value = (await client.call_tool_mcp("get_record", GET)).structured_content
     assert value["outcome"] == "partial" and value["next_actions"] == []
     assert value["sections"]["complexes"]["data"]["records"]
     assert value["sections"]["complexes"]["data"]["coverage"]["continuation_status"] == "storage_unavailable"
@@ -504,7 +506,7 @@ main()
 
     def run(arguments):
         result = subprocess.run(
-            [sys.executable, str(script), "get", json.dumps(arguments)],
+            [sys.executable, str(script), "get_record", json.dumps(arguments)],
             env=env,
             text=True,
             capture_output=True,
@@ -529,7 +531,7 @@ main()
 async def test_actual_mcp_continuation_drift_requires_restart(mcp_boundary, change):
     client, responses, calls, _, current_protein = mcp_boundary
     responses.append(body(total=3))
-    first = (await client.call_tool_mcp("get", GET)).structured_content
+    first = (await client.call_tool_mcp("get_record", GET)).structured_content
     action = first["next_actions"][0]
     if change == "sequence":
         current_protein["sequence"]["value"] = "A" * 766
@@ -548,7 +550,7 @@ async def test_actual_mcp_continuation_drift_requires_restart(mcp_boundary, chan
 async def test_actual_mcp_empty_and_unknown_membership_have_distinct_outcomes(mcp_boundary, taxon):
     client, responses, _, _, _ = mcp_boundary
     responses.append(body([]) if taxon == 9606 else body([complex_row(taxon=None)]))
-    value = (await client.call_tool_mcp("get", GET)).structured_content
+    value = (await client.call_tool_mcp("get_record", GET)).structured_content
     assert value["outcome"] == ("empty" if taxon == 9606 else "partial")
     assert value["sections"]["complexes"]["data"]["records"] == []
     assert value["provenance"][0]["sources"] == ["complexportal", "uniprot"]

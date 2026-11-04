@@ -180,8 +180,8 @@ async def test_compare_retains_success_and_classifies_invalid_peer(adapter_http,
 @pytest.mark.parametrize(
     "operation,params,payload",
     [
-        ("search", {"entity": "protein", "query": "BRAF"}, {"results": []}),
-        ("get", {"entity": "protein", "id": "P15056", "sections": ["record"]}, PROTEIN),
+        ("search_records", {"entity": "protein", "query": "BRAF"}, {"results": []}),
+        ("get_record", {"entity": "protein", "id": "P15056", "sections": ["record"]}, PROTEIN),
         (
             "query_source",
             {"source": "uniprot", "operation": "analyze_evolution", "params": {"accession": "P15056"}},
@@ -215,7 +215,7 @@ async def test_public_failure_is_not_cached_and_recovery_retains_evidence(
     assert first["outcome"] == "error" and not first["provenance"]
     section = next(iter(first["sections"].values()))
     assert section["error"]["code"] == "invalid_source_response"
-    assert second["outcome"] == third["outcome"] == ("empty" if operation == "search" else "data")
+    assert second["outcome"] == third["outcome"] == ("empty" if operation == "search_records" else "data")
     assert second["provenance"][0]["source"] == "uniprot"
     assert third["provenance"][0]["cached"] and len(calls) == 2
 

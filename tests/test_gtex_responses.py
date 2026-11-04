@@ -369,7 +369,7 @@ async def test_dynamic_qtl_is_one_record_and_standard_error_is_not_service_error
     async with Client(create_server(service=research)) as client:
         result = (
             await client.call_tool(
-                "get",
+                "get_record",
                 {
                     "entity": "gene",
                     "id": "BRAF",
@@ -398,11 +398,11 @@ async def test_malformed_expression_is_unavailable_and_not_cached_as_absence(
     state["responses"]["/expression/medianGeneExpression"] = payload
     arguments = {"entity": "gene", "id": "BRAF", "sections": ["expression"], "sources": ["gtex"]}
     async with Client(create_server(service=research)) as client:
-        failed = (await client.call_tool_mcp("get", arguments)).structured_content
+        failed = (await client.call_tool_mcp("get_record", arguments)).structured_content
         assert failed["outcome"] == "error", failed
         assert failed["sections"]["expression"]["outcome"] == "error"
         state["responses"]["/expression/medianGeneExpression"] = page([expression()])
-        recovered = (await client.call_tool_mcp("get", arguments)).structured_content
+        recovered = (await client.call_tool_mcp("get_record", arguments)).structured_content
     assert recovered["outcome"] == "data", recovered
     assert expression_source_rows(recovered["sections"]["expression"]["data"]["data"]) == [expression()]
     output = capsys.readouterr()
@@ -424,7 +424,7 @@ async def test_decode_and_network_failures_are_sanitized_before_mcp_logging(
     async with Client(create_server(service=research)) as client:
         result = (
             await client.call_tool_mcp(
-                "get",
+                "get_record",
                 {
                     "entity": "gene",
                     "id": "BRAF",
@@ -452,7 +452,7 @@ async def test_dynamic_sqtl_cannot_join_an_unqualified_intron(gtex_service, payl
     async with Client(create_server(service=research)) as client:
         result = (
             await client.call_tool_mcp(
-                "get",
+                "get_record",
                 {
                     "entity": "gene",
                     "id": "BRAF",
@@ -488,7 +488,7 @@ async def test_dynamic_sqtl_qualifies_intron_on_a_later_provider_page(gtex_servi
     async with Client(create_server(service=research)) as client:
         result = (
             await client.call_tool(
-                "get",
+                "get_record",
                 {
                     "entity": "gene",
                     "id": "BRAF",

@@ -18,7 +18,7 @@ XML = "<PubmedArticleSet>" + "".join(
 @pytest.mark.parametrize("mode,expected", [("provider", ["101", "102"]), ("hybrid", ["102", "101"])])
 async def test_same_pubmed_window_can_be_preserved_or_explicitly_reranked(mode, expected):
     wire = HTTP({"esearchresult": {"count": "2", "idlist": ["101", "102"]}}, XML)
-    result = await execute(ResearchService(http=wire), "literature_search", {
+    result = await execute(ResearchService(http=wire), "search_literature", {
         "query": "BRAF V600E melanoma", "limit": 10,
         "filters": {"source": "pubmed", "sort": "relevance", "ranking_mode": mode},
     }, scope="parity")

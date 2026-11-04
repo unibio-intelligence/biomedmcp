@@ -152,7 +152,7 @@ async def test_remote_cli_does_not_open_local_state(monkeypatch):
 
     monkeypatch.setattr(LocalState, "open", forbidden)
     with pytest.raises(ResearchError) as caught:
-        await cli.execute("literature_search", {}, url="https://example.org/mcp", state_dir="/unused")
+        await cli.execute("search_literature", {}, url="https://example.org/mcp", state_dir="/unused")
     assert caught.value.code == "invalid_parameters"
 
 
@@ -171,7 +171,7 @@ async def test_local_state_initialization_is_inside_cli_request_deadline(monkeyp
     token = operation_deadline.set(deadline)
     try:
         with pytest.raises(ResearchError) as caught:
-            await cli.execute("literature_search", {"query": "BRAF"})
+            await cli.execute("search_literature", {"query": "BRAF"})
         assert caught.value.code == "operation_timeout"
         assert operation_deadline.get() == deadline
     finally:

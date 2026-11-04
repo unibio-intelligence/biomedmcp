@@ -157,9 +157,9 @@ def test_nci_fields_are_not_coerced_or_misidentified(field, value):
 @pytest.mark.parametrize(
     "operation,args",
     [
-        ("trial_search", {"query": "synthetic"}),
-        ("get", {"entity": "trial", "id": "NCT04368728"}),
-        ("resolve", {"entity": "trial", "query": "NCT04368728"}),
+        ("search_trials", {"query": "synthetic"}),
+        ("get_record", {"entity": "trial", "id": "NCT04368728"}),
+        ("resolve_entity", {"entity": "trial", "query": "NCT04368728"}),
     ],
 )
 async def test_actual_mcp_trial_record_links_registry_assertions_to_its_source(operation, args, monkeypatch):
@@ -169,7 +169,7 @@ async def test_actual_mcp_trial_record_links_registry_assertions_to_its_source(o
         result = await client.call_tool_mcp(operation, args)
     assert not result.is_error
     value = result.structured_content
-    row = value["records"][0] if operation == "trial_search" else value["sections"]["record"]["data"]
+    row = value["records"][0] if operation == "search_trials" else value["sections"]["record"]["data"]
     assert row["record_type"] == "trial" and row["enrollment"]["basis"] == "actual"
     proofs = {p["evidence_id"]: p for p in value["provenance"]}
     assert row["evidence_ids"] and all(proofs[k]["source"] == row["source"] for k in row["evidence_ids"])
@@ -184,7 +184,7 @@ async def test_nci_search_keeps_target_semantics_without_exposing_auth(monkeypat
     monkeypatch.setenv("NCI_API_KEY", "synthetic-nci-sentinel")
     result = await execute(
         ResearchService(http=HTTP({"data": [nci()], "total": 1})),
-        "trial_search",
+        "search_trials",
         {"query": "synthetic", "filters": {"source": "nci"}},
         scope="local",
     )
@@ -193,7 +193,7 @@ async def test_nci_search_keeps_target_semantics_without_exposing_auth(monkeypat
     assert value["records"][0]["evidence_ids"] == [value["provenance"][0]["evidence_id"]]
     assert "synthetic-nci-sentinel" not in json.dumps(value)
     assert verify_receipt(value)
-    jsonschema.validate(value, output_schema("trial_search"))
+    jsonschema.validate(value, output_schema("search_trials"))
 
 
 @pytest.mark.asyncio
@@ -201,7 +201,7 @@ async def test_trial_wire_schema_rejects_malformed_units_counts_and_identity():
     value = (
         await execute(
             ResearchService(adapters=Adapter()),
-            "get",
+            "get_record",
             {"entity": "trial", "id": "NCT04368728"},
             scope="local",
         )
@@ -244,7 +244,7 @@ async def test_trial_wire_schema_rejects_malformed_units_counts_and_identity():
         bad = deepcopy(value)
         bad["sections"]["record"]["data"][key] = replacement
         with pytest.raises(jsonschema.ValidationError):
-            jsonschema.validate(bad, output_schema("get"))
+            jsonschema.validate(bad, output_schema("get_record"))
 
 
 @pytest.mark.asyncio
@@ -254,7 +254,10 @@ async def test_trial_get_requires_requested_identity_or_explicit_registry_alias(
     if alias:
         row["protocolSection"]["identificationModule"]["nctIdAliases"] = ["NCT04368728"]
     result = await execute(
-        ResearchService(adapters=Adapter(row)), "get", {"entity": "trial", "id": "NCT04368728"}, scope="local"
+        ResearchService(adapters=Adapter(row)),
+        "get_record",
+        {"entity": "trial", "id": "NCT04368728"},
+        scope="local",
     )
     if alias:
         assert result.outcome == "data"
@@ -280,10 +283,10 @@ async def test_malformed_trial_batch_peer_does_not_discard_valid_typed_evidence(
 
     async with Client(create_server(service=ResearchService(adapters=ByIdentity()))) as client:
         result = await client.call_tool_mcp(
-            "batch",
+            "run_batch",
             {
                 "calls": [
-                    {"operation": "get", "arguments": {"entity": "trial", "id": identifier}}
+                    {"operation": "get_record", "arguments": {"entity": "trial", "id": identifier}}
                     for identifier in ["NCT04368728", "NCT04681105"]
                 ]
             },
@@ -293,4 +296,4 @@ async def test_malformed_trial_batch_peer_does_not_discard_valid_typed_evidence(
     assert good["sections"]["record"]["data"]["enrollment"]["count"] == 100
     assert bad["outcome"] == "error" and bad["sections"]["record"]["data"] is None
     assert verify_receipt(good) and verify_receipt(bad)
-    jsonschema.validate(result.structured_content, output_schema("batch"))
+    jsonschema.validate(result.structured_content, output_schema("run_batch"))

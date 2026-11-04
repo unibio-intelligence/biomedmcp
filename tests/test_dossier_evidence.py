@@ -91,7 +91,7 @@ async def test_dossier_retains_constituent_trials_and_scientific_status(monkeypa
     assert result.sections["literature"].data["records"] == papers.records
     continuation = section.data["continuation"]
     if constituent.next_cursor:
-        assert continuation["tool"] == "trial_search"
+        assert continuation["tool"] == "search_trials"
         next_request = ADAPTERS[continuation["tool"]].validate_python(continuation["arguments"])
         assert next_request.cursor == constituent.next_cursor
         assert next_request.query == constituent.query["query"]

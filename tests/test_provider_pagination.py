@@ -317,9 +317,9 @@ async def test_actual_mcp_literature_continuation_retains_eligible_records(monke
     )
     async with Client(create_server(service=ResearchService(http=http))) as client:
         params = {"query": "BRAF", "limit": 2, "filters": {"source": "europepmc"}}
-        first = (await client.call_tool("literature_search", params)).data
+        first = (await client.call_tool("search_literature", params)).data
         second = (
-            await client.call_tool("literature_search", {**params, "cursor": first["next_cursor"]})
+            await client.call_tool("search_literature", {**params, "cursor": first["next_cursor"]})
         ).data
         assert {r["pmid"] for r in second["records"]} == {"4", "5"}
         assert second["next_cursor"] is None

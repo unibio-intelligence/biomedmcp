@@ -153,7 +153,7 @@ async def test_live_who_header_case_is_accepted_through_dispatch(entity, source,
 
     result = await execute(
         ResearchService(http=HTTP(text)),
-        "search",
+        "search_records",
         {
             "entity": entity,
             "query": query,
@@ -271,10 +271,11 @@ async def test_mcp_get_exposes_and_enforces_source_restriction(monkeypatch):
     service = ResearchService(adapters=adapters)
     async with Client(create_server(service=service)) as client:
         tools = {t.name: t for t in await client.list_tools()}
-        assert "sources" in tools["get"].input_schema["properties"]
+        assert "sources" in tools["get_record"].input_schema["properties"]
         result = (
             await client.call_tool(
-                "get", {"entity": "gene", "id": "BRAF", "sections": ["expression"], "sources": ["gtex"]}
+                "get_record",
+                {"entity": "gene", "id": "BRAF", "sections": ["expression"], "sources": ["gtex"]},
             )
         ).data
         assert set(result["sections"]) == {"expression"}

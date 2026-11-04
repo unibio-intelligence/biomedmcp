@@ -248,10 +248,10 @@ async def test_actual_mcp_invalid_response_is_uncached_and_healthy_recovery_is_c
     arguments = {"id": "BRAF V600E", "sections": ["civic"], "sources": ["civic"]}
     async with Client(create_server(service=service)) as client:
         failure = (
-            await client.call_tool("variant_evidence", arguments, raise_on_error=False)
+            await client.call_tool("get_variant_evidence", arguments, raise_on_error=False)
         ).structured_content
-        recovered = (await client.call_tool("variant_evidence", arguments)).data
-        cached = (await client.call_tool("variant_evidence", arguments)).data
+        recovered = (await client.call_tool("get_variant_evidence", arguments)).data
+        cached = (await client.call_tool("get_variant_evidence", arguments)).data
     assert failure["outcome"] == "error" and not failure["provenance"]
     assert failure["sections"]["civic"]["error"]["code"] == "invalid_source_response"
     assert (
@@ -284,14 +284,14 @@ async def test_filtered_page_preserves_executable_mcp_continuation(civic_mcp, se
     async with Client(create_server(service=service)) as client:
         result = (
             await client.call_tool(
-                "variant_evidence",
+                "get_variant_evidence",
                 {"id": "BRAF V600E", "sections": ["civic"], "section_parameters": {"civic": {"limit": 1}}},
             )
         ).data
         assert result["outcome"] == "partial" and len(result["next_actions"]) == 1
         assert not result["sections"]["civic"]["data"][selected]["nodes"]
         action = result["next_actions"][0]
-        assert action["tool"] == "variant_evidence"
+        assert action["tool"] == "get_variant_evidence"
         assert action["arguments"]["section_parameters"]["civic"]["collection"] == selected
         assert (
             token not in json.dumps(result)

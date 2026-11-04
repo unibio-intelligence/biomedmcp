@@ -131,7 +131,7 @@ async def test_fulltext_next_window_action_is_distinct_from_retained_snapshot(mo
     http = HTTP(xml, xml)
     async with Client(create_server(service=ResearchService(http=http))) as client:
         first = await client.call_tool(
-            "get",
+            "get_record",
             {
                 "entity": "article",
                 "id": "PMC123",
@@ -307,7 +307,7 @@ async def test_actual_mcp_resource_recovers_omitted_line_characters_and_original
         templates = await client.list_resource_templates()
         assert any(str(template.uri_template) == TEMPLATE for template in templates)
         result = await client.call_tool_mcp(
-            "get",
+            "get_record",
             {
                 "entity": "article",
                 "id": "PMC123",
@@ -342,7 +342,7 @@ async def test_local_cli_resource_reuses_persisted_scope_and_snapshot(tmp_path):
     service = ResearchService(http=http, runtime=ProviderRuntime(cache=state, cursor_key=state.signing_key))
     result = await execute(
         service,
-        "get",
+        "get_record",
         {
             "entity": "article",
             "id": "PMC123",
@@ -399,7 +399,7 @@ main()
         )
 
     first = run(
-        "get",
+        "get_record",
         {
             "entity": "article",
             "id": "PMC123",
@@ -472,7 +472,7 @@ async def test_actual_mcp_envelope_omission_is_recovered_through_supplied_resour
     )
     async with Client(create_server(service=ResearchService(http=http))) as client:
         result = await client.call_tool_mcp(
-            "get",
+            "get_record",
             {
                 "entity": "article",
                 "id": "PMC123",
@@ -518,7 +518,7 @@ async def test_exact_composed_omitted_records_retain_all_supporting_evidence_ids
                 return ResearchResult(entity="protein", outcome="data", records=rows, provenance=proofs)
 
     async with Client(create_server(service=Service())) as client:
-        result = await client.call_tool_mcp("get", {"entity": "protein", "id": "P12345"})
+        result = await client.call_tool_mcp("get_record", {"entity": "protein", "id": "P12345"})
         body = result.structured_content
         assert not result.is_error and body["truncated"] and verify_receipt(body)
         omission = body["query"]["output_omissions"]

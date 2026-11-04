@@ -12,7 +12,7 @@ async def test_advertised_qualified_pmid_fulltext_reaches_europepmc_without_retr
     http = HTTP({"resultList": {"result": [{"id": "123", "source": "MED", "pmcid": "PMC123"}]}}, JATS)
     service = ResearchService(http=http)
     args = {"entity": "article", "id": "PMID:123", "sections": ["fulltext"]}
-    run = await prepare(service, "get", args, scope="example-test")
+    run = await prepare(service, "get_record", args, scope="example-test")
     assert http.calls == []
     result = await run()
     assert result.outcome == "data"

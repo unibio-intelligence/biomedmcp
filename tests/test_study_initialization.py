@@ -178,13 +178,13 @@ async def test_changed_verified_coverage_invalidates_cached_scientific_result(st
     install()
     service = ResearchService()
     args = {"analysis": "gene_profile", "study": "ubi_synthetic", "gene": "TP53"}
-    first = await execute(service, "study_analysis", args, scope="public")
+    first = await execute(service, "analyze_study", args, scope="public")
     assert first.sections["study"].data["mutation_count"] == 2
     path = Path(os.environ["UBI_PUBLIC_STUDY_MANIFEST"])
     manifest = json.loads(path.read_text())
     manifest["studies"][0]["mutation_coverage"]["samples"] = ["S1", "S3", "S4"]
     path.write_text(json.dumps(manifest))
-    second = await execute(service, "study_analysis", args, scope="public")
+    second = await execute(service, "analyze_study", args, scope="public")
     assert second.sections["study"].data["mutation_count"] == 1
     assert second.sections["study"].data["total_samples"] == 3
     assert second.provenance[0].evidence_id != first.provenance[0].evidence_id
@@ -196,8 +196,8 @@ async def test_public_result_cache_cannot_hide_consumed_content_tampering(study,
     install()
     service = ResearchService()
     args = {"analysis": "gene_profile", "study": "ubi_synthetic", "gene": "TP53"}
-    first = await execute(service, "study_analysis", args, scope="public")
-    second = await execute(service, "study_analysis", args, scope="public")
+    first = await execute(service, "analyze_study", args, scope="public")
+    second = await execute(service, "analyze_study", args, scope="public")
     assert (
         first.sections["study"].data["mutation_count"] == second.sections["study"].data["mutation_count"] == 2
     )
@@ -209,7 +209,7 @@ async def test_public_result_cache_cannot_hide_consumed_content_tampering(study,
         return before if candidate == path else original_lstat(candidate, *args, **kwargs)
 
     monkeypatch.setattr(Path, "lstat", unchanged_metadata)
-    third = await execute(service, "study_analysis", args, scope="public")
+    third = await execute(service, "analyze_study", args, scope="public")
     section = third.sections["study"]
     assert section.outcome == "error"
     assert section.error["code"] == "study_version_changed"

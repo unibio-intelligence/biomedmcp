@@ -77,7 +77,8 @@ async def test_actual_public_mcp_recovers_all_observed_features_from_one_acquisi
     monkeypatch.setenv("UBI_PROFILE", "local")
     async with Client(create_server(service=ResearchService())) as client:
         response = await client.call_tool_mcp(
-            "get", {"entity": "protein", "id": "P02751", "sections": ["record"], "sources": ["uniprot"]}
+            "get_record",
+            {"entity": "protein", "id": "P02751", "sections": ["record"], "sources": ["uniprot"]},
         )
         assert not response.is_error
         result = response.structured_content
@@ -116,13 +117,13 @@ async def test_bad_known_endpoint_is_not_cached_as_empty_and_valid_source_can_re
     monkeypatch.setenv("UBI_PROFILE", "local")
     arguments = {"entity": "protein", "id": "P02751", "sections": ["record"], "sources": ["uniprot"]}
     async with Client(create_server(service=ResearchService())) as client:
-        failed = await client.call_tool_mcp("get", arguments)
+        failed = await client.call_tool_mcp("get_record", arguments)
         assert failed.is_error
         assert failed.structured_content["sections"]["record"]["error"]["code"] == "invalid_source_response"
         assert failed.structured_content["outcome"] == "error" and not failed.structured_content["provenance"]
         state["payload"] = valid
-        repaired = await client.call_tool_mcp("get", arguments)
+        repaired = await client.call_tool_mcp("get_record", arguments)
         assert not repaired.is_error and repaired.structured_content["sections"]["record"]["data"]
-        cached = await client.call_tool_mcp("get", arguments)
+        cached = await client.call_tool_mcp("get_record", arguments)
         assert not cached.is_error
     assert state["calls"] == 2

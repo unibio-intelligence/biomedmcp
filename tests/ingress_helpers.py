@@ -27,7 +27,7 @@ def maximum_batch():
     filters["source"] = "europepmc"
     calls = [
         {
-            "operation": "literature_search",
+            "operation": "search_literature",
             "arguments": {"query": str(i) + "q" * 511, "filters": filters, "limit": 25},
         }
         for i in range(10)
@@ -36,7 +36,7 @@ def maximum_batch():
         "jsonrpc": "2.0",
         "id": 1,
         "method": "tools/call",
-        "params": {"name": "batch", "arguments": {"calls": calls}},
+        "params": {"name": "run_batch", "arguments": {"calls": calls}},
     }
     raw = json.dumps(value, separators=(",", ":")).encode()
     assert len(raw) <= REQUEST_BYTES

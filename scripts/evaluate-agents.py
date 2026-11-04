@@ -11,45 +11,45 @@ from biomedmcp.contracts import BatchCall
 from biomedmcp.public_catalog import ADAPTERS, schema
 
 TASKS = [
-    {"id": "gene-record", "question": "Retrieve the PCSK9 gene record.", "routes": ["get"]},
+    {"id": "gene-record", "question": "Retrieve the PCSK9 gene record.", "routes": ["get_record"]},
     {
         "id": "ambiguous-alias",
         "question": "Resolve LDL receptor before combining gene evidence.",
-        "routes": ["resolve"],
+        "routes": ["resolve_entity"],
     },
-    {"id": "gtex-only", "question": "Retrieve LDLR expression using only GTEx.", "routes": ["get"]},
+    {"id": "gtex-only", "question": "Retrieve LDLR expression using only GTEx.", "routes": ["get_record"]},
     {
         "id": "literature-dates",
         "question": "Find PubMed PCSK9 papers published since 2024-01-01.",
-        "routes": ["literature_search"],
+        "routes": ["search_literature"],
     },
-    {"id": "article-direct", "question": "Read the full text for PMC123.", "routes": ["get"]},
-    {"id": "trial-status", "question": "Find recruiting familial hypercholesterolemia trials.", "routes": ["trial_search"]},
+    {"id": "article-direct", "question": "Read the full text for PMC123.", "routes": ["get_record"]},
+    {"id": "trial-status", "question": "Find recruiting familial hypercholesterolemia trials.", "routes": ["search_trials"]},
     {
         "id": "exact-variant",
         "question": "Retrieve ClinVar evidence for GRCh38 chr1:55039974:G:T.",
-        "routes": ["variant_evidence"],
+        "routes": ["get_variant_evidence"],
     },
     {
         "id": "ambiguous-variant",
         "question": "Retrieve evidence for PCSK9 R46L; preserve allele ambiguity.",
-        "routes": ["variant_evidence"],
+        "routes": ["get_variant_evidence"],
     },
-    {"id": "target-dossier", "question": "Assemble a target dossier for LDLR.", "routes": ["research"]},
+    {"id": "target-dossier", "question": "Assemble a target dossier for LDLR.", "routes": ["build_dossier"]},
     {
         "id": "study-frequency",
         "question": "Calculate TP53 mutation frequency in ubi_synthetic, using assay coverage.",
-        "routes": ["study_analysis"],
+        "routes": ["analyze_study"],
     },
     {
         "id": "study-survival",
         "question": "Calculate overall survival by TP53 mutation in ubi_synthetic.",
-        "routes": ["study_analysis"],
+        "routes": ["analyze_study"],
     },
     {
         "id": "source-failure",
         "question": "Find PCSK9 PubMed papers when the provider is unavailable; preserve the failure.",
-        "routes": ["literature_search"],
+        "routes": ["search_literature"],
     },
     {"id": "advanced-source", "question": "Retrieve GTEx tissue metadata.", "routes": ["query_source"]},
     {
@@ -77,7 +77,7 @@ def score(traces):
         scientific_calls = []
         calls = []
         for call in trace["calls"]:
-            if call["tool"] != "batch":
+            if call["tool"] != "run_batch":
                 calls.append(call)
                 continue
             try:
@@ -101,7 +101,7 @@ def score(traces):
                     ADAPTERS[name].validate_python(call["arguments"])
                 except (jsonschema.ValidationError, ValueError) as exc:
                     errors.append(str(exc).splitlines()[0][:200])
-            elif name not in {"capabilities", "quota"}:
+            elif name not in {"get_capabilities", "get_quota"}:
                 errors.append("Unknown public tool: " + name)
         chosen = scientific_calls[0] if scientific_calls else None
         route_ok = (

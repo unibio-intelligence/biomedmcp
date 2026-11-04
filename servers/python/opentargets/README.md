@@ -2,23 +2,23 @@
 
 Examples use the public BioMedMCP tools and their typed JSON arguments.
 
-Use the biomedmcp server and its canonical tools. Retained adapters are implementation packages; their internal tools are not separate public MCP mounts.
+Connect to the biomedmcp server and use its tools. This package runs inside that server; it is not a separate MCP server.
 
 Retrieve human gene sections target_evidence, diseases and druggability through get. The public target_dossier composes those assertions with expression and literature under one qualified gene identity.
 
-Declared advanced operations: `analyze_advanced`, `analyze_association`, `query_genetics`.
+Advanced operations: `analyze_advanced`, `analyze_association`, `query_genetics`.
 
-Inspect capabilities for this source to obtain the exact current parameter schemas. Stable Ensembl gene identifiers are resolved before target acquisition. Keep the source association score, tractability modality and disease identifier attached to each assertion.
+Run get_capabilities for this source to see its current parameters. Stable Ensembl gene identifiers are resolved before target acquisition. Keep the source association score, tractability modality and disease identifier attached to each assertion.
 
-These examples pass schemas and preflight and execute through MCP against mocked provider responses. They do not establish live source health or comprehensive scientific qualification. Association scores are not clinical risk probabilities, treatment effects or proof of causality. Tractability annotations do not establish safety or therapeutic efficacy. Distinct advanced association/genetics operations and nested response meanings require separate qualification.
+The examples are tested through MCP against mock responses; live results may differ. Association scores are not clinical risk probabilities, treatment effects or proof of causality. Tractability annotations do not establish safety or therapeutic efficacy. Distinct advanced association/genetics operations and nested response meanings require separate qualification.
 
-Follow advertised provider continuation for further acquisition. If the result advertises an evidence recovery URI, use its bounded ranges to read acquired data omitted from the preview; see [evidence recovery](../../../docs/evidence-resources.md). Snapshot scope, expiry and source rights still apply.
+To get more results, follow the continuation in the response. If a result includes an evidence recovery URI, use it to read data left out of the preview; see [evidence recovery](../../../docs/evidence-resources.md). Recovered data expires and is subject to the source's terms.
 
 ## Human LDLR target evidence and source disease associations
 
 ```json
 {
-  "tool": "get",
+  "tool": "get_record",
   "arguments": {
     "entity": "gene",
     "id": "LDLR",
@@ -36,7 +36,7 @@ Follow advertised provider continuation for further acquisition. If the result a
 
 ```json
 {
-  "tool": "research",
+  "tool": "build_dossier",
   "arguments": {
     "workflow": "target_dossier",
     "focus": "LDLR",

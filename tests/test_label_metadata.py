@@ -111,7 +111,7 @@ async def test_live_sized_label_prose_stays_visible_and_full_text_is_recoverable
     service.providers.fda = fda
     value = (
         await execute(
-            service, "get", {"entity": "drug", "id": "imatinib", "sections": ["label"]}, scope="test"
+            service, "get_record", {"entity": "drug", "id": "imatinib", "sections": ["label"]}, scope="test"
         )
     ).model_dump(mode="json")
     assert verify_receipt(value) and value["outcome"] == "data"

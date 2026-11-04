@@ -121,10 +121,10 @@ async def test_actual_mcp_schema_receipt_and_text_locate_independent_measurement
     data["data"]["variant"]["joint"].update(ac=2, an=120, populations=[])
     state["responses"] = [data]
     async with Client(create_server(service=service)) as client:
-        schema = (await client.call_tool_mcp("capabilities", {"source": "gnomad"})).structured_content[
+        schema = (await client.call_tool_mcp("get_capabilities", {"source": "gnomad"})).structured_content[
             "record_schemas"
         ]["variant_population"]
-        result = await client.call_tool_mcp("variant_evidence", ARGS)
+        result = await client.call_tool_mcp("get_variant_evidence", ARGS)
     assert not result.is_error
     value = result.structured_content
     assert verify_receipt(value) and json.loads(result.content[0].text) == value
@@ -154,13 +154,13 @@ async def test_invalid_derived_contract_has_no_evidence_and_valid_retry_is_uncac
 
     monkeypatch.setattr(gnomad, "frequency_record", broken)
     async with Client(create_server(service=service)) as client:
-        failed = (await client.call_tool_mcp("variant_evidence", ARGS)).structured_content
+        failed = (await client.call_tool_mcp("get_variant_evidence", ARGS)).structured_content
         section = failed["sections"]["population"]
         assert section["data"] is None and section["evidence_ids"] == []
         assert section["error"]["code"] == "invalid_source_response"
         assert failed["provenance"] == []
         monkeypatch.setattr(gnomad, "frequency_record", original)
-        success = await client.call_tool_mcp("variant_evidence", ARGS)
+        success = await client.call_tool_mcp("get_variant_evidence", ARGS)
         assert not success.is_error
         assert (
             success.structured_content["sections"]["population"]["data"]["record_type"]
@@ -178,7 +178,7 @@ async def test_omitted_ancestry_measurements_keep_exact_inputs_in_same_snapshot(
     ]
     state["responses"] = [data]
     async with Client(create_server(service=service)) as client:
-        value = (await client.call_tool_mcp("variant_evidence", ARGS)).structured_content
+        value = (await client.call_tool_mcp("get_variant_evidence", ARGS)).structured_content
         section = value["sections"]["population"]
         assert section["truncated"] and verify_receipt(value)
         row = section["data"]

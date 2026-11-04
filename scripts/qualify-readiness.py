@@ -175,7 +175,9 @@ def main():
     subprocess.run(
         [sys.executable, "-m", "pytest", "tests", "-q", "--junitxml", str(args.junit.resolve())],
         cwd=ROOT,
-        timeout=300,
+        # This is the total offline suite budget, not a provider/tool deadline.
+        # The expanded suite exceeds five minutes on native qualification hosts.
+        timeout=600,
         check=True,
     )
     after = import_probe(specifications)

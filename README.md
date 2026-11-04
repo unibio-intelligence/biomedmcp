@@ -1,8 +1,8 @@
 # biomedmcp
 
-Build a cited evidence notebook for a biomedical research question. BioMedMCP
-retrieves source records, keeps their identities and limitations visible, and
-lets an agent collect a bounded dossier before following individual leads.
+BioMedMCP gives your AI agent cited access to biomedical sources, including
+PubMed, UniProt, ClinicalTrials.gov, ChEMBL, Open Targets and GTEx, so its
+answers point to records you can check.
 
 <!-- mcp-name: io.github.unibio-intelligence/biomedmcp -->
 
@@ -15,8 +15,8 @@ Try this with your MCP client:
 > PCSK9 genetic studies. Separate observations, intervention results and open
 > questions. Cite the records you read and identify any unavailable sources.
 
-Connect to `https://biomedmcp.unibiointelligence.com/mcp` using Streamable HTTP.
-The hosted service controls sign-in and access. For a local server, install the
+Connect to `https://biomedmcp.unibiointelligence.com/mcp` using Streamable HTTP
+and sign in when prompted. For a local server, install the
 Python distribution or build from this checkout; see [connection options](https://github.com/unibio-intelligence/biomedmcp/blob/main/docs/connect.md).
 
 ## Run the same investigation locally
@@ -24,8 +24,8 @@ Python distribution or build from this checkout; see [connection options](https:
 Use Python 3.13+ in an activated virtual environment:
 
 ```sh
-python -m pip install biomedmcp==0.2.3
-UBI_PROFILE=local biomedmcp research '{"workflow":"target_dossier","focus":"LDLR","species":9606}'
+python -m pip install biomedmcp==0.2.4
+UBI_PROFILE=local biomedmcp build_dossier '{"workflow":"target_dossier","focus":"LDLR","species":9606}'
 ```
 
 The single Python distribution includes all source adapters. From a source
@@ -36,15 +36,15 @@ These focused calls can fill gaps in the notebook:
 
 <!-- public-call-examples:start -->
 ```sh
-UBI_PROFILE=local biomedmcp get '{"entity":"gene","id":"LDLR","species":9606,"sections":["expression"]}'
-UBI_PROFILE=local biomedmcp literature_search '{"query":"PCSK9","filters":{"source":"pubmed","date_from":"2024-01-01"}}'
-UBI_PROFILE=local biomedmcp variant_evidence '{"id":"PCSK9 R46L"}'
+UBI_PROFILE=local biomedmcp get_record '{"entity":"gene","id":"LDLR","species":9606,"sections":["expression"]}'
+UBI_PROFILE=local biomedmcp search_literature '{"query":"PCSK9","filters":{"source":"pubmed","date_from":"2024-01-01"}}'
+UBI_PROFILE=local biomedmcp get_variant_evidence '{"id":"PCSK9 R46L"}'
 ```
 <!-- public-call-examples:end -->
 
-Review each response's source, species, identifiers and outcome before combining
-records. A partial or unavailable section remains a gap in the notebook. Follow
-returned continuation and recovery actions to inspect material beyond the preview.
+Check each response's source, species and identifiers before combining records;
+a partial or unavailable section is a gap, not a negative result. Follow its
+continuation and recovery links to see more than the preview.
 
 ## Choose the next question
 
@@ -52,7 +52,7 @@ returned continuation and recovery actions to inspect material beyond the previe
 | --- | --- |
 | Separate target observations from causal claims | [Evidence investigations](https://github.com/unibio-intelligence/biomedmcp/blob/main/docs/investigations.md) |
 | Inspect an allele without conflating transcript or genome build | [Typed call examples](https://github.com/unibio-intelligence/biomedmcp/blob/main/docs/examples.md) |
-| Read a paper's accessible text and tables | `get` with `entity: "article"` and `sections: ["fulltext"]` |
+| Read a paper's accessible text and tables | `get_record` with `entity: "article"` and `sections: ["fulltext"]` |
 | Examine registered studies | `trial_search`; inspect each study's submitted record |
 | Reproduce a local analysis | [Synthetic study walkthrough](https://github.com/unibio-intelligence/biomedmcp/blob/main/docs/studies.md) |
 
@@ -69,7 +69,7 @@ results and evidence boundaries.
 
 Some sources need a key or installed dataset. Run `biomedmcp diagnose` and consult
 [source access](https://github.com/unibio-intelligence/biomedmcp/blob/main/docs/source-access.md). Keep credentials in environment variables
-or client secret storage. Source failures do not establish absence of evidence.
+or client secret storage. A failed source doesn't mean there is no evidence.
 
 The integration code uses [Apache-2.0](https://github.com/unibio-intelligence/biomedmcp/blob/main/LICENSE). Retrieved data retains its
 [source terms](https://github.com/unibio-intelligence/biomedmcp/blob/main/docs/source-licenses.md). See [notices](https://github.com/unibio-intelligence/biomedmcp/blob/main/NOTICE.md),

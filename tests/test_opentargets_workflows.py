@@ -461,7 +461,9 @@ async def test_actual_mcp_qualified_gene_genetics_and_continuation_keep_loci_and
     monkeypatch.setenv("UBI_PROFILE", "local")
     async with Client(create_server(service=ResearchService(adapters=Adapters()))) as c:
         result = (
-            await c.call_tool("get", {"entity": "gene", "id": "673", "sections": ["record", "genetics"]})
+            await c.call_tool(
+                "get_record", {"entity": "gene", "id": "673", "sections": ["record", "genetics"]}
+            )
         ).data
         section = result["sections"]["genetics"]
         assert section["outcome"] == "data" and section["evidence_ids"]
@@ -544,15 +546,15 @@ async def test_actual_mcp_gene_failure_cannot_mint_empty_genetics_and_retries(mo
     monkeypatch.setenv("UBI_PROFILE", "local")
     args = {"entity": "gene", "id": "673", "sections": ["record", "genetics"]}
     async with Client(create_server(service=ResearchService(adapters=GeneAdapters()))) as c:
-        first = (await c.call_tool("get", args)).data
+        first = (await c.call_tool("get_record", args)).data
         assert first["outcome"] == "partial" and first["sections"]["record"]["evidence_ids"]
         assert (
             first["sections"]["genetics"]["outcome"] == ("unavailable" if mode == "network" else "error")
             and first["sections"]["genetics"]["evidence_ids"] == []
         )
         p.failures.clear()
-        good = (await c.call_tool("get", args)).data
-        cached = (await c.call_tool("get", args)).data
+        good = (await c.call_tool("get_record", args)).data
+        cached = (await c.call_tool("get_record", args)).data
         assert good["sections"]["genetics"]["data"]["records"][0]["studyLocusId"] == "synthetic-locus-0"
         assert good["outcome"] == cached["outcome"] == "data"
         assert good["sections"]["genetics"]["evidence_ids"] == cached["sections"]["genetics"]["evidence_ids"]
@@ -576,7 +578,9 @@ async def test_wrong_gene_symbol_or_empty_composed_payload_cannot_mint_genetic_e
     async with Client(create_server(service=ResearchService(adapters=Adapters()))) as c:
         for _ in range(2):
             result = (
-                await c.call_tool("get", {"entity": "gene", "id": "673", "sections": ["record", "genetics"]})
+                await c.call_tool(
+                    "get_record", {"entity": "gene", "id": "673", "sections": ["record", "genetics"]}
+                )
             ).data
             assert result["outcome"] == "partial" and result["sections"]["genetics"]["evidence_ids"] == []
             assert result["sections"]["genetics"]["error"]["code"] == "invalid_source_response"
@@ -736,7 +740,9 @@ async def test_native_gene_composition_rejects_forged_coverage_and_recovery(monk
     monkeypatch.setenv("UBI_PROFILE", "local")
     async with Client(create_server(service=ResearchService(adapters=Adapters()))) as c:
         result = (
-            await c.call_tool("get", {"entity": "gene", "id": "673", "sections": ["record", "genetics"]})
+            await c.call_tool(
+                "get_record", {"entity": "gene", "id": "673", "sections": ["record", "genetics"]}
+            )
         ).data
         assert result["outcome"] == "partial" and result["sections"]["genetics"]["evidence_ids"] == []
         assert result["sections"]["genetics"]["error"]["code"] == "invalid_source_response"
@@ -848,7 +854,7 @@ async def test_actual_mcp_page_limit_keeps_source_rows_and_safe_partial_result(p
                 return {"hits": [deepcopy(HUMAN)]}
             return await super().call(source, operation, params)
 
-    tool = "get" if mode == "gene" else "query_source"
+    tool = "get_record" if mode == "gene" else "query_source"
     args = (
         {
             "entity": "gene",

@@ -85,7 +85,7 @@ def plan_sources(filters):
     if not eligible:
         raise ResearchError(
             "unsupported_filter",
-            "The selected source cannot honor these filters; inspect capabilities(entity='article').",
+            "The selected source cannot honor these filters; inspect get_capabilities(entity='article').",
         )
     if selected != "all" and eligible != candidates:
         raise ResearchError("unsupported_filter", "The selected source cannot honor these filters.")

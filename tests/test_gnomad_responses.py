@@ -253,7 +253,7 @@ async def test_actual_mcp_invalid_data_is_uncached_and_recovery_retains_sources(
 
     service, state = actual_gnomad
     state["responses"] = [{"data": {}}, population() if scope == "population" else constraint()]
-    tool = "variant_evidence" if scope == "population" else "get"
+    tool = "get_variant_evidence" if scope == "population" else "get_record"
     arguments = (
         {"id": "chr7:140753336:A:T", "assembly": "grch38", "sections": ["population"]}
         if scope == "population"
@@ -293,10 +293,14 @@ async def test_actual_mcp_unknown_measurements_stay_partial_and_uncached(actual_
     )
     async with Client(create_server(service=service)) as client:
         first = (
-            await client.call_tool("variant_evidence" if scope == "population" else "get", arguments)
+            await client.call_tool(
+                "get_variant_evidence" if scope == "population" else "get_record", arguments
+            )
         ).data
         second = (
-            await client.call_tool("variant_evidence" if scope == "population" else "get", arguments)
+            await client.call_tool(
+                "get_variant_evidence" if scope == "population" else "get_record", arguments
+            )
         ).data
     assert first["outcome"] == second["outcome"] == "partial"
     assert not second["provenance"][0]["cached"] and len(state["calls"]) == 2
@@ -312,7 +316,7 @@ async def test_successful_primary_variant_evidence_survives_gnomad_failure(actua
     async with Client(create_server(service=service)) as client:
         value = (
             await client.call_tool(
-                "variant_evidence",
+                "get_variant_evidence",
                 {"id": "chr7:140753336:A:T", "assembly": "grch38", "sections": ["record", "population"]},
             )
         ).data

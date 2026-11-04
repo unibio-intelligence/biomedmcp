@@ -1,6 +1,6 @@
 # GTEx QTL records
 
-Inspect `capabilities({"source":"gtex"})` for `record_schemas.qtl`. Five assertions cover the existing public `get` gene sections: single-tissue eQTL/sQTL associations, eQTL MetaSoft and dynamic eQTL/sQTL calculations. Use explicit tissue and dataset selectors; MetaSoft and dynamic modes require a qualified variant, and dynamic sQTL additionally requires a provider splicing phenotype. No additional public alias or gene-list operation is introduced.
+Inspect `get_capabilities({"source":"gtex"})` for `record_schemas.qtl`. Five assertions cover the existing public `get_record` gene sections: single-tissue eQTL/sQTL associations, eQTL MetaSoft and dynamic eQTL/sQTL calculations. Use explicit tissue and dataset selectors; MetaSoft and dynamic modes require a qualified variant, and dynamic sQTL additionally requires a provider splicing phenotype. No additional public alias or gene-list operation is introduced.
 
 ```json
 {"entity":"gene","id":"ENSG00000169174.14","sections":["sqtl"],"sources":["gtex"],"source_versions":{"gtex":"gtex_v10"},"section_parameters":{"sqtl":{"tissue_id":"Thyroid","analysis_mode":"gene_associations"}}}
@@ -18,4 +18,4 @@ Dynamic sQTL records retain the exact typed association used to qualify the gene
 
 Bounded delivery may omit array values or nested tissue evidence. Use the supplied [evidence resources](evidence-resources.md) and continuations to recover supporting ranges from the same snapshot and evidence IDs. Recover both paired arrays before exhaustive count checks or reconstruction; displayed prefixes cannot establish complete donor data. A full acquired record is needed to recompute its input hash and validate arithmetic. JSON Schema describes fields; additional production checks enforce identity, hashes, pointers, genotype partitions and joined-input consistency.
 
-Two gene-summary types also validate retained internal adapter results without adding a public route. Other expression providers, annotation/dossier nesting, broader variant assertions and independent scientific/model qualification remain separate requirements. These fixture-qualified records do not establish the scientific validity of a real association or live-provider health.
+Two gene-summary types also validate retained internal adapter results without adding a public route. Other expression providers, annotation/dossier nesting, broader variant assertions and independent scientific/model qualification remain separate requirements.

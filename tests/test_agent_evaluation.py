@@ -24,7 +24,7 @@ def trace(calls, **kwargs):
 
 
 def test_valid_route_does_not_invent_scientific_or_performance_results():
-    result = evaluation.score([trace([{"tool": "literature_search", "arguments": {"query": "BRAF"}}])])
+    result = evaluation.score([trace([{"tool": "search_literature", "arguments": {"query": "BRAF"}}])])
     assert result["correct_routes"] == result["valid_schemas"] == 1
     assert result["scientifically_adjudicated"] == 0
     assert result["rows"][0]["measurements"] == {}
@@ -37,11 +37,11 @@ def test_batch_calls_are_scored_and_invalid_inner_arguments_rejected():
             trace(
                 [
                     {
-                        "tool": "batch",
+                        "tool": "run_batch",
                         "arguments": {
                             "calls": [
                                 {
-                                    "operation": "literature_search",
+                                    "operation": "search_literature",
                                     "arguments": {"query": "BRAF", "filters": {"phase": "3"}},
                                 }
                             ]
@@ -60,8 +60,8 @@ def test_retired_route_and_empty_batch_do_not_pass():
         [
             trace(
                 [
-                    {"tool": "search", "arguments": {"entity": "article", "query": "BRAF"}},
-                    {"tool": "batch", "arguments": {"calls": []}},
+                    {"tool": "search_records", "arguments": {"entity": "article", "query": "BRAF"}},
+                    {"tool": "run_batch", "arguments": {"calls": []}},
                 ]
             )
         ]

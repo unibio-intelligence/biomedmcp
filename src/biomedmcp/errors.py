@@ -30,11 +30,11 @@ def correction_for(code: str) -> str:
     if code in {"invalid_cursor", "expired_cursor", "missing_page_state"}:
         return "Restart the same query without a cursor."
     if code.startswith(("invalid_", "unknown_", "unsupported_")):
-        return "Inspect tools/list and capabilities, then correct the arguments before retrying."
+        return "Inspect tools/list and get_capabilities, then correct the arguments before retrying."
     if "ambiguous" in code:
         return "Resolve the identifier with its species, namespace and assembly before joining evidence."
     if "rate_limit" in code or code == "provider_busy":
-        return "Wait before retrying; reduce concurrent requests and inspect quota."
+        return "Wait before retrying; reduce concurrent requests and inspect get_quota."
     if "authentication" in code or "access_denied" in code:
         return "Check the configured access permissions; keep credentials in client secret storage."
     if code in {"local_io_error", "invalid_local_state"}:

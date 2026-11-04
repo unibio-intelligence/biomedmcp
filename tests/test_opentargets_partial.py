@@ -200,7 +200,7 @@ async def test_actual_mcp_gene_retention_retry_cache_and_partial_recovery(monkey
         "sections": ["record", "target_evidence", "diseases", "druggability"],
     }
     async with Client(create_server(service=ResearchService(adapters=Adapters()))) as client:
-        first = (await client.call_tool("get", arguments)).data
+        first = (await client.call_tool("get_record", arguments)).data
         section = first["sections"]["target_evidence"]
         assert first["outcome"] == section["outcome"] == "partial"
         assert section["data"]["associated_diseases"] is None and section["evidence_ids"]
@@ -213,8 +213,8 @@ async def test_actual_mcp_gene_retention_retry_cache_and_partial_recovery(monkey
         assert recovered["value"] == rows[25:] and recovered["evidence_ids"] == section["evidence_ids"]
         assert len(provider.calls) == 2
         provider.failures.clear()
-        good = (await client.call_tool("get", arguments)).data
-        cached = (await client.call_tool("get", arguments)).data
+        good = (await client.call_tool("get_record", arguments)).data
+        cached = (await client.call_tool("get_record", arguments)).data
         assert good["outcome"] == cached["outcome"] == "data"
         assert good["sections"]["diseases"]["data"]["records"] == source()["associated_diseases"]["rows"]
         assert (

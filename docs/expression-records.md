@@ -1,7 +1,7 @@
 # GTEx expression records
 
-Call `capabilities` with `{"source":"gtex"}` to inspect the discriminated
-`expression` field schema. Gene expression retrieval uses the existing `get`
+Call `get_capabilities` with `{"source":"gtex"}` to inspect the discriminated
+`expression` field schema. Gene expression retrieval uses the existing `get_record`
 tool, for example:
 
 ```json
@@ -16,7 +16,7 @@ count identifies the length of that source record's complete acquired series.
 It does not identify participants, an assay population, or missing measurements.
 Both those denominators remain null. A reported zero remains a measurement.
 Missing/malformed required measurements fail validation rather than becoming
-zero. An empty provider record collection does not establish zero expression.
+zero. An empty result does not mean zero expression.
 
 Records preserve the resolved versioned GENCODE gene, supported dataset and
 its reference annotation/build context. Species is the human GTEx dataset
@@ -40,8 +40,7 @@ fields and discriminators; it cannot express every arithmetic or hash equality.
 
 The surrounding section's evidence IDs and receipt locate the acquired evidence
 and bind the public request, participating sources, implementation, retrieval
-time and delivered hashes. A dataset label does not prove immutable HTTP replay:
-receipts remain time-dependent with exact reproduction unestablished. Follow
+time and delivered hashes. A dataset label does not guarantee the same data on rerun. Follow
 provider actions for later records. Use [evidence resources](evidence-resources.md)
 to recover values omitted from the current acquired snapshot without another
 provider call. Recover a complete record before recomputing its input hash or

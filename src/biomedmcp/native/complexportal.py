@@ -371,7 +371,7 @@ class Continuation:
         payload["coverage"]["continuation_status"] = "available"
         return [
             {
-                "tool": "get",
+                "tool": "get_record",
                 "arguments": {
                     "entity": "protein",
                     "id": request.id,

@@ -435,7 +435,7 @@ async def gene_credible_sets(client, identifier, limit=10, page_index=0):
 
 def gene_page_action(identifier, limit, index):
     return {
-        "tool": "get",
+        "tool": "get_record",
         "arguments": {
             "entity": "gene",
             "id": identifier,

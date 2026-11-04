@@ -181,7 +181,7 @@ async def test_public_gene_xml_provenance_release_and_missing_measurement_are_ex
     async with Client(create_server(service=ResearchService())) as client:
         first = (
             await client.call_tool(
-                "get", {"entity": "gene", "id": "ERBB2", "species": 9606, "sections": ["hpa"]}
+                "get_record", {"entity": "gene", "id": "ERBB2", "species": 9606, "sections": ["hpa"]}
             )
         ).data
         section = first["sections"]["hpa"]
@@ -194,7 +194,7 @@ async def test_public_gene_xml_provenance_release_and_missing_measurement_are_ex
         before = len(calls)
         second = (
             await client.call_tool(
-                "get", {"entity": "gene", "id": "ERBB2", "species": 9606, "sections": ["hpa"]}
+                "get_record", {"entity": "gene", "id": "ERBB2", "species": 9606, "sections": ["hpa"]}
             )
         ).data
         assert len(calls) == before
@@ -208,11 +208,11 @@ async def test_public_failure_is_not_cached_and_next_valid_response_can_succeed(
     async with Client(create_server(service=ResearchService())) as client:
         params = {"entity": "gene", "id": "ERBB2", "species": 9606, "sections": ["hpa"]}
         first = decode_tool_result(
-            await client.call_tool("get", params, raise_on_error=False), public_operation="get"
+            await client.call_tool("get_record", params, raise_on_error=False), public_operation="get_record"
         )
         assert first["sections"]["hpa"]["outcome"] == "error"
         assert first["sections"]["hpa"]["error"]["code"] in {"invalid_source_response", "identity_mismatch"}
-        second = (await client.call_tool("get", params)).data
+        second = (await client.call_tool("get_record", params)).data
         assert second["sections"]["hpa"]["outcome"] == "data"
     assert sum(c.url.host == "www.proteinatlas.org" for c in calls) == 2
 
@@ -241,7 +241,9 @@ async def test_large_well_formed_xml_is_exactly_recoverable_without_reacquisitio
     xml = XML.replace("</entry>", "<synonym>" + "x" * 1_774_982 + "</synonym></entry>")
     calls = hpa_http(lambda _: httpx.Response(200, text=xml))
     async with Client(create_server(service=ResearchService())) as client:
-        result = (await client.call_tool("get", {"entity": "gene", "id": "ERBB2", "sections": ["hpa"]})).data
+        result = (
+            await client.call_tool("get_record", {"entity": "gene", "id": "ERBB2", "sections": ["hpa"]})
+        ).data
         section = result["sections"]["hpa"]
         assert section["outcome"] == "data" and section["truncated"]
         assert section["data"]["xml_utf8_sha256"] == hashlib.sha256(xml.encode()).hexdigest()

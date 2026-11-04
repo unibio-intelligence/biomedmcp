@@ -1,8 +1,9 @@
 {
   "tools": [
     {
-      "name": "search",
-      "description": "Find ordinary records with entity filters. Papers use literature_search; trials use trial_search. e.g. {\"entity\":\"gene\",\"query\":\"BRCA1\",\"filters\":{\"species\":9606}}; biomedmcp://guide",
+      "name": "search_records",
+      "title": "Search biomedical records",
+      "description": "Search genes, proteins, drugs, diseases, phenotypes, pathways, variants, pharmacogenomics, GWAS, diagnostics, adverse events, studies, patents or authors by text; returns IDs for get_record (variants: get_variant_evidence). Papers: search_literature. Trials: search_trials. Patent search is chemistry-linked (SureChEMBL); assignee/inventor/CPC search is query_source(source=patents). e.g. {\"entity\":\"gene\",\"query\":\"BRCA1\",\"filters\":{\"species\":9606}}",
       "input_schema": {
         "type": "object",
         "$defs": {
@@ -10,6 +11,7 @@
             "additionalProperties": false,
             "properties": {
               "consequence": {
+                "description": "e.g. missense_variant.",
                 "maxLength": 64,
                 "type": [
                   "string",
@@ -17,6 +19,7 @@
                 ]
               },
               "cpic_level": {
+                "description": "CPIC evidence level, e.g. A.",
                 "maxLength": 32,
                 "type": [
                   "string",
@@ -42,6 +45,7 @@
                 "type": "array"
               },
               "existence": {
+                "description": "UniProt protein existence level.",
                 "maximum": 5,
                 "minimum": 1,
                 "type": [
@@ -50,6 +54,7 @@
                 ]
               },
               "gene": {
+                "description": "Gene symbol, e.g. PCSK9.",
                 "maxLength": 128,
                 "type": [
                   "string",
@@ -57,6 +62,7 @@
                 ]
               },
               "hgvsp": {
+                "description": "Protein change, e.g. p.R46L.",
                 "maxLength": 128,
                 "type": [
                   "string",
@@ -71,6 +77,7 @@
                 ]
               },
               "max_frequency": {
+                "description": "Maximum population allele frequency.",
                 "maximum": 1,
                 "minimum": 0,
                 "type": [
@@ -79,6 +86,7 @@
                 ]
               },
               "p_value": {
+                "description": "Maximum association p-value.",
                 "exclusiveMinimum": 0,
                 "maximum": 1,
                 "type": [
@@ -104,6 +112,7 @@
                 ]
               },
               "revel_min": {
+                "description": "Minimum REVEL score.",
                 "maximum": 1,
                 "minimum": 0,
                 "type": [
@@ -119,12 +128,14 @@
                 ]
               },
               "reviewed": {
+                "description": "Swiss-Prot reviewed entries only.",
                 "type": [
                   "boolean",
                   "null"
                 ]
               },
               "significance": {
+                "description": "ClinVar significance, e.g. pathogenic.",
                 "maxLength": 64,
                 "type": [
                   "string",
@@ -132,6 +143,7 @@
                 ]
               },
               "source": {
+                "description": "One source ID; omit to query all.",
                 "maxLength": 64,
                 "type": [
                   "string",
@@ -140,6 +152,7 @@
               },
               "species": {
                 "default": 9606,
+                "description": "NCBI taxon ID; 9606 is human.",
                 "exclusiveMinimum": 0,
                 "type": "integer"
               },
@@ -434,7 +447,7 @@
             "if": {
               "properties": {
                 "entity": {
-                  "const": "adverse-event"
+                  "const": "adverse_event"
                 }
               },
               "required": [
@@ -513,6 +526,7 @@
             "type": "integer"
           },
           "cursor": {
+            "description": "next_cursor from the previous page.",
             "maxLength": 2048,
             "type": [
               "string",
@@ -521,7 +535,7 @@
           },
           "output": {
             "default": "summary",
-            "description": "Summary bounds record excerpts; full retains source fields within the response budget. Omitted evidence has recovery resources.",
+            "description": "summary trims excerpts; full keeps source fields. Omitted evidence stays recoverable.",
             "enum": [
               "summary",
               "full"
@@ -529,6 +543,7 @@
           },
           "freshness": {
             "default": "cached_if_fresh",
+            "description": "fresh bypasses the cache.",
             "enum": [
               "cached_if_fresh",
               "fresh"
@@ -547,7 +562,7 @@
               "pgx",
               "gwas",
               "diagnostic",
-              "adverse-event",
+              "adverse_event",
               "study",
               "patent"
             ]
@@ -606,7 +621,7 @@
                 "type": "string"
               },
               "operation": {
-                "const": "search"
+                "const": "search_records"
               },
               "request": {
                 "type": [
@@ -696,7 +711,7 @@
                       "pgx",
                       "gwas",
                       "diagnostic",
-                      "adverse-event",
+                      "adverse_event",
                       "study",
                       "patent",
                       "sequence"
@@ -913,8 +928,9 @@
       }
     },
     {
-      "name": "get",
-      "description": "Read ordinary records/evidence sections; variants use variant_evidence. Sources constrain all lookups and identity dependencies. e.g. {\"entity\":\"gene\",\"id\":\"PCSK9\",\"species\":9606}; biomedmcp://guide",
+      "name": "get_record",
+      "title": "Get record and evidence sections",
+      "description": "Fetch one record by ID with optional evidence sections, e.g. gene expression/eqtl/diseases/druggability, drug label/safety, article fulltext, trial eligibility, protein domains/structures. Variants: get_variant_evidence. List an entity's sections with get_capabilities(entity=...). e.g. {\"entity\":\"gene\",\"id\":\"PCSK9\",\"species\":9606}",
       "input_schema": {
         "type": "object",
         "$defs": {
@@ -941,11 +957,13 @@
             "properties": {
               "limit": {
                 "default": 10,
+                "description": "CIViC page size; maximum 25.",
                 "maximum": 25,
                 "minimum": 1,
                 "type": "integer"
               },
               "collection": {
+                "description": "Required with cursor.",
                 "enum": [
                   "evidenceItems",
                   "assertions",
@@ -953,6 +971,7 @@
                 ]
               },
               "cursor": {
+                "description": "Continuation from a previous CIViC page.",
                 "maxLength": 2048,
                 "minLength": 1,
                 "type": [
@@ -967,6 +986,7 @@
             "additionalProperties": false,
             "properties": {
               "tissue_id": {
+                "description": "GTEx tissue, e.g. Liver; required for gene_tissue.",
                 "maxLength": 128,
                 "type": [
                   "string",
@@ -988,6 +1008,7 @@
               },
               "page": {
                 "default": 0,
+                "description": "Zero-based page.",
                 "maximum": 100000,
                 "minimum": 0,
                 "type": "integer"
@@ -1001,6 +1022,7 @@
             "properties": {
               "view": {
                 "default": "outline",
+                "description": "outline lists sections; lines reads start-end; assets lists figures.",
                 "enum": [
                   "outline",
                   "lines",
@@ -1033,6 +1055,7 @@
               },
               "page": {
                 "default": 0,
+                "description": "Zero-based page.",
                 "maximum": 100000,
                 "minimum": 0,
                 "type": "integer"
@@ -1064,6 +1087,7 @@
             "additionalProperties": false,
             "properties": {
               "tissue_id": {
+                "description": "GTEx tissue, e.g. Liver.",
                 "maxLength": 128,
                 "minLength": 1,
                 "type": "string"
@@ -1105,6 +1129,7 @@
               },
               "page": {
                 "default": 0,
+                "description": "Zero-based page.",
                 "maximum": 100000,
                 "minimum": 0,
                 "type": "integer"
@@ -1580,7 +1605,7 @@
             "if": {
               "properties": {
                 "entity": {
-                  "const": "adverse-event"
+                  "const": "adverse_event"
                 }
               },
               "required": [
@@ -1669,17 +1694,19 @@
               "pgx",
               "gwas",
               "diagnostic",
-              "adverse-event",
+              "adverse_event",
               "study",
               "patent"
             ]
           },
           "id": {
+            "description": "Exact ID, e.g. PCSK9, PMID:123, NCT04368728, MONDO:0007750, Q8NBP7, R-HSA-109581 or an InChIKey.",
             "maxLength": 512,
             "minLength": 1,
             "type": "string"
           },
           "sections": {
+            "description": "Empty returns the base record; get_capabilities(entity=...) lists sections.",
             "items": {
               "enum": [
                 "annotations",
@@ -1750,6 +1777,7 @@
             "type": "array"
           },
           "sources": {
+            "description": "Restrict lookups to these source IDs.",
             "items": {
               "type": "string"
             },
@@ -1758,6 +1786,7 @@
           },
           "species": {
             "default": 9606,
+            "description": "NCBI taxon ID; 9606 is human.",
             "exclusiveMinimum": 0,
             "type": "integer"
           },
@@ -1765,14 +1794,17 @@
             "additionalProperties": {
               "type": "string"
             },
+            "description": "Pin releases as {source: version}.",
             "maxProperties": 8,
             "type": "object"
           },
           "section_parameters": {
-            "$ref": "#/$defs/RecordParameters"
+            "$ref": "#/$defs/RecordParameters",
+            "description": "Options keyed by requested section."
           },
           "freshness": {
             "default": "cached_if_fresh",
+            "description": "fresh bypasses the cache.",
             "enum": [
               "cached_if_fresh",
               "fresh"
@@ -1829,7 +1861,7 @@
                 "type": "string"
               },
               "operation": {
-                "const": "get"
+                "const": "get_record"
               },
               "request": {
                 "type": [
@@ -1919,7 +1951,7 @@
                       "pgx",
                       "gwas",
                       "diagnostic",
-                      "adverse-event",
+                      "adverse_event",
                       "study",
                       "patent",
                       "sequence"
@@ -2675,8 +2707,9 @@
       }
     },
     {
-      "name": "literature_search",
-      "description": "Find papers with publication/topic/source filters; deduplicate evidence and retain source outcomes and opaque continuation. e.g. {\"query\":\"PCSK9 LDL cholesterol\"}; biomedmcp://guide",
+      "name": "search_literature",
+      "title": "Search literature",
+      "description": "Search papers across PubMed, Europe PMC, PubTator and LitSense with date, author, journal, article-type and open-access filters. Deduplicates across sources and reports each source's outcome. Read abstracts or full text with get_record(entity=article). e.g. {\"query\":\"PCSK9 LDL cholesterol\"}",
       "input_schema": {
         "type": "object",
         "$defs": {
@@ -2700,6 +2733,7 @@
                 "type": "array"
               },
               "date_from": {
+                "description": "YYYY-MM-DD.",
                 "format": "date",
                 "type": [
                   "string",
@@ -2707,6 +2741,7 @@
                 ]
               },
               "date_to": {
+                "description": "YYYY-MM-DD.",
                 "format": "date",
                 "type": [
                   "string",
@@ -2732,6 +2767,7 @@
                 "type": "array"
               },
               "gene": {
+                "description": "Gene symbol, e.g. PCSK9.",
                 "maxLength": 128,
                 "type": [
                   "string",
@@ -2776,6 +2812,7 @@
                 ]
               },
               "source": {
+                "description": "One source ID; omit to query all.",
                 "maxLength": 64,
                 "type": [
                   "string",
@@ -2800,6 +2837,7 @@
             "type": "integer"
           },
           "cursor": {
+            "description": "next_cursor from the previous page.",
             "maxLength": 2048,
             "type": [
               "string",
@@ -2808,7 +2846,7 @@
           },
           "output": {
             "default": "summary",
-            "description": "Summary bounds record excerpts; full retains source fields within the response budget. Omitted evidence has recovery resources.",
+            "description": "summary trims excerpts; full keeps source fields. Omitted evidence stays recoverable.",
             "enum": [
               "summary",
               "full"
@@ -2816,6 +2854,7 @@
           },
           "freshness": {
             "default": "cached_if_fresh",
+            "description": "fresh bypasses the cache.",
             "enum": [
               "cached_if_fresh",
               "fresh"
@@ -2874,7 +2913,7 @@
                 "type": "string"
               },
               "operation": {
-                "const": "literature_search"
+                "const": "search_literature"
               },
               "request": {
                 "type": [
@@ -2964,7 +3003,7 @@
                       "pgx",
                       "gwas",
                       "diagnostic",
-                      "adverse-event",
+                      "adverse_event",
                       "study",
                       "patent",
                       "sequence"
@@ -3476,8 +3515,9 @@
       }
     },
     {
-      "name": "trial_search",
-      "description": "Find public clinical trials using disease/intervention and trial-specific filters. Does not determine individual clinical eligibility. e.g. {\"query\":\"familial hypercholesterolemia\",\"filters\":{\"status\":\"RECRUITING\"}}; biomedmcp://guide",
+      "name": "search_trials",
+      "title": "Search clinical trials",
+      "description": "Search clinical trials (ClinicalTrials.gov, NCI) by condition, intervention, phase and recruitment status. Read arms, eligibility or outcomes with get_record(entity=trial). Does not assess an individual's eligibility. e.g. {\"query\":\"familial hypercholesterolemia\",\"filters\":{\"status\":\"RECRUITING\"}}",
       "input_schema": {
         "type": "object",
         "$defs": {
@@ -3503,6 +3543,7 @@
                 "type": "array"
               },
               "gene": {
+                "description": "Gene symbol, e.g. PCSK9.",
                 "maxLength": 128,
                 "type": [
                   "string",
@@ -3510,6 +3551,7 @@
                 ]
               },
               "phase": {
+                "description": "e.g. PHASE2, PHASE3.",
                 "maxLength": 32,
                 "type": [
                   "string",
@@ -3517,6 +3559,7 @@
                 ]
               },
               "source": {
+                "description": "One source ID; omit to query all.",
                 "maxLength": 64,
                 "type": [
                   "string",
@@ -3524,6 +3567,7 @@
                 ]
               },
               "status": {
+                "description": "e.g. RECRUITING, COMPLETED.",
                 "maxLength": 64,
                 "type": [
                   "string",
@@ -3548,6 +3592,7 @@
             "type": "integer"
           },
           "cursor": {
+            "description": "next_cursor from the previous page.",
             "maxLength": 2048,
             "type": [
               "string",
@@ -3556,7 +3601,7 @@
           },
           "output": {
             "default": "summary",
-            "description": "Summary bounds record excerpts; full retains source fields within the response budget. Omitted evidence has recovery resources.",
+            "description": "summary trims excerpts; full keeps source fields. Omitted evidence stays recoverable.",
             "enum": [
               "summary",
               "full"
@@ -3564,6 +3609,7 @@
           },
           "freshness": {
             "default": "cached_if_fresh",
+            "description": "fresh bypasses the cache.",
             "enum": [
               "cached_if_fresh",
               "fresh"
@@ -3622,7 +3668,7 @@
                 "type": "string"
               },
               "operation": {
-                "const": "trial_search"
+                "const": "search_trials"
               },
               "request": {
                 "type": [
@@ -4159,8 +4205,9 @@
       }
     },
     {
-      "name": "variant_evidence",
-      "description": "Retrieve variant evidence with assembly/transcript ambiguity preserved. Defaults: ClinVar, population, CIViC. Request predictions for AlphaMissense, or eve for MIT-licensed EVE protein scores; computational predictions retain source and uncertainty. e.g. {\"id\":\"PCSK9 R46L\"}; biomedmcp://guide",
+      "name": "get_variant_evidence",
+      "title": "Get variant evidence",
+      "description": "Get evidence for one variant (rsID, gene + protein change, HGVS or chr:pos:ref:alt). Defaults: ClinVar, gnomAD population, CIViC; add predictions (AlphaMissense), eve, cosmic, oncokb, hotspots, gwas or cbioportal. Ambiguous assembly or transcript is reported, not guessed; predictions keep source and uncertainty. e.g. {\"id\":\"PCSK9 R46L\"}",
       "input_schema": {
         "type": "object",
         "$defs": {
@@ -4169,11 +4216,13 @@
             "properties": {
               "limit": {
                 "default": 10,
+                "description": "CIViC page size; maximum 25.",
                 "maximum": 25,
                 "minimum": 1,
                 "type": "integer"
               },
               "collection": {
+                "description": "Required with cursor.",
                 "enum": [
                   "evidenceItems",
                   "assertions",
@@ -4181,6 +4230,7 @@
                 ]
               },
               "cursor": {
+                "description": "Continuation from a previous CIViC page.",
                 "maxLength": 2048,
                 "minLength": 1,
                 "type": [
@@ -4195,11 +4245,13 @@
             "additionalProperties": false,
             "properties": {
               "molecular_profile_id": {
+                "description": "cBioPortal molecular profile ID.",
                 "maxLength": 200,
                 "minLength": 1,
                 "type": "string"
               },
               "sample_list_id": {
+                "description": "cBioPortal sample list ID.",
                 "maxLength": 200,
                 "minLength": 1,
                 "type": "string"
@@ -4222,6 +4274,7 @@
               },
               "page": {
                 "default": 0,
+                "description": "Zero-based page.",
                 "maximum": 100000,
                 "minimum": 0,
                 "type": "integer"
@@ -4269,11 +4322,13 @@
         "additionalProperties": false,
         "properties": {
           "id": {
+            "description": "rsID, gene + protein change (PCSK9 R46L), HGVS or chr:pos:ref:alt.",
             "maxLength": 512,
             "minLength": 1,
             "type": "string"
           },
           "assembly": {
+            "description": "Genome build for coordinate IDs.",
             "enum": [
               "grch37",
               "grch38",
@@ -4302,6 +4357,7 @@
             "type": "array"
           },
           "sources": {
+            "description": "Restrict lookups to these source IDs.",
             "items": {
               "type": "string"
             },
@@ -4309,10 +4365,12 @@
             "type": "array"
           },
           "section_parameters": {
-            "$ref": "#/$defs/VariantParameters"
+            "$ref": "#/$defs/VariantParameters",
+            "description": "Options keyed by requested section."
           },
           "freshness": {
             "default": "cached_if_fresh",
+            "description": "fresh bypasses the cache.",
             "enum": [
               "cached_if_fresh",
               "fresh"
@@ -4368,7 +4426,7 @@
                 "type": "string"
               },
               "operation": {
-                "const": "variant_evidence"
+                "const": "get_variant_evidence"
               },
               "request": {
                 "type": [
@@ -4659,8 +4717,9 @@
       }
     },
     {
-      "name": "study_analysis",
-      "description": "Analyze an installed verified public study. Bundled ubi_synthetic is an invented demo; discover installed releases with capabilities(source=study). Report clinical and assayed samples separately, unique mutant samples, events and exclusions. Preserve input hashes and denominators. Private compute uses Ubi platform. e.g. {\"analysis\":\"gene_profile\",\"study\":\"ubi_synthetic\",\"gene\":\"TP53\"}; biomedmcp://guide",
+      "name": "analyze_study",
+      "title": "Analyze genomics study",
+      "description": "Analyze an installed public cancer genomics study: gene_profile, mutation_cohort, survival, compare, co_occurrence, filter_cohort, top_mutated. List installed studies with get_capabilities(source=study); ubi_synthetic is invented demo data. Report sample denominators and exclusions. Private data analysis uses the Ubi platform. e.g. {\"analysis\":\"gene_profile\",\"study\":\"ubi_synthetic\",\"gene\":\"TP53\"}",
       "input_schema": {
         "type": "object",
         "$defs": {
@@ -4669,6 +4728,7 @@
             "properties": {
               "chart": {
                 "default": false,
+                "description": "Add a declarative chart of the returned values.",
                 "type": "boolean"
               },
               "genes": {
@@ -4680,6 +4740,7 @@
                 "type": "array"
               },
               "study": {
+                "description": "Installed study ID, e.g. ubi_synthetic.",
                 "pattern": "^[a-zA-Z0-9_-]{1,100}$",
                 "type": "string"
               },
@@ -4699,6 +4760,7 @@
             "properties": {
               "chart": {
                 "default": false,
+                "description": "Add a declarative chart of the returned values.",
                 "type": "boolean"
               },
               "gene": {
@@ -4708,6 +4770,7 @@
                 "type": "string"
               },
               "study": {
+                "description": "Installed study ID, e.g. ubi_synthetic.",
                 "pattern": "^[a-zA-Z0-9_-]{1,100}$",
                 "type": "string"
               },
@@ -4727,6 +4790,7 @@
             "properties": {
               "chart": {
                 "default": false,
+                "description": "Add a declarative chart of the returned values.",
                 "type": "boolean"
               },
               "gene": {
@@ -4736,6 +4800,7 @@
                 "type": "string"
               },
               "study": {
+                "description": "Installed study ID, e.g. ubi_synthetic.",
                 "pattern": "^[a-zA-Z0-9_-]{1,100}$",
                 "type": "string"
               },
@@ -4783,6 +4848,7 @@
               },
               "chart": {
                 "default": false,
+                "description": "Add a declarative chart of the returned values.",
                 "type": "boolean"
               },
               "deleted": {
@@ -4814,6 +4880,7 @@
                 "type": "array"
               },
               "study": {
+                "description": "Installed study ID, e.g. ubi_synthetic.",
                 "pattern": "^[a-zA-Z0-9_-]{1,100}$",
                 "type": "string"
               },
@@ -4832,6 +4899,7 @@
             "properties": {
               "chart": {
                 "default": false,
+                "description": "Add a declarative chart of the returned values.",
                 "type": "boolean"
               },
               "gene": {
@@ -4841,6 +4909,7 @@
                 "type": "string"
               },
               "study": {
+                "description": "Installed study ID, e.g. ubi_synthetic.",
                 "pattern": "^[a-zA-Z0-9_-]{1,100}$",
                 "type": "string"
               },
@@ -4869,6 +4938,7 @@
             "properties": {
               "chart": {
                 "default": false,
+                "description": "Add a declarative chart of the returned values.",
                 "type": "boolean"
               },
               "endpoint": {
@@ -4887,6 +4957,7 @@
                 "type": "string"
               },
               "study": {
+                "description": "Installed study ID, e.g. ubi_synthetic.",
                 "pattern": "^[a-zA-Z0-9_-]{1,100}$",
                 "type": "string"
               },
@@ -4906,6 +4977,7 @@
             "properties": {
               "chart": {
                 "default": false,
+                "description": "Add a declarative chart of the returned values.",
                 "type": "boolean"
               },
               "limit": {
@@ -4915,6 +4987,7 @@
                 "type": "integer"
               },
               "study": {
+                "description": "Installed study ID, e.g. ubi_synthetic.",
                 "pattern": "^[a-zA-Z0-9_-]{1,100}$",
                 "type": "string"
               },
@@ -5010,7 +5083,7 @@
                 "type": "string"
               },
               "operation": {
-                "const": "study_analysis"
+                "const": "analyze_study"
               },
               "request": {
                 "type": [
@@ -5289,8 +5362,9 @@
       }
     },
     {
-      "name": "resolve",
-      "description": "Resolve aliases/ambiguity before evidence joins. One exact species-qualified symbol/ID resolves; provider score alone never establishes identity. Retrieve known unambiguous identifiers directly. e.g. {\"entity\":\"gene\",\"query\":\"LDL receptor\",\"species\":9606}; biomedmcp://guide",
+      "name": "resolve_entity",
+      "title": "Resolve identifiers",
+      "description": "Map a name, alias or ambiguous identifier to exact species-qualified IDs before joining evidence. Returns candidates when ambiguous; a provider match score alone is not identity. Skip when you already hold an exact ID. e.g. {\"entity\":\"gene\",\"query\":\"LDL receptor\",\"species\":9606}",
       "input_schema": {
         "type": "object",
         "$defs": {
@@ -5309,7 +5383,7 @@
               "pgx",
               "gwas",
               "diagnostic",
-              "adverse-event",
+              "adverse_event",
               "study",
               "patent",
               "sequence"
@@ -5319,6 +5393,7 @@
         "additionalProperties": false,
         "properties": {
           "query": {
+            "description": "Name, alias, symbol or identifier.",
             "maxLength": 512,
             "minLength": 1,
             "type": "string"
@@ -5335,10 +5410,12 @@
           },
           "species": {
             "default": 9606,
+            "description": "NCBI taxon ID; 9606 is human.",
             "exclusiveMinimum": 0,
             "type": "integer"
           },
           "assembly": {
+            "description": "Genome build for coordinate IDs.",
             "enum": [
               "grch37",
               "grch38",
@@ -5395,7 +5472,7 @@
                 "type": "string"
               },
               "operation": {
-                "const": "resolve"
+                "const": "resolve_entity"
               },
               "request": {
                 "type": [
@@ -5485,7 +5562,7 @@
                       "pgx",
                       "gwas",
                       "diagnostic",
-                      "adverse-event",
+                      "adverse_event",
                       "study",
                       "patent",
                       "sequence"
@@ -5509,41 +5586,7 @@
               },
               "records": {
                 "items": {
-                  "type": "object",
-                  "allOf": [
-                    {
-                      "if": {
-                        "type": "object",
-                        "required": [
-                          "record_type"
-                        ],
-                        "properties": {
-                          "record_type": {
-                            "const": "literature"
-                          }
-                        }
-                      },
-                      "then": {
-                        "$ref": "#/$defs/LiteratureRecord"
-                      }
-                    },
-                    {
-                      "if": {
-                        "type": "object",
-                        "required": [
-                          "record_type"
-                        ],
-                        "properties": {
-                          "record_type": {
-                            "const": "trial"
-                          }
-                        }
-                      },
-                      "then": {
-                        "$ref": "#/$defs/TrialRecord"
-                      }
-                    }
-                  ]
+                  "type": "object"
                 },
                 "type": "array"
               },
@@ -5665,42 +5708,7 @@
                   "error"
                 ]
               },
-              "data": {
-                "allOf": [
-                  {
-                    "if": {
-                      "type": "object",
-                      "required": [
-                        "record_type"
-                      ],
-                      "properties": {
-                        "record_type": {
-                          "const": "literature"
-                        }
-                      }
-                    },
-                    "then": {
-                      "$ref": "#/$defs/LiteratureRecord"
-                    }
-                  },
-                  {
-                    "if": {
-                      "type": "object",
-                      "required": [
-                        "record_type"
-                      ],
-                      "properties": {
-                        "record_type": {
-                          "const": "trial"
-                        }
-                      }
-                    },
-                    "then": {
-                      "$ref": "#/$defs/TrialRecord"
-                    }
-                  }
-                ]
-              },
+              "data": {},
               "evidence_ids": {
                 "items": {
                   "type": "string"
@@ -5732,476 +5740,6 @@
             },
             "required": [
               "outcome"
-            ],
-            "type": "object"
-          },
-          "LiteratureRecord": {
-            "properties": {
-              "record_type": {
-                "const": "literature"
-              },
-              "identities": {
-                "items": {
-                  "additionalProperties": false,
-                  "properties": {
-                    "namespace": {
-                      "enum": [
-                        "pmid",
-                        "pmcid",
-                        "doi",
-                        "europepmc",
-                        "openalex"
-                      ]
-                    },
-                    "source": {
-                      "enum": [
-                        "pubmed",
-                        "europepmc",
-                        "pubtator",
-                        "litsense2",
-                        "openalex"
-                      ]
-                    },
-                    "value": {
-                      "maxLength": 512,
-                      "minLength": 1,
-                      "type": "string"
-                    },
-                    "evidence_ids": {
-                      "items": {
-                        "type": "string"
-                      },
-                      "type": "array"
-                    }
-                  },
-                  "required": [
-                    "namespace",
-                    "source",
-                    "value"
-                  ],
-                  "type": "object"
-                },
-                "maxItems": 64,
-                "minItems": 1,
-                "type": "array"
-              },
-              "content_scope": {
-                "enum": [
-                  "bibliographic",
-                  "provider_excerpt",
-                  "sentence_excerpt"
-                ]
-              },
-              "pmid": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "pmcid": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "doi": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "title": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "abstract": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "date": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "authors": {
-                "items": {
-                  "type": [
-                    "string",
-                    "null"
-                  ]
-                },
-                "type": "array"
-              },
-              "author_completeness": {
-                "enum": [
-                  "complete",
-                  "source_limited"
-                ]
-              },
-              "citation_count": {
-                "minimum": 0,
-                "type": [
-                  "integer",
-                  "null"
-                ]
-              },
-              "is_open_access": {
-                "type": [
-                  "boolean",
-                  "null"
-                ]
-              },
-              "is_retracted": {
-                "type": [
-                  "boolean",
-                  "null"
-                ]
-              },
-              "source_assertions": {
-                "items": {
-                  "additionalProperties": false,
-                  "properties": {
-                    "kind": {
-                      "enum": [
-                        "retraction",
-                        "open_access",
-                        "citation_count"
-                      ]
-                    },
-                    "source": {
-                      "enum": [
-                        "pubmed",
-                        "europepmc",
-                        "pubtator",
-                        "litsense2",
-                        "openalex"
-                      ]
-                    },
-                    "value": {
-                      "anyOf": [
-                        {
-                          "type": "boolean"
-                        },
-                        {
-                          "type": "integer"
-                        },
-                        {
-                          "type": "null"
-                        }
-                      ]
-                    },
-                    "missingness": {
-                      "enum": [
-                        "reported",
-                        "not_supplied"
-                      ]
-                    },
-                    "unit": {
-                      "enum": [
-                        "flag",
-                        "citations"
-                      ]
-                    },
-                    "evidence_ids": {
-                      "items": {
-                        "type": "string"
-                      },
-                      "type": "array"
-                    }
-                  },
-                  "required": [
-                    "kind",
-                    "source",
-                    "value",
-                    "missingness",
-                    "unit"
-                  ],
-                  "type": "object",
-                  "allOf": [
-                    {
-                      "if": {
-                        "properties": {
-                          "kind": {
-                            "const": "citation_count"
-                          }
-                        }
-                      },
-                      "then": {
-                        "properties": {
-                          "unit": {
-                            "const": "citations"
-                          },
-                          "value": {
-                            "type": [
-                              "integer",
-                              "null"
-                            ],
-                            "minimum": 0
-                          }
-                        }
-                      },
-                      "else": {
-                        "properties": {
-                          "unit": {
-                            "const": "flag"
-                          },
-                          "value": {
-                            "type": [
-                              "boolean",
-                              "null"
-                            ]
-                          }
-                        }
-                      }
-                    },
-                    {
-                      "if": {
-                        "properties": {
-                          "missingness": {
-                            "const": "not_supplied"
-                          }
-                        }
-                      },
-                      "then": {
-                        "properties": {
-                          "value": {
-                            "type": "null"
-                          }
-                        }
-                      },
-                      "else": {
-                        "properties": {
-                          "value": {
-                            "not": {
-                              "type": "null"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
-                },
-                "type": "array"
-              }
-            },
-            "required": [
-              "identities",
-              "content_scope",
-              "source_assertions",
-              "record_type"
-            ],
-            "type": "object"
-          },
-          "TrialRecord": {
-            "properties": {
-              "record_type": {
-                "const": "trial"
-              },
-              "assertion_type": {
-                "const": "registry_record"
-              },
-              "source": {
-                "enum": [
-                  "clinical-trials",
-                  "nci"
-                ]
-              },
-              "identities": {
-                "items": {
-                  "additionalProperties": false,
-                  "allOf": [
-                    {
-                      "else": {
-                        "properties": {
-                          "value": {
-                            "pattern": "^NCI-\\d{4}-\\d{5,}$"
-                          }
-                        }
-                      },
-                      "if": {
-                        "properties": {
-                          "namespace": {
-                            "const": "nct"
-                          }
-                        }
-                      },
-                      "then": {
-                        "properties": {
-                          "value": {
-                            "not": {
-                              "const": "NCT00000000"
-                            },
-                            "pattern": "^NCT\\d{8}$"
-                          }
-                        }
-                      }
-                    }
-                  ],
-                  "properties": {
-                    "namespace": {
-                      "enum": [
-                        "nct",
-                        "nci"
-                      ]
-                    },
-                    "value": {
-                      "maxLength": 128,
-                      "minLength": 1,
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "namespace",
-                    "value"
-                  ],
-                  "type": "object"
-                },
-                "maxItems": 64,
-                "minItems": 1,
-                "type": "array"
-              },
-              "species": {
-                "const": 9606
-              },
-              "title": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "status": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "phases": {
-                "items": {
-                  "type": "string"
-                },
-                "type": [
-                  "array",
-                  "null"
-                ]
-              },
-              "study_type": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "enrollment": {
-                "additionalProperties": false,
-                "allOf": [
-                  {
-                    "else": {
-                      "properties": {
-                        "missingness": {
-                          "const": "reported"
-                        }
-                      }
-                    },
-                    "if": {
-                      "properties": {
-                        "count": {
-                          "type": "null"
-                        }
-                      }
-                    },
-                    "then": {
-                      "properties": {
-                        "missingness": {
-                          "const": "not_supplied"
-                        }
-                      }
-                    }
-                  }
-                ],
-                "properties": {
-                  "count": {
-                    "minimum": 0,
-                    "type": [
-                      "integer",
-                      "null"
-                    ]
-                  },
-                  "basis": {
-                    "enum": [
-                      "actual",
-                      "estimated",
-                      "minimum_target",
-                      "not_supplied"
-                    ]
-                  },
-                  "unit": {
-                    "const": "participants"
-                  },
-                  "missingness": {
-                    "enum": [
-                      "reported",
-                      "not_supplied"
-                    ]
-                  },
-                  "role": {
-                    "enum": [
-                      "registry_enrollment",
-                      "minimum_target_accrual"
-                    ]
-                  }
-                },
-                "required": [
-                  "count",
-                  "basis",
-                  "missingness",
-                  "role",
-                  "unit"
-                ],
-                "type": "object"
-              },
-              "has_results": {
-                "type": [
-                  "boolean",
-                  "null"
-                ]
-              },
-              "results_missingness": {
-                "enum": [
-                  "reported",
-                  "not_supplied",
-                  "not_normalized"
-                ]
-              },
-              "source_release": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "evidence_ids": {
-                "items": {
-                  "type": "string"
-                },
-                "type": "array"
-              }
-            },
-            "required": [
-              "source",
-              "identities",
-              "title",
-              "status",
-              "phases",
-              "study_type",
-              "enrollment",
-              "has_results",
-              "results_missingness",
-              "record_type",
-              "assertion_type",
-              "species"
             ],
             "type": "object"
           }
@@ -6241,8 +5779,9 @@
       }
     },
     {
-      "name": "relate",
-      "description": "Traverse an evidence relationship. Relations: gene/drug/disease: articles,trials; variant: articles,structure; article: citations,references,recommendations,authors,entities; author: articles. e.g. {\"entity\":\"article\",\"id\":\"PMID:123\",\"relation\":\"references\"}; biomedmcp://guide",
+      "name": "find_related",
+      "title": "Find related records",
+      "description": "List records linked to one record. gene/drug/disease: articles, trials. variant: articles, structure. article: citations, references, recommendations, authors, entities. author: articles. Record attributes are get_record sections, not relations. e.g. {\"entity\":\"article\",\"id\":\"PMID:123\",\"relation\":\"references\"}",
       "input_schema": {
         "type": "object",
         "$defs": {
@@ -6261,7 +5800,7 @@
               "pgx",
               "gwas",
               "diagnostic",
-              "adverse-event",
+              "adverse_event",
               "study",
               "patent",
               "sequence"
@@ -6274,6 +5813,7 @@
             "$ref": "#/$defs/Entity"
           },
           "id": {
+            "description": "Record ID, e.g. PCSK9, PMID:123 or openalex:A123.",
             "maxLength": 512,
             "minLength": 1,
             "type": "string"
@@ -6291,10 +5831,12 @@
           },
           "species": {
             "default": 9606,
+            "description": "NCBI taxon ID; 9606 is human.",
             "exclusiveMinimum": 0,
             "type": "integer"
           },
           "assembly": {
+            "description": "Genome build for coordinate IDs.",
             "enum": [
               "grch37",
               "grch38",
@@ -6353,7 +5895,7 @@
                 "type": "string"
               },
               "operation": {
-                "const": "relate"
+                "const": "find_related"
               },
               "request": {
                 "type": [
@@ -6443,7 +5985,7 @@
                       "pgx",
                       "gwas",
                       "diagnostic",
-                      "adverse-event",
+                      "adverse_event",
                       "study",
                       "patent",
                       "sequence"
@@ -6623,42 +6165,7 @@
                   "error"
                 ]
               },
-              "data": {
-                "allOf": [
-                  {
-                    "if": {
-                      "type": "object",
-                      "required": [
-                        "record_type"
-                      ],
-                      "properties": {
-                        "record_type": {
-                          "const": "literature"
-                        }
-                      }
-                    },
-                    "then": {
-                      "$ref": "#/$defs/LiteratureRecord"
-                    }
-                  },
-                  {
-                    "if": {
-                      "type": "object",
-                      "required": [
-                        "record_type"
-                      ],
-                      "properties": {
-                        "record_type": {
-                          "const": "trial"
-                        }
-                      }
-                    },
-                    "then": {
-                      "$ref": "#/$defs/TrialRecord"
-                    }
-                  }
-                ]
-              },
+              "data": {},
               "evidence_ids": {
                 "items": {
                   "type": "string"
@@ -7199,8 +6706,9 @@
       }
     },
     {
-      "name": "research",
-      "description": "Dossiers retain citations/outcomes. Inspect capabilities and get further sections for completeness. e.g. {\"workflow\":\"target_dossier\",\"focus\":\"LDLR\",\"species\":9606}; biomedmcp://guide",
+      "name": "build_dossier",
+      "title": "Build research dossier",
+      "description": "Build a multi-section dossier in one call: verified identity, default record sections and top related papers, with citations and per-source outcomes. Workflows: target_dossier, model_input_bundle (gene), drug_review, disease_landscape, pathway_review, variant_dossier, negative_evidence (bounded literature check; never proves absence). Add sections with get_record. e.g. {\"workflow\":\"target_dossier\",\"focus\":\"LDLR\",\"species\":9606}",
       "input_schema": {
         "type": "object",
         "$defs": {
@@ -7227,11 +6735,13 @@
             "properties": {
               "limit": {
                 "default": 10,
+                "description": "CIViC page size; maximum 25.",
                 "maximum": 25,
                 "minimum": 1,
                 "type": "integer"
               },
               "collection": {
+                "description": "Required with cursor.",
                 "enum": [
                   "evidenceItems",
                   "assertions",
@@ -7239,6 +6749,7 @@
                 ]
               },
               "cursor": {
+                "description": "Continuation from a previous CIViC page.",
                 "maxLength": 2048,
                 "minLength": 1,
                 "type": [
@@ -7253,11 +6764,13 @@
             "additionalProperties": false,
             "properties": {
               "molecular_profile_id": {
+                "description": "cBioPortal molecular profile ID.",
                 "maxLength": 200,
                 "minLength": 1,
                 "type": "string"
               },
               "sample_list_id": {
+                "description": "cBioPortal sample list ID.",
                 "maxLength": 200,
                 "minLength": 1,
                 "type": "string"
@@ -7399,6 +6912,7 @@
             "additionalProperties": false,
             "properties": {
               "tissue_id": {
+                "description": "GTEx tissue, e.g. Liver; required for gene_tissue.",
                 "maxLength": 128,
                 "type": [
                   "string",
@@ -7420,6 +6934,7 @@
               },
               "page": {
                 "default": 0,
+                "description": "Zero-based page.",
                 "maximum": 100000,
                 "minimum": 0,
                 "type": "integer"
@@ -7433,6 +6948,7 @@
             "properties": {
               "view": {
                 "default": "outline",
+                "description": "outline lists sections; lines reads start-end; assets lists figures.",
                 "enum": [
                   "outline",
                   "lines",
@@ -7465,6 +6981,7 @@
               },
               "page": {
                 "default": 0,
+                "description": "Zero-based page.",
                 "maximum": 100000,
                 "minimum": 0,
                 "type": "integer"
@@ -7496,6 +7013,7 @@
             "additionalProperties": false,
             "properties": {
               "tissue_id": {
+                "description": "GTEx tissue, e.g. Liver.",
                 "maxLength": 128,
                 "minLength": 1,
                 "type": "string"
@@ -7537,6 +7055,7 @@
               },
               "page": {
                 "default": 0,
+                "description": "Zero-based page.",
                 "maximum": 100000,
                 "minimum": 0,
                 "type": "integer"
@@ -7562,13 +7081,72 @@
             ]
           },
           "focus": {
+            "description": "Gene symbol, drug, disease (MONDO ID or name), pathway (R-HSA ID or exact name), variant, or topic.",
             "maxLength": 512,
             "minLength": 1,
             "type": "string"
           },
           "sections": {
+            "description": "Replace the workflow's default sections.",
             "items": {
-              "type": "string"
+              "enum": [
+                "annotations",
+                "approvals",
+                "assets",
+                "biblio",
+                "cbioportal",
+                "cgi",
+                "citations",
+                "civic",
+                "claims",
+                "clingen",
+                "clinical_features",
+                "clinvar",
+                "conservation",
+                "constraint",
+                "cosmic",
+                "diagnostics",
+                "diseases",
+                "disgenet",
+                "druggability",
+                "eqtl",
+                "eve",
+                "events",
+                "exons",
+                "expression",
+                "family",
+                "fulltext",
+                "funding",
+                "gencc",
+                "genes",
+                "genetics",
+                "go",
+                "gwas",
+                "hotspots",
+                "hpa",
+                "indexing",
+                "indications",
+                "interactions",
+                "label",
+                "models",
+                "oncokb",
+                "pathways",
+                "phenotypes",
+                "population",
+                "predictions",
+                "prevalence",
+                "protein",
+                "record",
+                "regulatory",
+                "safety",
+                "shortage",
+                "sqtl",
+                "survival",
+                "target_evidence",
+                "targets",
+                "transcripts",
+                "variants"
+              ]
             },
             "maxItems": 12,
             "type": [
@@ -7577,14 +7155,17 @@
             ]
           },
           "section_parameters": {
-            "$ref": "#/$defs/DossierParameters"
+            "$ref": "#/$defs/DossierParameters",
+            "description": "Options keyed by requested section."
           },
           "species": {
             "default": 9606,
+            "description": "NCBI taxon ID; 9606 is human.",
             "exclusiveMinimum": 0,
             "type": "integer"
           },
           "assembly": {
+            "description": "Genome build for coordinate IDs.",
             "enum": [
               "grch37",
               "grch38",
@@ -7642,7 +7223,7 @@
                 "type": "string"
               },
               "operation": {
-                "const": "research"
+                "const": "build_dossier"
               },
               "request": {
                 "type": [
@@ -7732,7 +7313,7 @@
                       "pgx",
                       "gwas",
                       "diagnostic",
-                      "adverse-event",
+                      "adverse_event",
                       "study",
                       "patent",
                       "sequence"
@@ -8245,7 +7826,8 @@
     },
     {
       "name": "query_source",
-      "description": "Run advanced source operations after checking capabilities/schema. Common tasks have dedicated tools. e.g. {\"source\":\"gtex\",\"operation\":\"get_metadata\",\"params\":{\"info_type\":\"tissues\",\"dataset_id\":\"gtex_v10\"}}; biomedmcp://guide",
+      "title": "Query source directly",
+      "description": "Run a source-specific operation that other tools do not cover, e.g. ChEMBL bioactivities, Ensembl coordinates, PDB structure quality, OmniPath interactions, NCBI Datasets genomes, ncbi-records for GenBank/GEO/SRA. Read get_capabilities(source=...) for operations and params first. e.g. {\"source\":\"gtex\",\"operation\":\"get_metadata\",\"params\":{\"info_type\":\"tissues\",\"dataset_id\":\"gtex_v10\"}}",
       "input_schema": {
         "type": "object",
         "additionalProperties": false,
@@ -8279,16 +7861,19 @@
             ]
           },
           "operation": {
+            "description": "Operation listed by get_capabilities(source=...).",
             "maxLength": 128,
             "minLength": 1,
             "type": "string"
           },
           "params": {
+            "description": "Arguments for that operation's schema.",
             "maxProperties": 32,
             "type": "object"
           },
           "freshness": {
             "default": "cached_if_fresh",
+            "description": "fresh bypasses the cache.",
             "enum": [
               "cached_if_fresh",
               "fresh"
@@ -8435,7 +8020,7 @@
                       "pgx",
                       "gwas",
                       "diagnostic",
-                      "adverse-event",
+                      "adverse_event",
                       "study",
                       "patent",
                       "sequence"
@@ -8649,8 +8234,9 @@
       }
     },
     {
-      "name": "batch",
-      "description": "Execute up to ten independent read operations with one atomic quota reservation. e.g. {\"calls\":[{\"operation\":\"get\",\"arguments\":{\"entity\":\"gene\",\"id\":\"PCSK9\",\"species\":9606}}]}; biomedmcp://guide",
+      "name": "run_batch",
+      "title": "Run batched reads",
+      "description": "Run up to ten independent read calls in parallel with one quota reservation; each result keeps its own outcome. build_dossier and utilities are not batchable. e.g. {\"calls\":[{\"operation\":\"get_record\",\"arguments\":{\"entity\":\"gene\",\"id\":\"PCSK9\",\"species\":9606}}]}",
       "input_schema": {
         "type": "object",
         "$defs": {
@@ -8659,18 +8245,19 @@
             "properties": {
               "operation": {
                 "enum": [
-                  "search",
-                  "get",
-                  "literature_search",
-                  "trial_search",
-                  "variant_evidence",
-                  "study_analysis",
-                  "resolve",
-                  "relate",
+                  "search_records",
+                  "get_record",
+                  "search_literature",
+                  "search_trials",
+                  "get_variant_evidence",
+                  "analyze_study",
+                  "resolve_entity",
+                  "find_related",
                   "query_source"
                 ]
               },
               "arguments": {
+                "description": "Arguments for that tool.",
                 "maxProperties": 16,
                 "type": "object"
               }
@@ -8693,6 +8280,7 @@
             "type": "array"
           },
           "idempotency_key": {
+            "description": "Reuse when retrying so quota is charged once.",
             "maxLength": 128,
             "minLength": 1,
             "type": [
@@ -8738,845 +8326,6 @@
               "correction"
             ],
             "type": "object"
-          },
-          "ErrorResult": {
-            "additionalProperties": false,
-            "properties": {
-              "schema_version": {
-                "const": "1.0"
-              },
-              "outcome": {
-                "const": "error"
-              },
-              "error": {
-                "$ref": "#/$defs/ErrorInfo"
-              }
-            },
-            "required": [
-              "error",
-              "schema_version",
-              "outcome"
-            ],
-            "type": "object"
-          },
-          "EvidenceReceipt": {
-            "additionalProperties": false,
-            "properties": {
-              "schema_version": {
-                "const": "1.0"
-              },
-              "implementation": {
-                "pattern": "^biomedmcp/\\d+\\.\\d+\\.\\d+$",
-                "type": "string"
-              },
-              "operation": {
-                "pattern": "^(search|get|literature_search|trial_search|variant_evidence|study_analysis|resolve|relate|research|query_source)$",
-                "type": "string"
-              },
-              "request": {
-                "type": [
-                  "object",
-                  "null"
-                ]
-              },
-              "request_sha256": {
-                "pattern": "^[0-9a-f]{64}$",
-                "type": "string"
-              },
-              "result_sha256": {
-                "pattern": "^[0-9a-f]{64}$",
-                "type": "string"
-              },
-              "sources": {
-                "items": {
-                  "maxLength": 64,
-                  "minLength": 1,
-                  "type": "string"
-                },
-                "maxItems": 64,
-                "type": "array"
-              },
-              "completed_at": {
-                "format": "date-time",
-                "type": "string"
-              },
-              "request_redacted": {
-                "type": "boolean"
-              },
-              "request_omitted": {
-                "type": "boolean"
-              },
-              "time_dependent": {
-                "type": "boolean"
-              },
-              "reproduction": {
-                "const": "not_established"
-              }
-            },
-            "required": [
-              "implementation",
-              "operation",
-              "request",
-              "request_sha256",
-              "result_sha256",
-              "sources",
-              "completed_at",
-              "request_redacted",
-              "request_omitted",
-              "time_dependent",
-              "schema_version",
-              "reproduction"
-            ],
-            "type": "object"
-          },
-          "ResearchResult": {
-            "additionalProperties": false,
-            "properties": {
-              "schema_version": {
-                "const": "1.0"
-              },
-              "content_policy": {
-                "const": "data_only"
-              },
-              "rejected_links": {
-                "additionalProperties": {
-                  "type": "string"
-                },
-                "type": "object"
-              },
-              "entity": {
-                "anyOf": [
-                  {
-                    "enum": [
-                      "gene",
-                      "variant",
-                      "article",
-                      "author",
-                      "trial",
-                      "drug",
-                      "disease",
-                      "phenotype",
-                      "protein",
-                      "pathway",
-                      "pgx",
-                      "gwas",
-                      "diagnostic",
-                      "adverse-event",
-                      "study",
-                      "patent",
-                      "sequence"
-                    ]
-                  },
-                  {
-                    "type": "null"
-                  }
-                ]
-              },
-              "outcome": {
-                "enum": [
-                  "data",
-                  "empty",
-                  "partial",
-                  "ambiguous",
-                  "unavailable",
-                  "not_applicable",
-                  "error"
-                ]
-              },
-              "records": {
-                "items": {
-                  "type": "object",
-                  "allOf": [
-                    {
-                      "if": {
-                        "type": "object",
-                        "required": [
-                          "record_type"
-                        ],
-                        "properties": {
-                          "record_type": {
-                            "const": "literature"
-                          }
-                        }
-                      },
-                      "then": {
-                        "$ref": "#/$defs/LiteratureRecord"
-                      }
-                    },
-                    {
-                      "if": {
-                        "type": "object",
-                        "required": [
-                          "record_type"
-                        ],
-                        "properties": {
-                          "record_type": {
-                            "const": "trial"
-                          }
-                        }
-                      },
-                      "then": {
-                        "$ref": "#/$defs/TrialRecord"
-                      }
-                    }
-                  ]
-                },
-                "type": "array"
-              },
-              "sections": {
-                "additionalProperties": {
-                  "$ref": "#/$defs/Section"
-                },
-                "type": "object"
-              },
-              "provenance": {
-                "items": {
-                  "additionalProperties": false,
-                  "properties": {
-                    "evidence_id": {
-                      "type": "string"
-                    },
-                    "source": {
-                      "type": "string"
-                    },
-                    "sources": {
-                      "items": {
-                        "type": "string"
-                      },
-                      "type": "array"
-                    },
-                    "processor": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
-                    },
-                    "record_id": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
-                    },
-                    "url": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
-                    },
-                    "retrieved_at": {
-                      "type": "string"
-                    },
-                    "source_version": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
-                    },
-                    "content_hash": {
-                      "type": "string"
-                    },
-                    "cached": {
-                      "type": "boolean"
-                    }
-                  },
-                  "required": [
-                    "evidence_id",
-                    "source",
-                    "content_hash"
-                  ],
-                  "type": "object"
-                },
-                "type": "array"
-              },
-              "warnings": {
-                "items": {
-                  "type": "string"
-                },
-                "type": "array"
-              },
-              "next_actions": {
-                "items": {
-                  "type": "object"
-                },
-                "type": "array"
-              },
-              "next_cursor": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "truncated": {
-                "type": "boolean"
-              },
-              "query": {
-                "type": "object"
-              },
-              "receipt": {
-                "$ref": "#/$defs/EvidenceReceipt"
-              }
-            },
-            "required": [
-              "outcome",
-              "schema_version",
-              "content_policy",
-              "receipt"
-            ],
-            "type": "object"
-          },
-          "Section": {
-            "additionalProperties": false,
-            "properties": {
-              "outcome": {
-                "enum": [
-                  "data",
-                  "empty",
-                  "partial",
-                  "ambiguous",
-                  "unavailable",
-                  "not_applicable",
-                  "error"
-                ]
-              },
-              "data": {
-                "allOf": [
-                  {
-                    "if": {
-                      "type": "object",
-                      "required": [
-                        "record_type"
-                      ],
-                      "properties": {
-                        "record_type": {
-                          "const": "literature"
-                        }
-                      }
-                    },
-                    "then": {
-                      "$ref": "#/$defs/LiteratureRecord"
-                    }
-                  },
-                  {
-                    "if": {
-                      "type": "object",
-                      "required": [
-                        "record_type"
-                      ],
-                      "properties": {
-                        "record_type": {
-                          "const": "trial"
-                        }
-                      }
-                    },
-                    "then": {
-                      "$ref": "#/$defs/TrialRecord"
-                    }
-                  }
-                ]
-              },
-              "evidence_ids": {
-                "items": {
-                  "type": "string"
-                },
-                "type": "array"
-              },
-              "warnings": {
-                "items": {
-                  "type": "string"
-                },
-                "type": "array"
-              },
-              "error": {
-                "anyOf": [
-                  {
-                    "$ref": "#/$defs/ErrorInfo"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ]
-              },
-              "truncated": {
-                "type": "boolean"
-              },
-              "recovery": {
-                "type": "object"
-              }
-            },
-            "required": [
-              "outcome"
-            ],
-            "type": "object"
-          },
-          "LiteratureRecord": {
-            "properties": {
-              "record_type": {
-                "const": "literature"
-              },
-              "identities": {
-                "items": {
-                  "additionalProperties": false,
-                  "properties": {
-                    "namespace": {
-                      "enum": [
-                        "pmid",
-                        "pmcid",
-                        "doi",
-                        "europepmc",
-                        "openalex"
-                      ]
-                    },
-                    "source": {
-                      "enum": [
-                        "pubmed",
-                        "europepmc",
-                        "pubtator",
-                        "litsense2",
-                        "openalex"
-                      ]
-                    },
-                    "value": {
-                      "maxLength": 512,
-                      "minLength": 1,
-                      "type": "string"
-                    },
-                    "evidence_ids": {
-                      "items": {
-                        "type": "string"
-                      },
-                      "type": "array"
-                    }
-                  },
-                  "required": [
-                    "namespace",
-                    "source",
-                    "value"
-                  ],
-                  "type": "object"
-                },
-                "maxItems": 64,
-                "minItems": 1,
-                "type": "array"
-              },
-              "content_scope": {
-                "enum": [
-                  "bibliographic",
-                  "provider_excerpt",
-                  "sentence_excerpt"
-                ]
-              },
-              "pmid": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "pmcid": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "doi": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "title": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "abstract": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "date": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "authors": {
-                "items": {
-                  "type": [
-                    "string",
-                    "null"
-                  ]
-                },
-                "type": "array"
-              },
-              "author_completeness": {
-                "enum": [
-                  "complete",
-                  "source_limited"
-                ]
-              },
-              "citation_count": {
-                "minimum": 0,
-                "type": [
-                  "integer",
-                  "null"
-                ]
-              },
-              "is_open_access": {
-                "type": [
-                  "boolean",
-                  "null"
-                ]
-              },
-              "is_retracted": {
-                "type": [
-                  "boolean",
-                  "null"
-                ]
-              },
-              "source_assertions": {
-                "items": {
-                  "additionalProperties": false,
-                  "properties": {
-                    "kind": {
-                      "enum": [
-                        "retraction",
-                        "open_access",
-                        "citation_count"
-                      ]
-                    },
-                    "source": {
-                      "enum": [
-                        "pubmed",
-                        "europepmc",
-                        "pubtator",
-                        "litsense2",
-                        "openalex"
-                      ]
-                    },
-                    "value": {
-                      "anyOf": [
-                        {
-                          "type": "boolean"
-                        },
-                        {
-                          "type": "integer"
-                        },
-                        {
-                          "type": "null"
-                        }
-                      ]
-                    },
-                    "missingness": {
-                      "enum": [
-                        "reported",
-                        "not_supplied"
-                      ]
-                    },
-                    "unit": {
-                      "enum": [
-                        "flag",
-                        "citations"
-                      ]
-                    },
-                    "evidence_ids": {
-                      "items": {
-                        "type": "string"
-                      },
-                      "type": "array"
-                    }
-                  },
-                  "required": [
-                    "kind",
-                    "source",
-                    "value",
-                    "missingness",
-                    "unit"
-                  ],
-                  "type": "object",
-                  "allOf": [
-                    {
-                      "if": {
-                        "properties": {
-                          "kind": {
-                            "const": "citation_count"
-                          }
-                        }
-                      },
-                      "then": {
-                        "properties": {
-                          "unit": {
-                            "const": "citations"
-                          },
-                          "value": {
-                            "type": [
-                              "integer",
-                              "null"
-                            ],
-                            "minimum": 0
-                          }
-                        }
-                      },
-                      "else": {
-                        "properties": {
-                          "unit": {
-                            "const": "flag"
-                          },
-                          "value": {
-                            "type": [
-                              "boolean",
-                              "null"
-                            ]
-                          }
-                        }
-                      }
-                    },
-                    {
-                      "if": {
-                        "properties": {
-                          "missingness": {
-                            "const": "not_supplied"
-                          }
-                        }
-                      },
-                      "then": {
-                        "properties": {
-                          "value": {
-                            "type": "null"
-                          }
-                        }
-                      },
-                      "else": {
-                        "properties": {
-                          "value": {
-                            "not": {
-                              "type": "null"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
-                },
-                "type": "array"
-              }
-            },
-            "required": [
-              "identities",
-              "content_scope",
-              "source_assertions",
-              "record_type"
-            ],
-            "type": "object"
-          },
-          "TrialRecord": {
-            "properties": {
-              "record_type": {
-                "const": "trial"
-              },
-              "assertion_type": {
-                "const": "registry_record"
-              },
-              "source": {
-                "enum": [
-                  "clinical-trials",
-                  "nci"
-                ]
-              },
-              "identities": {
-                "items": {
-                  "additionalProperties": false,
-                  "allOf": [
-                    {
-                      "else": {
-                        "properties": {
-                          "value": {
-                            "pattern": "^NCI-\\d{4}-\\d{5,}$"
-                          }
-                        }
-                      },
-                      "if": {
-                        "properties": {
-                          "namespace": {
-                            "const": "nct"
-                          }
-                        }
-                      },
-                      "then": {
-                        "properties": {
-                          "value": {
-                            "not": {
-                              "const": "NCT00000000"
-                            },
-                            "pattern": "^NCT\\d{8}$"
-                          }
-                        }
-                      }
-                    }
-                  ],
-                  "properties": {
-                    "namespace": {
-                      "enum": [
-                        "nct",
-                        "nci"
-                      ]
-                    },
-                    "value": {
-                      "maxLength": 128,
-                      "minLength": 1,
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "namespace",
-                    "value"
-                  ],
-                  "type": "object"
-                },
-                "maxItems": 64,
-                "minItems": 1,
-                "type": "array"
-              },
-              "species": {
-                "const": 9606
-              },
-              "title": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "status": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "phases": {
-                "items": {
-                  "type": "string"
-                },
-                "type": [
-                  "array",
-                  "null"
-                ]
-              },
-              "study_type": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "enrollment": {
-                "additionalProperties": false,
-                "allOf": [
-                  {
-                    "else": {
-                      "properties": {
-                        "missingness": {
-                          "const": "reported"
-                        }
-                      }
-                    },
-                    "if": {
-                      "properties": {
-                        "count": {
-                          "type": "null"
-                        }
-                      }
-                    },
-                    "then": {
-                      "properties": {
-                        "missingness": {
-                          "const": "not_supplied"
-                        }
-                      }
-                    }
-                  }
-                ],
-                "properties": {
-                  "count": {
-                    "minimum": 0,
-                    "type": [
-                      "integer",
-                      "null"
-                    ]
-                  },
-                  "basis": {
-                    "enum": [
-                      "actual",
-                      "estimated",
-                      "minimum_target",
-                      "not_supplied"
-                    ]
-                  },
-                  "unit": {
-                    "const": "participants"
-                  },
-                  "missingness": {
-                    "enum": [
-                      "reported",
-                      "not_supplied"
-                    ]
-                  },
-                  "role": {
-                    "enum": [
-                      "registry_enrollment",
-                      "minimum_target_accrual"
-                    ]
-                  }
-                },
-                "required": [
-                  "count",
-                  "basis",
-                  "missingness",
-                  "role",
-                  "unit"
-                ],
-                "type": "object"
-              },
-              "has_results": {
-                "type": [
-                  "boolean",
-                  "null"
-                ]
-              },
-              "results_missingness": {
-                "enum": [
-                  "reported",
-                  "not_supplied",
-                  "not_normalized"
-                ]
-              },
-              "source_release": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "evidence_ids": {
-                "items": {
-                  "type": "string"
-                },
-                "type": "array"
-              }
-            },
-            "required": [
-              "source",
-              "identities",
-              "title",
-              "status",
-              "phases",
-              "study_type",
-              "enrollment",
-              "has_results",
-              "results_missingness",
-              "record_type",
-              "assertion_type",
-              "species"
-            ],
-            "type": "object"
           }
         },
         "anyOf": [
@@ -9595,14 +8344,27 @@
               },
               "results": {
                 "items": {
-                  "anyOf": [
-                    {
-                      "$ref": "#/$defs/ResearchResult"
+                  "properties": {
+                    "schema_version": {
+                      "const": "1.0"
                     },
-                    {
-                      "$ref": "#/$defs/ErrorResult"
+                    "outcome": {
+                      "enum": [
+                        "data",
+                        "empty",
+                        "partial",
+                        "ambiguous",
+                        "unavailable",
+                        "not_applicable",
+                        "error"
+                      ]
                     }
-                  ]
+                  },
+                  "required": [
+                    "outcome",
+                    "schema_version"
+                  ],
+                  "type": "object"
                 },
                 "maxItems": 10,
                 "minItems": 1,
@@ -9617,7 +8379,24 @@
             "type": "object"
           },
           {
-            "$ref": "#/$defs/ErrorResult"
+            "additionalProperties": false,
+            "properties": {
+              "schema_version": {
+                "const": "1.0"
+              },
+              "outcome": {
+                "const": "error"
+              },
+              "error": {
+                "$ref": "#/$defs/ErrorInfo"
+              }
+            },
+            "required": [
+              "error",
+              "schema_version",
+              "outcome"
+            ],
+            "type": "object"
           }
         ],
         "type": "object"
@@ -9630,8 +8409,9 @@
       }
     },
     {
-      "name": "capabilities",
-      "description": "Inspect enabled sources, workflows, sections or an advanced operation's exact schema. e.g. {}; biomedmcp://guide",
+      "name": "get_capabilities",
+      "title": "Inspect get_capabilities",
+      "description": "List enabled sources, entity sections, dossier workflows and source operations with exact parameter schemas. Narrow with source or entity; diagnose=true probes source health. Examples: biomedmcp://guide. e.g. {}",
       "input_schema": {
         "type": "object",
         "$defs": {
@@ -9650,7 +8430,7 @@
               "pgx",
               "gwas",
               "diagnostic",
-              "adverse-event",
+              "adverse_event",
               "study",
               "patent",
               "sequence"
@@ -9679,6 +8459,7 @@
           },
           "diagnose": {
             "default": false,
+            "description": "Probe live source health (slower).",
             "type": "boolean"
           }
         }
@@ -9785,8 +8566,9 @@
       }
     },
     {
-      "name": "quota",
-      "description": "Inspect current research allowance and reset times; sign in for higher limits. e.g. {}; biomedmcp://guide",
+      "name": "get_quota",
+      "title": "Check quota",
+      "description": "Show remaining research allowance and reset times; signed-in accounts get higher limits. e.g. {}",
       "input_schema": {
         "type": "object",
         "additionalProperties": false,
@@ -9983,10 +8765,12 @@
     }
   ],
   "tool_count": 13,
-  "utf8_bytes": 97420,
+  "utf8_bytes": 92421,
   "tokens": null,
   "tokenizer": null,
   "measurement": "live tools/list",
   "byte_budget": 98304,
-  "budget_decision": "96 KiB bounds the 13-tool catalog with self-contained evidence-receipt schemas. Client/model token and task impact remains unqualified. Selected literature and trial registry metadata is typed; other inner scientific record coverage remains open. Equivalent nullable shorthand and omission of redundant annotations preserve constraints. FastMCP retains self-contained local definitions, with no external schema references."
+  "model_visible_utf8_bytes": 38652,
+  "model_visible_byte_budget": 40960,
+  "budget_decision": "96 KiB bounds the 13-tool catalog with self-contained evidence-receipt schemas; 40 KiB bounds the model-visible part (names, titles, descriptions, input schemas and annotations). Claude tool definitions and default Codex function tools omit output schemas; Codex code mode renders them into TypeScript declarations. Parameter descriptions are short so repeated fields stay cheap. run_batch advertises only its envelope because each item is validated against its own tool schema; resolve_entity advertises a strictly looser schema without typed record families, which the server still enforces. Task impact remains unqualified. Selected literature and trial registry metadata is typed; other inner scientific record coverage remains open. Equivalent nullable shorthand and omission of redundant annotations preserve constraints. FastMCP retains self-contained local definitions, with no external schema references."
 }

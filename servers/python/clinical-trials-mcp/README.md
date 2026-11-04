@@ -2,23 +2,23 @@
 
 Examples use the public BioMedMCP tools and their typed JSON arguments.
 
-Use the biomedmcp server and its canonical tools. Retained adapters are implementation packages; their internal tools are not separate public MCP mounts.
+Connect to the biomedmcp server and use its tools. This package runs inside that server; it is not a separate MCP server.
 
-Use trial_search for trial discovery, get(entity=trial) for known NCT records and explicit submitted protocol sections, and query_source for the two distinct comparison/statistics operations. The public surface keeps its compact tool interface; the eight retained implementation helpers are not separately mounted public aliases.
+Use search_trials for trial discovery, get_record(entity=trial) for known NCT records and explicit submitted protocol sections, and query_source for the two distinct comparison/statistics operations. The public surface keeps its compact tool interface; the eight retained implementation helpers are not separately mounted public aliases.
 
-Declared advanced operations: `compare_trials`, `get_trial_statistics`.
+Advanced operations: `compare_trials`, `get_trial_statistics`.
 
-Inspect capabilities for this source to obtain the exact current parameter schemas. Queries use the documented Essie syntax for location, sponsor, dates, posted results or age eligibility when an ordinary trial filter is insufficient. Follow the signed trial_search cursor; query_source statistics uses its generated next_actions to retrieve another provider window with unchanged filters. Counts in separate windows are not cumulative. Identifier-only queries cannot be combined with filters because the provider ignores those filters; use get for known NCT records. To discover trials sharing a reference trial's conditions, retrieve that record first and search its actual submitted condition terms; co-condition discovery is not a validated similarity score.
+Run get_capabilities for this source to see its current parameters. Queries use the documented Essie syntax for location, sponsor, dates, posted results or age eligibility when an ordinary trial filter is insufficient. Follow the signed search_trials cursor; query_source statistics uses its generated next_actions to retrieve another provider window with unchanged filters. Counts in separate windows are not cumulative. Identifier-only queries cannot be combined with filters because the provider ignores those filters; use get for known NCT records. To discover trials sharing a reference trial's conditions, retrieve that record first and search its actual submitted condition terms; co-condition discovery is not a validated similarity score.
 
-These examples pass schemas and preflight and execute through MCP against mocked provider responses. They do not establish live source health or comprehensive scientific qualification. The adapter validates dated OpenAPI request/response schemas, exact or explicitly aliased NCT identity, nested protocol/results fields, counts and continuation before extracting evidence. Missing optional protocol modules are unavailable, not measured negative evidence. Statistics count unique study memberships per label in one bounded provider-returned window, with acquired/grouped/missing denominators and explicit completeness. A trial can have several phase or condition labels; their sum may exceed the study denominator. The window is not a representative population sample. Comparisons preserve successful peers and safe failures, retain ACTUAL versus ESTIMATED enrollment, and mark missing fields unavailable. Missing enrollment counts are unavailable; counts without an actual/estimated classification remain partial. Registry protocol endpoints and posted results do not establish comparable treatment effects, individual eligibility, current site recruitment or clinical suitability. Large nested records can be truncated; follow advertised recovery ranges for acquired data. Real agent/client and full provider qualification remain open. No claim of complete inherited functionality is made.
+The examples are tested through MCP against mock responses; live results may differ. The adapter validates dated OpenAPI request/response schemas, exact or explicitly aliased NCT identity, nested protocol/results fields, counts and continuation before extracting evidence. Missing optional protocol modules are unavailable, not measured negative evidence. Statistics count unique study memberships per label in one bounded provider-returned window, with acquired/grouped/missing denominators and explicit completeness. A trial can have several phase or condition labels; their sum may exceed the study denominator. The window is not a representative population sample. Comparisons preserve successful peers and safe failures, retain ACTUAL versus ESTIMATED enrollment, and mark missing fields unavailable. Missing enrollment counts are unavailable; counts without an actual/estimated classification remain partial. Registry protocol endpoints and posted results do not establish comparable treatment effects, individual eligibility, current site recruitment or clinical suitability. Large nested records can be truncated; follow advertised recovery ranges for acquired data. Real agent/client and full provider qualification remain open. No claim of complete inherited functionality is made.
 
-Follow advertised provider continuation for further acquisition. If the result advertises an evidence recovery URI, use its bounded ranges to read acquired data omitted from the preview; see [evidence recovery](../../../docs/evidence-resources.md). Snapshot scope, expiry and source rights still apply.
+To get more results, follow the continuation in the response. If a result includes an evidence recovery URI, use it to read data left out of the preview; see [evidence recovery](../../../docs/evidence-resources.md). Recovered data expires and is subject to the source's terms.
 
 ## Recruiting familial hypercholesterolemia trials
 
 ```json
 {
-  "tool": "trial_search",
+  "tool": "search_trials",
   "arguments": {
     "query": "familial hypercholesterolemia",
     "filters": {
@@ -32,7 +32,7 @@ Follow advertised provider continuation for further acquisition. If the result a
 
 ```json
 {
-  "tool": "trial_search",
+  "tool": "search_trials",
   "arguments": {
     "query": "breast cancer",
     "filters": {
@@ -46,7 +46,7 @@ Follow advertised provider continuation for further acquisition. If the result a
 
 ```json
 {
-  "tool": "trial_search",
+  "tool": "search_trials",
   "arguments": {
     "query": "ezetimibe"
   }
@@ -57,7 +57,7 @@ Follow advertised provider continuation for further acquisition. If the result a
 
 ```json
 {
-  "tool": "get",
+  "tool": "get_record",
   "arguments": {
     "entity": "trial",
     "id": "NCT04368728"
@@ -69,7 +69,7 @@ Follow advertised provider continuation for further acquisition. If the result a
 
 ```json
 {
-  "tool": "get",
+  "tool": "get_record",
   "arguments": {
     "entity": "trial",
     "id": "NCT04368728",
@@ -85,7 +85,7 @@ Follow advertised provider continuation for further acquisition. If the result a
 
 ```json
 {
-  "tool": "trial_search",
+  "tool": "search_trials",
   "arguments": {
     "query": "familial hypercholesterolemia AND AREA[LocationCity]Boston",
     "filters": {
@@ -99,7 +99,7 @@ Follow advertised provider continuation for further acquisition. If the result a
 
 ```json
 {
-  "tool": "trial_search",
+  "tool": "search_trials",
   "arguments": {
     "query": "COVID-19 AND AREA[HasResults]true",
     "filters": {
@@ -113,7 +113,7 @@ Follow advertised provider continuation for further acquisition. If the result a
 
 ```json
 {
-  "tool": "trial_search",
+  "tool": "search_trials",
   "arguments": {
     "query": "leukemia AND AREA[StdAge]CHILD"
   }

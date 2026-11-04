@@ -80,7 +80,7 @@ async def test_live_taxonomy_representations_survive_dispatch_without_changing_s
     row = edge(ncbiTaxonId=taxon)
     result = await execute(
         ResearchService(adapters=GeneAdapters(), http=HTTP([row])),
-        "get",
+        "get_record",
         {"entity": "gene", "id": "BRAF", "sections": ["interactions"]},
         scope="public",
     )
@@ -116,14 +116,14 @@ async def test_mouse_network_keeps_qualified_species_and_symbol():
 async def test_dispatch_retains_record_and_retries_failed_network(payload):
     service = ResearchService(adapters=GeneAdapters(), http=HTTP(payload, [edge()]))
     arguments = {"entity": "gene", "id": "673", "sections": ["record", "interactions"]}
-    bad = await execute(service, "get", deepcopy(arguments), scope="public")
+    bad = await execute(service, "get_record", deepcopy(arguments), scope="public")
     assert bad.outcome == "partial"
     assert bad.sections["record"].outcome == "data"
     assert bad.sections["interactions"].outcome == "error"
     assert bad.sections["interactions"].error["code"] == "invalid_source_response"
     assert bad.sections["interactions"].evidence_ids == []
     assert all(p.source != "string" for p in bad.provenance)
-    good = await execute(service, "get", deepcopy(arguments), scope="public")
+    good = await execute(service, "get_record", deepcopy(arguments), scope="public")
     assert good.outcome == "data"
     assert good.sections["interactions"].data["records"] == [edge()]
     assert good.sections["interactions"].evidence_ids
@@ -134,7 +134,7 @@ async def test_dispatch_retains_record_and_retries_failed_network(payload):
 async def test_explicit_empty_network_is_valid_with_interpretation_limits():
     result = await execute(
         ResearchService(adapters=GeneAdapters(), http=HTTP([])),
-        "get",
+        "get_record",
         {"entity": "gene", "id": "BRAF", "sections": ["interactions"]},
         scope="public",
     )
@@ -155,9 +155,9 @@ async def test_actual_mcp_boundary_preserves_partial_result_and_cache_provenance
     service = ResearchService(adapters=GeneAdapters(), http=http)
     arguments = {"entity": "gene", "id": "673", "sections": ["record", "interactions"]}
     async with Client(create_server(service=service)) as client:
-        failed = (await client.call_tool("get", arguments)).data
-        good = (await client.call_tool("get", arguments)).data
-        cached = (await client.call_tool("get", arguments)).data
+        failed = (await client.call_tool("get_record", arguments)).data
+        good = (await client.call_tool("get_record", arguments)).data
+        cached = (await client.call_tool("get_record", arguments)).data
     assert failed["outcome"] == "partial"
     assert failed["sections"]["record"]["outcome"] == "data"
     assert failed["sections"]["interactions"]["error"]["code"] == "invalid_source_response"
@@ -184,7 +184,7 @@ async def test_network_bounds_preserve_recoverable_neighbor_edges(monkeypatch):
     async with Client(create_server(service=ResearchService(adapters=GeneAdapters(), http=http))) as client:
         result = (
             await client.call_tool(
-                "get",
+                "get_record",
                 {
                     "entity": "gene",
                     "id": "673",

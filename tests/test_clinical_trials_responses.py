@@ -219,10 +219,10 @@ async def test_actual_mcp_invalid_search_is_not_cached_as_absence(trials_http):
 
     _, calls = trials_http(response)
     async with Client(create_server(service=ResearchService())) as client:
-        first_call = await client.call_tool("trial_search", {"query": "melanoma"}, raise_on_error=False)
+        first_call = await client.call_tool("search_trials", {"query": "melanoma"}, raise_on_error=False)
         assert first_call.is_error
         first = first_call.structured_content
-        second = (await client.call_tool("trial_search", {"query": "melanoma"})).data
+        second = (await client.call_tool("search_trials", {"query": "melanoma"})).data
     assert (
         first["outcome"] == "error"
         and first["sections"]["clinical-trials"]["error"]["code"] == "invalid_source_response"
@@ -237,7 +237,7 @@ async def test_absent_optional_protocol_module_is_unavailable_with_primary_evide
     async with Client(create_server(service=ResearchService())) as client:
         result = (
             await client.call_tool(
-                "get", {"entity": "trial", "id": "NCT04368728", "sections": ["record", "eligibility"]}
+                "get_record", {"entity": "trial", "id": "NCT04368728", "sections": ["record", "eligibility"]}
             )
         ).data
     assert result["outcome"] == "partial"

@@ -619,11 +619,11 @@ async def test_actual_mcp_continuation_moves_between_redis_workers(workers, monk
     services, request, calls = page_services(workers)
     params = {"query": request.query, "limit": 2, "filters": {"source": "europepmc"}}
     async with Client(create_server(service=services[0])) as first:
-        result = (await first.call_tool("literature_search", params)).data
+        result = (await first.call_tool("search_literature", params)).data
     async with Client(create_server(service=services[1])) as second:
         continued = (
             await second.call_tool(
-                "literature_search",
+                "search_literature",
                 {
                     **params,
                     "cursor": result["next_cursor"],
@@ -1007,7 +1007,7 @@ async def test_actual_complex_continuation_crosses_real_redis_workers(workers, m
         "section_parameters": {"complexes": {"limit": 1}},
     }
     async with Client(create_server(service=services[0])) as c:
-        first = (await c.call_tool_mcp("get", args)).structured_content
+        first = (await c.call_tool_mcp("get_record", args)).structured_content
     action = first["next_actions"][0]
     key = "biomedmcp:result:complexportal-page:" + digest(
         action["arguments"]["section_parameters"]["complexes"]["cursor"]

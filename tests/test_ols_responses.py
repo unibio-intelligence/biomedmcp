@@ -243,9 +243,13 @@ async def test_actual_mcp_failed_result_is_uncached_then_success_has_attribution
         else {"entity": "phenotype", "id": TERM_ID}
     )
     async with Client(create_server(service=ResearchService())) as client:
-        first = (await client.call_tool(mode, params, raise_on_error=False)).structured_content
-        second = (await client.call_tool(mode, params)).data
-        third = (await client.call_tool(mode, params)).data
+        first = (
+            await client.call_tool(
+                {"search": "search_records"}.get(mode, "get_record"), params, raise_on_error=False
+            )
+        ).structured_content
+        second = (await client.call_tool({"search": "search_records"}.get(mode, "get_record"), params)).data
+        third = (await client.call_tool({"search": "search_records"}.get(mode, "get_record"), params)).data
     assert first["outcome"] == "error" and not first["provenance"]
     assert next(iter(first["sections"].values()))["error"]["code"] == "invalid_source_response"
     assert second["outcome"] == third["outcome"] == "data"
@@ -273,9 +277,11 @@ async def test_actual_mcp_resolve_followup_uses_hpo_id_and_executes(monkeypatch)
         transport, "AsyncClient", lambda **kwargs: original(transport=httpx.MockTransport(handler))
     )
     async with Client(create_server(service=ResearchService())) as client:
-        resolved = (await client.call_tool("resolve", {"entity": "phenotype", "query": "synthetic"})).data
+        resolved = (
+            await client.call_tool("resolve_entity", {"entity": "phenotype", "query": "synthetic"})
+        ).data
         action = resolved["next_actions"][0]
-        assert action["tool"] == "get" and action["arguments"]["id"] == TERM_ID
+        assert action["tool"] == "get_record" and action["arguments"]["id"] == TERM_ID
         acquired = (await client.call_tool(action["tool"], action["arguments"])).data
     assert acquired["outcome"] == "data" and acquired["sections"]["record"]["data"]["id"] == TERM_ID
     assert len(calls) == 2
@@ -324,7 +330,7 @@ async def test_actual_http_failure_is_safe_and_never_means_no_phenotype(monkeypa
     )
     async with Client(create_server(service=ResearchService())) as client:
         result = (
-            await client.call_tool("get", {"entity": "phenotype", "id": TERM_ID}, raise_on_error=False)
+            await client.call_tool("get_record", {"entity": "phenotype", "id": TERM_ID}, raise_on_error=False)
         ).structured_content
     assert result["outcome"] == "error" and result["records"] == [] and not result["provenance"]
     assert result["sections"]["record"]["outcome"] in {"error", "unavailable"}
@@ -366,9 +372,9 @@ async def test_actual_mcp_search_continuation_uses_returned_source_offset(monkey
     )
     params = {"entity": "phenotype", "query": "synthetic", "limit": 2}
     async with Client(create_server(service=ResearchService())) as client:
-        first = (await client.call_tool("search", params)).data
+        first = (await client.call_tool("search_records", params)).data
         assert first["next_cursor"] is not None
-        second = (await client.call_tool("search", params | {"cursor": first["next_cursor"]})).data
+        second = (await client.call_tool("search_records", params | {"cursor": first["next_cursor"]})).data
     assert [r["id"] for r in first["records"] + second["records"]] == [
         "HP:0001250",
         "HP:0001251",

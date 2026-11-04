@@ -48,7 +48,7 @@ def local_cli(tmp_path):
         )
         env.pop("UBI_CURSOR_KEY", None)
         return subprocess.run(
-            [sys.executable, str(script), "literature_search", json.dumps(arguments), *(extra or [])],
+            [sys.executable, str(script), "search_literature", json.dumps(arguments), *(extra or [])],
             env=env,
             capture_output=True,
             text=True,

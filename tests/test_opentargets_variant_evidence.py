@@ -469,7 +469,7 @@ async def test_batch_rejects_tampered_cursor_before_any_provider_request(provide
     async with Client(create_server(service=ResearchService())) as c:
         invalid = {**ARGS, "params": {**PARAMS, "evidence_cursor": TOKEN}}
         result = await c.call_tool(
-            "batch",
+            "run_batch",
             {
                 "requests": [
                     {"tool": "query_source", "arguments": ARGS},
