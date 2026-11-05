@@ -16,6 +16,7 @@ import subprocess
 import tarfile
 import tempfile
 import tomllib
+import uuid
 import zipfile
 from email.parser import Parser
 from pathlib import Path, PurePosixPath
@@ -247,6 +248,10 @@ def wheel_sbom(directory, receipt):
     report = {
         "bomFormat": "CycloneDX",
         "specVersion": "1.6",
+        # actions/attest recognises CycloneDX only with a serial number. It is derived from
+        # the archive digest so the SBOM regenerated at publication matches the attested one.
+        "serialNumber": "urn:uuid:"
+        + str(uuid.uuid5(uuid.NAMESPACE_URL, f"https://github.com/{REPOSITORY}/releases/{receipt['version']}/{receipt['archive']['sha256']}")),
         "version": 1,
         "metadata": {
             "component": {

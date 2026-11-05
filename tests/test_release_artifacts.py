@@ -5,7 +5,9 @@ import importlib.util
 import io
 import json
 import os
+import re
 import tarfile
+import uuid
 import zipfile
 from pathlib import Path
 
@@ -688,6 +690,19 @@ def test_sbom_binds_archive_and_preserves_unresolved_metadata(release, prepared)
     assert {"name": "ubi:wheel:license-expression", "value": "MIT"} in component["properties"]
     assert any(p["name"] == "ubi:wheel:requires-dist" and ";" in p["value"] for p in component["properties"])
     assert "dependencies" not in report and "licenses" not in component
+
+
+def test_sbom_is_recognised_by_actions_attest_and_stable(release, prepared):
+    # actions/attest v4 (src/sbom.ts) accepts CycloneDX only with bomFormat, serialNumber and
+    # specVersion; publication regenerates the SBOM and compares it to the attested predicate.
+    directory, receipt, _ = prepared
+    report = release.wheel_sbom(directory, receipt)
+    assert report["bomFormat"] and report["serialNumber"] and report["specVersion"]
+    assert re.fullmatch(r"urn:uuid:[0-9a-f]{8}-[0-9a-f]{4}-5[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}",
+                        report["serialNumber"])
+    assert report["serialNumber"] == release.wheel_sbom(directory, receipt)["serialNumber"]
+    other_archive = f"https://github.com/{release.REPOSITORY}/releases/{receipt['version']}/{'0' * 64}"
+    assert report["serialNumber"] != "urn:uuid:" + str(uuid.uuid5(uuid.NAMESPACE_URL, other_archive))
     assert report["metadata"]["component"]["hashes"][0]["content"] == receipt["archive"]["sha256"]
 
 

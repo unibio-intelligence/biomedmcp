@@ -354,7 +354,7 @@
     },
     "scripts/release-artifacts.py": {
       "executable": true,
-      "sha256": "0e4494cd399bf3c9d96416ebe13af7d1f8b3eb25d4386438865bb4eef6989bd0"
+      "sha256": "164440d94c5de87ad93e1cfb9ab7cb29763c6950ba8a84fb342d44350700d3ac"
     },
     "scripts/release-exceptions.json": {
       "executable": false,
@@ -1774,7 +1774,7 @@
     },
     "src/biomedmcp/offline-qualification.json": {
       "executable": false,
-      "sha256": "0de9bd99a6cf0722843d7d6cd9d74d3000b7a8e5ddc87f45e1c7006b80576435"
+      "sha256": "6b4b64aa92c5905b27e55abd24ac79ff7dfd210a0ac88d751e6b49f2bedfc00e"
     },
     "src/biomedmcp/onboarding.py": {
       "executable": false,
@@ -2422,7 +2422,7 @@
     },
     "tests/test_release_artifacts.py": {
       "executable": false,
-      "sha256": "8a5cba66e8fc69fb247c9d7bb2dcc9252b37a235d1d52aebd88e7853e48af4d7"
+      "sha256": "5d8c0a00c0ffb34503d60d86bc900aaaa762c489a70f450be87c704ef09c90e9"
     },
     "tests/test_remote_guest.py": {
       "executable": false,
@@ -2647,5 +2647,5 @@
   },
   "format": 1,
   "publication_ready": true,
-  "tree_sha256": "f3600c6fffe341ace2116ef6d35d80dc3a51e51bb5524ef02b95d45388391c83"
+  "tree_sha256": "36bdf666c5818e351be3625138e82c7c9ebdce47174c99f8e73302dbae45ae53"
 }

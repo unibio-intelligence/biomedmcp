@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
   "implementation": "biomedmcp/0.2.4",
-  "qualified_at": "2026-11-05T02:43:26.859768+00:00",
-  "junit_sha256": "bcb82c635e26cdfe22dee24116101813d982219b1c05b61814b1268c625a3bc2",
+  "qualified_at": "2026-11-05T03:11:31.330764+00:00",
+  "junit_sha256": "adf05652cc93ee669ef6624c5e46a72f31599da2e98a8b1d8d4f9077bde69614",
   "core_sha256": "8238b9519326ab57a843b159f948e17088315b7d64ec1fe400edda966db4aca6",
   "dependencies": {
     "fastmcp": "4.1.2",
@@ -712,7 +712,7 @@
     "tests/test_reactome_responses.py": "824100bfae9922dd7610c93e3b311d628cf5b207de4aaf8b41bf55d644bff8fd",
     "tests/test_record_schema_resources.py": "d7a1fb33d83d3482b82ce2c98439a14769601c1a3c58fca1d72c6ae934eaea18",
     "tests/test_registry_distribution.py": "cace2e3796b0e4bf6ff0d162c7b8f4e47f7d2e5bb201026bf66854c86e45af4e",
-    "tests/test_release_artifacts.py": "8a5cba66e8fc69fb247c9d7bb2dcc9252b37a235d1d52aebd88e7853e48af4d7",
+    "tests/test_release_artifacts.py": "5d8c0a00c0ffb34503d60d86bc900aaaa762c489a70f450be87c704ef09c90e9",
     "tests/test_remote_guest.py": "905413b3df6f71687b3a0497a38eba5b43403e7080e2ea485f355041ddd97cde",
     "tests/test_removed_source.py": "97ee7060147fabf62f8c2b367538c3bb3e5addc43c81b4f8903f348bd196e1e4",
     "tests/test_repaired_adapters.py": "7d72a40db3351a3a9f7ed75e72027c850a4ca9d4124f5e3517a56e9efc3033ba",
