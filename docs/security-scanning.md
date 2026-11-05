@@ -58,7 +58,14 @@ GB. Neither cache nor target archive is uploaded as a CI artifact.
 Any dependency advisory blocks, including unknown severity and unfixed findings.
 Runtime High, Critical and Unknown findings block; lower-severity runtime
 findings remain in the report. Configured advisory ignores, path exclusions and
-fix-state filters are forbidden. Upstream matcher rules still determine
+fix-state filters are forbidden.
+
+The one exception path is `scripts/release-exceptions.json`. A non-Critical
+finding with no available fix may pass only through an entry naming its
+advisory ID, package and scan target, with a reason, the date added and an
+expiry at most 90 days later. An expired, malformed or unused entry fails the
+scan, and a finding that gains a fix blocks again. Excepted findings stay in the
+report with their reason and expiry. Upstream matcher rules still determine
 candidate matches, so a scanner finding requires assessment and does not by
 itself demonstrate application exploitability.
 
@@ -83,7 +90,9 @@ exhaustive native-library detection, source-code security or provider readiness.
 
 
 Both public and hosted Dockerfiles use the same digest-pinned official Python
-3.13.16 Alpine 3.23 base. Its musl C library differs from the prior slim Trixie
+3.13.18 Alpine 3.23 base, with `sqlite-libs` 3.54.1 from Alpine edge until
+Alpine 3.23 ships a patched SQLite. Edge keeps only its latest build, so a later
+rebuild may need that pin updated. Its musl C library differs from the prior slim Trixie
 base, so scientific numerical/reference tests, transport, public Redis and
 reviewed hosted-auth contracts must qualify the built images. Zlib is pinned to
 Alpine's patched `1.3.2-r1` package; test-only Git and procps-ng are pinned

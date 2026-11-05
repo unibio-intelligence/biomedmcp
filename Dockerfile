@@ -1,7 +1,9 @@
 # syntax=docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
 FROM ghcr.io/astral-sh/uv:0.9.21@sha256:15f68a476b768083505fe1dbfcc998344d0135f0ca1b8465c4760b323904f05a AS uv
-FROM python:3.13.16-alpine3.23@sha256:07b20c774a247152e74f622034c1482495d299e070eec620ddff13e01264290b AS base
-RUN apk add --no-cache zlib=1.3.2-r1 musl=1.2.5-r24 musl-utils=1.2.5-r24
+FROM python:3.13.18-alpine3.23@sha256:e4aeaca9081549f19bd5bc8605ed5ab257ba34f97e0471f8e09161f45b4b08b8 AS base
+# sqlite-libs comes from Alpine edge until Alpine 3.23 ships a patched release.
+RUN apk add --no-cache zlib=1.3.2-r1 musl=1.2.5-r24 musl-utils=1.2.5-r24 \
+    && apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/edge/main sqlite-libs=3.54.1-r0
 COPY --from=uv /uv /usr/local/bin/uv
 WORKDIR /app
 ENV UV_LINK_MODE=copy UV_COMPILE_BYTECODE=1 PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1

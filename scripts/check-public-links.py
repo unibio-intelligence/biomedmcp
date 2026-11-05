@@ -28,6 +28,7 @@ MAX_REDIRECTS = 5
 MAX_ATTEMPTS = 3
 LINK_TIMEOUT = 12
 RUN_TIMEOUT = 240
+EXCEPTIONS = ROOT / "scripts/release-exceptions.json"
 AUTH_KEYS = {
     "apikey",
     "key",
@@ -269,6 +270,29 @@ def worker(url, timeout):
         return {"status": "worker_failure", "chain": [], "attempts": []}
 
 
+def blocked_hosts(path):
+    """Reviewed hosts that refuse automated requests; their HTTP refusals are reported, not failed."""
+    if not path.is_file():
+        return {}
+    rows = json.loads(path.read_text()).get("links", [])
+    hosts = {}
+    for row in rows:
+        if not (isinstance(row, dict) and set(row) == {"host", "reason", "reviewed"}
+                and all(isinstance(row[k], str) and row[k].strip() for k in row)):
+            raise ValueError("Each link exception needs host, reason and reviewed")
+        hosts[row["host"].lower()] = row["reason"]
+    return hosts
+
+
+def classify(result, hosts):
+    """An HTTP refusal from a listed host is unverified rather than failed; nothing else changes."""
+    host = (urlsplit(result["url"]).hostname or "").lower()
+    listed = next((h for h in hosts if host == h or host.endswith("." + h)), None)
+    if listed and result["status"] == "http_failure":
+        return {**result, "status": "unverified_host_blocks_automation", "exception": hosts[listed]}
+    return result
+
+
 def qualify(root, *, run=None):
     run = run or worker
     start = time.monotonic()
@@ -276,6 +300,8 @@ def qualify(root, *, run=None):
     parser_path = ROOT / "scripts/check-governance.py"
     parser_before = hashlib.sha256(parser_path.read_bytes()).hexdigest()
     links, inputs, errors = inventory(root)
+    hosts = blocked_hosts(EXCEPTIONS)
+    exceptions_before = hashlib.sha256(EXCEPTIONS.read_bytes()).hexdigest() if EXCEPTIONS.is_file() else None
     results = []
     for url, references in links.items():
         remaining = RUN_TIMEOUT - (time.monotonic() - start)
@@ -285,12 +311,15 @@ def qualify(root, *, run=None):
             else {"status": "run_deadline", "chain": []}
         )
         results.append(
-            {
-                "url": display_url(url),
-                "request_sha256": hashlib.sha256(url.encode("utf-8")).hexdigest(),
-                "references": references,
-                **result,
-            }
+            classify(
+                {
+                    "url": display_url(url),
+                    "request_sha256": hashlib.sha256(url.encode("utf-8")).hexdigest(),
+                    "references": references,
+                    **result,
+                },
+                hosts,
+            )
         )
     _, after, after_errors = inventory(root)
     changed = (
@@ -298,17 +327,21 @@ def qualify(root, *, run=None):
         or errors != after_errors
         or script_before != hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
         or parser_before != hashlib.sha256(parser_path.read_bytes()).hexdigest()
+        or exceptions_before
+        != (hashlib.sha256(EXCEPTIONS.read_bytes()).hexdigest() if EXCEPTIONS.is_file() else None)
     )
     return {
         "schema_version": 1,
         "qualified_at": datetime.now(UTC).isoformat(),
         "result": "passed"
-        if not changed and not errors and results and all(x["status"] == "reachable" for x in results)
+        if not changed and not errors and results
+        and all(x["status"] in {"reachable", "unverified_host_blocks_automation"} for x in results)
         else "failed",
         "scope": "Live unauthenticated HTTP reachability of parsed public Markdown/HTML links; no remote-anchor/page semantics, provider health or client/model qualification.",
         "inputs_sha256": inputs,
         "script_sha256": script_before,
         "parser_sha256": parser_before,
+        "exceptions_sha256": exceptions_before,
         "limits": {
             "links": MAX_LINKS,
             "redirects": MAX_REDIRECTS,
@@ -353,7 +386,13 @@ def main():
             {
                 "result": report["result"],
                 "links": len(report.get("links", [])),
-                "failures": sum(x["status"] != "reachable" for x in report.get("links", [])),
+                "failures": sum(
+                    x["status"] not in {"reachable", "unverified_host_blocks_automation"}
+                    for x in report.get("links", [])
+                ),
+                "unverified": sum(
+                    x["status"] == "unverified_host_blocks_automation" for x in report.get("links", [])
+                ),
             }
         )
     )

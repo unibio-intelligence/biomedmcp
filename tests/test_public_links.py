@@ -503,3 +503,30 @@ def test_ci_links_are_advisory_but_security_and_release_checks_remain_required(
     assert ("::warning title=External documentation links::" in result.stdout) is (
         workflow_name == "ci.yml" and link_status != 0
     )
+
+
+def test_listed_host_refusal_is_unverified_and_other_failures_still_fail(checker, tmp_path, monkeypatch):
+    exceptions = tmp_path / "release-exceptions.json"
+    exceptions.write_text(json.dumps({"links": [
+        {"host": "blocked.example.org", "reason": "Refuses automated requests.", "reviewed": "2026-11-05"}]}))
+    monkeypatch.setattr(checker, "EXCEPTIONS", exceptions)
+    (tmp_path / "README.md").write_text(
+        "[Blocked](https://www.blocked.example.org/page) [Bad](https://docs.example.org/bad)"
+    )
+    report = checker.qualify(
+        tmp_path, run=lambda url, timeout: checker.check_url(url, request=response(403))
+    )
+    statuses = {x["url"]: x["status"] for x in report["links"]}
+    assert statuses["https://www.blocked.example.org/page"] == "unverified_host_blocks_automation"
+    assert statuses["https://docs.example.org/bad"] == "http_failure"
+    assert report["result"] == "failed"
+
+
+def test_listed_host_network_failure_is_not_excused(checker, tmp_path, monkeypatch):
+    exceptions = tmp_path / "release-exceptions.json"
+    exceptions.write_text(json.dumps({"links": [
+        {"host": "blocked.example.org", "reason": "Refuses automated requests.", "reviewed": "2026-11-05"}]}))
+    monkeypatch.setattr(checker, "EXCEPTIONS", exceptions)
+    result = checker.classify({"url": "https://blocked.example.org/", "status": "dns_failure", "chain": []},
+                              checker.blocked_hosts(exceptions))
+    assert result["status"] == "dns_failure"

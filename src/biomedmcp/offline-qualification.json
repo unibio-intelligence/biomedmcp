@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
   "implementation": "biomedmcp/0.2.4",
-  "qualified_at": "2026-11-04T20:31:51.049340+00:00",
-  "junit_sha256": "514cb69472b2c5b6c29f962c8581f9da0aae2e15acae2e3d2ecdc04522798f92",
+  "qualified_at": "2026-11-05T01:05:35.639834+00:00",
+  "junit_sha256": "2eef5a6d859d9bdda717a3991031a83d7f9c03aed57e81fc13f240dd3d359210",
   "core_sha256": "8238b9519326ab57a843b159f948e17088315b7d64ec1fe400edda966db4aca6",
   "dependencies": {
     "fastmcp": "4.1.2",
@@ -703,7 +703,7 @@
     "tests/test_provider_pagination.py": "1a1bdc8d573d3669a21b934c12cdd28ababe9316b64278f22bc14185d6d0a991",
     "tests/test_provider_security.py": "91b9fda2596a313c77e91be9f53c5f613a15565c28ba5e168dc0672a98f3b031",
     "tests/test_public_examples.py": "d5a181051aaf48bda874c90fa80a5105ddd1549f73651514be3c3d2b917ba738",
-    "tests/test_public_links.py": "724f0089d83cade6d89a893c2c969b23d007e58a3d93438169282f31f66f71c6",
+    "tests/test_public_links.py": "b254278b2e9453f2f1614d7e2eec1aecddf282390eb52e54c3a2599527f67004",
     "tests/test_public_predictor_cache.py": "22bb64789532a0b970d89f97c7e652172cf66bd851271e0a80262f5965fba737",
     "tests/test_public_snapshot_grants.py": "94b85f11c5bebd14439b6b6e760bf68fef232ead9f100d52cc312941c9529e35",
     "tests/test_pubmed_search_parity.py": "da1a0e0aa9cc854eb596dea25b6375dc67b40112588a4359344fb65be512fe08",
@@ -726,7 +726,7 @@
     "tests/test_schema_compaction.py": "9cf1b2376a60a7864a647a12b3aa34ad0fa947552d3371e75418872c4ccff8c5",
     "tests/test_scientific_workflows.py": "3e8f280ba121fe4af8348d27a8ea2263c2a39ed0ae79f926086b8904ec5df6c6",
     "tests/test_security_dependencies.py": "6fcbdec5aaf6d71a8ee75f4dba2752fe5798c4ed8236cb60898df49a56e7d4da",
-    "tests/test_security_scan.py": "16fd85fa408ce85a5a0e5dfcd9d498c61b291e280d37ff21cbcd1f1e5d574e3a",
+    "tests/test_security_scan.py": "fb8edc829d0bb376218f8d20cb00fde6039112fa4467af6594e6083709869884",
     "tests/test_snapshot_compression.py": "ac59b779cd45e11d1fd2e2e2227bd8dd3e6987537d6b27d193357627890fae7f",
     "tests/test_source69_regressions.py": "ac21bc2c33c4eec770ffebd0bbef6ee96625d569736d3c6b8db4c95c6f3a3e06",
     "tests/test_source70_regressions.py": "d33157170ea9d9ac80e23883b6bdf7dcb1887b0183f7b1915de237136c82f999",

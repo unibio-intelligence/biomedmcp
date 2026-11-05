@@ -1,8 +1,14 @@
 # Contributing
 
-Report an issue in this repository with your biomedmcp version, a minimal example, and expected versus observed behavior. Keep credentials, patient data and sensitive research out of reports.
+Contributions are welcome: bug reports, fixes, documentation, new data sources and better tool descriptions.
 
-Patches are welcome. Accepted changes are reviewed, tested and credited in a later public release. The hosted service and public releases may update at different times.
+## How to contribute
+
+1. **Open an issue first.** For a bug, give your biomedmcp version, the tool or command, a minimal example, and the expected and observed behavior. To propose a data source or feature, describe what it answers, the provider and its terms of use. Except for typo fixes, wait for a maintainer to agree on the approach before you open a pull request.
+2. **Open a focused pull request.** Make one change per pull request, link its issue (`Closes #123`) and run the tests below first.
+3. **Review and release.** Accepted changes are reviewed, tested and credited in a later public release. The hosted service and public releases may update at different times.
+
+Contributions are licensed under the repository's [Apache-2.0 license](LICENSE). Keep credentials, patient data and sensitive research out of issues. Report security issues privately to [helpdesk@unibiointelligence.com](mailto:helpdesk@unibiointelligence.com), not in public issues.
 
 ## Development
 

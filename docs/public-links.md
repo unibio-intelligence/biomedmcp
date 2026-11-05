@@ -31,6 +31,11 @@ docker run --label "$UBI_TEST_RUN_LABEL" --rm --read-only --cap-drop ALL --secur
 '
 ```
 
+Some sites refuse automated requests from CI runners even though their pages
+load in a browser. Hosts listed with a reason in `scripts/release-exceptions.json`
+have their HTTP refusals reported as `unverified_host_blocks_automation` instead
+of failing; DNS, network and other failures still fail.
+
 The checker parses Markdown inline/reference links, images and HTML link attributes
 through the shared governance parser. Fenced code examples are excluded. HTTP
 targets are deduplicated after removing fragments. Local paths and heading anchors

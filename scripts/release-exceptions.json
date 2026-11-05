@@ -1,0 +1,29 @@
+{
+  "security": [
+    {
+      "id": "CVE-2026-119586",
+      "package": "sqlite-libs",
+      "target": "runtime",
+      "reason": "No fixed SQLite release exists yet. The image uses Alpine edge sqlite-libs 3.54.1, which fixes CVE-2026-119373, CVE-2026-119374 and CVE-2026-119379. Remove when a fixed sqlite-libs is available.",
+      "added": "2026-11-05",
+      "expires": "2026-12-05"
+    }
+  ],
+  "links": [
+    {
+      "host": "europepmc.org",
+      "reason": "Returns HTTP 403 to automated requests from CI runners; pages load in a browser.",
+      "reviewed": "2026-11-05"
+    },
+    {
+      "host": "www.fda.gov",
+      "reason": "Redirects automated requests to an abuse-detection page; pages load in a browser.",
+      "reviewed": "2026-11-05"
+    },
+    {
+      "host": "www.snpedia.com",
+      "reason": "Returns HTTP 403 to automated requests from CI runners; pages load in a browser.",
+      "reviewed": "2026-11-05"
+    }
+  ]
+}

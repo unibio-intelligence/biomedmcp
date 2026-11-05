@@ -327,3 +327,58 @@ def test_empty_fix_outside_observed_alpine_cpe_contract_is_refused(scanner,evide
     elif change=='state':match['vulnerability']['fix']['state']='safe'
     with pytest.raises(ValueError,match='Invalid fix information'):
         scanner.validate(report,bom,target='dependencies',expected=PURLS,now=NOW)
+
+
+def exception_entry(**changes):
+    entry = {"id": "SYNTHETIC-ADVISORY", "package": "pyjwt", "target": "runtime",
+             "reason": "No fixed release exists yet.", "added": "2026-10-01", "expires": "2026-10-31"}
+    entry.update(changes)
+    return entry
+
+
+def runtime_report(evidence, match):
+    report, bom = evidence
+    report.update(matches=[match], source={"type": "image", "target": {"imageID": "sha256:" + "b" * 64}})
+    report["descriptor"]["configuration"]["db"].update({"auto-update": False, "require-update-check": False})
+    return report, bom, {"image_config_digest": "sha256:" + "b" * 64, "installed": [("pyjwt", "2.15.0")]}
+
+
+def test_reviewed_exception_unblocks_only_an_unfixed_high_finding(scanner, evidence):
+    report, bom, expected = runtime_report(evidence, finding("High"))
+    value = scanner.validate(report, bom, target="runtime", expected=expected, now=NOW,
+                             exceptions=[exception_entry()])
+    row = value["findings"][0]
+    assert value["result"] == "passed" and not row["blocking"]
+    assert row["exception"]["expires"] == "2026-10-31"
+    assert value["exceptions_applied"] == ["SYNTHETIC-ADVISORY/pyjwt"]
+
+
+@pytest.mark.parametrize("change", ["critical", "fixed", "other-target", "other-package"])
+def test_exception_never_unblocks_critical_fixed_or_mismatched_findings(scanner, evidence, change):
+    match = finding("Critical" if change == "critical" else "High")
+    if change == "fixed":
+        match["vulnerability"]["fix"] = {"state": "fixed", "versions": ["2.16.0"]}
+    entry = exception_entry(target="dependencies" if change == "other-target" else "runtime",
+                            package="other" if change == "other-package" else "pyjwt")
+    report, bom, expected = runtime_report(evidence, match)
+    value = scanner.validate(report, bom, target="runtime", expected=expected, now=NOW, exceptions=[entry])
+    assert value["result"] == "failed" and value["findings"][0]["blocking"]
+    assert value["exceptions_applied"] == []
+
+
+@pytest.mark.parametrize("change,message", [
+    ({"expires": "2026-10-08"}, "expired"),
+    ({"expires": "2027-03-01"}, "must expire within"),
+    ({"target": "image"}, "Invalid security exception target"),
+    ({"reason": ""}, "needs id, package"),
+])
+def test_invalid_or_expired_exceptions_fail_closed(scanner, tmp_path, change, message):
+    path = tmp_path / "release-exceptions.json"
+    path.write_text(json.dumps({"security": [exception_entry(**change)]}))
+    with pytest.raises(ValueError, match=message):
+        scanner.load_exceptions(path, NOW.date())
+
+
+def test_reviewed_exception_file_is_valid_today(scanner):
+    assert all(row["target"] in {"dependencies", "runtime"}
+               for row in scanner.load_exceptions(scanner.EXCEPTIONS, datetime.now(UTC).date()))

@@ -10,7 +10,7 @@ import subprocess
 import tarfile
 import tempfile
 import tomllib
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime
 from pathlib import Path
 from urllib.parse import parse_qs, quote, urlsplit
 from uuid import uuid4
@@ -35,8 +35,59 @@ db:
 """
 
 
+EXCEPTIONS = ROOT / "scripts/release-exceptions.json"
+MAX_EXCEPTION_DAYS = 90
+POLICY = (
+    "Dependency advisories and runtime High/Critical/Unknown findings block. A High or lower finding "
+    "with no available fix may pass only through an unexpired, reviewed entry in "
+    "scripts/release-exceptions.json; Critical findings and findings with a fix never pass. Excepted "
+    "findings stay in the report. No scanner-level ignores, excludes or fix-state filters."
+)
+
+
 class ScanError(ValueError):
     pass
+
+
+def load_exceptions(path, today):
+    """Reviewed, time-limited exceptions for findings that have no available fix."""
+    if not path.is_file():
+        return []
+    rows = json.loads(path.read_text()).get("security", [])
+    require(isinstance(rows, list), "Invalid security exception list")
+    keys = {"id", "package", "target", "reason", "added", "expires"}
+    seen = set()
+    for row in rows:
+        require(isinstance(row, dict) and set(row) == keys
+                and all(isinstance(row[k], str) and row[k].strip() for k in keys),
+                "Each security exception needs id, package, target, reason, added and expires")
+        require(row["target"] in {"dependencies", "runtime"}, "Invalid security exception target")
+        added, expires = (date.fromisoformat(row[k]) for k in ("added", "expires"))
+        require(added <= expires and (expires - added).days <= MAX_EXCEPTION_DAYS,
+                f"Security exception {row['id']} must expire within {MAX_EXCEPTION_DAYS} days of being added")
+        require(today <= expires, f"Security exception {row['id']} expired on {row['expires']}")
+        key = (row["id"], row["package"], row["target"])
+        require(key not in seen, "Duplicate security exception")
+        seen.add(key)
+    return rows
+
+
+def apply_exceptions(findings, exceptions, target):
+    """Unblock only matching findings that are not Critical and have no available fix."""
+    used = set()
+    for row in findings:
+        if not row["blocking"]:
+            continue
+        for entry in exceptions:
+            if (entry["target"], entry["id"], entry["package"]) != (target, row["id"], row["package"]):
+                continue
+            if row["severity"] != "Critical" and row["fix_state"] != "fixed" and not row["fix_versions"]:
+                row["blocking"] = False
+                row["exception"] = {"reason": entry["reason"], "expires": entry["expires"]}
+                used.add((entry["id"], entry["package"]))
+            else:
+                row["exception_not_applicable"] = "Critical findings and findings with a fix always block"
+    return used
 
 
 def require(condition, message):
@@ -124,7 +175,7 @@ def archive_identity(path, image_id):
         return {"image_config_digest": config_digest, "architecture": data["architecture"], "os": data["os"]}
 
 
-def validate(report, bom, *, target, expected, now=None):
+def validate(report, bom, *, target, expected, now=None, exceptions=()):
     require(isinstance(report, dict) and isinstance(report.get("matches"), list), "Missing scanner findings")
     descriptor = report["descriptor"]
     require(descriptor["name"] == "grype" and descriptor["version"] == VERSION, "Unreviewed scanner version")
@@ -246,9 +297,11 @@ def validate(report, bom, *, target, expected, now=None):
         )
         if reported_state != state:
             findings[-1]["reported_fix_state"] = reported_state
+    used = apply_exceptions(findings, exceptions, target)
     return {
         "result": "failed" if any(row["blocking"] for row in findings) else "passed",
         "findings": findings,
+        "exceptions_applied": sorted("/".join(key) for key in used),
         "component_count": len(components),
         "database": status,
         "database_archive_checksum": checksum[0],
@@ -324,6 +377,9 @@ def scan(root, output, image, *, cache=None):
     cache.mkdir(parents=True, exist_ok=True)
     output.mkdir(parents=True)
     sources = [root / "uv.lock", root / "pyproject.toml", root / "scripts/scan-security.py"]
+    exceptions_path = root / "scripts/release-exceptions.json"
+    if exceptions_path.is_file():
+        sources.append(exceptions_path)
     manifest = root / "source-manifest.json"
     if manifest.is_file():
         sources.append(manifest)
@@ -334,7 +390,7 @@ def scan(root, output, image, *, cache=None):
         "scanned_at": datetime.now(UTC).isoformat(),
         "scanner_image": SCANNER,
         "inputs_sha256": before,
-        "policy": "All dependency advisories block. Runtime High/Critical/Unknown findings block, including unfixed findings. No configured ignores, excludes or fix-state filters; pinned upstream matching policy applies.",
+        "policy": POLICY,
         "limitations": "Known-advisory scan and discovered package inventory only; no claim of exploitability, absence of vulnerabilities, complete native-library detection or source-code security.",
     }
     try:
@@ -345,6 +401,8 @@ def scan(root, output, image, *, cache=None):
             receipt["source_revision"] = None
         if manifest.is_file():
             receipt["export_tree_sha256"] = json.loads(manifest.read_text())["tree_sha256"]
+        exceptions = load_exceptions(exceptions_path, datetime.now(UTC).date())
+        receipt["exceptions"] = exceptions
         purls, local = lock_nodes(root / "uv.lock")
         receipt["local_workspace_packages_not_advisory_qualified"] = local
         identity = run(["docker", "image", "inspect", "--format", "{{.Id}}", image])
@@ -395,7 +453,9 @@ def scan(root, output, image, *, cache=None):
                 report, bom = (
                     json.loads((folder / file).read_text()) for file in ("report.json", "sbom.cdx.json")
                 )
-                results[label] = validate(report, bom, target=label, expected=expected)
+                results[label] = validate(
+                    report, bom, target=label, expected=expected, exceptions=exceptions
+                )
                 threshold = (
                     {"Low", "Medium", "High", "Critical"} if label == "dependencies" else {"High", "Critical"}
                 )
@@ -412,6 +472,16 @@ def scan(root, output, image, *, cache=None):
                 results["dependencies"]["database"] == results["runtime"]["database"],
                 "Database changed between scans",
             )
+            applied = {
+                (label, item)
+                for label, result in results.items()
+                for item in result["exceptions_applied"]
+            }
+            for entry in exceptions:
+                require(
+                    (entry["target"], entry["id"] + "/" + entry["package"]) in applied,
+                    f"Remove unused security exception {entry['id']} ({entry['package']})",
+                )
             receipt["scans"] = results
         require(
             before == {str(path.relative_to(root)): sha(path) for path in sources},

@@ -1,0 +1,21 @@
+name: Data source or feature
+description: Suggest a new data source, tool or improvement.
+body:
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What it should answer
+      description: The question or workflow, and the provider or API involved.
+    validations:
+      required: true
+  - type: input
+    id: terms
+    attributes:
+      label: Provider terms
+      description: Link to the provider's license or terms of use, if known.
+  - type: checkboxes
+    id: contribute
+    attributes:
+      label: Contribution
+      options:
+        - label: I would like to implement this myself after we agree on the approach.

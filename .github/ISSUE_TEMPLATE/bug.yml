@@ -1,0 +1,24 @@
+name: Bug report
+description: A tool or command that fails or returns unexpected results.
+body:
+  - type: input
+    id: version
+    attributes:
+      label: biomedmcp version and client
+      placeholder: biomedmcp 0.2.4, Claude Desktop, stdio
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Tool call or command
+      description: The tool name and arguments, or the CLI command, that shows the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Expected and observed behavior
+      description: Paste any error. Remove credentials, patient data and sensitive research.
+    validations:
+      required: true
