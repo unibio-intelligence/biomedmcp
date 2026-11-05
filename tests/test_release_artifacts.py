@@ -278,9 +278,33 @@ def test_conflicting_existing_release_stops_without_mutations(release, prepared,
         ("permissions", {"push": False}),
     ],
 )
-def test_wrong_destination_or_unobservable_drafts_stop_before_mutations(release, prepared, field, value):
+def test_wrong_destination_or_unobservable_drafts_stop_before_mutations(release, prepared, field, value, monkeypatch):
+    monkeypatch.delenv("RELEASE_TOKEN_KIND", raising=False)
     directory, receipt, remote = prepared
     remote.repository[field] = value
+    with pytest.raises(release.ReleaseError):
+        release.publish(remote, directory, receipt, "Reviewed changelog")
+    assert remote.mutations == []
+
+
+@pytest.mark.parametrize("permissions", [{"push": False}, None])
+def test_declared_workflow_token_may_observe_drafts_without_push_flag(release, prepared, monkeypatch, permissions):
+    # GitHub reports push as false (or omits it) for the workflow installation token.
+    directory, receipt, remote = prepared
+    remote.repository["permissions"] = permissions
+    monkeypatch.setenv("GITHUB_ACTIONS", "true")
+    monkeypatch.setenv("RELEASE_TOKEN_KIND", "workflow")
+    assert release.publish(remote, directory, receipt, "Reviewed changelog")["status"] == "published"
+
+
+@pytest.mark.parametrize("environment", [{"GITHUB_ACTIONS": "true"}, {"RELEASE_TOKEN_KIND": "workflow"}])
+def test_undeclared_token_without_push_still_stops_before_mutations(release, prepared, monkeypatch, environment):
+    directory, receipt, remote = prepared
+    remote.repository["permissions"] = {"push": False}
+    monkeypatch.delenv("GITHUB_ACTIONS", raising=False)
+    monkeypatch.delenv("RELEASE_TOKEN_KIND", raising=False)
+    for key, value in environment.items():
+        monkeypatch.setenv(key, value)
     with pytest.raises(release.ReleaseError):
         release.publish(remote, directory, receipt, "Reviewed changelog")
     assert remote.mutations == []
@@ -824,3 +848,8 @@ def test_workflow_attests_between_security_and_publication():
         s.get("if") != "always()"
         for s in [steps[indexed["provenance"]], steps[indexed["wheel_sbom"]], steps[publish]]
     )
+    # Every later step that builds or bundles artifacts sees the pinned source timestamp.
+    pin = next(i for i, s in enumerate(steps) if "SOURCE_DATE_EPOCH=" in s.get("run", "") and "GITHUB_ENV" in s.get("run", ""))
+    bundle = next(i for i, s in enumerate(steps) if "release-artifacts.py bundle" in s.get("run", ""))
+    assert pin < security < bundle
+    assert steps[publish]["env"]["RELEASE_TOKEN_KIND"] == "workflow"

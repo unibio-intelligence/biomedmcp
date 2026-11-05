@@ -35,6 +35,9 @@ jobs:
           assert tomllib.loads(Path("pyproject.toml").read_text())["project"]["version"] == version
           assert Path("LICENSE").is_file()
           PY
+      - name: Pin the source timestamp for reproducible artifacts
+        # Later steps (wheel build and bundle) read SOURCE_DATE_EPOCH from the job environment.
+        run: echo "SOURCE_DATE_EPOCH=$(git show -s --format=%ct "$GITHUB_SHA")" >> "$GITHUB_ENV"
       - name: Qualify containers and dependent checks with scoped cleanup
         id: public_links
         run: |
@@ -45,7 +48,7 @@ jobs:
             security_status=0
             TMPDIR="$RUNNER_TEMP" python scripts/scan-security.py --image "$UBI_RUNTIME_IMAGE" --output "$RUNNER_TEMP/ubi-security-report" || security_status=$?
             test "$link_status" -eq 0 && test "$security_status" -eq 0 || exit 1
-            export SOURCE_DATE_EPOCH="$(git show -s --format=%ct "$GITHUB_SHA")"
+            test -n "$SOURCE_DATE_EPOCH"
             mkdir -p "$RUNNER_TEMP/ubi-wheels"
             docker run --label "$UBI_TEST_RUN_LABEL" --rm -e SOURCE_DATE_EPOCH -v "$RUNNER_TEMP/ubi-wheels:/wheels" "$UBI_TEST_IMAGE" uv build --wheel --out-dir /wheels
             docker run --label "$UBI_TEST_RUN_LABEL" --rm --network none -v "$RUNNER_TEMP/ubi-wheels:/wheels:ro" "$UBI_TEST_IMAGE" uv run --frozen --no-sync python scripts/check-wheel.py --wheels /wheels
@@ -106,6 +109,7 @@ jobs:
       - name: Verify or resume versioned public artifacts
         env:
           GH_TOKEN: ${{ github.token }}
+          RELEASE_TOKEN_KIND: workflow
           RELEASE_VERSION: ${{ inputs.version }}
         run: |
           python scripts/release-artifacts.py publish --assets "$RUNNER_TEMP/ubi-release-assets"

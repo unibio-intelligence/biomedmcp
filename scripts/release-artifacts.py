@@ -547,8 +547,13 @@ def publish(github, directory, receipt, notes):
         metadata.get("full_name") == REPOSITORY and metadata.get("private") is False,
         "Destination must be the exact public release repository.",
     )
+    # The workflow token is a GitHub App installation token: GitHub reports push as false
+    # for it even though this job grants contents: write, which is what drafts require.
+    workflow_token = (
+        os.environ.get("GITHUB_ACTIONS") == "true" and os.environ.get("RELEASE_TOKEN_KIND") == "workflow"
+    )
     require(
-        metadata.get("permissions", {}).get("push") is True,
+        (metadata.get("permissions") or {}).get("push") is True or workflow_token,
         "Authenticated push access is required to observe drafts.",
     )
     matches = [r for r in github.pages(f"repos/{REPOSITORY}/releases") if r.get("tag_name") == tag]
