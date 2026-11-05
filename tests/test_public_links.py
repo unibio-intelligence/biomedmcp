@@ -530,3 +530,40 @@ def test_listed_host_network_failure_is_not_excused(checker, tmp_path, monkeypat
     result = checker.classify({"url": "https://blocked.example.org/", "status": "dns_failure", "chain": []},
                               checker.blocked_hosts(exceptions))
     assert result["status"] == "dns_failure"
+
+
+@pytest.mark.parametrize("status,chain,outage", [
+    ("timeout", [], True),
+    ("request_timeout", [], True),
+    ("network_failure", [], True),
+    ("http_failure", [{"url": "https://docs.example.org/", "http_status": 500}], True),
+    ("http_failure", [{"url": "https://docs.example.org/", "http_status": 503}], True),
+    ("http_failure", [{"url": "https://docs.example.org/", "http_status": 429}], True),
+    ("http_failure", [{"url": "https://docs.example.org/", "http_status": 404}], False),
+    ("http_failure", [{"url": "https://docs.example.org/", "http_status": 403}], False),
+    ("dns_failure", [], False),
+    ("tls_validation_failed", [], False),
+    ("redirect_limit", [], False),
+    ("worker_failure", [], False),
+])
+def test_provider_outages_are_unverified_and_broken_links_still_fail(checker, status, chain, outage):
+    result = checker.classify({"url": "https://docs.example.org/", "status": status, "chain": chain}, {})
+    assert (result["status"] == "unverified_provider_unavailable") == outage
+    if outage:
+        assert result["observed_status"] == status
+
+
+def test_report_passes_through_an_outage_but_not_a_broken_link(checker, tmp_path, monkeypatch):
+    monkeypatch.setattr(checker, "EXCEPTIONS", tmp_path / "missing.json")
+    (tmp_path / "README.md").write_text(
+        "[Down](https://down.example.org/page) [Ok](https://docs.example.org/ok)"
+    )
+    report = checker.qualify(tmp_path, run=lambda url, timeout: checker.check_url(
+        url, request=response(503 if "down" in url else 200)))
+    assert report["result"] == "passed"
+    (tmp_path / "README.md").write_text(
+        "[Down](https://down.example.org/page) [Gone](https://docs.example.org/gone)"
+    )
+    report = checker.qualify(tmp_path, run=lambda url, timeout: checker.check_url(
+        url, request=response(503 if "down" in url else 404)))
+    assert report["result"] == "failed"

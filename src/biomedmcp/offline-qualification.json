@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
   "implementation": "biomedmcp/0.2.4",
-  "qualified_at": "2026-11-05T01:05:35.639834+00:00",
-  "junit_sha256": "2eef5a6d859d9bdda717a3991031a83d7f9c03aed57e81fc13f240dd3d359210",
+  "qualified_at": "2026-11-05T02:06:18.031152+00:00",
+  "junit_sha256": "053d5491e279b20c77877af7c1b4537de68057d03df871910709d26024731f2b",
   "core_sha256": "8238b9519326ab57a843b159f948e17088315b7d64ec1fe400edda966db4aca6",
   "dependencies": {
     "fastmcp": "4.1.2",
@@ -703,7 +703,7 @@
     "tests/test_provider_pagination.py": "1a1bdc8d573d3669a21b934c12cdd28ababe9316b64278f22bc14185d6d0a991",
     "tests/test_provider_security.py": "91b9fda2596a313c77e91be9f53c5f613a15565c28ba5e168dc0672a98f3b031",
     "tests/test_public_examples.py": "d5a181051aaf48bda874c90fa80a5105ddd1549f73651514be3c3d2b917ba738",
-    "tests/test_public_links.py": "b254278b2e9453f2f1614d7e2eec1aecddf282390eb52e54c3a2599527f67004",
+    "tests/test_public_links.py": "aecc05247460e5fb433c7d85cbee8a798a7b1a81a15ddd8c6dcf8be28368eaa3",
     "tests/test_public_predictor_cache.py": "22bb64789532a0b970d89f97c7e652172cf66bd851271e0a80262f5965fba737",
     "tests/test_public_snapshot_grants.py": "94b85f11c5bebd14439b6b6e760bf68fef232ead9f100d52cc312941c9529e35",
     "tests/test_pubmed_search_parity.py": "da1a0e0aa9cc854eb596dea25b6375dc67b40112588a4359344fb65be512fe08",

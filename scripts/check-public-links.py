@@ -284,12 +284,28 @@ def blocked_hosts(path):
     return hosts
 
 
+OUTAGE_STATUSES = {"timeout", "request_timeout", "network_failure", "connection_failed"}
+UNVERIFIED = {"unverified_host_blocks_automation", "unverified_provider_unavailable"}
+
+
+def provider_outage(result):
+    """Timeouts, dropped connections, HTTP 429 and 5xx say the site is down, not that the link is wrong."""
+    if result["status"] in OUTAGE_STATUSES:
+        return True
+    chain = result.get("chain") or []
+    return result["status"] == "http_failure" and bool(chain) and (
+        chain[-1]["http_status"] == 429 or chain[-1]["http_status"] >= 500
+    )
+
+
 def classify(result, hosts):
-    """An HTTP refusal from a listed host is unverified rather than failed; nothing else changes."""
+    """Report listed-host refusals and provider outages as unverified; broken links still fail."""
     host = (urlsplit(result["url"]).hostname or "").lower()
     listed = next((h for h in hosts if host == h or host.endswith("." + h)), None)
     if listed and result["status"] == "http_failure":
         return {**result, "status": "unverified_host_blocks_automation", "exception": hosts[listed]}
+    if provider_outage(result):
+        return {**result, "status": "unverified_provider_unavailable", "observed_status": result["status"]}
     return result
 
 
@@ -335,7 +351,7 @@ def qualify(root, *, run=None):
         "qualified_at": datetime.now(UTC).isoformat(),
         "result": "passed"
         if not changed and not errors and results
-        and all(x["status"] in {"reachable", "unverified_host_blocks_automation"} for x in results)
+        and all(x["status"] == "reachable" or x["status"] in UNVERIFIED for x in results)
         else "failed",
         "scope": "Live unauthenticated HTTP reachability of parsed public Markdown/HTML links; no remote-anchor/page semantics, provider health or client/model qualification.",
         "inputs_sha256": inputs,
@@ -387,12 +403,10 @@ def main():
                 "result": report["result"],
                 "links": len(report.get("links", [])),
                 "failures": sum(
-                    x["status"] not in {"reachable", "unverified_host_blocks_automation"}
+                    x["status"] != "reachable" and x["status"] not in UNVERIFIED
                     for x in report.get("links", [])
                 ),
-                "unverified": sum(
-                    x["status"] == "unverified_host_blocks_automation" for x in report.get("links", [])
-                ),
+                "unverified": sum(x["status"] in UNVERIFIED for x in report.get("links", [])),
             }
         )
     )

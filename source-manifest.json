@@ -182,7 +182,7 @@
     },
     "docs/public-links.md": {
       "executable": false,
-      "sha256": "237138cee4053538450bd1e43a3698ff6ae911ff6fe8fb4754da4b01a92d9904"
+      "sha256": "714efda3c277baf64318a1cf8304a1256a5b303f50677ea739c585ef299bd1f5"
     },
     "docs/python-dependency-inventory.json": {
       "executable": false,
@@ -302,7 +302,7 @@
     },
     "scripts/check-public-links.py": {
       "executable": true,
-      "sha256": "d03386c4b55552cf2f04e57b0008cb9db9c07f9ed282d966b192b90320125555"
+      "sha256": "121c63a84283ffe223a4654ca04ee8b85213ab52b5dfd54cfa26ed245014edc9"
     },
     "scripts/check-wheel.py": {
       "executable": true,
@@ -1774,7 +1774,7 @@
     },
     "src/biomedmcp/offline-qualification.json": {
       "executable": false,
-      "sha256": "8de586b2fe3ca30a9c3c17535a60a0b8dd4be5956931914e0223f9246e8e32ea"
+      "sha256": "2be86a3e6b2909cca13a2801860f864c456f0c947adaad1acf1f9e5242685f6d"
     },
     "src/biomedmcp/onboarding.py": {
       "executable": false,
@@ -2386,7 +2386,7 @@
     },
     "tests/test_public_links.py": {
       "executable": false,
-      "sha256": "b254278b2e9453f2f1614d7e2eec1aecddf282390eb52e54c3a2599527f67004"
+      "sha256": "aecc05247460e5fb433c7d85cbee8a798a7b1a81a15ddd8c6dcf8be28368eaa3"
     },
     "tests/test_public_predictor_cache.py": {
       "executable": false,
@@ -2647,5 +2647,5 @@
   },
   "format": 1,
   "publication_ready": true,
-  "tree_sha256": "a7c20f2d014ef5f7e2b3bd0b6f008b6ef27c77be50a5a173174e3b5168046e0c"
+  "tree_sha256": "ec7d0f2867641eb83eacd14dd6b406a87b83876ecf2e8aca834bc3f3aa8daacf"
 }
