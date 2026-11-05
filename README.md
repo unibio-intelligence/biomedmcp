@@ -74,3 +74,8 @@ or client secret storage. A failed source doesn't mean there is no evidence.
 The integration code uses [Apache-2.0](https://github.com/unibio-intelligence/biomedmcp/blob/main/LICENSE). Retrieved data retains its
 [source terms](https://github.com/unibio-intelligence/biomedmcp/blob/main/docs/source-licenses.md). See [notices](https://github.com/unibio-intelligence/biomedmcp/blob/main/NOTICE.md),
 [release notes](https://github.com/unibio-intelligence/biomedmcp/blob/main/CHANGELOG.md) and [contributing](https://github.com/unibio-intelligence/biomedmcp/blob/main/CONTRIBUTING.md).
+
+## Acknowledgements
+
+We gratefully acknowledge support from Anthropic's AI for Science rare disease
+research grants.

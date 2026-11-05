@@ -58,7 +58,7 @@
     },
     "README.md": {
       "executable": false,
-      "sha256": "21f717ce5ad671a3bcc576cde10c49fbd2e0c6bdc3020b3e187e2764d4864ff5"
+      "sha256": "68ba90aceb791b297d322df02a2f0486deeb3b8be16950350839567921c4cfbb"
     },
     "docs/adapter-catalog.json": {
       "executable": false,
@@ -2647,5 +2647,5 @@
   },
   "format": 1,
   "publication_ready": true,
-  "tree_sha256": "824eab8ffea424aa6068faeb8914cf3666d20433e06841403d6536c25c9fd94d"
+  "tree_sha256": "a7c20f2d014ef5f7e2b3bd0b6f008b6ef27c77be50a5a173174e3b5168046e0c"
 }
