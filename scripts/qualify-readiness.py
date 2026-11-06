@@ -54,9 +54,9 @@ ENDPOINT_EVIDENCE = {
     "gnomad": ["test_gnomad_responses", "test_typed_population_records"],
     "ncbi": ["test_ncbi_datasets", "test_ncbi_gene_reports", "test_direct_clinvar"],
     "reactome": ["test_reactome_responses", "test_reactome_contracts"],
-    "antibody-registry": ["test_repaired_adapters"],
-    "bio-ontology": ["test_repaired_adapters"],
-    "mygene": ["test_repaired_adapters", "test_qualified_gene_identity"],
+    "antibody-registry": ["test_retained_routes"],
+    "bio-ontology": ["test_retained_routes"],
+    "mygene": ["test_retained_routes", "test_qualified_gene_identity"],
     "protein-atlas": ["test_hpa_responses"],
     "string": ["test_string_network"],
     "clingen": ["test_clingen_responses", "test_typed_variant_assertions"],
@@ -117,9 +117,9 @@ def qualify(junit, *, probe=None):
         imported = probe["sources"][source]
         if not imported["importable"]:
             raise ValueError("An adapter could not import during readiness qualification")
-        evidence = ["tests/test_adapter_inventory.py"] if source in PROVIDERS else []
+        evidence = ["tests/unit/adapters/test_adapter_inventory.py"] if source in PROVIDERS else []
         endpoint_modules = ENDPOINT_EVIDENCE.get(source, [])
-        evidence += [f"tests/{name}.py" for name in endpoint_modules]
+        evidence += [test_path(name) for name in endpoint_modules]
         entries[source] = {
             "kind": "endpoint_contract" if endpoint_modules else "inventory",
             "implementation_sha256": imported["implementation_sha256"],
@@ -152,6 +152,12 @@ def qualify(junit, *, probe=None):
         "sources": entries,
         "interpretation": "Offline bounded inventory/endpoint fixtures only; no live-health or model/client readiness claim.",
     }
+
+
+def test_path(module):
+    """Repository-relative path of one test module, wherever it lives under tests/."""
+    (path,) = (ROOT / "tests").rglob(module + ".py")
+    return str(path.relative_to(ROOT))
 
 
 def test_inputs():

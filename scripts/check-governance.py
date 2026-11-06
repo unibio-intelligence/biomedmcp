@@ -7,6 +7,7 @@ import hashlib
 import json
 import re
 import runpy
+import sys
 import tomllib
 from contextlib import ExitStack, contextmanager
 from html.parser import HTMLParser
@@ -19,10 +20,12 @@ from markdown_it import MarkdownIt
 from biomedmcp.adapters import PROVIDERS
 from biomedmcp.diagnostics import import_probe, offline_evidence
 from biomedmcp.native import REVISION
-from biomedmcp.onboarding import investigations_markdown, matrix_markdown
 from biomedmcp.source_licensing import check_inventory
 from biomedmcp.source_licensing import matrix_markdown as license_markdown
 from biomedmcp.source_policy import policy, source_names
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from onboarding_docs import investigations_markdown, matrix_markdown
 
 ROOT = Path(__file__).resolve().parents[1]
 SKIP = {".git", ".venv", "__pycache__", "build", "dist", "vendor", ".cache", "reports"}
@@ -95,7 +98,6 @@ async def generated(root):
             "docs/investigations.md": investigations_markdown().encode(),
             "docs/source-access.md": matrix_markdown().encode(),
             "docs/source-licenses.md": license_markdown().encode(),
-            "docs/locked-dependencies.json": (json.dumps(lock_inventory(root), indent=2) + "\n").encode(),
         }
     )
     return outputs
@@ -109,28 +111,7 @@ def compare_generated(root, expected):
             errors.append(name)
             continue
         actual = path.read_bytes()
-        if name == "docs/mcp-catalog-budget.json":
-            try:
-                old, new = json.loads(actual), json.loads(data)
-                # Token counts depend on optional tokenizer installation, not schema identity.
-                for value in (old, new):
-                    if not isinstance(value, dict) or not {"tokens", "tokenizer"} <= value.keys():
-                        raise ValueError("Missing token measurement fields")
-                    if not (
-                        value["tokens"] is None
-                        and value["tokenizer"] is None
-                        or type(value["tokens"]) is int
-                        and value["tokens"] > 0
-                        and value["tokenizer"] == "cl100k_base"
-                    ):
-                        raise ValueError("Invalid token measurement")
-                    value.pop("tokens", None)
-                    value.pop("tokenizer", None)
-                same = old == new
-            except (ValueError, AttributeError):
-                same = False
-        else:
-            same = actual == data
+        same = actual == data
         if not same:
             errors.append(name)
     return errors

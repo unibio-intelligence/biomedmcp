@@ -1,6 +1,6 @@
 # PDB archive retrieval
 
-Discover current parameters with `capabilities(source="pdb")`, then use `query_source`. The distinct operations are `search_structures`, `get_structure_info`, `download_structure` and `get_structure_quality`. [Source permissions](source-licenses.md) cover PDB archive records and coordinates; computed models and non-PDB third-party model identifiers are outside this integration.
+Discover current parameters with `get_capabilities(source="pdb")`, then use `query_source`. The distinct operations are `search_structures`, `get_structure_info`, `download_structure` and `get_structure_quality`. [Source permissions](source-licenses.md) cover PDB archive records and coordinates; computed models and non-PDB third-party model identifiers are outside this integration.
 
 Search returns experimental archive entries, provider scores, stable record locators, acquired counts and provider totals. `coverage` states the offset, limit and content scope. Execute the supplied `next_actions` to continue; a displayed window is not the complete archive. An HTTP 204 from RCSB means no hits in that page; an empty later page does not mean the total is zero. Past the largest supported offset, results stay partial and no continuation is offered.
 

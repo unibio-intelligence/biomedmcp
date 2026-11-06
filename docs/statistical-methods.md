@@ -43,7 +43,7 @@ The [fixed inputs](../tests/fixtures/statistics/r-cases.json), [R outputs](../te
 References were generated using R 4.6.1, stats 4.6.1, survival 3.8-6 and jsonlite 2.0.0. The official [survival source archive](https://cloud.r-project.org/src/contrib/Archive/survival/survival_3.8-6.tar.gz) has SHA-256 `9a4c0a35d86c64ec5a6e6cf179ab22dcffb5ce1d313d2880a09f1e53422699d7`. Install that reviewed library separately for developer reproduction; R is not a Python runtime or CI dependency. Normal tests read the fixed files offline:
 
 ```sh
-uv run --frozen pytest tests/test_study_statistics_reference.py tests/test_study_patient_inference.py tests/test_study_statistics_boundaries.py
+uv run --frozen pytest tests/unit/studies/test_study_statistics_reference.py tests/unit/studies/test_study_patient_inference.py tests/unit/studies/test_study_statistics_boundaries.py
 # Optional developer reproduction with the specified R/package versions already installed:
 Rscript --vanilla scripts/reference-statistics.R tests/fixtures/statistics/r-cases.json /tmp/r-reference.json
 ```

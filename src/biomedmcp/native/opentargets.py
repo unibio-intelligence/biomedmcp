@@ -405,13 +405,6 @@ baselineExpression{count rows{unit median min max q1 q3 datasourceId datatypeId
 tissueBiosampleFromSource celltypeBiosampleFromSource tissueBiosample{biosampleId biosampleName}}}
 safetyLiabilities{event effects{direction dosing} datasource} tractability{label modality value}"""
 ASSOCIATION_FIELDS = "count rows{disease{id name} score datatypeScores{id score}}"
-PROFILE_QUERY = (
-    "query($id:String!){target(ensemblId:$id){"
-    + TARGET_FIELDS
-    + " associatedDiseases{"
-    + ASSOCIATION_FIELDS
-    + "}}}"
-)
 TARGET_QUERY = "query($id:String!){target(ensemblId:$id){" + TARGET_FIELDS + "}}"
 
 

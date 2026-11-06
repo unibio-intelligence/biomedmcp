@@ -102,7 +102,7 @@
       "operation_count": 4,
       "operations": [
         {
-          "description": "List ontologies, optionally filtering acronym/name locally.\n\nThe provider's ontology collection is not a term search. Offset/limit\ncontinue the filtered collection, whose contents may change over time.",
+          "description": "List the ontologies hosted on BioPortal, narrowed by acronym or name.\n\nThis reads the ontology inventory, not terms inside ontologies. Filtering\nand offset/limit windowing happen locally over the full inventory.",
           "input_schema": {
             "additionalProperties": false,
             "properties": {
@@ -115,16 +115,19 @@
                     "type": "null"
                   }
                 ],
-                "default": null
+                "default": null,
+                "description": "Also list ontology views (subsets) when true."
               },
               "limit": {
                 "default": 25,
+                "description": "Rows to return, at most 25.",
                 "maximum": 25,
                 "minimum": 1,
                 "type": "integer"
               },
               "offset": {
                 "default": 0,
+                "description": "Rows to skip in the filtered list.",
                 "maximum": 10000,
                 "minimum": 0,
                 "type": "integer"
@@ -140,7 +143,8 @@
                     "type": "null"
                   }
                 ],
-                "default": null
+                "default": null,
+                "description": "Substring matched case-insensitively against acronym and name."
               }
             },
             "type": "object"
@@ -148,12 +152,44 @@
           "name": "search_ontologies"
         },
         {
-          "description": "Get detailed information about a specific ontology class",
+          "description": "Page through the classes of one ontology as BioPortal serves them.\n\nRows keep their original `@id` URI and `prefLabel`; the provider decides\nthe ordering, so continue with `next_page` rather than re-sorting.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "ontology": {
+                "description": "BioPortal ontology acronym such as GO, NCIT or SNOMEDCT.",
+                "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$",
+                "type": "string"
+              },
+              "page": {
+                "default": 1,
+                "description": "1-based provider page.",
+                "maximum": 10000,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "pagesize": {
+                "default": 25,
+                "description": "Rows per page, at most 25.",
+                "maximum": 25,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "ontology"
+            ],
+            "type": "object"
+          },
+          "name": "get_ontology_classes"
+        },
+        {
+          "description": "Fetch one class record from one ontology by its exact URI.\n\nThe URI is percent-encoded into the request path; the returned record is\nthe provider's own representation, including `@id`.",
           "input_schema": {
             "additionalProperties": false,
             "properties": {
               "class_id": {
-                "description": "Class ID/URI (URL-encoded if necessary)",
+                "description": "Full class URI exactly as the ontology defines it.",
                 "maxLength": 2048,
                 "minLength": 1,
                 "type": "string"
@@ -168,10 +204,10 @@
                   }
                 ],
                 "default": null,
-                "description": "Comma-separated attributes to include (e.g., prefLabel,definition,parents,children)"
+                "description": "Attribute names to request, joined with commas, e.g. prefLabel,definition,parents."
               },
               "ontology": {
-                "description": "Ontology acronym",
+                "description": "BioPortal ontology acronym such as GO, NCIT or SNOMEDCT.",
                 "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$",
                 "type": "string"
               }
@@ -185,36 +221,7 @@
           "name": "get_class_info"
         },
         {
-          "description": "Retrieve a provider page of classes with labels and original class URIs.",
-          "input_schema": {
-            "additionalProperties": false,
-            "properties": {
-              "ontology": {
-                "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$",
-                "type": "string"
-              },
-              "page": {
-                "default": 1,
-                "maximum": 10000,
-                "minimum": 1,
-                "type": "integer"
-              },
-              "pagesize": {
-                "default": 25,
-                "maximum": 25,
-                "minimum": 1,
-                "type": "integer"
-              }
-            },
-            "required": [
-              "ontology"
-            ],
-            "type": "object"
-          },
-          "name": "get_ontology_classes"
-        },
-        {
-          "description": "Retrieve mapping assertions for an ontology or class.\n\nPreserve classes, source and process. A mapping is not automatically\nbiological equivalence; its generating process determines its meaning.",
+          "description": "Retrieve mapping assertions for an ontology, or for one class in it.\n\nWhole-ontology mappings are paged by the provider; per-class mappings\narrive as one list and are windowed locally. `missing_process_count`\ntells how many returned rows lack a generating process.",
           "input_schema": {
             "additionalProperties": false,
             "properties": {
@@ -229,20 +236,24 @@
                     "type": "null"
                   }
                 ],
-                "default": null
+                "default": null,
+                "description": "Restrict to mappings of this class URI; omit for the whole ontology."
               },
               "ontology": {
+                "description": "BioPortal ontology acronym such as GO, NCIT or SNOMEDCT.",
                 "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$",
                 "type": "string"
               },
               "page": {
                 "default": 1,
+                "description": "1-based provider page.",
                 "maximum": 10000,
                 "minimum": 1,
                 "type": "integer"
               },
               "pagesize": {
                 "default": 25,
+                "description": "Rows per page, at most 25.",
                 "maximum": 25,
                 "minimum": 1,
                 "type": "integer"
@@ -1560,11 +1571,14 @@
       "operation_count": 2,
       "operations": [
         {
-          "description": "Retrieve reported annotations; missing modalities are unavailable, not negative.",
+          "description": "Collect reported absorption, distribution, metabolism, excretion, toxicity and physicochemical annotations from one MyChem record; unavailable modalities stay explicit.",
           "input_schema": {
             "additionalProperties": false,
             "properties": {
               "chemical_id": {
+                "description": "InChIKey, ChEMBL ID, DrugBank ID, UNII, PubChem CID or name.",
+                "maxLength": 256,
+                "minLength": 1,
                 "type": "string"
               }
             },
@@ -1576,27 +1590,35 @@
           "name": "get_admet_properties"
         },
         {
-          "description": "Map literal identifiers; preserve all source matches and explicit missingness.",
+          "description": "Map chemical identifiers between ChEMBL, InChIKey, PubChem, DrugBank, UNII and ChEBI namespaces in one POST /v1/query batch; every match stays a candidate.",
           "input_schema": {
             "additionalProperties": false,
             "properties": {
               "from_type": {
+                "description": "One of: chembl, inchikey, pubchem, drugbank, unii, chebi",
                 "type": "string"
               },
               "input_ids": {
+                "description": "Literal identifiers in from_type.",
                 "items": {
                   "type": "string"
                 },
+                "maxItems": 1000,
+                "minItems": 1,
                 "type": "array"
               },
               "missing_ok": {
                 "default": true,
+                "description": "Whether unmapped inputs are acceptable.",
                 "type": "boolean"
               },
               "to_types": {
+                "description": "Target namespaces.",
                 "items": {
                   "type": "string"
                 },
+                "maxItems": 6,
+                "minItems": 1,
                 "type": "array"
               }
             },
@@ -1633,14 +1655,20 @@
       "operation_count": 4,
       "operations": [
         {
-          "description": "Retrieve source assertions without inventing confidence or an aggregate score.",
+          "description": "Return DisGeNET gene-disease assertions for one gene symbol on one MyDisease record, as reported, with no derived association call or aggregate score.",
           "input_schema": {
             "additionalProperties": false,
             "properties": {
               "disease_id": {
+                "description": "MONDO, DOID, OMIM, Orphanet identifier or name.",
+                "maxLength": 256,
+                "minLength": 1,
                 "type": "string"
               },
               "gene_symbol": {
+                "maxLength": 64,
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9_.-]+$",
                 "type": "string"
               }
             },
@@ -1653,14 +1681,19 @@
           "name": "get_gene_disease_evidence"
         },
         {
-          "description": "Preserve every exact HPO annotation and its reported frequency units.",
+          "description": "Return every HPO annotation row for one phenotype on one MyDisease record, keeping raw frequency values or HPO frequency terms exactly as reported.",
           "input_schema": {
             "additionalProperties": false,
             "properties": {
               "disease_id": {
+                "description": "MONDO, DOID, OMIM, Orphanet identifier or name.",
+                "maxLength": 256,
+                "minLength": 1,
                 "type": "string"
               },
               "phenotype_id": {
+                "description": "HPO term, e.g. HP:0001250.",
+                "pattern": "^HP:[0-9]{7}$",
                 "type": "string"
               }
             },
@@ -1673,26 +1706,39 @@
           "name": "get_phenotype_frequency"
         },
         {
-          "description": "Rank annotation-set overlap within one source window, not clinical similarity.",
+          "description": "Rank diseases annotated with any query HPO term by Jaccard or Dice overlap of exact HPO identifier sets within one MyDisease query window (GET /v1/query); not a clinical similarity.",
           "input_schema": {
             "additionalProperties": false,
             "properties": {
               "algorithm": {
                 "default": "jaccard",
+                "enum": [
+                  "jaccard",
+                  "dice"
+                ],
                 "type": "string"
               },
               "min_similarity": {
                 "default": 0.5,
+                "maximum": 1,
+                "minimum": 0,
                 "type": "number"
               },
               "phenotype_list": {
                 "items": {
+                  "description": "HPO term, e.g. HP:0001250.",
+                  "pattern": "^HP:[0-9]{7}$",
                   "type": "string"
                 },
+                "maxItems": 100,
+                "minItems": 1,
                 "type": "array"
               },
               "size": {
                 "default": 20,
+                "description": "Source window size; one window only.",
+                "maximum": 100,
+                "minimum": 1,
                 "type": "integer"
               }
             },
@@ -1704,27 +1750,35 @@
           "name": "get_phenotype_similarity"
         },
         {
-          "description": "Map literal identifiers; preserve all source matches and explicit missingness.",
+          "description": "Map disease identifiers between MONDO, DOID, Orphanet, OMIM and MeSH namespaces in one POST /v1/query batch; every match stays a candidate.",
           "input_schema": {
             "additionalProperties": false,
             "properties": {
               "from_type": {
+                "description": "One of: mondo, doid, orphanet, omim, mesh",
                 "type": "string"
               },
               "input_ids": {
+                "description": "Literal identifiers in from_type.",
                 "items": {
                   "type": "string"
                 },
+                "maxItems": 1000,
+                "minItems": 1,
                 "type": "array"
               },
               "missing_ok": {
                 "default": true,
+                "description": "Whether unmapped inputs are acceptable.",
                 "type": "boolean"
               },
               "to_types": {
+                "description": "Target namespaces.",
                 "items": {
                   "type": "string"
                 },
+                "maxItems": 5,
+                "minItems": 1,
                 "type": "array"
               }
             },
@@ -2966,12 +3020,12 @@
       "operation_count": 3,
       "operations": [
         {
-          "description": "Advanced analyses: compare targets, find similar entities, validate targets, prioritize.\n\nThis tool replaces 5 advanced analysis tools:\n- compare_targets, find_similar_targets, build_target_validation_report,\n  get_target_prioritization, get_api_metadata, get_interaction_resources",
+          "description": "Bounded multi-target analyses; parameters a mode does not consume must keep their defaults.",
           "input_schema": {
             "additionalProperties": false,
             "properties": {
               "analysis_type": {
-                "description": "Type of advanced analysis:\n- \"compare\": Side-by-side comparison of multiple targets\n- \"similar\": Compare recorded annotation overlap within a bounded literature-model candidate window\n- \"validate\": Source evidence assessment with annotation counts and interpretation limits\n- \"prioritize\": Rank direct disease associations by their reported genetic component\n- \"metadata\": Get API and system metadata",
+                "description": "compare: the same aspects for 2-10 targets; similar: annotation Jaccard overlap for one target against its literature-model candidates; validate: annotation and candidate counts for one target, optionally with a disease pair; prioritize: direct disease associations ranked by their genetic_association component; metadata: API and data release versions.",
                 "type": "string"
               },
               "comparison_aspects": {
@@ -2987,7 +3041,7 @@
                   }
                 ],
                 "default": null,
-                "description": "Aspects to compare (for compare mode). Pass as an ARRAY.\nExamples: [\"tractability\"], [\"tractability\", \"safety\"], [\"diseases\", \"pathways\"]\nDefault: None (all aspects)\nIMPORTANT: Pass [\"tractability\", \"safety\"] NOT \"[\"tractability\", \"safety\"]\""
+                "description": "compare only: tractability, safety, diseases, pathways. Default: all."
               },
               "disease_id": {
                 "anyOf": [
@@ -2999,10 +3053,10 @@
                   }
                 ],
                 "default": null,
-                "description": "Disease context for validation/prioritization"
+                "description": "Disease ID for validate (optional) and prioritize."
               },
               "entity_ids": {
-                "description": "One or more entity IDs (targets for most analyses). Pass as an ARRAY.\nExamples: [\"ENSG00000012048\"], [\"ENSG00000012048\", \"ENSG00000141510\"]\nIMPORTANT: Pass [\"ENSG00000012048\"] NOT \"[\"ENSG00000012048\"]\"",
+                "description": "Human Ensembl gene IDs; empty for metadata or discovery.",
                 "items": {
                   "type": "string"
                 },
@@ -3010,17 +3064,17 @@
               },
               "limit": {
                 "default": 10,
-                "description": "Display bound for similar/prioritize modes (1-100, default: 10).\nOther modes reject nondefault unrelated parameters. Prioritize accepts 0-10\ndistinct targets; an empty array discovers within the bounded source window.",
+                "description": "similar/prioritize only: rows displayed (1-100).",
                 "type": "integer"
               },
               "similarity_criteria": {
                 "default": "pathways",
-                "description": "For similarity analysis:\n- \"pathways\": Similar pathway membership\n- \"diseases\": Similar disease associations\n- \"go_terms\": Similar GO term annotations\n- \"interactions\": Similar interaction partners",
+                "description": "similar only: pathways, diseases, go_terms or interactions.",
                 "type": "string"
               },
               "threshold": {
                 "default": 0.5,
-                "description": "Minimum annotation Jaccard for similar mode (0.0-1.0).\nProvider literature-model scores only discover candidates; they are not annotation overlap.",
+                "description": "similar only: minimum annotation Jaccard (0-1).",
                 "type": "number"
               }
             },
@@ -3033,13 +3087,13 @@
           "name": "analyze_advanced"
         },
         {
-          "description": "Analyze associations and evidence between entities, or discover therapeutic opportunities.\n\nThis tool replaces:\n- analyze_target_disease_association\n- get_target_disease_biomarkers\n- discover_therapeutic_opportunities\n- get_association_datasources",
+          "description": "Pair, drug and discovery associations; unconsumed parameters are rejected before any request.",
           "input_schema": {
             "additionalProperties": false,
             "properties": {
               "association_type": {
                 "default": "target-disease",
-                "description": "Type of association to analyze:\n- \"target-disease\": Target-disease evidence and associations\n- \"drug-target\": Drug-target mechanism relationships\n- \"drug-disease\": Drug-disease indications\n- \"discover-opportunities\": Find and rank therapeutic targets for a disease",
+                "description": "target-disease: indexed pair score plus one evidence window (source_id=target, target_id=disease); drug-target: mechanism rows and targets; drug-disease: indications; discover-opportunities: disease targets ranked by genetic_association score.",
                 "type": "string"
               },
               "evidence_cursor": {
@@ -3052,7 +3106,7 @@
                   }
                 ],
                 "default": null,
-                "description": "Follow the service-signed target-disease next action unchanged.\nThe action binds the original identities, filters, biomarker flag, limit and account."
+                "description": "target-disease: continuation issued by the service; submit it unchanged."
               },
               "evidence_types": {
                 "anyOf": [
@@ -3067,7 +3121,7 @@
                   }
                 ],
                 "default": null,
-                "description": "Filter by specific evidence types. Pass as an ARRAY.\nExamples: [\"genetic_association\"], [\"somatic_mutation\"], [\"genetic_association\", \"known_drug\"]\nIMPORTANT: Pass [\"genetic_association\"] NOT \"[\"genetic_association\"]\""
+                "description": "target-disease: keep only these datatype IDs, e.g. genetic_association."
               },
               "filters": {
                 "anyOf": [
@@ -3080,21 +3134,21 @@
                   }
                 ],
                 "default": null,
-                "description": "Discovery accepts only min_score for that component.\nOther modes reject discovery filters and ranking strategies."
+                "description": "discover-opportunities: {\"min_score\": x} on the genetic component."
               },
               "include_biomarkers": {
                 "default": true,
-                "description": "Retain reported biomarkerList annotations from displayed evidence",
+                "description": "target-disease: list biomarker annotations.",
                 "type": "boolean"
               },
               "limit": {
                 "default": 20,
-                "description": "Maximum results to return (1-100, default: 20)",
+                "description": "Evidence or ranking rows (1-100).",
                 "type": "integer"
               },
               "min_score": {
                 "default": 0.0,
-                "description": "Minimum association score threshold (0.0-1.0, default: 0.0)",
+                "description": "Minimum score for displayed evidence or ranked targets.",
                 "type": "number"
               },
               "ranking_strategy": {
@@ -3107,10 +3161,10 @@
                   }
                 ],
                 "default": null,
-                "description": "Discovery supports \"genetic_evidence\",\nusing the separately reported genetic_association component."
+                "description": "discover-opportunities: \"genetic_evidence\"."
               },
               "source_id": {
-                "description": "Source entity ID (target, disease, or drug)",
+                "description": "Target Ensembl ID, disease ID or ChEMBL ID depending on the mode.",
                 "type": "string"
               },
               "target_id": {
@@ -3123,7 +3177,7 @@
                   }
                 ],
                 "default": null,
-                "description": "Target entity ID (required for pair-specific analysis)"
+                "description": "Disease ID for target-disease."
               }
             },
             "required": [
@@ -3134,7 +3188,7 @@
           "name": "analyze_association"
         },
         {
-          "description": "Query genetic variants, GWAS studies, and credible sets.\n\nThis tool replaces 10 genetics/variant tools:\n- analyze_genetic_variant, get_variant_info, get_variant_evidences,\n  get_variant_credible_sets, get_variant_pharmacogenomics\n- explore_gwas_studies, get_studies_by_disease, get_study_info,\n  get_study_credible_sets, get_credible_set_by_id",
+          "description": "Variant, study and credible-set records with bounded, separately paged relations.\n\nExactly one selector is required; windows and flags a mode does not consume must keep their defaults.",
           "input_schema": {
             "additionalProperties": false,
             "properties": {
@@ -3148,7 +3202,7 @@
                   }
                 ],
                 "default": null,
-                "description": "Credible set identifier"
+                "description": "credible_set: one study-locus ID."
               },
               "disease_id": {
                 "anyOf": [
@@ -3160,7 +3214,7 @@
                   }
                 ],
                 "default": null,
-                "description": "One exact indexed disease ID for study discovery.\nStudy mode requires exactly one of study_id, disease_id or gene_id."
+                "description": "study: discover studies indexed to one disease."
               },
               "evidence_cursor": {
                 "anyOf": [
@@ -3172,7 +3226,7 @@
                   }
                 ],
                 "default": null,
-                "description": "Variant evidence continuation returned by the public service.\nIt preserves the variant, flags and limit; it is independent of credible-set page_index."
+                "description": "variant evidence continuation; submit unchanged."
               },
               "gene_id": {
                 "anyOf": [
@@ -3184,40 +3238,40 @@
                   }
                 ],
                 "default": null,
-                "description": "Internal study discovery selector. Public gene genetics\nuses get(entity=\"gene\", sections=[\"genetics\"]) with qualified identity."
+                "description": "study: discover studies linked to one Ensembl gene."
               },
               "include_credible_sets": {
                 "default": false,
-                "description": "Include associated credible sets (variant/study queries)",
+                "description": "Add one window of fine-mapped loci.",
                 "type": "boolean"
               },
               "include_evidences": {
                 "default": false,
-                "description": "Include evidence strings (variant queries)",
+                "description": "variant: add one window of linked evidence.",
                 "type": "boolean"
               },
               "include_functional_consequences": {
                 "default": true,
-                "description": "Include VEP functional predictions (variant queries)",
+                "description": "variant: transcript and effect predictions.",
                 "type": "boolean"
               },
               "include_pharmacogenomics": {
                 "default": false,
-                "description": "Include pharmacogenomics data (variant queries)",
+                "description": "variant: pharmacogenomics annotations.",
                 "type": "boolean"
               },
               "limit": {
                 "default": 25,
-                "description": "Maximum results to return (1-100, default: 25)",
+                "description": "Window size for loci, evidence or studies (1-100).",
                 "type": "integer"
               },
               "page_index": {
                 "default": 0,
-                "description": "Source page index for paginated credible sets or study discovery.",
+                "description": "Zero-based source page for loci or studies.",
                 "type": "integer"
               },
               "query_type": {
-                "description": "Type of genetics query:\n- \"variant\": Query variant information and annotations\n- \"study\": Query GWAS study information\n- \"credible_set\": Query fine-mapping credible sets",
+                "description": "variant, study or credible_set.",
                 "type": "string"
               },
               "study_id": {
@@ -3230,7 +3284,7 @@
                   }
                 ],
                 "default": null,
-                "description": "GWAS study identifier"
+                "description": "study: one GWAS or QTL study ID."
               },
               "variant_id": {
                 "anyOf": [
@@ -3242,7 +3296,7 @@
                   }
                 ],
                 "default": null,
-                "description": "Exact source variant ID, e.g. chromosome_position_ref_alt.\nrsIDs require a separately qualified identity lookup."
+                "description": "variant: chromosome_position_ref_alt."
               }
             },
             "required": [

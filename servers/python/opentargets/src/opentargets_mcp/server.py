@@ -1,259 +1,202 @@
-"""FastMCP-backed server for Open Targets MCP tools."""
+"""Open Targets Platform MCP adapter: target, disease, drug and genetics evidence."""
 
-from __future__ import annotations
+from typing import Annotated
 
-import functools
-import inspect
-import logging
-import os
-from collections.abc import Callable
-from typing import Any
-
-import anyio
-import mcp.types as mcp_types
-from dotenv import load_dotenv
 from fastmcp import FastMCP
-from mcp.server.lowlevel.server import NotificationOptions
-from starlette.requests import Request
-from starlette.responses import JSONResponse, Response
+from mcp.types import ToolAnnotations
+from pydantic import Field
 
+from biomedmcp.errors import provider_tool_boundary
+
+from . import __version__
 from .queries import OpenTargetsClient
 from .tools.unified import UnifiedTools
 
-__all__ = [
-    "get_client",
-    "main",
-    "mcp",
-]
-
-# ---------------------------------------------------------------------------
-# Logging & environment setup
-# ---------------------------------------------------------------------------
-load_dotenv()
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
-# ---------------------------------------------------------------------------
-# Client lifecycle management
-# ---------------------------------------------------------------------------
-# Initialize client at module load time for use in composition
-logger.info("Initializing Open Targets client")
-_client = OpenTargetsClient()
+READ_ONLY_ANNOTATIONS = ToolAnnotations(title="Query Open Targets", read_only_hint=True, open_world_hint=True)
+mcp = FastMCP("opentargets", version=__version__)
+CLIENT = OpenTargetsClient()
+TOOLS = UnifiedTools()
 
 
-def get_client() -> OpenTargetsClient:
-    """Return the active OpenTargetsClient."""
-    return _client
+@mcp.tool(annotations=READ_ONLY_ANNOTATIONS)
+@provider_tool_boundary("opentargets")
+async def get_entity(
+    entity_type: Annotated[str, Field(description='"target", "disease" or "drug".')],
+    entity_id: Annotated[str, Field(description="Ensembl gene ID, EFO/MONDO disease ID or ChEMBL drug ID.")],
+    sections: Annotated[
+        list[str] | None,
+        Field(
+            description="target: identity, biology, safety, tractability (one validated record), alternative_genes, "
+            "interactions, tep; disease: identity, targets, phenotypes, otar_projects; drug: identity, "
+            "mechanisms_of_action, indications, adverse_events, cross_references. Default: the identity record."
+        ),
+    ] = None,
+    include_associations: Annotated[
+        bool, Field(description="Targets only: also acquire associated diseases.")
+    ] = False,
+    association_limit: Annotated[
+        int, Field(description="Rows per association or adverse-event window (1-100).")
+    ] = 10,
+) -> dict:
+    """One Open Targets entity record with independently acquired optional sections.
 
-
-# ---------------------------------------------------------------------------
-# FastMCP initialisation
-# ---------------------------------------------------------------------------
-mcp = FastMCP(
-    name="opentargets",
-    version="0.2.0",
-)
-
-_unified_tools = UnifiedTools()
-
-
-def _make_tool_wrapper(method: Callable[..., Any]) -> Callable[..., Any]:
-    """Wrap an API coroutine so the shared client is injected automatically."""
-
-    @functools.wraps(method)
-    async def wrapper(*args: Any, **kwargs: Any) -> Any:
-        from biomedmcp.errors import provider_boundary
-
-        with provider_boundary("opentargets"):
-            client = get_client()
-            return await method(client, *args, **kwargs)
-
-    signature = inspect.signature(method)
-    params = list(signature.parameters.values())[1:]
-    wrapper.__signature__ = signature.replace(parameters=params)  # type: ignore[attr-defined]
-    return wrapper
-
-
-def register_all_api_methods() -> None:
-    """Register only the 5 unified tools from UnifiedTools class."""
-
-    # Import ToolAnnotations for Anthropic compliance
-    try:
-        from mcp.types import ToolAnnotations
-
-        read_only_annotations = ToolAnnotations(
-            title="Query Open Targets",
-            read_only_hint=True,
-            open_world_hint=True,
-        )
-    except ImportError:
-        read_only_annotations = None
-
-    # Only register these 5 unified tools
-    allowed_tools = {
-        "search",
-        "get_entity",
-        "analyze_association",
-        "query_genetics",
-        "analyze_advanced",
-    }
-
-    api_instances = (_unified_tools,)
-
-    for api in api_instances:
-        for name in dir(api):
-            if name.startswith("_"):
-                continue
-            if name not in allowed_tools:
-                logger.debug("Skipping non-unified tool: %s", name)
-                continue
-            method = getattr(api, name)
-            if not inspect.iscoroutinefunction(method):
-                continue
-            wrapper = _make_tool_wrapper(method)
-            mcp.tool(name=name, annotations=read_only_annotations)(wrapper)
-            logger.info("Registered unified tool: %s", name)
-
-
-register_all_api_methods()
-
-
-# ---------------------------------------------------------------------------
-# Deprecated module-level guidance
-# ---------------------------------------------------------------------------
-
-
-def __getattr__(name: str) -> Any:  # pragma: no cover - guidance only
-    if name == "ALL_TOOLS":
-        raise AttributeError("ALL_TOOLS has been removed in v0.2.0. Use FastMCP list_tools instead.")
-    if name == "API_CLASS_MAP":
-        raise AttributeError("API_CLASS_MAP has been removed in v0.2.0. Tool dispatch is handled by FastMCP.")
-    raise AttributeError(name)
-
-
-# ---------------------------------------------------------------------------
-# Discovery endpoint for HTTP/SSE transports
-# ---------------------------------------------------------------------------
-
-
-@mcp.custom_route("/.well-known/mcp.json", methods=["GET"], include_in_schema=False)
-async def discovery_endpoint(request: Request) -> JSONResponse:
-    """Expose MCP discovery metadata for HTTP/SSE clients."""
-
-    base_url = str(request.base_url).rstrip("/")
-    sse_path = "sse"
-    message_path = "messages/"
-    http_path = "mcp"
-
-    capabilities = mcp._mcp_server.get_capabilities(NotificationOptions(), experimental_capabilities={})
-
-    transports: dict[str, dict[str, str]] = {
-        "sse": {
-            "url": f"{base_url}/{sse_path}",
-            "messageUrl": f"{base_url}/{message_path}",
-        }
-    }
-
-    transports["http"] = {
-        "url": f"{base_url}/{http_path}",
-    }
-
-    discovery = {
-        "protocolVersion": mcp_types.LATEST_PROTOCOL_VERSION,
-        "server": {
-            "name": mcp._mcp_server.name,
-            "version": mcp._mcp_server.version,
-            "instructions": mcp._mcp_server.instructions,
-        },
-        "capabilities": capabilities.model_dump(mode="json"),
-        "transports": transports,
-    }
-
-    return JSONResponse(discovery)
-
-
-@mcp.custom_route("/", methods=["GET"], include_in_schema=False)
-async def root_health(_: Request) -> JSONResponse:
-    """Simple health check endpoint."""
-
-    return JSONResponse({"status": "ok"})
-
-
-@mcp.custom_route("/sse", methods=["POST"], include_in_schema=False)
-async def sse_message_fallback(_: Request) -> Response:
-    """Gracefully handle clients that POST to the SSE endpoint."""
-
-    return Response(status_code=204)
-
-
-# ---------------------------------------------------------------------------
-# CLI entry point
-# ---------------------------------------------------------------------------
-def main() -> None:
-    import argparse
-
-    parser = argparse.ArgumentParser(
-        description="Open Targets MCP Server",
-        epilog="Environment overrides: MCP_TRANSPORT, FASTMCP_SERVER_HOST, FASTMCP_SERVER_PORT",
-    )
-    parser.add_argument(
-        "--transport",
-        choices=["stdio", "sse", "http"],
-        default=os.getenv("MCP_TRANSPORT", "stdio"),
-        help="Transport protocol to expose (stdio, sse, or http)",
-    )
-    parser.add_argument(
-        "--host",
-        default=os.getenv("FASTMCP_SERVER_HOST", "0.0.0.0"),
-        help="Host for SSE transport (default: 0.0.0.0)",
-    )
-    parser.add_argument(
-        "--port",
-        type=int,
-        default=int(os.getenv("FASTMCP_SERVER_PORT", "8000")),
-        help="Port for SSE transport (default: 8000)",
-    )
-    parser.add_argument(
-        "--verbose",
-        action="store_true",
-        help="Enable verbose (DEBUG level) logging",
+    A failed optional section is reported in section_outcomes and never becomes an empty result.
+    """
+    return await TOOLS.get_entity(
+        CLIENT, entity_type, entity_id, sections, include_associations, association_limit
     )
 
-    args = parser.parse_args()
 
-    if args.verbose:
-        logging.getLogger().setLevel(logging.DEBUG)
+@mcp.tool(annotations=READ_ONLY_ANNOTATIONS)
+@provider_tool_boundary("opentargets")
+async def search_drugs(
+    query: Annotated[str, Field(description="Drug name, synonym or trade name text.")],
+    limit: Annotated[int, Field(description="Maximum hits (1-100).")] = 10,
+) -> dict:
+    """Text search restricted to drug entities, returning ChEMBL identifiers for exact follow-up calls."""
+    return await TOOLS.search_drugs(CLIENT, query, limit)
 
-    if args.transport in {"sse", "http"}:
-        os.environ["FASTMCP_SERVER_HOST"] = args.host
-        os.environ["FASTMCP_SERVER_PORT"] = str(args.port)
-        if hasattr(mcp, "settings"):
-            mcp.settings.host = args.host  # type: ignore[attr-defined]
-            mcp.settings.port = args.port  # type: ignore[attr-defined]
-        logger.info("Configured %s host=%s port=%s", args.transport.upper(), args.host, args.port)
 
-    logger.info(
-        "Starting Open Targets MCP server (transport=%s, host=%s, port=%s)",
-        args.transport,
-        args.host,
-        args.port,
+@mcp.tool(annotations=READ_ONLY_ANNOTATIONS)
+@provider_tool_boundary("opentargets")
+async def analyze_advanced(
+    analysis_type: Annotated[
+        str,
+        Field(
+            description="compare: the same aspects for 2-10 targets; similar: annotation Jaccard overlap for one "
+            "target against its literature-model candidates; validate: annotation and candidate counts for one "
+            "target, optionally with a disease pair; prioritize: direct disease associations ranked by their "
+            "genetic_association component; metadata: API and data release versions."
+        ),
+    ],
+    entity_ids: Annotated[
+        list[str], Field(description="Human Ensembl gene IDs; empty for metadata or discovery.")
+    ],
+    disease_id: Annotated[
+        str | None, Field(description="Disease ID for validate (optional) and prioritize.")
+    ] = None,
+    similarity_criteria: Annotated[
+        str, Field(description="similar only: pathways, diseases, go_terms or interactions.")
+    ] = "pathways",
+    comparison_aspects: Annotated[
+        list[str] | None,
+        Field(description="compare only: tractability, safety, diseases, pathways. Default: all."),
+    ] = None,
+    threshold: Annotated[float, Field(description="similar only: minimum annotation Jaccard (0-1).")] = 0.5,
+    limit: Annotated[int, Field(description="similar/prioritize only: rows displayed (1-100).")] = 10,
+) -> dict:
+    """Bounded multi-target analyses; parameters a mode does not consume must keep their defaults."""
+    return await TOOLS.analyze_advanced(
+        CLIENT,
+        analysis_type,
+        entity_ids,
+        disease_id,
+        similarity_criteria,
+        comparison_aspects,
+        threshold,
+        limit,
     )
 
-    try:
-        if args.transport == "http":
 
-            async def run_http():
-                await mcp.run_http_async(host=args.host, port=args.port)
+@mcp.tool(annotations=READ_ONLY_ANNOTATIONS)
+@provider_tool_boundary("opentargets")
+async def analyze_association(
+    source_id: Annotated[
+        str, Field(description="Target Ensembl ID, disease ID or ChEMBL ID depending on the mode.")
+    ],
+    association_type: Annotated[
+        str,
+        Field(
+            description="target-disease: indexed pair score plus one evidence window (source_id=target, "
+            "target_id=disease); drug-target: mechanism rows and targets; drug-disease: indications; "
+            "discover-opportunities: disease targets ranked by genetic_association score."
+        ),
+    ] = "target-disease",
+    target_id: Annotated[str | None, Field(description="Disease ID for target-disease.")] = None,
+    evidence_types: Annotated[
+        list[str] | None,
+        Field(description="target-disease: keep only these datatype IDs, e.g. genetic_association."),
+    ] = None,
+    filters: Annotated[
+        dict | None, Field(description='discover-opportunities: {"min_score": x} on the genetic component.')
+    ] = None,
+    min_score: Annotated[
+        float, Field(description="Minimum score for displayed evidence or ranked targets.")
+    ] = 0.0,
+    limit: Annotated[int, Field(description="Evidence or ranking rows (1-100).")] = 20,
+    include_biomarkers: Annotated[
+        bool, Field(description="target-disease: list biomarker annotations.")
+    ] = True,
+    ranking_strategy: Annotated[
+        str | None, Field(description='discover-opportunities: "genetic_evidence".')
+    ] = None,
+    evidence_cursor: Annotated[
+        str | None,
+        Field(description="target-disease: continuation issued by the service; submit it unchanged."),
+    ] = None,
+) -> dict:
+    """Pair, drug and discovery associations; unconsumed parameters are rejected before any request."""
+    return await TOOLS.analyze_association(
+        CLIENT,
+        source_id,
+        association_type,
+        target_id,
+        evidence_types,
+        filters,
+        min_score,
+        limit,
+        include_biomarkers,
+        ranking_strategy,
+        evidence_cursor,
+    )
 
-            anyio.run(run_http)
-        else:
-            mcp.run(transport=args.transport)
-    except KeyboardInterrupt:  # pragma: no cover - user interaction
-        logger.info("Server interrupted by user")
-    except Exception:  # pragma: no cover - unexpected runtime failure
-        logger.exception("Server encountered an unrecoverable error")
-        raise
 
+@mcp.tool(annotations=READ_ONLY_ANNOTATIONS)
+@provider_tool_boundary("opentargets")
+async def query_genetics(
+    query_type: Annotated[str, Field(description="variant, study or credible_set.")],
+    variant_id: Annotated[str | None, Field(description="variant: chromosome_position_ref_alt.")] = None,
+    study_id: Annotated[str | None, Field(description="study: one GWAS or QTL study ID.")] = None,
+    credible_set_id: Annotated[str | None, Field(description="credible_set: one study-locus ID.")] = None,
+    gene_id: Annotated[
+        str | None, Field(description="study: discover studies linked to one Ensembl gene.")
+    ] = None,
+    disease_id: Annotated[
+        str | None, Field(description="study: discover studies indexed to one disease.")
+    ] = None,
+    include_credible_sets: Annotated[bool, Field(description="Add one window of fine-mapped loci.")] = False,
+    include_evidences: Annotated[
+        bool, Field(description="variant: add one window of linked evidence.")
+    ] = False,
+    include_functional_consequences: Annotated[
+        bool, Field(description="variant: transcript and effect predictions.")
+    ] = True,
+    include_pharmacogenomics: Annotated[
+        bool, Field(description="variant: pharmacogenomics annotations.")
+    ] = False,
+    limit: Annotated[int, Field(description="Window size for loci, evidence or studies (1-100).")] = 25,
+    page_index: Annotated[int, Field(description="Zero-based source page for loci or studies.")] = 0,
+    evidence_cursor: Annotated[
+        str | None, Field(description="variant evidence continuation; submit unchanged.")
+    ] = None,
+) -> dict:
+    """Variant, study and credible-set records with bounded, separately paged relations.
 
-if __name__ == "__main__":  # pragma: no cover
-    main()
+    Exactly one selector is required; windows and flags a mode does not consume must keep their defaults.
+    """
+    return await TOOLS.query_genetics(
+        CLIENT,
+        query_type,
+        variant_id,
+        study_id,
+        credible_set_id,
+        gene_id,
+        disease_id,
+        include_credible_sets,
+        include_evidences,
+        include_functional_consequences,
+        include_pharmacogenomics,
+        limit,
+        page_index,
+        evidence_cursor,
+    )

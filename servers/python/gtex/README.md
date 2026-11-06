@@ -227,4 +227,4 @@ See the [public runtime README](../../../README.md) for installation, source con
 
 Provider contracts: [GTEx Portal API contract](https://gtexportal.org/api/v2/openapi.json). Packaged contracts.json identifies the dated official document hash and the response schemas used for validation.
 
-Licensed under [Apache-2.0](LICENSE). Provider data has its own [terms](../../../docs/source-licenses.md).
+Licensed under [Apache-2.0](../../../LICENSE). Provider data has its own [terms](../../../docs/source-licenses.md).

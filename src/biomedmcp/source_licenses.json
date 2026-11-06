@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "reviewed_on": "2026-10-13",
-  "policy": "Owner-approved default enablement for the free hosted research service: share-alike is accepted; mixed or unresolved permissions are eligible unless a documented restriction blocks the implemented use. Eligibility is not a verified permissive license. Preserve upstream attribution, license, share-alike and use limitations separately from Apache-2.0 integration code. Keys cannot override documented holds.",
+  "policy": "Default source enablement: share-alike licenses are accepted, and mixed or unresolved permissions are eligible unless a documented restriction blocks the implemented use. Eligibility is not a verified permissive license. Preserve upstream attribution, license, share-alike and use limitations separately from Apache-2.0 integration code. Keys cannot override documented holds.",
   "policy_owner_confirmation": "confirmed_2026-10-13_default_enable",
   "sources": [
     {

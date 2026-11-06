@@ -153,9 +153,9 @@ record. Coverage applies to the current window; a terminal page cannot summarize
 earlier pages. Source data are not pinned, and an empty page does not mean no
 evidence exists.
 
-The [selected offline regressions](../tests/test_opentargets_responses.py)
-and [assessment regressions](../tests/test_opentargets_assessments.py), alongside
-[partial acquisition regressions](../tests/test_opentargets_partial.py), exercise
+The [selected offline regressions](../tests/unit/sources/test_opentargets_responses.py)
+and [assessment regressions](../tests/unit/sources/test_opentargets_assessments.py), alongside
+[partial acquisition regressions](../tests/unit/sources/test_opentargets_partial.py), exercise
 acquisition types, scientific counts/scores, qualified identity, selected
 assessment/comparison semantics, cache/retry, actual MCP continuation and
 recovery. They do not cover every advanced analysis, live provider health or clinical target validation.

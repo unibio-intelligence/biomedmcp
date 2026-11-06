@@ -24,10 +24,9 @@ def require(condition, message):
 def check(root, wheels):
     project = tomllib.loads((root / "pyproject.toml").read_text())
     metadata = project["project"]
-    adapter_names = {
-        normalize(tomllib.loads(path.read_text())["project"]["name"])
-        for path in (root / "servers/python").glob("*/pyproject.toml")
-    }
+    packages = project["tool"]["hatch"]["build"]["targets"]["wheel"]["packages"]
+    # Bundled adapter modules must never also appear as separate distributions.
+    adapter_names = {normalize(Path(package).name) for package in packages if package != "src/biomedmcp"}
     paths = sorted(wheels.glob("*.whl"))
     require(len(paths) == 1, "Release exactly one biomedmcp wheel, with adapters bundled inside.")
     requirements = {Requirement(value) for value in metadata["dependencies"]}
@@ -50,7 +49,6 @@ def check(root, wheels):
             "Wheel dependencies differ from the reviewed runtime requirements.",
         )
         checked = 0
-        packages = project["tool"]["hatch"]["build"]["targets"]["wheel"]["packages"]
         require(len(packages) == len(adapter_names) + 1, "Adapter module inventory is incomplete.")
         for package in packages:
             directory = root / package

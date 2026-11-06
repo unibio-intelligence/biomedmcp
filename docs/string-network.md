@@ -25,6 +25,6 @@ returned, the rest are listed as omitted; use the recovery URI to fetch them
 without a new STRING request.
 
 These semantics follow the [STRING API contract](https://string-db.org/help/api/).
-The [offline regressions](../tests/test_string_network.py) exercise selected
+The [offline regressions](../tests/unit/sources/test_string_network.py) exercise selected
 response shapes, qualified human/mouse requests, partial results, retries,
 cache provenance and recovery through the actual MCP client boundary.

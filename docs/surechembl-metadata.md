@@ -1,8 +1,8 @@
 # SureChEMBL document metadata
 
-Check [source permissions](source-licenses.md) and current operation descriptions with `capabilities(source="surechembl")`. The source53 changes are awaiting consolidated qualification.
+Check [source permissions](source-licenses.md) and current operation descriptions with `get_capabilities(source="surechembl")`.
 
-Ordinary `search(entity="patent", query=...)` uses SureChEMBL's current metadata search. Results retain document identity, reported publication date and literal assignee, plus a source citation URL. Missing dates and assignees remain null. Underlying patent text, claims, drawings and attachments are outside the released scope.
+Ordinary `search_records(entity="patent", query=...)` uses SureChEMBL's current metadata search. Results retain document identity, reported publication date and literal assignee, plus a source citation URL. Missing dates and assignees remain null. Underlying patent text, claims, drawings and attachments are outside the released scope.
 
 Use `query_source` with `get_patent_statistics`, an explicit source query, `group_by`, `limit` and `page`. Counts describe acquired document records. They do not count unique patent families or normalized corporate entities. Read `denominator`, `coverage`, `population_statistics_status` and `input_locators`; a provider population total does not make a displayed window complete. Execute the supplied `next_actions` to continue. Missing grouping measurements remain unknown. Classification fields are not supplied by this response contract.
 

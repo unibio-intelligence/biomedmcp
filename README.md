@@ -24,7 +24,7 @@ Python distribution or build from this checkout; see [connection options](https:
 Use Python 3.13+ in an activated virtual environment:
 
 ```sh
-python -m pip install biomedmcp==0.2.4
+python -m pip install biomedmcp==0.2.5
 UBI_PROFILE=local biomedmcp build_dossier '{"workflow":"target_dossier","focus":"LDLR","species":9606}'
 ```
 

@@ -84,14 +84,11 @@ for _entity in SEARCH_SOURCES:
 
 WORKFLOWS = {
     "target_dossier": ("gene", ["expression", "target_evidence", "diseases", "druggability"]),
-    "variant_evidence": ("variant", ["clinvar", "population", "civic"]),
+    "variant_dossier": ("variant", ["clinvar", "population", "civic"]),
     "drug_review": ("drug", ["label", "regulatory", "safety", "shortage", "approvals"]),
     "disease_landscape": ("disease", ["genes", "phenotypes", "pathways"]),
-    "literature_review": ("article", []),
     "pathway_review": ("pathway", ["genes", "events"]),
     "negative_evidence": ("article", []),
-    "study_summary": ("study", []),
-    "patent_landscape": ("patent", []),
     "model_input_bundle": ("gene", ["expression", "target_evidence"]),
 }
 
@@ -2006,12 +2003,7 @@ class ResearchService:
                 return candidates
             focus = exact[0].get("stId") or exact[0].get("id")
         if _plan_only:
-            if workflow not in {
-                "literature_review",
-                "patent_landscape",
-                "study_summary",
-                "negative_evidence",
-            }:
+            if workflow != "negative_evidence":
                 await self.get(
                     GetRequest(
                         entity=entity,
@@ -2034,8 +2026,6 @@ class ResearchService:
                 "No matching records is scoped to this query, sources and retrieval time; it does not establish universal absence."
             )
             return result
-        if workflow in {"literature_review", "patent_landscape", "study_summary"}:
-            return await self.search(SearchRequest(entity=entity, query=focus), scope=scope)
         request = GetRequest(
             entity=entity,
             id=focus,
@@ -2181,7 +2171,7 @@ class ResearchService:
             )
             if result.outcome != "error":
                 result.outcome = "partial"
-        if workflow in {"variant_evidence", "drug_review", "disease_landscape"}:
+        if workflow in {"variant_dossier", "drug_review", "disease_landscape"}:
             try:
                 related = await self.relate(
                     Entity(entity),

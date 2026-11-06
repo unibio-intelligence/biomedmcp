@@ -1,5 +1,3 @@
-"""MyChem MCP package metadata."""
+"""MyChem.info chemical and drug annotation MCP adapter for biomedmcp."""
 
-__all__ = ["__version__"]
-
-__version__ = "0.3.0"
+__version__ = "0.1.0"
