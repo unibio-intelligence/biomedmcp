@@ -50,12 +50,6 @@ STUDY_ANALYSES = {
     "filter_cohort": "filter",
     "top_mutated": "top_mutated",
 }
-RETIRED_WORKFLOWS = {
-    "literature_review": "search_literature",
-    "patent_landscape": "search_records",
-    "study_summary": "search_records",
-}
-WORKFLOW_NAMES = {"variant_dossier": "variant_evidence"}
 
 
 def fields_model(name, origin, names):
@@ -320,9 +314,7 @@ for analysis, names in study_fields.items():
 StudyAnalysis = Annotated[Union[tuple(study_models)], Field(discriminator="analysis")]  # noqa: UP007 -- runtime-generated union
 
 
-workflow_names = tuple(k for k in WORKFLOWS if k not in RETIRED_WORKFLOWS and k != "variant_evidence") + (
-    "variant_dossier",
-)
+workflow_names = tuple(WORKFLOWS)
 
 
 class DossierParameters(RecordParameters):
@@ -442,7 +434,6 @@ def native_request(operation, model):
         analysis = STUDY_ANALYSES[data.pop("analysis")]
         return "query_source", SourceRequest(source="study", operation=analysis, params=data)
     if operation == "build_dossier":
-        data["workflow"] = WORKFLOW_NAMES.get(data["workflow"], data["workflow"])
         return "research", WorkflowRequest(**data)
     return NATIVE_OPERATIONS[operation], model
 
@@ -561,9 +552,8 @@ def operation_map():
         rows.append(
             {
                 "primitive": f"workflow/{workflow}",
-                "tool": RETIRED_WORKFLOWS.get(workflow, "build_dossier"),
-                "public_workflow": "variant_dossier" if workflow == "variant_evidence" else workflow,
-                "retired_alias": workflow in RETIRED_WORKFLOWS,
+                "tool": "build_dossier",
+                "public_workflow": workflow,
                 "handler": "ResearchService.research",
             }
         )

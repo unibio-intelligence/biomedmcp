@@ -164,4 +164,4 @@ See the [public runtime README](../../../README.md) for installation, source con
 
 Provider contracts: [ClinicalTrials.gov REST API and dated OpenAPI](https://clinicaltrials.gov/api/oas/v2), [study data structure](https://clinicaltrials.gov/data-api/about-api/study-data-structure), [complex search syntax](https://clinicaltrials.gov/find-studies/constructing-complex-search-queries). Packaged contracts.json records the official source hash/date and selected endpoint schemas.
 
-Licensed under [Apache-2.0](LICENSE). Provider data has its own [terms](../../../docs/source-licenses.md).
+Licensed under [Apache-2.0](../../../LICENSE). Provider data has its own [terms](../../../docs/source-licenses.md).

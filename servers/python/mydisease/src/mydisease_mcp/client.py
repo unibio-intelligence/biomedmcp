@@ -1,21 +1,14 @@
-"""Validated MyDisease annotation acquisition; underlying source permissions remain separate."""
+"""MyDisease.info client: the shared BioThings acquisition contract bound to MyDisease."""
 
-from biomedmcp.native.biothings import BioThingsClient, CacheEntry
+from biomedmcp.native.biothings import BioThingsClient
 
-
-class MyDiseaseError(Exception):
-    """Invalid local annotation arguments (never includes provider response bodies)."""
+BASE_URL = "https://mydisease.info/v1"
 
 
 class MyDiseaseClient(BioThingsClient):
+    """GET/POST against MyDisease.info with envelope validation, held-field removal and caching."""
+
     source = "mydisease"
 
-    def __init__(
-        self,
-        base_url="https://mydisease.info/v1",
-        timeout=30.0,
-        cache_enabled=True,
-        cache_ttl=3600,
-        rate_limit=10,
-    ):
-        super().__init__(base_url, timeout, cache_enabled, cache_ttl, rate_limit)
+    def __init__(self, base_url=BASE_URL, **options):
+        super().__init__(base_url, **options)

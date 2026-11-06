@@ -1,318 +1,194 @@
-"""FastMCP-backed server for MyChem MCP tools."""
-from __future__ import annotations
+"""MyChem.info MCP server: chemical search, annotation sections, ADMET reports and ID mapping."""
 
-import anyio
-import functools
-import inspect
-import logging
-import os
-from contextlib import asynccontextmanager
-from typing import Any, Callable, Dict, Optional, Tuple
+from typing import Annotated
+from urllib.parse import quote
 
 from fastmcp import FastMCP
-from starlette.requests import Request
-from starlette.responses import JSONResponse, Response
-import mcp.types as mcp_types
-from mcp.server.lowlevel.server import NotificationOptions
+from pydantic import Field
 
-from . import __version__ as package_version
+from biomedmcp.errors import provider_tool_boundary
+from biomedmcp.native.biothings import field_values, mapping_inputs, mappings, partial_outcome
+
 from .client import MyChemClient
-from .tools import (
-    ADMETApi,
-    AnnotationApi,
-    BatchApi,
-    BioactivityApi,
-    BiologicalContextApi,
-    ClinicalApi,
-    DrugApi,
-    ExportApi,
-    MappingApi,
-    MetadataApi,
-    PatentApi,
-    QueryApi,
-    StructureApi,
-)
 
-__all__ = [
-    "mcp",
-    "get_client",
-    "main",
+try:
+    from mcp.types import ToolAnnotations
+
+    READ_ONLY_ANNOTATIONS = ToolAnnotations(title="Query MyChem", read_only_hint=True, open_world_hint=True)
+except ImportError:  # pragma: no cover - annotations are optional metadata
+    READ_ONLY_ANNOTATIONS = None
+
+mcp = FastMCP("mychem", version="0.1.0")
+client = MyChemClient(cache_enabled=False)
+
+ChemicalId = Annotated[
+    str,
+    Field(
+        min_length=1,
+        max_length=256,
+        description="InChIKey, ChEMBL ID, DrugBank ID, UNII, PubChem CID or name.",
+    ),
 ]
+SEARCH_FIELDS = "chembl.pref_name,chembl.molecule_chembl_id,chebi.name,drugbank.name,pubchem.cid,unii.unii"
+ID_FIELDS = {
+    "chembl": "chembl.molecule_chembl_id",
+    "inchikey": "chembl.inchikey,pubchem.inchikey,drugbank.inchikey,unii.inchikey",
+    "pubchem": "pubchem.cid",
+    "drugbank": "drugbank.id",
+    "unii": "unii.unii",
+    "chebi": "chebi.id",
+}
+# Reported annotation paths per ADMET modality; physicochemical values are not predictions.
+ADMET_PATHS = {
+    "absorption": {
+        "drugbank": ["drugbank.absorption"],
+        "drugcentral": ["drugcentral.pharmacology.absorption"],
+    },
+    "distribution": {"drugbank": ["drugbank.volume_of_distribution", "drugbank.protein_binding"]},
+    "metabolism": {"drugbank": ["drugbank.metabolism"]},
+    "excretion": {"drugbank": ["drugbank.half_life", "drugbank.clearance", "drugbank.route_of_elimination"]},
+    "toxicity": {"chembl": ["chembl.toxicity"], "drugbank": ["drugbank.toxicity"]},
+    "physicochemical": {
+        "logp": ["pubchem.logp", "pubchem.xlogp", "chembl.molecule_properties.alogp"],
+        "molecular_weight": ["pubchem.molecular_weight", "chembl.molecule_properties.full_mwt"],
+        "hbd": ["pubchem.hydrogen_bond_donor_count", "chembl.molecule_properties.hbd"],
+        "hba": ["pubchem.hydrogen_bond_acceptor_count", "chembl.molecule_properties.hba"],
+        "tpsa": ["pubchem.topological_polar_surface_area", "chembl.molecule_properties.psa"],
+    },
+}
+SECTIONS = {
+    "targets": ["drugcentral.bioactivity", "drugbank.targets"],
+    "indications": ["drugcentral.drug_use", "chembl.drug_indications"],
+    "interactions": ["drugbank.drug_interactions"],
+}
 
-# ---------------------------------------------------------------------------
-# Logging setup
-# ---------------------------------------------------------------------------
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+
+def _path(chemical_id):
+    return "chem/" + quote(chemical_id, safe="")
 
 
-# ---------------------------------------------------------------------------
-# Client lifecycle management
-# ---------------------------------------------------------------------------
-def _load_client_config() -> Dict[str, Any]:
-    """Load client configuration from environment variables."""
-    def _bool(value: str, default: bool) -> bool:
-        try:
-            return value.lower() in {"1", "true", "yes", "on"}
-        except AttributeError:
-            return default
-
+def _section(name, chemical_id, row):
+    reported = {path: field_values(row, path) for path in SECTIONS[name]}
     return {
-        "base_url": os.environ.get("MYCHEM_BASE_URL", "https://mychem.info/v1"),
-        "cache_enabled": _bool("false", True),
-        "cache_ttl": int(os.environ.get("MYCHEM_CACHE_TTL", "3600")),
-        "rate_limit": int(os.environ.get("MYCHEM_RATE_LIMIT", "10")),
-        "timeout": float(os.environ.get("MYCHEM_TIMEOUT", "30.0")),
-    }
-
-
-# Initialize client at module load time for use in composition
-_client_config = _load_client_config()
-logger.info(
-    "Initializing MyChem client with cache_enabled=%s cache_ttl=%s rate_limit=%s timeout=%s",
-    _client_config["cache_enabled"],
-    _client_config["cache_ttl"],
-    _client_config["rate_limit"],
-    _client_config["timeout"],
-)
-
-_client = MyChemClient(
-    base_url=_client_config["base_url"],
-    timeout=_client_config["timeout"],
-    cache_enabled=_client_config["cache_enabled"],
-    cache_ttl=_client_config["cache_ttl"],
-    rate_limit=_client_config["rate_limit"],
-)
-
-
-def get_client() -> MyChemClient:
-    """Return the active MyChemClient."""
-    return _client
-
-
-# ---------------------------------------------------------------------------
-# FastMCP initialisation
-# ---------------------------------------------------------------------------
-mcp = FastMCP(
-    name="mychem-mcp",
-    version=package_version,
-)
-
-_query_api = QueryApi()
-_annotation_api = AnnotationApi()
-_batch_api = BatchApi()
-_structure_api = StructureApi()
-_drug_api = DrugApi()
-_admet_api = ADMETApi()
-_patent_api = PatentApi()
-_clinical_api = ClinicalApi()
-_metadata_api = MetadataApi()
-_export_api = ExportApi()
-_mapping_api = MappingApi()
-_bioactivity_api = BioactivityApi()
-_biological_context_api = BiologicalContextApi()
-
-
-def _make_tool_wrapper(method: Callable[..., Any]) -> Callable[..., Any]:
-    """Wrap an API coroutine so the shared client is injected automatically."""
-
-    @functools.wraps(method)
-    async def wrapper(*args: Any, **kwargs: Any) -> Any:
-        client = get_client()
-        return await method(client, *args, **kwargs)
-
-    signature = inspect.signature(method)
-    params = list(signature.parameters.values())[1:]
-    wrapper.__signature__ = signature.replace(parameters=params)  # type: ignore[attr-defined]
-    return wrapper
-
-
-def register_all_api_methods() -> None:
-    """Register every coroutine defined on the API classes as FastMCP tools."""
-    
-    # Import ToolAnnotations for Anthropic compliance
-    try:
-        from mcp.types import ToolAnnotations
-        read_only_annotations = ToolAnnotations(
-            title="Query MyChem.info",
-            read_only_hint=True,
-            open_world_hint=True,
-        )
-    except ImportError:
-        read_only_annotations = None
-    
-    api_instances: Tuple[Any, ...] = (
-        _query_api,
-        _annotation_api,
-        _batch_api,
-        _structure_api,
-        _drug_api,
-        _admet_api,
-        _patent_api,
-        _clinical_api,
-        _metadata_api,
-        _export_api,
-        _mapping_api,
-        _bioactivity_api,
-        _biological_context_api,
-    )
-
-    for api in api_instances:
-        for name in dir(api):
-            if name.startswith("_"):
-                continue
-            method = getattr(api, name)
-            if not inspect.iscoroutinefunction(method):
-                continue
-            wrapper = _make_tool_wrapper(method)
-            mcp.tool(name=name, annotations=read_only_annotations)(wrapper)
-            logger.debug("Registered tool: %s", name)
-
-
-register_all_api_methods()
-
-
-# ---------------------------------------------------------------------------
-# Deprecated module-level guidance
-# ---------------------------------------------------------------------------
-
-def __getattr__(name: str) -> Any:  # pragma: no cover - guidance only
-    if name == "ALL_TOOLS":
-        raise AttributeError(
-            "ALL_TOOLS has been removed in v0.3.0. Use FastMCP list_tools instead."
-        )
-    if name == "API_CLASS_MAP":
-        raise AttributeError(
-            "API_CLASS_MAP has been removed in v0.3.0. Tool dispatch is handled by FastMCP."
-        )
-    raise AttributeError(name)
-
-
-# ---------------------------------------------------------------------------
-# Discovery endpoints for HTTP/SSE transports
-# ---------------------------------------------------------------------------
-
-
-@mcp.custom_route("/.well-known/mcp.json", methods=["GET"], include_in_schema=False)
-async def discovery_endpoint(request: Request) -> JSONResponse:
-    """Expose MCP discovery metadata for HTTP/SSE clients."""
-
-    base_url = str(request.base_url).rstrip("/")
-    sse_path = "sse"
-    message_path = "messages/"
-    http_path = "mcp"
-
-    capabilities = mcp._mcp_server.get_capabilities(
-        NotificationOptions(),
-        experimental_capabilities={}
-    )
-
-    transports: Dict[str, Dict[str, str]] = {
-        "sse": {
-            "url": f"{base_url}/{sse_path}",
-            "messageUrl": f"{base_url}/{message_path}",
-        }
-    }
-
-    transports["http"] = {
-        "url": f"{base_url}/{http_path}",
-    }
-
-    discovery = {
-        "protocolVersion": mcp_types.LATEST_PROTOCOL_VERSION,
-        "server": {
-            "name": mcp._mcp_server.name,
-            "version": mcp._mcp_server.version,
-            "instructions": mcp._mcp_server.instructions,
+        "chemical_id": chemical_id,
+        "record_id": row["_id"],
+        "status": "complete" if any(reported.values()) else "partial",
+        name: {path: values for path, values in reported.items() if values},
+        "annotation_status": {
+            path: "reported" if values else "unavailable" for path, values in reported.items()
         },
-        "capabilities": capabilities.model_dump(mode="json"),
-        "transports": transports,
+        "limitations": [
+            "Values are source annotations as reported by MyChem; absence is not a negative finding."
+        ],
     }
 
-    return JSONResponse(discovery)
+
+@mcp.tool(annotations=READ_ONLY_ANNOTATIONS)
+@provider_tool_boundary("mychem")
+async def search_chemical(
+    q: Annotated[
+        str,
+        Field(
+            min_length=1,
+            max_length=512,
+            description="MyChem query string (name, identifier or fielded query).",
+        ),
+    ],
+    fields: Annotated[
+        str, Field(min_length=1, max_length=512, description="Comma-separated MyChem fields to return.")
+    ] = SEARCH_FIELDS,
+    size: Annotated[int, Field(ge=1, le=100, description="Hits per page.")] = 10,
+    from_: Annotated[int, Field(ge=0, le=10000, description="Zero-based offset of the first hit.")] = 0,
+) -> dict:
+    """Search MyChem.info (GET /v1/query) and return its hits/total envelope unchanged."""
+    return await client.get("query", {"q": q, "fields": fields, "size": size, "from": from_})
 
 
-@mcp.custom_route("/", methods=["GET"], include_in_schema=False)
-async def root_health(_: Request) -> JSONResponse:
-    """Simple health check endpoint."""
+@mcp.tool(annotations=READ_ONLY_ANNOTATIONS)
+@provider_tool_boundary("mychem")
+async def get_chemical_by_id(
+    chemical_id: ChemicalId,
+    fields: Annotated[
+        str | None, Field(max_length=512, description="Comma-separated fields; all when omitted.")
+    ] = None,
+    dotfield: Annotated[bool, Field(description="Flatten nested fields into dotted keys.")] = False,
+) -> dict:
+    """Fetch one MyChem.info annotation record (GET /v1/chem/{id}) with upstream field names intact."""
+    params = {**({"fields": fields} if fields else {}), **({"dotfield": "true"} if dotfield else {})}
+    return await client.get(_path(chemical_id), params or None)
 
-    return JSONResponse({"status": "ok"})
+
+@mcp.tool(annotations=READ_ONLY_ANNOTATIONS)
+@provider_tool_boundary("mychem")
+async def get_drug_targets(drug_id: ChemicalId) -> dict:
+    """Report DrugCentral bioactivity and DrugBank target annotations for one MyChem record."""
+    row = await client.get(_path(drug_id), {"fields": ",".join(SECTIONS["targets"])})
+    return _section("targets", drug_id, row)
 
 
-@mcp.custom_route("/sse", methods=["POST"], include_in_schema=False)
-async def sse_message_fallback(_: Request) -> Response:
-    """Gracefully handle clients that POST to the SSE endpoint."""
+@mcp.tool(annotations=READ_ONLY_ANNOTATIONS)
+@provider_tool_boundary("mychem")
+async def get_disease_associations(chemical_id: ChemicalId) -> dict:
+    """Report DrugCentral drug-use and ChEMBL indication annotations for one MyChem record."""
+    row = await client.get(_path(chemical_id), {"fields": ",".join(SECTIONS["indications"])})
+    return _section("indications", chemical_id, row)
 
-    return Response(status_code=204)
+
+@mcp.tool(annotations=READ_ONLY_ANNOTATIONS)
+@provider_tool_boundary("mychem")
+async def get_drug_interactions(drug_id: ChemicalId) -> dict:
+    """Report DrugBank drug-interaction annotations for one MyChem record."""
+    row = await client.get(_path(drug_id), {"fields": ",".join(SECTIONS["interactions"])})
+    return _section("interactions", drug_id, row)
 
 
-# ---------------------------------------------------------------------------
-# CLI entry point
-# ---------------------------------------------------------------------------
-def main() -> None:
-    import argparse
+@mcp.tool(annotations=READ_ONLY_ANNOTATIONS)
+@provider_tool_boundary("mychem")
+@partial_outcome
+async def get_admet_properties(chemical_id: ChemicalId) -> dict:
+    """Collect reported absorption, distribution, metabolism, excretion, toxicity and physicochemical annotations from one MyChem record; unavailable modalities stay explicit."""
+    fields = ",".join(path for group in ADMET_PATHS.values() for paths in group.values() for path in paths)
+    row = await client.get(_path(chemical_id), {"fields": fields})
+    properties, status = {}, {}
+    for modality, group in ADMET_PATHS.items():
+        values = {}
+        for label, paths in group.items():
+            found = [item for path in paths for item in field_values(row, path)]
+            if found:
+                values[label] = found
+        properties[modality] = values or None
+        status[modality] = "reported" if values else "unavailable"
+    return {
+        "chemical_id": chemical_id,
+        "record_id": row["_id"],
+        "status": "complete" if all(v == "reported" for v in status.values()) else "partial",
+        "admet_properties": properties,
+        "measurement_status": status,
+        "limitations": [
+            "Reported source annotations only; physicochemical descriptors are not ADMET predictions.",
+            "An unavailable modality means no annotation was returned, not a negative measurement.",
+        ],
+    }
 
-    parser = argparse.ArgumentParser(
-        description="MyChem MCP Server",
-        epilog="Environment overrides: MCP_TRANSPORT, FASTMCP_SERVER_HOST, FASTMCP_SERVER_PORT",
+
+@mcp.tool(annotations=READ_ONLY_ANNOTATIONS)
+@provider_tool_boundary("mychem")
+@partial_outcome
+async def map_identifiers(
+    input_ids: Annotated[
+        list[str], Field(min_length=1, max_length=1000, description="Literal identifiers in from_type.")
+    ],
+    from_type: Annotated[str, Field(description="One of: " + ", ".join(ID_FIELDS))],
+    to_types: Annotated[
+        list[str], Field(min_length=1, max_length=len(ID_FIELDS), description="Target namespaces.")
+    ],
+    missing_ok: Annotated[bool, Field(description="Whether unmapped inputs are acceptable.")] = True,
+) -> dict:
+    """Map chemical identifiers between ChEMBL, InChIKey, PubChem, DrugBank, UNII and ChEBI namespaces in one POST /v1/query batch; every match stays a candidate."""
+    mapping_inputs(input_ids, from_type, to_types, ID_FIELDS)
+    unique = list(dict.fromkeys(input_ids))
+    rows = await client.post(
+        "query",
+        {"q": unique, "scopes": ID_FIELDS[from_type], "fields": ",".join(ID_FIELDS[t] for t in to_types)},
     )
-    parser.add_argument(
-        "--transport",
-        choices=["stdio", "sse", "http"],
-        default=os.getenv("MCP_TRANSPORT", "stdio"),
-        help="Transport protocol to expose (stdio, sse, or http)",
-    )
-    parser.add_argument(
-        "--host",
-        default=os.getenv("FASTMCP_SERVER_HOST", "0.0.0.0"),
-        help="Host for SSE transport (default: 0.0.0.0)",
-    )
-    parser.add_argument(
-        "--port",
-        type=int,
-        default=int(os.getenv("FASTMCP_SERVER_PORT", "8000")),
-        help="Port for SSE transport (default: 8000)",
-    )
-    parser.add_argument(
-        "--verbose",
-        action="store_true",
-        help="Enable verbose (DEBUG level) logging",
-    )
-
-    args = parser.parse_args()
-
-    if args.verbose:
-        logging.getLogger().setLevel(logging.DEBUG)
-
-    if args.transport in {"sse", "http"}:
-        os.environ["FASTMCP_SERVER_HOST"] = args.host
-        os.environ["FASTMCP_SERVER_PORT"] = str(args.port)
-        if hasattr(mcp, "settings"):
-            mcp.settings.host = args.host  # type: ignore[attr-defined]
-            mcp.settings.port = args.port  # type: ignore[attr-defined]
-        logger.info("Configured %s host=%s port=%s", args.transport.upper(), args.host, args.port)
-
-    logger.info(
-        "Starting MyChem MCP server (transport=%s, host=%s, port=%s)",
-        args.transport,
-        args.host,
-        args.port,
-    )
-
-    try:
-        if args.transport == "http":
-            async def run_http() -> None:
-                await mcp.run_http_async(host=args.host, port=args.port)
-
-            anyio.run(run_http)
-        else:
-            mcp.run(transport=args.transport)
-    except KeyboardInterrupt:  # pragma: no cover - user interaction
-        logger.info("Server interrupted by user")
-    except Exception:  # pragma: no cover - unexpected runtime failure
-        logger.exception("Server encountered an unrecoverable error")
-        raise
-
-
-if __name__ == "__main__":  # pragma: no cover
-    main()
+    return mappings(rows, input_ids, from_type, to_types, ID_FIELDS, missing_ok)

@@ -49,4 +49,4 @@ See the [public runtime README](../../../README.md) for installation, source con
 
 Provider contracts: [Open Targets Platform API](https://platform-docs.opentargets.org/data-access/graphql-api).
 
-Licensed under [Apache-2.0](LICENSE). Provider data has its own [terms](../../../docs/source-licenses.md).
+Licensed under [Apache-2.0](../../../LICENSE). Provider data has its own [terms](../../../docs/source-licenses.md).

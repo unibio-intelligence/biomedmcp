@@ -1,5 +1,3 @@
-"""MyGene MCP package metadata."""
+"""MyGene.info gene annotation and identifier mapping MCP adapter for biomedmcp."""
 
-__all__ = ["__version__"]
-
-__version__ = "0.3.0"
+__version__ = "0.1.0"

@@ -1,288 +1,163 @@
-"""FastMCP-backed server for MyGene MCP tools."""
-from __future__ import annotations
+"""MyGene.info MCP server: gene search, batch identifier mapping and comparison."""
 
-import anyio
-import functools
-import inspect
-import logging
-import os
-from contextlib import asynccontextmanager
-from typing import Any, Callable, Dict, Optional, Tuple
+from typing import Annotated, Literal
 
-import mcp.types as mcp_types
 from fastmcp import FastMCP
-from mcp.server.lowlevel.server import NotificationOptions
-from starlette.requests import Request
-from starlette.responses import JSONResponse, Response
+from pydantic import Field
 
-from . import __version__ as package_version
+from biomedmcp.errors import ResearchError, provider_tool_boundary
+from biomedmcp.native.identity import gene_matches, qualify_gene
+
 from .client import MyGeneClient
-from .tools import (
-    AdvancedQueryApi,
-    AnnotationApi,
-    BatchApi,
-    ChemicalApi,
-    DiseaseApi,
-    ExportApi,
-    ExpressionApi,
-    GOApi,
-    HomologyApi,
-    IntervalApi,
-    MetadataApi,
-    PathwayApi,
-    QueryApi,
-    VariantApi,
-    UnifiedTools,
-)
 
-__all__ = [
-    "mcp",
-    "get_client",
-    "main",
+try:
+    from mcp.types import ToolAnnotations
+
+    READ_ONLY_ANNOTATIONS = ToolAnnotations(title="Query MyGene", read_only_hint=True, open_world_hint=True)
+except ImportError:  # pragma: no cover - annotations are optional metadata
+    READ_ONLY_ANNOTATIONS = None
+
+mcp = FastMCP("mygene", version="0.1.0")
+client = MyGeneClient(cache_enabled=False)
+
+IDENTITY_FIELDS = "symbol,name,taxid,entrezgene,ensembl.gene,HGNC"
+Namespace = Literal["symbol", "entrezgene", "ensembl.gene"]
+GeneId = Annotated[str, Field(min_length=1, max_length=64, pattern=r"^[^\s,+]+$")]
+GeneIds = Annotated[
+    list[GeneId],
+    Field(
+        min_length=1, max_length=25, description="Literal identifiers in one namespace; no batch separators."
+    ),
 ]
-
-# ---------------------------------------------------------------------------
-# Logging setup
-# ---------------------------------------------------------------------------
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+Species = Annotated[int, Field(gt=0, description="NCBI taxonomy ID, e.g. 9606 for human.")]
 
 
-# ---------------------------------------------------------------------------
-# Client lifecycle management
-# ---------------------------------------------------------------------------
-def _load_client_config() -> Dict[str, Any]:
-    """Load client configuration from environment variables."""
-    return {
-        "base_url": os.getenv("MYGENE_BASE_URL", "https://mygene.info/v3"),
-        "timeout": float(os.getenv("MYGENE_TIMEOUT", "30.0")),
-    }
+def _grouped_batch(rows, inputs):
+    """One explicit outcome per input; contradictory or foreign rows are rejected."""
+    grouped = {identifier: [] for identifier in inputs}
+    for row in rows:
+        if row["query"] not in grouped:
+            raise ResearchError("invalid_source_response", "MyGene returned a row for an unrequested query.")
+        grouped[row["query"]].append(row)
+    for candidates in grouped.values():
+        if not candidates or (len(candidates) > 1 and any(r.get("notfound") is True for r in candidates)):
+            raise ResearchError("invalid_source_response", "MyGene omitted or contradicted a batch outcome.")
+    return grouped
 
 
-# Initialize client at module load time for use in composition
-_config = _load_client_config()
-logger.info(
-    "Initializing MyGene client with base_url=%s timeout=%s",
-    _config["base_url"],
-    _config["timeout"],
-)
-
-_client = MyGeneClient(
-    base_url=_config["base_url"],
-    timeout=_config["timeout"],
-)
-
-
-def get_client() -> MyGeneClient:
-    """Return the active MyGeneClient."""
-    return _client
-
-
-# ---------------------------------------------------------------------------
-# FastMCP initialisation
-# ---------------------------------------------------------------------------
-mcp = FastMCP(
-    name="mygene-mcp",
-    version=package_version,
-)
-
-# Initialize unified tools API
-_unified_api = UnifiedTools()
+@mcp.tool(annotations=READ_ONLY_ANNOTATIONS)
+@provider_tool_boundary("mygene")
+async def query_genes(
+    query: Annotated[
+        str,
+        Field(
+            min_length=1,
+            max_length=512,
+            description="MyGene query string (symbol, name, alias or fielded query).",
+        ),
+    ],
+    fields: Annotated[
+        str, Field(min_length=1, max_length=512, description="Comma-separated MyGene fields to return.")
+    ] = "symbol,name,taxid,entrezgene",
+    species: Annotated[
+        str, Field(min_length=1, max_length=64, description="Taxonomy ID or common name filter, e.g. '9606'.")
+    ] = "9606",
+    limit: Annotated[int, Field(ge=1, le=100, description="Hits per page.")] = 10,
+    from_: Annotated[int, Field(ge=0, le=10000, description="Zero-based offset of the first hit.")] = 0,
+) -> dict:
+    """Search MyGene.info (GET /v3/query) and return its hits/total envelope unchanged."""
+    return await client.get(
+        "query", {"q": query, "fields": fields, "species": species, "size": limit, "from": from_}
+    )
 
 
-def _make_tool_wrapper(method: Callable[..., Any]) -> Callable[..., Any]:
-    """Wrap an API coroutine so the shared client is injected automatically."""
-
-    @functools.wraps(method)
-    async def wrapper(*args: Any, **kwargs: Any) -> Any:
-        client = get_client()
-        return await method(client, *args, **kwargs)
-
-    signature = inspect.signature(method)
-    params = list(signature.parameters.values())[1:]
-    wrapper.__signature__ = signature.replace(parameters=params)  # type: ignore[attr-defined]
-    return wrapper
-
-
-def register_all_api_methods() -> None:
-    """Register every coroutine defined on the API classes as FastMCP tools."""
-    
-    # Import ToolAnnotations for Anthropic compliance
-    try:
-        from mcp.types import ToolAnnotations
-        read_only_annotations = ToolAnnotations(
-            title="Query MyGene.info",
-            read_only_hint=True,
-            open_world_hint=True,
-        )
-    except ImportError:
-        read_only_annotations = None
-    
-    # List of unified tool methods
-    unified_tools = [
-        "query_genes",
-        "get_gene",
-        "analyze_gene_context",
-        "compare_genes",
-        "map_gene_ids",
-        "batch_operations",
-    ]
-
-    for tool_name in unified_tools:
-        method = getattr(_unified_api, tool_name)
-        if not inspect.iscoroutinefunction(method):
-            logger.warning("Method %s is not a coroutine, skipping", tool_name)
+@mcp.tool(annotations=READ_ONLY_ANNOTATIONS)
+@provider_tool_boundary("mygene")
+async def map_gene_ids(
+    gene_ids: GeneIds,
+    input_namespace: Annotated[Namespace, Field(description="Namespace every input belongs to.")] = "symbol",
+    species: Species = 9606,
+) -> dict:
+    """Map up to 25 gene identifiers in one namespace to species-qualified Entrez/Ensembl/HGNC identities via one POST /v3/query batch."""
+    inputs = list(dict.fromkeys(gene_ids))
+    rows = await client.post(
+        "query",
+        {"q": inputs, "scopes": input_namespace, "species": str(species), "fields": IDENTITY_FIELDS},
+    )
+    mappings, missing = [], []
+    for identifier, candidates in _grouped_batch(rows, inputs).items():
+        if candidates[0].get("notfound") is True:
+            missing.append(identifier)
+            mappings.append({"query": identifier, "status": "not_found", "candidates": []})
             continue
-
-        wrapper = _make_tool_wrapper(method)
-        mcp.tool(name=tool_name, annotations=read_only_annotations)(wrapper)
-        logger.info("Registered unified tool: %s", tool_name)
-
-
-register_all_api_methods()
-
-
-# ---------------------------------------------------------------------------
-# Deprecated module-level guidance
-# ---------------------------------------------------------------------------
-
-def __getattr__(name: str) -> Any:  # pragma: no cover - guidance only
-    if name == "ALL_TOOLS":
-        raise AttributeError(
-            "ALL_TOOLS has been removed in v0.3.0. Use FastMCP list_tools instead."
+        identities = []
+        for row in candidates:
+            if not gene_matches(row, identifier, species):
+                raise ResearchError(
+                    "invalid_source_response", "MyGene candidate does not carry the requested identity."
+                )
+            identities.append(qualify_gene(row, species))
+        mappings.append(
+            {
+                "query": identifier,
+                "status": "resolved" if len(identities) == 1 else "ambiguous",
+                "candidates": identities,
+            }
         )
-    if name == "API_CLASS_MAP":
-        raise AttributeError(
-            "API_CLASS_MAP has been removed in v0.3.0. Tool dispatch is handled by FastMCP."
-        )
-    raise AttributeError(name)
+    return {
+        "success": True,
+        "status": "complete" if all(m["status"] == "resolved" for m in mappings) else "partial",
+        "input_namespace": input_namespace,
+        "species": species,
+        "total_input": len(gene_ids),
+        "unique_inputs": len(inputs),
+        "mappings": mappings,
+        "unmapped_ids": missing,
+        "limitations": ["Identities are MyGene annotations for the declared namespace and species only."],
+    }
 
 
-# ---------------------------------------------------------------------------
-# Discovery endpoints for HTTP/SSE transports
-# ---------------------------------------------------------------------------
-
-
-@mcp.custom_route("/.well-known/mcp.json", methods=["GET"], include_in_schema=False)
-async def discovery_endpoint(request: Request) -> JSONResponse:
-    """Expose MCP discovery metadata for HTTP/SSE clients."""
-
-    base_url = str(request.base_url).rstrip("/")
-    sse_path = "sse"
-    message_path = "messages/"
-    http_path = "mcp"
-
-    capabilities = mcp._mcp_server.get_capabilities(
-        NotificationOptions(),
-        experimental_capabilities={}
+@mcp.tool(annotations=READ_ONLY_ANNOTATIONS)
+@provider_tool_boundary("mygene")
+async def compare_genes(
+    gene_ids: Annotated[
+        list[GeneId],
+        Field(min_length=2, max_length=25, description="Two to 25 symbols, Entrez or Ensembl gene IDs."),
+    ],
+    species: Species = 9606,
+    fields: Annotated[
+        str,
+        Field(min_length=1, max_length=512, description="Comma-separated MyGene fields placed side by side."),
+    ] = "symbol,name,taxid,entrezgene,ensembl.gene,type_of_gene,summary",
+) -> dict:
+    """Fetch several genes in one POST /v3/query batch (symbol, Entrez or Ensembl scopes) and tabulate the requested fields per input."""
+    inputs = list(dict.fromkeys(gene_ids))
+    rows = await client.post(
+        "query",
+        {"q": inputs, "scopes": "symbol,entrezgene,ensembl.gene", "species": str(species), "fields": fields},
     )
-
-    transports: Dict[str, Dict[str, str]] = {
-        "sse": {
-            "url": f"{base_url}/{sse_path}",
-            "messageUrl": f"{base_url}/{message_path}",
-        }
-    }
-
-    transports["http"] = {
-        "url": f"{base_url}/{http_path}",
-    }
-
-    discovery = {
-        "protocolVersion": mcp_types.LATEST_PROTOCOL_VERSION,
-        "server": {
-            "name": mcp._mcp_server.name,
-            "version": mcp._mcp_server.version,
-            "instructions": mcp._mcp_server.instructions,
+    grouped = _grouped_batch(rows, inputs)
+    found = {k: [r for r in v if r.get("notfound") is not True] for k, v in grouped.items()}
+    names = [name for name in fields.split(",") if name]
+    return {
+        "species": species,
+        "inputs": inputs,
+        "records": found,
+        "not_found": [k for k, v in found.items() if not v],
+        "ambiguous": [k for k, v in found.items() if len(v) > 1],
+        "comparison": {
+            name: {k: [_pluck(r, name) for r in v] for k, v in found.items() if v} for name in names
         },
-        "capabilities": capabilities.model_dump(mode="json"),
-        "transports": transports,
     }
 
-    return JSONResponse(discovery)
 
-
-@mcp.custom_route("/", methods=["GET"], include_in_schema=False)
-async def root_health(_: Request) -> JSONResponse:
-    """Simple health check endpoint."""
-
-    return JSONResponse({"status": "ok"})
-
-
-@mcp.custom_route("/sse", methods=["POST"], include_in_schema=False)
-async def sse_message_fallback(_: Request) -> Response:
-    """Gracefully handle clients that POST to the SSE endpoint."""
-
-    return Response(status_code=204)
-
-
-# ---------------------------------------------------------------------------
-# CLI entry point
-# ---------------------------------------------------------------------------
-def main() -> None:
-    import argparse
-
-    parser = argparse.ArgumentParser(
-        description="MyGene MCP Server",
-        epilog="Environment overrides: MCP_TRANSPORT, FASTMCP_SERVER_HOST, FASTMCP_SERVER_PORT",
-    )
-    parser.add_argument(
-        "--transport",
-        choices=["stdio", "sse", "http"],
-        default=os.getenv("MCP_TRANSPORT", "stdio"),
-        help="Transport protocol to expose (stdio, sse, or http)",
-    )
-    parser.add_argument(
-        "--host",
-        default=os.getenv("FASTMCP_SERVER_HOST", "0.0.0.0"),
-        help="Host for SSE transport (default: 0.0.0.0)",
-    )
-    parser.add_argument(
-        "--port",
-        type=int,
-        default=int(os.getenv("FASTMCP_SERVER_PORT", "8000")),
-        help="Port for SSE transport (default: 8000)",
-    )
-    parser.add_argument(
-        "--verbose",
-        action="store_true",
-        help="Enable verbose (DEBUG level) logging",
-    )
-
-    args = parser.parse_args()
-
-    if args.verbose:
-        logging.getLogger().setLevel(logging.DEBUG)
-
-    if args.transport in {"sse", "http"}:
-        os.environ["FASTMCP_SERVER_HOST"] = args.host
-        os.environ["FASTMCP_SERVER_PORT"] = str(args.port)
-        if hasattr(mcp, "settings"):
-            mcp.settings.host = args.host  # type: ignore[attr-defined]
-            mcp.settings.port = args.port  # type: ignore[attr-defined]
-        logger.info("Configured %s host=%s port=%s", args.transport.upper(), args.host, args.port)
-
-    logger.info(
-        "Starting MyGene MCP server (transport=%s, host=%s, port=%s)",
-        args.transport,
-        args.host,
-        args.port,
-    )
-
-    try:
-        if args.transport == "http":
-            async def run_http() -> None:
-                await mcp.run_http_async(host=args.host, port=args.port)
-
-            anyio.run(run_http)
+def _pluck(row, path):
+    node = row
+    for part in path.split("."):
+        if isinstance(node, list):
+            node = [item.get(part) for item in node if isinstance(item, dict)]
+        elif isinstance(node, dict):
+            node = node.get(part)
         else:
-            mcp.run(transport=args.transport)
-    except KeyboardInterrupt:  # pragma: no cover - user interaction
-        logger.info("Server interrupted by user")
-    except Exception:  # pragma: no cover - unexpected runtime failure
-        logger.exception("Server encountered an unrecoverable error")
-        raise
-
-
-if __name__ == "__main__":  # pragma: no cover
-    main()
+            return None
+    return node

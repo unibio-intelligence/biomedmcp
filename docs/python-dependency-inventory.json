@@ -1,5 +1,5 @@
 {
-  "uv_lock_sha256": "d470454995a023bbea5b97baf60bebf52c5508049bdaaf328ac44a321c87a9ad",
+  "uv_lock_sha256": "aea08424d97ba357fe53be332dfb5facadf12dd6a791d257009d208ddbf592ca",
   "packages": [
     {
       "name": "aiofile",
@@ -8,31 +8,6 @@
       "license_files": [
         "LICENCE",
         "LICENCE.md"
-      ]
-    },
-    {
-      "name": "aiohappyeyeballs",
-      "version": "2.7.1",
-      "license": "PSF-2.0",
-      "license_files": [
-        "LICENSE"
-      ]
-    },
-    {
-      "name": "aiohttp",
-      "version": "3.14.5",
-      "license": "Apache-2.0 AND MIT",
-      "license_files": [
-        "LICENSE.txt",
-        "vendor/llhttp/LICENSE"
-      ]
-    },
-    {
-      "name": "aiosignal",
-      "version": "1.4.0",
-      "license": "Apache 2.0",
-      "license_files": [
-        "LICENSE"
       ]
     },
     {
@@ -77,32 +52,11 @@
     },
     {
       "name": "biomedmcp",
-      "version": "0.2.4",
+      "version": "0.2.5",
       "license": "Apache-2.0",
       "license_files": [
         "LICENSE",
-        "NOTICE.md",
-        "servers/python/antibody-registry/LICENSE",
-        "servers/python/bio-ontology-mcp/LICENSE",
-        "servers/python/chembl-mcp/LICENSE",
-        "servers/python/clinical-trials-mcp/LICENSE",
-        "servers/python/dailymed-mcp/LICENSE",
-        "servers/python/depmap-mcp/LICENSE",
-        "servers/python/ensembl-mcp/LICENSE",
-        "servers/python/gtex/LICENSE",
-        "servers/python/mychem/LICENSE",
-        "servers/python/mydisease/LICENSE",
-        "servers/python/mygene/LICENSE",
-        "servers/python/ncbi-mcp/LICENSE",
-        "servers/python/omnipath-mcp/LICENSE",
-        "servers/python/openfda-mcp/LICENSE",
-        "servers/python/opentargets/LICENSE",
-        "servers/python/orange-book-mcp/LICENSE",
-        "servers/python/pdb-mcp/LICENSE",
-        "servers/python/protein-atlas-mcp/LICENSE",
-        "servers/python/reactome-mcp/LICENSE",
-        "servers/python/surechembl-mcp/LICENSE",
-        "servers/python/uniprot-mcp/LICENSE"
+        "NOTICE.md"
       ]
     },
     {
@@ -133,14 +87,6 @@
       "name": "cffi",
       "version": "2.1.1",
       "license": "MIT-0",
-      "license_files": [
-        "LICENSE"
-      ]
-    },
-    {
-      "name": "charset-normalizer",
-      "version": "3.5.1",
-      "license": "MIT",
       "license_files": [
         "LICENSE"
       ]
@@ -220,14 +166,6 @@
       "version": "4.1.2",
       "license": "Apache-2.0",
       "license_files": []
-    },
-    {
-      "name": "frozenlist",
-      "version": "1.8.0",
-      "license": "Apache-2.0",
-      "license_files": [
-        "LICENSE"
-      ]
     },
     {
       "name": "graphql-core",
@@ -370,12 +308,6 @@
       ]
     },
     {
-      "name": "Levenshtein",
-      "version": "0.27.5",
-      "license": "GPL-2.0-or-later",
-      "license_files": []
-    },
-    {
       "name": "markdown-it-py",
       "version": "4.2.0",
       "license": "See installed distribution license files",
@@ -418,14 +350,6 @@
       "name": "more-itertools",
       "version": "11.1.0",
       "license": "MIT",
-      "license_files": [
-        "LICENSE"
-      ]
-    },
-    {
-      "name": "multidict",
-      "version": "6.9.1",
-      "license": "Apache License 2.0",
       "license_files": [
         "LICENSE"
       ]
@@ -508,15 +432,6 @@
       "license": "MIT",
       "license_files": [
         "LICENSE"
-      ]
-    },
-    {
-      "name": "propcache",
-      "version": "0.5.4",
-      "license": "Apache-2.0",
-      "license_files": [
-        "LICENSE",
-        "NOTICE"
       ]
     },
     {
@@ -619,14 +534,6 @@
       ]
     },
     {
-      "name": "python-Levenshtein",
-      "version": "0.27.5",
-      "license": "GPL-2.0-or-later",
-      "license_files": [
-        "LICENSE"
-      ]
-    },
-    {
       "name": "python-multipart",
       "version": "0.0.32",
       "license": "Apache-2.0",
@@ -643,12 +550,6 @@
       ]
     },
     {
-      "name": "RapidFuzz",
-      "version": "3.14.6",
-      "license": "MIT",
-      "license_files": []
-    },
-    {
       "name": "redis",
       "version": "6.4.0",
       "license": "MIT",
@@ -662,15 +563,6 @@
       "license": "MIT",
       "license_files": [
         "COPYING"
-      ]
-    },
-    {
-      "name": "requests",
-      "version": "2.34.2",
-      "license": "Apache-2.0",
-      "license_files": [
-        "LICENSE",
-        "NOTICE"
       ]
     },
     {
@@ -756,14 +648,6 @@
       ]
     },
     {
-      "name": "thefuzz",
-      "version": "0.22.1",
-      "license": "MIT",
-      "license_files": [
-        "LICENSE.txt"
-      ]
-    },
-    {
       "name": "truststore",
       "version": "0.10.4",
       "license": "MIT",
@@ -796,14 +680,6 @@
       ]
     },
     {
-      "name": "urllib3",
-      "version": "2.8.0",
-      "license": "MIT",
-      "license_files": [
-        "LICENSE.txt"
-      ]
-    },
-    {
       "name": "uvicorn",
       "version": "0.53.0",
       "license": "BSD-3-Clause",
@@ -825,15 +701,6 @@
       "license": "BSD-3-Clause",
       "license_files": [
         "LICENSE"
-      ]
-    },
-    {
-      "name": "yarl",
-      "version": "1.25.1",
-      "license": "Apache-2.0",
-      "license_files": [
-        "LICENSE",
-        "NOTICE"
       ]
     }
   ]

@@ -58,4 +58,4 @@ See the [public runtime README](../../../README.md) for installation, source con
 
 Provider contracts: [Reactome Content Service](https://reactome.org/ContentService/).
 
-Licensed under [Apache-2.0](LICENSE). Provider data has its own [terms](../../../docs/source-licenses.md).
+Licensed under [Apache-2.0](../../../LICENSE). Provider data has its own [terms](../../../docs/source-licenses.md).

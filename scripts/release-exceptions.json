@@ -16,6 +16,11 @@
       "reviewed": "2026-11-05"
     },
     {
+      "host": "www.bioontology.org",
+      "reason": "Serves a Cloudflare bot check (HTTP 403) to automated requests; the terms page loads in a browser.",
+      "reviewed": "2026-11-05"
+    },
+    {
       "host": "www.fda.gov",
       "reason": "Redirects automated requests to an abuse-detection page; pages load in a browser.",
       "reviewed": "2026-11-05"

@@ -1,5 +1,19 @@
 # Release notes
 
+## 0.2.5
+
+- Remove the `build_dossier` workflows `literature_review`,
+  `patent_landscape` and `study_summary`; use `search_literature` or
+  `search_records` instead.
+- Remove the unused `python-Levenshtein`, `thefuzz`, `aiohttp`, `requests` and
+  `python-dotenv` dependencies.
+- The adapter packages ship only inside the `biomedmcp` wheel, under its
+  Apache-2.0 license.
+- Reimplement the MyGene, MyChem, MyDisease, Open Targets and BioPortal
+  adapters from the public API contracts. Each now exposes only the
+  operations the research service and `query_source` use; adapter tool
+  descriptions and schemas changed accordingly.
+
 ## 0.2.4
 
 - Rename all 13 MCP tools and CLI operations to verb-object names, such as

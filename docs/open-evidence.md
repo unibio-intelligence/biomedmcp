@@ -9,7 +9,7 @@ oncogenicity classifications. NIH does not independently verify submitted
 assertions; missing classifications are unknown.
 
 ```json
-{"tool":"variant_evidence","arguments":{"id":"PCSK9 R46L","sections":["clinvar"]}}
+{"tool":"get_variant_evidence","arguments":{"id":"PCSK9 R46L","sections":["clinvar"]}}
 ```
 
 An explicit allele is preferable when an rsID or protein change maps to multiple
@@ -22,7 +22,7 @@ transcript HGVS or an allele in the qualified assembly. Indels require qualified
 unnormalized coordinates.
 
 ```json
-{"tool":"variant_evidence","arguments":{"id":"chr1:55039974:G:T","assembly":"grch38","sections":["clinvar","population","civic"]}}
+{"tool":"get_variant_evidence","arguments":{"id":"chr1:55039974:G:T","assembly":"grch38","sections":["clinvar","population","civic"]}}
 ```
 
 Population and CIViC are separate sources with their own checks. Population
@@ -37,7 +37,7 @@ Europe PMC and contributor terms remain attached; this is not a blanket
 permissive license for all Europe PMC content.
 
 ```json
-{"tool":"relate","arguments":{"entity":"article","id":"29846123","relation":"citations","limit":10}}
+{"tool":"find_related","arguments":{"entity":"article","id":"29846123","relation":"citations","limit":10}}
 ```
 
 The response reports source total, returned count and whether more indexed
@@ -58,9 +58,9 @@ included. Basic calls need no key. An optional `OPENALEX_API_KEY`, set on the
 server, gives more provider capacity; it is never a tool parameter.
 
 ```json
-{"tool":"search","arguments":{"entity":"author","query":"Jennifer Doudna","filters":{"source":"openalex"},"limit":3}}
-{"tool":"relate","arguments":{"entity":"author","id":"openalex:A5023888391","relation":"articles","limit":3}}
-{"tool":"relate","arguments":{"entity":"article","id":"10.7717/peerj.4375","relation":"recommendations","limit":3}}
+{"tool":"search_records","arguments":{"entity":"author","query":"Jennifer Doudna","filters":{"source":"openalex"},"limit":3}}
+{"tool":"find_related","arguments":{"entity":"author","id":"openalex:A5023888391","relation":"articles","limit":3}}
+{"tool":"find_related","arguments":{"entity":"article","id":"10.7717/peerj.4375","relation":"recommendations","limit":3}}
 ```
 
 Drug `label` reads return SPL identifiers, version/effective date, product metadata,
@@ -71,7 +71,7 @@ recovered through evidence resources. HTML tables, images and attachments are no
 included. A label listing does not confirm FDA approval, current labeling or
 suitability for a patient.
 
-`variant_evidence` with `sections=["predictions"]` now returns **AlphaMissense**
+`get_variant_evidence` with `sections=["predictions"]` now returns **AlphaMissense**
 precomputed predictions under CC BY 4.0. Gene/protein-change inputs use an exact
 reviewed human UniProt sequence matched to the official AlphaFold DB score file;
 the response retains the sequence version and score-file hash. Genomic, rsID and
@@ -83,8 +83,8 @@ predictions, not clinical diagnoses or patient-risk estimates. Non-missense or
 unavailable predictions are reported as such.
 
 ```json
-{"tool":"variant_evidence","arguments":{"id":"PCSK9 R46L","sections":["predictions"]}}
-{"tool":"variant_evidence","arguments":{"id":"chr1:55039974:G:T","assembly":"grch38","sections":["predictions"]}}
+{"tool":"get_variant_evidence","arguments":{"id":"PCSK9 R46L","sections":["predictions"]}}
+{"tool":"get_variant_evidence","arguments":{"id":"chr1:55039974:G:T","assembly":"grch38","sections":["predictions"]}}
 ```
 
 Semantic Scholar acquisition, TLDR sections, source discovery and credentials have
@@ -93,6 +93,6 @@ See `get_capabilities` for coverage and [connection instructions](connect.md).
 
 ## Additional predictor scores
 
-Request `variant_evidence` with `sections: ["eve"]` and a gene/protein substitution such as `PCSK9 R46L` for original EVE ASM scores. The [EVE publisher licenses all site data under MIT](https://evemodel.org/download/bulk); returned evidence includes its full copyright/permission notice, uncertainty, source 75%-retained classification, canonical protein identity and artifact hash. Coverage depends on EVE's supplied proteins and positions; genomic mapping is not inferred. AlphaMissense remains available through `sections: ["predictions"]`. Scores from these distinct models are not combined.
+Request `get_variant_evidence` with `sections: ["eve"]` and a gene/protein substitution such as `PCSK9 R46L` for original EVE ASM scores. The [EVE publisher licenses all site data under MIT](https://evemodel.org/download/bulk); returned evidence includes its full copyright/permission notice, uncertainty, source 75%-retained classification, canonical protein identity and artifact hash. Coverage depends on EVE's supplied proteins and positions; genomic mapping is not inferred. AlphaMissense remains available through `sections: ["predictions"]`. Scores from these distinct models are not combined.
 
 Public predictor results are cached for one day and shared across anonymous requests to the same server. Results from personal keys or signed-in requests are not shared. Set `freshness` to `fresh` to bypass the cache.

@@ -1,21 +1,14 @@
-"""Validated MyChem annotation acquisition; underlying source permissions remain separate."""
+"""MyChem.info client: the shared BioThings acquisition contract bound to MyChem."""
 
-from biomedmcp.native.biothings import BioThingsClient, CacheEntry
+from biomedmcp.native.biothings import BioThingsClient
 
-
-class MyChemError(Exception):
-    """Invalid local annotation arguments (never includes provider response bodies)."""
+BASE_URL = "https://mychem.info/v1"
 
 
 class MyChemClient(BioThingsClient):
+    """GET/POST against MyChem.info with envelope validation, held-field removal and caching."""
+
     source = "mychem"
 
-    def __init__(
-        self,
-        base_url="https://mychem.info/v1",
-        timeout=30.0,
-        cache_enabled=True,
-        cache_ttl=3600,
-        rate_limit=10,
-    ):
-        super().__init__(base_url, timeout, cache_enabled, cache_ttl, rate_limit)
+    def __init__(self, base_url=BASE_URL, **options):
+        super().__init__(base_url, **options)

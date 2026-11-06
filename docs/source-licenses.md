@@ -1,6 +1,6 @@
 # Source license and release inventory
 
-Owner-approved default enablement for the free hosted research service: share-alike is accepted; mixed or unresolved permissions are eligible unless a documented restriction blocks the implemented use. Eligibility is not a verified permissive license. Preserve upstream attribution, license, share-alike and use limitations separately from Apache-2.0 integration code. Keys cannot override documented holds.
+Default source enablement: share-alike licenses are accepted, and mixed or unresolved permissions are eligible unless a documented restriction blocks the implemented use. Eligibility is not a verified permissive license. Preserve upstream attribution, license, share-alike and use limitations separately from Apache-2.0 integration code. Keys cannot override documented holds.
 
 Reviewed on 2026-10-13. Eligibility concerns source permissions only; implementation, scientific qualification and the integration-code license remain separate release gates. Unresolved entries are not completed license reviews. Software licenses and licenses on papers describing a database do not establish permission for its API/data.
 

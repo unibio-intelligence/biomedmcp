@@ -5,11 +5,15 @@ import argparse
 import asyncio
 import json
 import os
+import sys
 from pathlib import Path
 
 from fastmcp import Client
 
-from biomedmcp.examples import ADAPTER_READMES, adapter_readme, guide_examples, readme_examples
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from adapter_docs import ADAPTER_READMES, adapter_readme
+
+from biomedmcp.examples import guide_examples, readme_examples
 from biomedmcp.mcp.server import create_server
 from biomedmcp.output_contracts import CATALOG_BYTE_BUDGET, MODEL_VISIBLE_BYTE_BUDGET
 from biomedmcp.public_catalog import operation_map
@@ -54,7 +58,6 @@ async def artifacts(root):
     except ImportError:
         pass
     outputs = {
-        "docs/mcp-catalog-budget.json": json.dumps(report, indent=2) + "\n",
         "docs/operation-ownership.json": json.dumps(operation_map(), indent=2) + "\n",
         "docs/examples.md": (
             "# Public call examples\n\nUse these typed calls to inspect records or extend an evidence notebook. Calls are tested with synthetic provider responses; live results vary. Check [source release eligibility](source-licenses.md) before execution; unreleased integrations cannot be enabled by adding keys.\n\n"
@@ -79,8 +82,7 @@ async def main():
     outputs = await artifacts(args.root)
     for name, data in outputs.items():
         (args.root / name).write_bytes(data)
-    report = json.loads(outputs["docs/mcp-catalog-budget.json"])
-    print(json.dumps({k: v for k, v in report.items() if k != "tools"}))
+    print(json.dumps({"generated": sorted(outputs)}))
 
 
 if __name__ == "__main__":

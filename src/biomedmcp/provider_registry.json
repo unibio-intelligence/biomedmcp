@@ -41,7 +41,7 @@
       "compound",
       "pharmacology"
     ],
-    "tool_count": "~42",
+    "tool_count": "7",
     "executable": true,
     "layer": "ubi-bio"
   },
@@ -56,7 +56,7 @@
       "annotation",
       "medical"
     ],
-    "tool_count": "~55",
+    "tool_count": "10",
     "executable": true,
     "layer": "ubi-bio"
   },
@@ -71,7 +71,7 @@
       "annotation",
       "genetics"
     ],
-    "tool_count": "~26",
+    "tool_count": "3",
     "executable": true,
     "layer": "ubi-bio"
   },
@@ -87,7 +87,7 @@
       "drug",
       "therapeutic"
     ],
-    "tool_count": "~42",
+    "tool_count": "5",
     "executable": true,
     "layer": "ubi-bio"
   },
@@ -318,7 +318,7 @@
       "medical",
       "knowledge"
     ],
-    "tool_count": "~12",
+    "tool_count": "4",
     "executable": true,
     "required_env": [
       "BIOONTOLOGY_API_KEY"

@@ -1,3 +1,3 @@
-# src/opentargets_mcp/__init__.py
+"""Open Targets Platform adapter for the biomedmcp core."""
 
-__version__ = "0.2.0"
+__version__ = "0.1.0"

@@ -3,7 +3,7 @@
 biomedmcp
 Copyright 2026 UniBio Intelligence
 
-All code in this repository, including the adapter packages under `servers/python/`, is written by UniBio Intelligence and licensed under [Apache-2.0](LICENSE). Each distribution carries the same license file and `Apache-2.0` metadata.
+All code in this repository, including the adapter packages under `servers/python/`, is written by UniBio Intelligence and licensed under [Apache-2.0](LICENSE). The adapters ship inside the biomedmcp distribution under the same license.
 
 ## Third-party software
 

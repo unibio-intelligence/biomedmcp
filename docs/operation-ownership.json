@@ -1862,70 +1862,42 @@
     "primitive": "workflow/target_dossier",
     "tool": "build_dossier",
     "public_workflow": "target_dossier",
-    "retired_alias": false,
     "handler": "ResearchService.research"
   },
   {
-    "primitive": "workflow/variant_evidence",
+    "primitive": "workflow/variant_dossier",
     "tool": "build_dossier",
     "public_workflow": "variant_dossier",
-    "retired_alias": false,
     "handler": "ResearchService.research"
   },
   {
     "primitive": "workflow/drug_review",
     "tool": "build_dossier",
     "public_workflow": "drug_review",
-    "retired_alias": false,
     "handler": "ResearchService.research"
   },
   {
     "primitive": "workflow/disease_landscape",
     "tool": "build_dossier",
     "public_workflow": "disease_landscape",
-    "retired_alias": false,
-    "handler": "ResearchService.research"
-  },
-  {
-    "primitive": "workflow/literature_review",
-    "tool": "search_literature",
-    "public_workflow": "literature_review",
-    "retired_alias": true,
     "handler": "ResearchService.research"
   },
   {
     "primitive": "workflow/pathway_review",
     "tool": "build_dossier",
     "public_workflow": "pathway_review",
-    "retired_alias": false,
     "handler": "ResearchService.research"
   },
   {
     "primitive": "workflow/negative_evidence",
     "tool": "build_dossier",
     "public_workflow": "negative_evidence",
-    "retired_alias": false,
-    "handler": "ResearchService.research"
-  },
-  {
-    "primitive": "workflow/study_summary",
-    "tool": "search_records",
-    "public_workflow": "study_summary",
-    "retired_alias": true,
-    "handler": "ResearchService.research"
-  },
-  {
-    "primitive": "workflow/patent_landscape",
-    "tool": "search_records",
-    "public_workflow": "patent_landscape",
-    "retired_alias": true,
     "handler": "ResearchService.research"
   },
   {
     "primitive": "workflow/model_input_bundle",
     "tool": "build_dossier",
     "public_workflow": "model_input_bundle",
-    "retired_alias": false,
     "handler": "ResearchService.research"
   }
 ]

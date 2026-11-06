@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0",
-  "implementation": "biomedmcp/0.2.4",
-  "qualified_at": "2026-11-05T03:11:31.330764+00:00",
-  "junit_sha256": "adf05652cc93ee669ef6624c5e46a72f31599da2e98a8b1d8d4f9077bde69614",
-  "core_sha256": "8238b9519326ab57a843b159f948e17088315b7d64ec1fe400edda966db4aca6",
+  "implementation": "biomedmcp/0.2.5",
+  "qualified_at": "2026-11-06T01:02:08.279775+00:00",
+  "junit_sha256": "9308bdd3cb118cbad56923a3af8cc35b51c8d5a8726c92f217cb6a3281a44751",
+  "core_sha256": "44e3a8a3ff132bf25c8afe87abca57064a0a38e747d1e25683bec484c61eb1ce",
   "dependencies": {
     "fastmcp": "4.1.2",
     "pydantic": "2.13.5",
@@ -13,14 +13,14 @@
   "sources": {
     "alphamissense": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "8238b9519326ab57a843b159f948e17088315b7d64ec1fe400edda966db4aca6",
+      "implementation_sha256": "44e3a8a3ff132bf25c8afe87abca57064a0a38e747d1e25683bec484c61eb1ce",
       "scope": "Native provider response contracts; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 53,
       "evidence": [
-        "tests/test_alphamissense.py"
+        "tests/unit/sources/test_alphamissense.py"
       ],
       "evidence_sha256": {
-        "tests/test_alphamissense.py": "b794f5d0f9b68f260e43e6313beeebf7b494b55d81099211e8abf9b28daa0c79"
+        "tests/unit/sources/test_alphamissense.py": "b794f5d0f9b68f260e43e6313beeebf7b494b55d81099211e8abf9b28daa0c79"
       }
     },
     "antibody-registry": {
@@ -29,26 +29,26 @@
       "scope": "Retained import/declared operation inventory; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 72,
       "evidence": [
-        "tests/test_adapter_inventory.py",
-        "tests/test_repaired_adapters.py"
+        "tests/unit/adapters/test_adapter_inventory.py",
+        "tests/unit/adapters/test_retained_routes.py"
       ],
       "evidence_sha256": {
-        "tests/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
-        "tests/test_repaired_adapters.py": "7d72a40db3351a3a9f7ed75e72027c850a4ca9d4124f5e3517a56e9efc3033ba"
+        "tests/unit/adapters/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
+        "tests/unit/adapters/test_retained_routes.py": "7d72a40db3351a3a9f7ed75e72027c850a4ca9d4124f5e3517a56e9efc3033ba"
       }
     },
     "bio-ontology": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "bf52ac7ede6fa4364b0ad5985c9c04470607391bd02926483a0970d2c6225d37",
+      "implementation_sha256": "bb82f975ad27053dbc808d0af17e8e612fd388c5830b1d50e21e3641d1f2139b",
       "scope": "Retained import/declared operation inventory; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 72,
       "evidence": [
-        "tests/test_adapter_inventory.py",
-        "tests/test_repaired_adapters.py"
+        "tests/unit/adapters/test_adapter_inventory.py",
+        "tests/unit/adapters/test_retained_routes.py"
       ],
       "evidence_sha256": {
-        "tests/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
-        "tests/test_repaired_adapters.py": "7d72a40db3351a3a9f7ed75e72027c850a4ca9d4124f5e3517a56e9efc3033ba"
+        "tests/unit/adapters/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
+        "tests/unit/adapters/test_retained_routes.py": "7d72a40db3351a3a9f7ed75e72027c850a4ca9d4124f5e3517a56e9efc3033ba"
       }
     },
     "chembl": {
@@ -57,38 +57,38 @@
       "scope": "Retained import/declared operation inventory; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 32,
       "evidence": [
-        "tests/test_adapter_inventory.py",
-        "tests/test_chembl_properties.py"
+        "tests/unit/adapters/test_adapter_inventory.py",
+        "tests/unit/sources/test_chembl_properties.py"
       ],
       "evidence_sha256": {
-        "tests/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
-        "tests/test_chembl_properties.py": "5014b193a98e7f85e953575b94c51485a02c75a3b66e50e9117c2c8a190c70c0"
+        "tests/unit/adapters/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
+        "tests/unit/sources/test_chembl_properties.py": "5014b193a98e7f85e953575b94c51485a02c75a3b66e50e9117c2c8a190c70c0"
       }
     },
     "civic": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "8238b9519326ab57a843b159f948e17088315b7d64ec1fe400edda966db4aca6",
+      "implementation_sha256": "44e3a8a3ff132bf25c8afe87abca57064a0a38e747d1e25683bec484c61eb1ce",
       "scope": "Native provider response contracts; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 97,
       "evidence": [
-        "tests/test_civic_responses.py"
+        "tests/unit/sources/test_civic_responses.py"
       ],
       "evidence_sha256": {
-        "tests/test_civic_responses.py": "e312d30badcdafdca96a5fa4c468cf960d99b55820cb21b4789bb08513ffc8a6"
+        "tests/unit/sources/test_civic_responses.py": "456405054b384f1f0ad6abbe2d59b2d7ec0443dadb7971fe87741f689bc3cdbc"
       }
     },
     "clingen": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "8238b9519326ab57a843b159f948e17088315b7d64ec1fe400edda966db4aca6",
+      "implementation_sha256": "44e3a8a3ff132bf25c8afe87abca57064a0a38e747d1e25683bec484c61eb1ce",
       "scope": "Native provider response contracts; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 111,
       "evidence": [
-        "tests/test_clingen_responses.py",
-        "tests/test_typed_variant_assertions.py"
+        "tests/unit/sources/test_clingen_responses.py",
+        "tests/unit/records/test_typed_variant_assertions.py"
       ],
       "evidence_sha256": {
-        "tests/test_clingen_responses.py": "3a8e58714d423820456023823ed4e011ce0971bb653f63404f548fa7d1757a2c",
-        "tests/test_typed_variant_assertions.py": "6aac765ba615b9ed8a9d6a8707951bc8c1d09a739ebf7300c1992803039cee77"
+        "tests/unit/sources/test_clingen_responses.py": "3a8e58714d423820456023823ed4e011ce0971bb653f63404f548fa7d1757a2c",
+        "tests/unit/records/test_typed_variant_assertions.py": "6aac765ba615b9ed8a9d6a8707951bc8c1d09a739ebf7300c1992803039cee77"
       }
     },
     "clinical-trials": {
@@ -97,26 +97,26 @@
       "scope": "Retained import/declared operation inventory; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 130,
       "evidence": [
-        "tests/test_adapter_inventory.py",
-        "tests/test_clinical_trials_responses.py",
-        "tests/test_typed_trial_records.py"
+        "tests/unit/adapters/test_adapter_inventory.py",
+        "tests/unit/sources/test_clinical_trials_responses.py",
+        "tests/unit/records/test_typed_trial_records.py"
       ],
       "evidence_sha256": {
-        "tests/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
-        "tests/test_clinical_trials_responses.py": "9238810806ba320e86ba75eef10c93d0c99f5237c112b4ce07e0de846d49c90d",
-        "tests/test_typed_trial_records.py": "06dea2fc815567a2f84decb5348abf1e989d519228c31f6c2d6ed27ae3921677"
+        "tests/unit/adapters/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
+        "tests/unit/sources/test_clinical_trials_responses.py": "9238810806ba320e86ba75eef10c93d0c99f5237c112b4ce07e0de846d49c90d",
+        "tests/unit/records/test_typed_trial_records.py": "06dea2fc815567a2f84decb5348abf1e989d519228c31f6c2d6ed27ae3921677"
       }
     },
     "complexportal": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "8238b9519326ab57a843b159f948e17088315b7d64ec1fe400edda966db4aca6",
+      "implementation_sha256": "44e3a8a3ff132bf25c8afe87abca57064a0a38e747d1e25683bec484c61eb1ce",
       "scope": "Native provider response contracts; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 87,
       "evidence": [
-        "tests/test_complexportal_responses.py"
+        "tests/unit/sources/test_complexportal_responses.py"
       ],
       "evidence_sha256": {
-        "tests/test_complexportal_responses.py": "a3e498ee23f96cd0675dcca56f31ffc5deb1c5b1dfebbcecac95fe8cb1c339b7"
+        "tests/unit/sources/test_complexportal_responses.py": "85392f451e1fbd91b0d44cdb6280feb65ece5e02f78690724355948b67bf29b1"
       }
     },
     "dailymed": {
@@ -125,10 +125,10 @@
       "scope": "Retained import/declared operation inventory; provider response semantics not qualified by this inventory",
       "test_count": 2,
       "evidence": [
-        "tests/test_adapter_inventory.py"
+        "tests/unit/adapters/test_adapter_inventory.py"
       ],
       "evidence_sha256": {
-        "tests/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1"
+        "tests/unit/adapters/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1"
       }
     },
     "depmap": {
@@ -137,10 +137,10 @@
       "scope": "Retained import/declared operation inventory; provider response semantics not qualified by this inventory",
       "test_count": 1,
       "evidence": [
-        "tests/test_adapter_inventory.py"
+        "tests/unit/adapters/test_adapter_inventory.py"
       ],
       "evidence_sha256": {
-        "tests/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1"
+        "tests/unit/adapters/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1"
       }
     },
     "ensembl": {
@@ -149,184 +149,184 @@
       "scope": "Retained import/declared operation inventory; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 171,
       "evidence": [
-        "tests/test_adapter_inventory.py",
-        "tests/test_ensembl_contracts.py",
-        "tests/test_ensembl_genome_contracts.py"
+        "tests/unit/adapters/test_adapter_inventory.py",
+        "tests/unit/sources/test_ensembl_contracts.py",
+        "tests/unit/sources/test_ensembl_genome_contracts.py"
       ],
       "evidence_sha256": {
-        "tests/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
-        "tests/test_ensembl_contracts.py": "2c75b235ff2d485e064e34ea7dfe0480de37bb188ae8a7151c2f6b2c6e94396c",
-        "tests/test_ensembl_genome_contracts.py": "7cd78d604ba3650b817828336e042344bf8fdf1d0c3b76405e5f5ffed62be455"
+        "tests/unit/adapters/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
+        "tests/unit/sources/test_ensembl_contracts.py": "2c75b235ff2d485e064e34ea7dfe0480de37bb188ae8a7151c2f6b2c6e94396c",
+        "tests/unit/sources/test_ensembl_genome_contracts.py": "7cd78d604ba3650b817828336e042344bf8fdf1d0c3b76405e5f5ffed62be455"
       }
     },
     "europepmc": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "8238b9519326ab57a843b159f948e17088315b7d64ec1fe400edda966db4aca6",
+      "implementation_sha256": "44e3a8a3ff132bf25c8afe87abca57064a0a38e747d1e25683bec484c61eb1ce",
       "scope": "Native provider response contracts; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 125,
       "evidence": [
-        "tests/test_fulltext_range_contract.py",
-        "tests/test_typed_literature_records.py",
-        "tests/test_evidence_recovery.py",
-        "tests/test_open_citation_graph.py"
+        "tests/unit/sources/test_fulltext_range_contract.py",
+        "tests/unit/records/test_typed_literature_records.py",
+        "tests/unit/records/test_evidence_recovery.py",
+        "tests/unit/sources/test_open_citation_graph.py"
       ],
       "evidence_sha256": {
-        "tests/test_fulltext_range_contract.py": "346db44f08e91955d08674a5e3aa9be029a0c49d5db2454b4b41891265dee778",
-        "tests/test_typed_literature_records.py": "aa0610c6ce0176cb084091beeec36d9f1ce7cbc2bcebcd2a1b6e4b75d2dd8f10",
-        "tests/test_evidence_recovery.py": "4b6e5b3c7cbd22368685a88cec436e1914a2d292c31c75f56cc5e1b107f870c3",
-        "tests/test_open_citation_graph.py": "0f72c2bde46424e8306fe3a8fd7247449cbfe244c4a001d24db04fd5da1c2678"
+        "tests/unit/sources/test_fulltext_range_contract.py": "346db44f08e91955d08674a5e3aa9be029a0c49d5db2454b4b41891265dee778",
+        "tests/unit/records/test_typed_literature_records.py": "aa0610c6ce0176cb084091beeec36d9f1ce7cbc2bcebcd2a1b6e4b75d2dd8f10",
+        "tests/unit/records/test_evidence_recovery.py": "4b6e5b3c7cbd22368685a88cec436e1914a2d292c31c75f56cc5e1b107f870c3",
+        "tests/unit/sources/test_open_citation_graph.py": "0f72c2bde46424e8306fe3a8fd7247449cbfe244c4a001d24db04fd5da1c2678"
       }
     },
     "eve": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "8238b9519326ab57a843b159f948e17088315b7d64ec1fe400edda966db4aca6",
+      "implementation_sha256": "44e3a8a3ff132bf25c8afe87abca57064a0a38e747d1e25683bec484c61eb1ce",
       "scope": "Native provider response contracts; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 30,
       "evidence": [
-        "tests/test_eve.py"
+        "tests/unit/sources/test_eve.py"
       ],
       "evidence_sha256": {
-        "tests/test_eve.py": "47b53ba2bd97ab4c149e7a171e8e8fef301506a30c926196ac72adc830e8f035"
+        "tests/unit/sources/test_eve.py": "47b53ba2bd97ab4c149e7a171e8e8fef301506a30c926196ac72adc830e8f035"
       }
     },
     "gencc": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "8238b9519326ab57a843b159f948e17088315b7d64ec1fe400edda966db4aca6",
+      "implementation_sha256": "44e3a8a3ff132bf25c8afe87abca57064a0a38e747d1e25683bec484c61eb1ce",
       "scope": "Native provider response contracts; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 58,
       "evidence": [
-        "tests/test_gencc_responses.py"
+        "tests/unit/sources/test_gencc_responses.py"
       ],
       "evidence_sha256": {
-        "tests/test_gencc_responses.py": "d242e05b878cc3a4e2142c51270ad85e1f35073b3fa1c4bf81c5ca2d3c6f08b1"
+        "tests/unit/sources/test_gencc_responses.py": "d242e05b878cc3a4e2142c51270ad85e1f35073b3fa1c4bf81c5ca2d3c6f08b1"
       }
     },
     "gnomad": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "8238b9519326ab57a843b159f948e17088315b7d64ec1fe400edda966db4aca6",
+      "implementation_sha256": "44e3a8a3ff132bf25c8afe87abca57064a0a38e747d1e25683bec484c61eb1ce",
       "scope": "Native provider response contracts; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 130,
       "evidence": [
-        "tests/test_gnomad_responses.py",
-        "tests/test_typed_population_records.py"
+        "tests/unit/sources/test_gnomad_responses.py",
+        "tests/unit/records/test_typed_population_records.py"
       ],
       "evidence_sha256": {
-        "tests/test_gnomad_responses.py": "090af410dda569f6970a9a9c7b2f72f14b8293f1a079383ece673f8d5fccffb6",
-        "tests/test_typed_population_records.py": "ae47de1de55fbabe8b0282ce304490dd4159dae9a1dcdd18faf689775fbbae56"
+        "tests/unit/sources/test_gnomad_responses.py": "225edb3c1d15c57b3491878ebb262b9fbf18e326b5fd6add248753a45cf90dc6",
+        "tests/unit/records/test_typed_population_records.py": "ae47de1de55fbabe8b0282ce304490dd4159dae9a1dcdd18faf689775fbbae56"
       }
     },
     "gtex": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "02ebef6b69cf460fed28bd009dca0b5350383bccbffa838b01381a07e23455b5",
+      "implementation_sha256": "27eeba24d08bc98b452527d7ca0d70c592bc4c41ac345ef344606da557a63a80",
       "scope": "Retained import/declared operation inventory; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 396,
       "evidence": [
-        "tests/test_adapter_inventory.py",
-        "tests/test_gtex_responses.py",
-        "tests/test_gtex_pagination.py",
-        "tests/test_gtex_reference_identity.py",
-        "tests/test_typed_expression_records.py",
-        "tests/test_typed_qtl_records.py"
+        "tests/unit/adapters/test_adapter_inventory.py",
+        "tests/unit/sources/test_gtex_responses.py",
+        "tests/unit/sources/test_gtex_pagination.py",
+        "tests/unit/sources/test_gtex_reference_identity.py",
+        "tests/unit/records/test_typed_expression_records.py",
+        "tests/unit/records/test_typed_qtl_records.py"
       ],
       "evidence_sha256": {
-        "tests/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
-        "tests/test_gtex_responses.py": "40e567d110003b2fc63ad2ebfdb15c5808f154480882ea8ee92875f40343bd6a",
-        "tests/test_gtex_pagination.py": "8a326eaad29ab6350a75cffb609889abefc701f2678d6e2cd5c9fc5e9b932852",
-        "tests/test_gtex_reference_identity.py": "389776265c52537369bce13f68cbd98c18ab5e3218ce9e5474779dca44569cb3",
-        "tests/test_typed_expression_records.py": "187bc542af64e1f35ca2272d947460222e48065173a46e189d2809dbf23378b7",
-        "tests/test_typed_qtl_records.py": "cf086b64a31dc6d90cbe14e3db9da13f35c778776c26d2693ed5f8d6498e76fd"
+        "tests/unit/adapters/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
+        "tests/unit/sources/test_gtex_responses.py": "9038a00015f31333fb7261592cacaf1e33a5934d3697fcf5b4c206bf08cc5ed7",
+        "tests/unit/sources/test_gtex_pagination.py": "8a326eaad29ab6350a75cffb609889abefc701f2678d6e2cd5c9fc5e9b932852",
+        "tests/unit/sources/test_gtex_reference_identity.py": "389776265c52537369bce13f68cbd98c18ab5e3218ce9e5474779dca44569cb3",
+        "tests/unit/records/test_typed_expression_records.py": "187bc542af64e1f35ca2272d947460222e48065173a46e189d2809dbf23378b7",
+        "tests/unit/records/test_typed_qtl_records.py": "cf086b64a31dc6d90cbe14e3db9da13f35c778776c26d2693ed5f8d6498e76fd"
       }
     },
     "gwas": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "8238b9519326ab57a843b159f948e17088315b7d64ec1fe400edda966db4aca6",
+      "implementation_sha256": "44e3a8a3ff132bf25c8afe87abca57064a0a38e747d1e25683bec484c61eb1ce",
       "scope": "Native provider response contracts; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 95,
       "evidence": [
-        "tests/test_gwas_responses.py"
+        "tests/unit/sources/test_gwas_responses.py"
       ],
       "evidence_sha256": {
-        "tests/test_gwas_responses.py": "20d3eecb6040b6a806b0d658ff7cca72cecc53d671b8112d1a7737f1b18d7ead"
+        "tests/unit/sources/test_gwas_responses.py": "892aac13c38db99d51eccd52a6707195f4a5d7eb72bd017aec16e047f227d265"
       }
     },
     "interpro": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "8238b9519326ab57a843b159f948e17088315b7d64ec1fe400edda966db4aca6",
+      "implementation_sha256": "44e3a8a3ff132bf25c8afe87abca57064a0a38e747d1e25683bec484c61eb1ce",
       "scope": "Native provider response contracts; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 102,
       "evidence": [
-        "tests/test_interpro_responses.py"
+        "tests/unit/sources/test_interpro_responses.py"
       ],
       "evidence_sha256": {
-        "tests/test_interpro_responses.py": "01a4ef8e54f501509d82773ec294bd017aa97950adfbbdd25c798a5d25b34c6b"
+        "tests/unit/sources/test_interpro_responses.py": "01a4ef8e54f501509d82773ec294bd017aa97950adfbbdd25c798a5d25b34c6b"
       }
     },
     "monarch": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "8238b9519326ab57a843b159f948e17088315b7d64ec1fe400edda966db4aca6",
+      "implementation_sha256": "44e3a8a3ff132bf25c8afe87abca57064a0a38e747d1e25683bec484c61eb1ce",
       "scope": "Native provider response contracts; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 19,
       "evidence": [
-        "tests/test_monarch_responses.py"
+        "tests/unit/sources/test_monarch_responses.py"
       ],
       "evidence_sha256": {
-        "tests/test_monarch_responses.py": "6982170351c287033373adeca08bfded48fe3650c3313ef1d53dc1b18a15910e"
+        "tests/unit/sources/test_monarch_responses.py": "6982170351c287033373adeca08bfded48fe3650c3313ef1d53dc1b18a15910e"
       }
     },
     "mychem": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "03e2b8207f055fbc5b1f5d8353678d4931748dcc11cd8a97ce0e7b09c17a00a8",
+      "implementation_sha256": "2a9ab76412ec2f60a98b9227289181a8f7f2cadccc20296db760d444900ad409",
       "scope": "Retained import/declared operation inventory; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 116,
       "evidence": [
-        "tests/test_adapter_inventory.py",
-        "tests/test_biothings_responses.py"
+        "tests/unit/adapters/test_adapter_inventory.py",
+        "tests/unit/sources/test_biothings_responses.py"
       ],
       "evidence_sha256": {
-        "tests/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
-        "tests/test_biothings_responses.py": "147d5e24860cf2c63f8125ab1ce6cb86de54a91513819d7b74233dd9d2a0e70e"
+        "tests/unit/adapters/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
+        "tests/unit/sources/test_biothings_responses.py": "147d5e24860cf2c63f8125ab1ce6cb86de54a91513819d7b74233dd9d2a0e70e"
       }
     },
     "mydisease": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "3af559422ec4575fe06a07a0c52e1d8a568c8151fc058073b73f0ab857b3c580",
+      "implementation_sha256": "c0c0648e20af467b92595431e6d4845e49db5737f22b12cb929b463db545edc8",
       "scope": "Retained import/declared operation inventory; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 116,
       "evidence": [
-        "tests/test_adapter_inventory.py",
-        "tests/test_biothings_responses.py"
+        "tests/unit/adapters/test_adapter_inventory.py",
+        "tests/unit/sources/test_biothings_responses.py"
       ],
       "evidence_sha256": {
-        "tests/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
-        "tests/test_biothings_responses.py": "147d5e24860cf2c63f8125ab1ce6cb86de54a91513819d7b74233dd9d2a0e70e"
+        "tests/unit/adapters/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
+        "tests/unit/sources/test_biothings_responses.py": "147d5e24860cf2c63f8125ab1ce6cb86de54a91513819d7b74233dd9d2a0e70e"
       }
     },
     "mygene": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "150435ad2ba519240079aa77b108945f5c33533c5a7b2adf39cdc879f83a1ba8",
+      "implementation_sha256": "e3cf8ab91e5c84d8491c65a6eb879277611a71f2f08903f7b6bab78e9139467b",
       "scope": "Retained import/declared operation inventory; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 110,
       "evidence": [
-        "tests/test_adapter_inventory.py",
-        "tests/test_repaired_adapters.py",
-        "tests/test_qualified_gene_identity.py"
+        "tests/unit/adapters/test_adapter_inventory.py",
+        "tests/unit/adapters/test_retained_routes.py",
+        "tests/unit/records/test_qualified_gene_identity.py"
       ],
       "evidence_sha256": {
-        "tests/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
-        "tests/test_repaired_adapters.py": "7d72a40db3351a3a9f7ed75e72027c850a4ca9d4124f5e3517a56e9efc3033ba",
-        "tests/test_qualified_gene_identity.py": "868ff3b5bbef3fa43c7ba2f3149d6037ba9604edb6779fc19bd4fc13bd3762a7"
+        "tests/unit/adapters/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
+        "tests/unit/adapters/test_retained_routes.py": "7d72a40db3351a3a9f7ed75e72027c850a4ca9d4124f5e3517a56e9efc3033ba",
+        "tests/unit/records/test_qualified_gene_identity.py": "868ff3b5bbef3fa43c7ba2f3149d6037ba9604edb6779fc19bd4fc13bd3762a7"
       }
     },
     "myvariant": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "8238b9519326ab57a843b159f948e17088315b7d64ec1fe400edda966db4aca6",
+      "implementation_sha256": "44e3a8a3ff132bf25c8afe87abca57064a0a38e747d1e25683bec484c61eb1ce",
       "scope": "Native provider response contracts; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 118,
       "evidence": [
-        "tests/test_myvariant_responses.py"
+        "tests/unit/sources/test_myvariant_responses.py"
       ],
       "evidence_sha256": {
-        "tests/test_myvariant_responses.py": "80e6281393c622d902ceb45fed65110f645449f26d1f1db5749e0fd85d649c20"
+        "tests/unit/sources/test_myvariant_responses.py": "80e6281393c622d902ceb45fed65110f645449f26d1f1db5749e0fd85d649c20"
       }
     },
     "ncbi": {
@@ -335,28 +335,28 @@
       "scope": "Retained import/declared operation inventory; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 198,
       "evidence": [
-        "tests/test_adapter_inventory.py",
-        "tests/test_ncbi_datasets.py",
-        "tests/test_ncbi_gene_reports.py",
-        "tests/test_direct_clinvar.py"
+        "tests/unit/adapters/test_adapter_inventory.py",
+        "tests/unit/sources/test_ncbi_datasets.py",
+        "tests/unit/sources/test_ncbi_gene_reports.py",
+        "tests/unit/sources/test_direct_clinvar.py"
       ],
       "evidence_sha256": {
-        "tests/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
-        "tests/test_ncbi_datasets.py": "147c1846dbbbd370aad42fa0fc3193dbc6c057d8f54bc95d3f4958bbd44d39df",
-        "tests/test_ncbi_gene_reports.py": "d1ba4b7bbacab0af96f83f87f1805bd5eba72dfd3ec75e16068d3b3cafe94a00",
-        "tests/test_direct_clinvar.py": "2b54dec86275cb81ba0914d58e52d9bdb58e2309e77fe9e91bf790fe2ef86bde"
+        "tests/unit/adapters/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
+        "tests/unit/sources/test_ncbi_datasets.py": "147c1846dbbbd370aad42fa0fc3193dbc6c057d8f54bc95d3f4958bbd44d39df",
+        "tests/unit/sources/test_ncbi_gene_reports.py": "d1ba4b7bbacab0af96f83f87f1805bd5eba72dfd3ec75e16068d3b3cafe94a00",
+        "tests/unit/sources/test_direct_clinvar.py": "2b54dec86275cb81ba0914d58e52d9bdb58e2309e77fe9e91bf790fe2ef86bde"
       }
     },
     "ols": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "8238b9519326ab57a843b159f948e17088315b7d64ec1fe400edda966db4aca6",
+      "implementation_sha256": "44e3a8a3ff132bf25c8afe87abca57064a0a38e747d1e25683bec484c61eb1ce",
       "scope": "Native provider response contracts; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 107,
       "evidence": [
-        "tests/test_ols_responses.py"
+        "tests/unit/sources/test_ols_responses.py"
       ],
       "evidence_sha256": {
-        "tests/test_ols_responses.py": "9c78d8a5275671dc0bf6ea2cb1b285a91a8f68b6cbea84e841b3e9347b47649b"
+        "tests/unit/sources/test_ols_responses.py": "9c78d8a5275671dc0bf6ea2cb1b285a91a8f68b6cbea84e841b3e9347b47649b"
       }
     },
     "omnipath": {
@@ -365,60 +365,60 @@
       "scope": "Retained import/declared operation inventory; provider response semantics not qualified by this inventory",
       "test_count": 2,
       "evidence": [
-        "tests/test_adapter_inventory.py"
+        "tests/unit/adapters/test_adapter_inventory.py"
       ],
       "evidence_sha256": {
-        "tests/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1"
+        "tests/unit/adapters/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1"
       }
     },
     "openalex": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "8238b9519326ab57a843b159f948e17088315b7d64ec1fe400edda966db4aca6",
+      "implementation_sha256": "44e3a8a3ff132bf25c8afe87abca57064a0a38e747d1e25683bec484c61eb1ce",
       "scope": "Native provider response contracts; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 25,
       "evidence": [
-        "tests/test_openalex.py"
+        "tests/unit/sources/test_openalex.py"
       ],
       "evidence_sha256": {
-        "tests/test_openalex.py": "9e20cfd46b74dfe88661167fe817ebefbebd867727925301542e8916d5e2ae81"
+        "tests/unit/sources/test_openalex.py": "9e20cfd46b74dfe88661167fe817ebefbebd867727925301542e8916d5e2ae81"
       }
     },
     "openfda": {
       "kind": "inventory",
-      "implementation_sha256": "81032d65289ab21cbed09629c5df6415fec8a46c81e4cb8711927af9f29684e1",
+      "implementation_sha256": "20beb636d92f423d5cdf0fbeb3cd4bfd3678fdf8e50ee5606a24fc4d9f5792d3",
       "scope": "Retained import/declared operation inventory; provider response semantics not qualified by this inventory",
       "test_count": 2,
       "evidence": [
-        "tests/test_adapter_inventory.py"
+        "tests/unit/adapters/test_adapter_inventory.py"
       ],
       "evidence_sha256": {
-        "tests/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1"
+        "tests/unit/adapters/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1"
       }
     },
     "opentargets": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "14c7bcab41f49e409bb2327ec43d31e6241ee3e2649967a8bb1775244b2a9d9c",
+      "implementation_sha256": "4147bd709d777d5ae6b6dc98d0d6f71a3b73747a74d189a89ea1f72825a49655",
       "scope": "Retained import/declared operation inventory; selected response/identity fixtures (not exhaustive provider qualification)",
-      "test_count": 373,
+      "test_count": 331,
       "evidence": [
-        "tests/test_adapter_inventory.py",
-        "tests/test_opentargets_responses.py",
-        "tests/test_opentargets_assessments.py",
-        "tests/test_opentargets_partial.py",
-        "tests/test_opentargets_workflows.py",
-        "tests/test_opentargets_variant_evidence.py",
-        "tests/test_opentargets_pair_evidence.py",
-        "tests/test_source_schemas.py"
+        "tests/unit/adapters/test_adapter_inventory.py",
+        "tests/unit/sources/test_opentargets_responses.py",
+        "tests/unit/sources/test_opentargets_assessments.py",
+        "tests/unit/sources/test_opentargets_partial.py",
+        "tests/unit/sources/test_opentargets_workflows.py",
+        "tests/unit/sources/test_opentargets_variant_evidence.py",
+        "tests/unit/sources/test_opentargets_pair_evidence.py",
+        "tests/unit/sources/test_source_schemas.py"
       ],
       "evidence_sha256": {
-        "tests/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
-        "tests/test_opentargets_responses.py": "a28d59dddf94876c65e22b9acf67f6578a7885c44692b2d1aa49a12dc4d7dca2",
-        "tests/test_opentargets_assessments.py": "f31bc5c5cdc8ad5b1b5afee1c9449123862d435da4fa28c95874bd70fdfb16b6",
-        "tests/test_opentargets_partial.py": "d20dbf096ddcd8946a574d434951da0aefd0253806d6c6cf567e10ef2fade1ee",
-        "tests/test_opentargets_workflows.py": "df89743d27aa8962b760ae61d76ff8834a315d678ebb2ce7b7b0f9f8f316dcb4",
-        "tests/test_opentargets_variant_evidence.py": "ee4ebf9602e95874739a28b8caf5926d5945045d42e31234e43b988c8b9bb3dc",
-        "tests/test_opentargets_pair_evidence.py": "e905818a5fdbd7a4eae627e8196a3c4d7709e5abde3b3b4b48bc8c9b391e0893",
-        "tests/test_source_schemas.py": "fdaa216c83e0c9a76ae40bd83f5b5ddde9077cf774fe0a14674b3b12f7c19729"
+        "tests/unit/adapters/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
+        "tests/unit/sources/test_opentargets_responses.py": "a28d59dddf94876c65e22b9acf67f6578a7885c44692b2d1aa49a12dc4d7dca2",
+        "tests/unit/sources/test_opentargets_assessments.py": "f31bc5c5cdc8ad5b1b5afee1c9449123862d435da4fa28c95874bd70fdfb16b6",
+        "tests/unit/sources/test_opentargets_partial.py": "d20dbf096ddcd8946a574d434951da0aefd0253806d6c6cf567e10ef2fade1ee",
+        "tests/unit/sources/test_opentargets_workflows.py": "df89743d27aa8962b760ae61d76ff8834a315d678ebb2ce7b7b0f9f8f316dcb4",
+        "tests/unit/sources/test_opentargets_variant_evidence.py": "a7cd962f4a5774efcedf1d7b7e53153eb077df2a86c47920665b064330e0055c",
+        "tests/unit/sources/test_opentargets_pair_evidence.py": "533a817b5e037709d79631ec01552a5595402b1f87b1d867e9fc50ed85f246b7",
+        "tests/unit/sources/test_source_schemas.py": "d88b7224a887c5acfc3f4b5e3f486ee45dbfde987c3495984ebd0c5e5f6a2324"
       }
     },
     "orange-book": {
@@ -427,10 +427,10 @@
       "scope": "Retained import/declared operation inventory; provider response semantics not qualified by this inventory",
       "test_count": 2,
       "evidence": [
-        "tests/test_adapter_inventory.py"
+        "tests/unit/adapters/test_adapter_inventory.py"
       ],
       "evidence_sha256": {
-        "tests/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1"
+        "tests/unit/adapters/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1"
       }
     },
     "pdb": {
@@ -439,26 +439,26 @@
       "scope": "Retained import/declared operation inventory; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 86,
       "evidence": [
-        "tests/test_adapter_inventory.py",
-        "tests/test_pdb_responses.py"
+        "tests/unit/adapters/test_adapter_inventory.py",
+        "tests/unit/sources/test_pdb_responses.py"
       ],
       "evidence_sha256": {
-        "tests/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
-        "tests/test_pdb_responses.py": "03f0dbbb2497f9bd2e22c7ca46b22a37a67d1ecb5d6b2b9d913c8b3c91877479"
+        "tests/unit/adapters/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
+        "tests/unit/sources/test_pdb_responses.py": "4fc988b850f98e0802048e88ae289d439f89448209ccc6b30cae48aaece73132"
       }
     },
     "pmc": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "8238b9519326ab57a843b159f948e17088315b7d64ec1fe400edda966db4aca6",
+      "implementation_sha256": "44e3a8a3ff132bf25c8afe87abca57064a0a38e747d1e25683bec484c61eb1ce",
       "scope": "Native provider response contracts; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 46,
       "evidence": [
-        "tests/test_pmc_fulltext_fallback.py",
-        "tests/test_fulltext_range_contract.py"
+        "tests/unit/sources/test_pmc_fulltext_fallback.py",
+        "tests/unit/sources/test_fulltext_range_contract.py"
       ],
       "evidence_sha256": {
-        "tests/test_pmc_fulltext_fallback.py": "852f355b5e50ee6a3e873f831c1ceeaacc1209cd97f633156163a2487673493a",
-        "tests/test_fulltext_range_contract.py": "346db44f08e91955d08674a5e3aa9be029a0c49d5db2454b4b41891265dee778"
+        "tests/unit/sources/test_pmc_fulltext_fallback.py": "852f355b5e50ee6a3e873f831c1ceeaacc1209cd97f633156163a2487673493a",
+        "tests/unit/sources/test_fulltext_range_contract.py": "346db44f08e91955d08674a5e3aa9be029a0c49d5db2454b4b41891265dee778"
       }
     },
     "protein-atlas": {
@@ -467,12 +467,12 @@
       "scope": "Retained import/declared operation inventory; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 95,
       "evidence": [
-        "tests/test_adapter_inventory.py",
-        "tests/test_hpa_responses.py"
+        "tests/unit/adapters/test_adapter_inventory.py",
+        "tests/unit/sources/test_hpa_responses.py"
       ],
       "evidence_sha256": {
-        "tests/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
-        "tests/test_hpa_responses.py": "841abc330abcba1a7b2fcf03c8d4f7ea174e3c321f5df848a5acbaa68c911266"
+        "tests/unit/adapters/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
+        "tests/unit/sources/test_hpa_responses.py": "841abc330abcba1a7b2fcf03c8d4f7ea174e3c321f5df848a5acbaa68c911266"
       }
     },
     "reactome": {
@@ -481,66 +481,66 @@
       "scope": "Retained import/declared operation inventory; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 77,
       "evidence": [
-        "tests/test_adapter_inventory.py",
-        "tests/test_reactome_responses.py",
-        "tests/test_reactome_contracts.py"
+        "tests/unit/adapters/test_adapter_inventory.py",
+        "tests/unit/sources/test_reactome_responses.py",
+        "tests/unit/sources/test_reactome_contracts.py"
       ],
       "evidence_sha256": {
-        "tests/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
-        "tests/test_reactome_responses.py": "824100bfae9922dd7610c93e3b311d628cf5b207de4aaf8b41bf55d644bff8fd",
-        "tests/test_reactome_contracts.py": "bff73df3d4f631c9f54895de05dc25b474b3d11370523cfe7400af932f564702"
+        "tests/unit/adapters/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
+        "tests/unit/sources/test_reactome_responses.py": "824100bfae9922dd7610c93e3b311d628cf5b207de4aaf8b41bf55d644bff8fd",
+        "tests/unit/sources/test_reactome_contracts.py": "bff73df3d4f631c9f54895de05dc25b474b3d11370523cfe7400af932f564702"
       }
     },
     "string": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "8238b9519326ab57a843b159f948e17088315b7d64ec1fe400edda966db4aca6",
+      "implementation_sha256": "44e3a8a3ff132bf25c8afe87abca57064a0a38e747d1e25683bec484c61eb1ce",
       "scope": "Native provider response contracts; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 80,
       "evidence": [
-        "tests/test_string_network.py"
+        "tests/unit/sources/test_string_network.py"
       ],
       "evidence_sha256": {
-        "tests/test_string_network.py": "760b3779ed2bd322353d66bcdf0a309ffbb47037bae7f92f94ce5c14172d1172"
+        "tests/unit/sources/test_string_network.py": "760b3779ed2bd322353d66bcdf0a309ffbb47037bae7f92f94ce5c14172d1172"
       }
     },
     "study": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "8238b9519326ab57a843b159f948e17088315b7d64ec1fe400edda966db4aca6",
+      "implementation_sha256": "44e3a8a3ff132bf25c8afe87abca57064a0a38e747d1e25683bec484c61eb1ce",
       "scope": "Checksummed public study fixtures; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 334,
       "evidence": [
-        "tests/test_study_metadata_contract.py",
-        "tests/test_native_studies.py",
-        "tests/test_study_missingness.py",
-        "tests/test_typed_study_records.py",
-        "tests/test_typed_mutation_profile.py",
-        "tests/test_typed_study_derivations.py",
-        "tests/test_study_initialization.py",
-        "tests/test_study_concurrent_recovery.py",
-        "tests/test_study_statistics_reference.py",
-        "tests/test_study_patient_inference.py",
-        "tests/test_study_statistics_boundaries.py",
-        "tests/test_study_algorithm_benchmark.py",
-        "tests/test_study_cache.py",
-        "tests/test_study_resources.py",
-        "tests/test_study_resource_benchmark.py"
+        "tests/unit/studies/test_study_metadata_contract.py",
+        "tests/unit/studies/test_native_studies.py",
+        "tests/unit/studies/test_study_missingness.py",
+        "tests/unit/records/test_typed_study_records.py",
+        "tests/unit/records/test_typed_mutation_profile.py",
+        "tests/unit/records/test_typed_study_derivations.py",
+        "tests/unit/studies/test_study_initialization.py",
+        "tests/unit/studies/test_study_concurrent_recovery.py",
+        "tests/unit/studies/test_study_statistics_reference.py",
+        "tests/unit/studies/test_study_patient_inference.py",
+        "tests/unit/studies/test_study_statistics_boundaries.py",
+        "tests/tooling/test_study_algorithm_benchmark.py",
+        "tests/unit/studies/test_study_cache.py",
+        "tests/unit/studies/test_study_resources.py",
+        "tests/tooling/test_study_resource_benchmark.py"
       ],
       "evidence_sha256": {
-        "tests/test_study_metadata_contract.py": "1c6871d0d37a8441edd1ac32612103b6ac2ef8d45ffc36836f509c65d057c9fb",
-        "tests/test_native_studies.py": "354a1e96eb1a07cbe49981e00dca53030784ea39af9b4d74e90c58861bd2b025",
-        "tests/test_study_missingness.py": "8bc476ff6583f89d092bad1881375dabf0a532562033af4e00cf7edcd8040f1c",
-        "tests/test_typed_study_records.py": "1cccbcdc8180b143dfc107235913e6bc48eed34334558e339aaf5cef9d00f7c4",
-        "tests/test_typed_mutation_profile.py": "f7a713339cbeba24d39c41854d8047ec81a3438935e11394d7babedceb1a6373",
-        "tests/test_typed_study_derivations.py": "9d961603bf9a3b3f6ee06e0bcd57696f3f2c7413fc39511147572445b77b7cfc",
-        "tests/test_study_initialization.py": "c9dbb1e31ae30768c03be3e466f54f610222219f973929beb549f9567c5320ef",
-        "tests/test_study_concurrent_recovery.py": "6f207b0d3ac7d00628ea856d0a3d3cbecec0812d1959a8ea0be0c838aa8d7e65",
-        "tests/test_study_statistics_reference.py": "657edff3edfbf9cfee1559782a68b2cf61da95e1f09c9efabee7c77245feb01e",
-        "tests/test_study_patient_inference.py": "34511f9aab4c0b13decd4e1ec0b741f66fafe0340ad3c4cf0284cdbefd15fe3a",
-        "tests/test_study_statistics_boundaries.py": "0d074cf5793ae81ccdbcb5606888cffe548869e36b2710ceb2239523fb7915ea",
-        "tests/test_study_algorithm_benchmark.py": "3fb533cdcfe67ea0fb8bfaee4f6e00dad6f7c83294505249b0ca44c02766fa0d",
-        "tests/test_study_cache.py": "bdc12b023261376c6344f43cdf878ef5c201763aaab80ebe1162349dc3cfc7b3",
-        "tests/test_study_resources.py": "a16b0e66f348b7bb81048d67db0eab9ec895c56b9bb021b38d8aeb2886631dfa",
-        "tests/test_study_resource_benchmark.py": "4f1a8fdf6aaaea5ae1fe0e28c211fcd1e14e15a5060158f3a98a4187281fd7dd"
+        "tests/unit/studies/test_study_metadata_contract.py": "1c6871d0d37a8441edd1ac32612103b6ac2ef8d45ffc36836f509c65d057c9fb",
+        "tests/unit/studies/test_native_studies.py": "354a1e96eb1a07cbe49981e00dca53030784ea39af9b4d74e90c58861bd2b025",
+        "tests/unit/studies/test_study_missingness.py": "8bc476ff6583f89d092bad1881375dabf0a532562033af4e00cf7edcd8040f1c",
+        "tests/unit/records/test_typed_study_records.py": "1cccbcdc8180b143dfc107235913e6bc48eed34334558e339aaf5cef9d00f7c4",
+        "tests/unit/records/test_typed_mutation_profile.py": "f7a713339cbeba24d39c41854d8047ec81a3438935e11394d7babedceb1a6373",
+        "tests/unit/records/test_typed_study_derivations.py": "9d961603bf9a3b3f6ee06e0bcd57696f3f2c7413fc39511147572445b77b7cfc",
+        "tests/unit/studies/test_study_initialization.py": "c9dbb1e31ae30768c03be3e466f54f610222219f973929beb549f9567c5320ef",
+        "tests/unit/studies/test_study_concurrent_recovery.py": "6f207b0d3ac7d00628ea856d0a3d3cbecec0812d1959a8ea0be0c838aa8d7e65",
+        "tests/unit/studies/test_study_statistics_reference.py": "8c16a8e8f7fb5966df7e93d7c1980a6a6a6fe087b03dfa71b6c01c0c869e9055",
+        "tests/unit/studies/test_study_patient_inference.py": "34511f9aab4c0b13decd4e1ec0b741f66fafe0340ad3c4cf0284cdbefd15fe3a",
+        "tests/unit/studies/test_study_statistics_boundaries.py": "0d074cf5793ae81ccdbcb5606888cffe548869e36b2710ceb2239523fb7915ea",
+        "tests/tooling/test_study_algorithm_benchmark.py": "9382115b13c41cb0aa43cf918c61312afae1605c9501d3b788c3abffd04f78d5",
+        "tests/unit/studies/test_study_cache.py": "bdc12b023261376c6344f43cdf878ef5c201763aaab80ebe1162349dc3cfc7b3",
+        "tests/unit/studies/test_study_resources.py": "a16b0e66f348b7bb81048d67db0eab9ec895c56b9bb021b38d8aeb2886631dfa",
+        "tests/tooling/test_study_resource_benchmark.py": "d0de3d8d3b6e0aba1e203d062c89f5245ae2acc7bcf117dfd9b2be5d83035e44"
       }
     },
     "surechembl": {
@@ -549,16 +549,16 @@
       "scope": "Retained import/declared operation inventory; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 78,
       "evidence": [
-        "tests/test_adapter_inventory.py",
-        "tests/test_surechembl_metadata.py",
-        "tests/test_surechembl_search.py",
-        "tests/test_surechembl_annotations.py"
+        "tests/unit/adapters/test_adapter_inventory.py",
+        "tests/unit/sources/test_surechembl_metadata.py",
+        "tests/unit/sources/test_surechembl_search.py",
+        "tests/unit/sources/test_surechembl_annotations.py"
       ],
       "evidence_sha256": {
-        "tests/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
-        "tests/test_surechembl_metadata.py": "d657fcbd57396b812faade7a95da88a95f78c3f0936536dde2802ac322f4f564",
-        "tests/test_surechembl_search.py": "ea58976f51dfef299501c19d172a8496fcc2542f4642479dd9f407c7fa72ce37",
-        "tests/test_surechembl_annotations.py": "e761ea3de0daf7b0ae2f6a47187045ef1cae232308f29e5ef41232b8d1c4d528"
+        "tests/unit/adapters/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
+        "tests/unit/sources/test_surechembl_metadata.py": "d657fcbd57396b812faade7a95da88a95f78c3f0936536dde2802ac322f4f564",
+        "tests/unit/sources/test_surechembl_search.py": "ea58976f51dfef299501c19d172a8496fcc2542f4642479dd9f407c7fa72ce37",
+        "tests/unit/sources/test_surechembl_annotations.py": "e761ea3de0daf7b0ae2f6a47187045ef1cae232308f29e5ef41232b8d1c4d528"
       }
     },
     "uniprot": {
@@ -567,16 +567,16 @@
       "scope": "Retained import/declared operation inventory; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 134,
       "evidence": [
-        "tests/test_adapter_inventory.py",
-        "tests/test_uniprot_responses.py",
-        "tests/test_uniprot_annotations.py",
-        "tests/test_uniprot_unknown_positions.py"
+        "tests/unit/adapters/test_adapter_inventory.py",
+        "tests/unit/sources/test_uniprot_responses.py",
+        "tests/unit/sources/test_uniprot_annotations.py",
+        "tests/unit/sources/test_uniprot_unknown_positions.py"
       ],
       "evidence_sha256": {
-        "tests/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
-        "tests/test_uniprot_responses.py": "485ced6bb75d67cf9c791ade750101422a2c1ee57a72d230696722ece342efa3",
-        "tests/test_uniprot_annotations.py": "6925987ad3ba27845b2cb084eeddab60985e635a135ef9bc93257cb4d722ac25",
-        "tests/test_uniprot_unknown_positions.py": "4702ac9a8016a9703e0748740ea8f9160739be69c0c0f526bbe108d63e1f6b56"
+        "tests/unit/adapters/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
+        "tests/unit/sources/test_uniprot_responses.py": "fa3751e003b4f0866bb6b445003840a0c4870b4a2d6b06ddde30963d36a3ae4e",
+        "tests/unit/sources/test_uniprot_annotations.py": "6925987ad3ba27845b2cb084eeddab60985e635a135ef9bc93257cb4d722ac25",
+        "tests/unit/sources/test_uniprot_unknown_positions.py": "21f844434dce1c67f7f320da008bac8d1f5a55cf7e72c16a12b4a2abbc16759f"
       }
     }
   },
@@ -593,12 +593,9 @@
     "tests/fixtures/civic-schema-2026-10-09.json": "5e40558295ac49f39a755f0e69c32466f987107472f98770f15c798397505628",
     "tests/fixtures/complexportal-observation-2026-10-11.json": "ed519b9789b59b3b2009d6832e5d55a36fb795781e9f4bceab28e66a65d7f751",
     "tests/fixtures/complexportal-p15056-2026-10-11.json": "68621229dcb6b3eb1981133b373fe767474edbb6fcf90a4604784eebf810180f",
-    "tests/fixtures/ensembl-contract-2026-10-12.json": "31f107e1ae3aafcaa23748548a1f75f81ad58031df444a3f203da87aa5234697",
     "tests/fixtures/gnomad-schema-2026-10-09.json": "87ba76415f23c5e595f43915b78544f546f79ce274827045ad7c89ba397e345f",
     "tests/fixtures/gwas-contract-2026-10-11.json": "fd77fd030c3172ff211eb32295af23d3321f146dedf100f04365085237cae4e0",
     "tests/fixtures/interpro-contract-2026-10-11.json": "f1c6bf62ceb0c9cadba2aa5a770be6f11d05f60d231f7e34099cc93427be3957",
-    "tests/fixtures/ols-contract-2026-10-11.json": "1a8ce796469bd73c2196561012b0dc83742510e857d5d0f9d168d8d70ecc95e0",
-    "tests/fixtures/opentargets-schema-2026-09-16.json": "f51b2b48dedac4331c79101479f53ca1f64f9ddfe5dc7fce96d1a5a4470c2cbd",
     "tests/fixtures/pdb-entry-4hhb-2026-10-11.json": "a95a79421b90211667e08cc21555acb6e2c384fe882bb7c9b174eadb4e9fdb1a",
     "tests/fixtures/reactome-contract-2026-10-11.json": "0bea12cf8d61a6b9ed00c7019f8d5455768b18bf1e3f183c2e90a846f642e7ee",
     "tests/fixtures/release-gh-fixture.py": "17f592914760f763cde832d1f8191406db3203fa7b4fa2262fd5691dd2376a75",
@@ -626,148 +623,156 @@
     "tests/redis/test_runtime_redis.py": "d517bfed7265e0847c1e5f4d095ab3f506122116607ea2cfa0381d31e4c2ef86",
     "tests/string_helpers.py": "2a85979a9a816c34c5418bb5eec550f43bf41191a019f4cfda9914220607b8ae",
     "tests/synthetic_permissions.py": "cd5af9342b04a6df212be717f968f7d060f66224f3547d893028c0c650b75885",
-    "tests/test_adapter_catalog_cache.py": "e79ebf2750f39c09392ab1bfdb4ad7c7f293ed6be07e80f328d7c4f8ceb70dab",
-    "tests/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
-    "tests/test_agent_evaluation.py": "5f77f4de94a743e067ad0aaa0d8b29e3373cac7ad32142c0c95a33e47bf0a988",
-    "tests/test_alphamissense.py": "b794f5d0f9b68f260e43e6313beeebf7b494b55d81099211e8abf9b28daa0c79",
-    "tests/test_anonymous_pagination.py": "613c70d510449c8bf2834a3a9fb142b52712c69fd9292cb4832ee588dfc2f8ce",
-    "tests/test_audit_regressions.py": "61187eed31b3e1c12cf282da60dfaa03cf635e0e2cac257fbbf965a85ba4307b",
-    "tests/test_auth_branding.py": "25fa9aeb09562a31708b5f803d657a425ef826d44ab07a9d813c3563cbdb75e8",
-    "tests/test_biothings_responses.py": "147d5e24860cf2c63f8125ab1ce6cb86de54a91513819d7b74233dd9d2a0e70e",
-    "tests/test_bulk_redaction.py": "f46a8a8d0f8bf017b1ffcead1453c18ab9f4ffda3941e7780a454ddd242ea6d8",
-    "tests/test_chembl_properties.py": "5014b193a98e7f85e953575b94c51485a02c75a3b66e50e9117c2c8a190c70c0",
-    "tests/test_civic_responses.py": "e312d30badcdafdca96a5fa4c468cf960d99b55820cb21b4789bb08513ffc8a6",
-    "tests/test_cli_contract.py": "2513c9c00058c3b60dbdd7ec544f7c925e9bd9809db0dd37fdf1b5a8c0f77888",
-    "tests/test_cli_pagination.py": "8acd7522df5d4f97a1defae8dc9caebc4da151a11b2e119fdd2897854ecf4d9f",
-    "tests/test_clingen_responses.py": "3a8e58714d423820456023823ed4e011ce0971bb653f63404f548fa7d1757a2c",
-    "tests/test_clinical_trials_responses.py": "9238810806ba320e86ba75eef10c93d0c99f5237c112b4ce07e0de846d49c90d",
-    "tests/test_complexportal_responses.py": "a3e498ee23f96cd0675dcca56f31ffc5deb1c5b1dfebbcecac95fe8cb1c339b7",
-    "tests/test_diagnosis.py": "a3873daa62db2c446b9ce649dad3d0cd99cef1699f9c504898134ed1f8f46d2f",
-    "tests/test_direct_clinvar.py": "2b54dec86275cb81ba0914d58e52d9bdb58e2309e77fe9e91bf790fe2ef86bde",
-    "tests/test_docker_cleanup.py": "d8430d6735452d2e62a9a278c1bc54e7dd8897258be26eb288c900837567824f",
-    "tests/test_dossier_evidence.py": "73714f7efcd65949a9a095c0c4414713eb67b6273cb53e2ccbde7eebaebc6a33",
-    "tests/test_ensembl_contracts.py": "2c75b235ff2d485e064e34ea7dfe0480de37bb188ae8a7151c2f6b2c6e94396c",
-    "tests/test_ensembl_genome_contracts.py": "7cd78d604ba3650b817828336e042344bf8fdf1d0c3b76405e5f5ffed62be455",
-    "tests/test_eve.py": "47b53ba2bd97ab4c149e7a171e8e8fef301506a30c926196ac72adc830e8f035",
-    "tests/test_evidence_receipts.py": "0abba8d46ef221bfc8ce9f3d7de385da604184cfe0124333db0547544ab7ed4a",
-    "tests/test_evidence_recovery.py": "4b6e5b3c7cbd22368685a88cec436e1914a2d292c31c75f56cc5e1b107f870c3",
-    "tests/test_example_regressions.py": "0002598663f3d60938099fe8fac16ee530eb0d5655da363646972bf89cf03932",
-    "tests/test_extensions.py": "5b028157d99494f8199e5a710418ae3b9da6f888f689f8efbf746691dc13e04c",
-    "tests/test_fulltext_floating_tables.py": "fcfae11e7fa5ae2d545a0d6cc25514314ee3c69cb4285b2dad22bfc31a669c72",
-    "tests/test_fulltext_range_contract.py": "346db44f08e91955d08674a5e3aa9be029a0c49d5db2454b4b41891265dee778",
-    "tests/test_gencc_responses.py": "d242e05b878cc3a4e2142c51270ad85e1f35073b3fa1c4bf81c5ca2d3c6f08b1",
-    "tests/test_gnomad_responses.py": "090af410dda569f6970a9a9c7b2f72f14b8293f1a079383ece673f8d5fccffb6",
-    "tests/test_gnomad_source_permissions.py": "d4b3e7796c9572a978ec07c7e40926ce552fa1d601aa678d9dcb66552cd54100",
-    "tests/test_governance.py": "4f2f3cf88ef43c634176265ff657d150897e198f15565611eeaeed0744099f09",
-    "tests/test_gtex_pagination.py": "8a326eaad29ab6350a75cffb609889abefc701f2678d6e2cd5c9fc5e9b932852",
-    "tests/test_gtex_reference_identity.py": "389776265c52537369bce13f68cbd98c18ab5e3218ce9e5474779dca44569cb3",
-    "tests/test_gtex_responses.py": "40e567d110003b2fc63ad2ebfdb15c5808f154480882ea8ee92875f40343bd6a",
-    "tests/test_gwas_responses.py": "20d3eecb6040b6a806b0d658ff7cca72cecc53d671b8112d1a7737f1b18d7ead",
-    "tests/test_hpa_responses.py": "841abc330abcba1a7b2fcf03c8d4f7ea174e3c321f5df848a5acbaa68c911266",
-    "tests/test_http_contract.py": "b26165d24e06e32714ee7cbe1021e2a1d57759c19b9009a85910ab39af5ad361",
-    "tests/test_http_security.py": "01b2c9bb086f620ec09bc4dd10f59e41b47c4e8ad8919c946d71741f075bdd09",
-    "tests/test_http_telemetry.py": "d1d1456d1d732f544f4480a13928ed68dfac1755475a3fbc9ff46e8b73a1164d",
-    "tests/test_hybrid_catalog.py": "9db1b8d5e17a283d67412b96ec3adc30593fdaf5b803f7614bff881dd3e73895",
-    "tests/test_infrastructure_readiness.py": "21ddd478df734e241c7478ed4603c7a6c556b5a8f9c21a712ede504b32604c5e",
-    "tests/test_ingress_budget.py": "9d215c1998e5c9aa8d5756935d87c4b291b9364b493d7fd5b2fe874904bc0063",
-    "tests/test_interpro_responses.py": "01a4ef8e54f501509d82773ec294bd017aa97950adfbbdd25c798a5d25b34c6b",
-    "tests/test_label_metadata.py": "cb81772bce12024b1a6adceb1a0792637d577957b50e649e36b89079de0a57d8",
-    "tests/test_live_canary.py": "cb3f3bf20d8d75a85b5c7c6a1e26954932e683a4be50e1c116eb45a3801c204f",
-    "tests/test_live_contract_regressions.py": "0c99f0a44e8f37b6319792e6436f7aa79f1596ce42ef4792a7e24f44a01e173b",
-    "tests/test_local_boundary.py": "1ad8111b5ebfb22bf2f2f8be05efd34d2de2d2ab6f018b97b25557f5109a0a89",
-    "tests/test_local_source_keys.py": "fb67b2a743df9ee1772d22e251230349784eb7d296066ec3934a2560b65ee0b9",
-    "tests/test_local_state.py": "8af8fcaaac8c46cdd923387d432ee5f609ce0fbe7363f08f419f66f7ee36cdad",
-    "tests/test_monarch_responses.py": "6982170351c287033373adeca08bfded48fe3650c3313ef1d53dc1b18a15910e",
-    "tests/test_myvariant_responses.py": "80e6281393c622d902ceb45fed65110f645449f26d1f1db5749e0fd85d649c20",
-    "tests/test_native_entities.py": "e69e9ec3193f745bd857e01f3524abea8c929a0044b34ff6134717077f402d78",
-    "tests/test_native_literature.py": "cf32b2f7e65f37a0759d19f6fec7c737cf8806a75192e617989eded8960c7ccd",
-    "tests/test_native_response_shapes.py": "1b34536df0c80e811c8f82d479d85a09ad9fc90de366cfaf4d5aa7940e61ad5b",
-    "tests/test_native_studies.py": "354a1e96eb1a07cbe49981e00dca53030784ea39af9b4d74e90c58861bd2b025",
-    "tests/test_native_variants.py": "6a043cb955bd78b226b33047b3b9f3d7017213220ac16f969b3df58e0aad9752",
-    "tests/test_ncbi_datasets.py": "147c1846dbbbd370aad42fa0fc3193dbc6c057d8f54bc95d3f4958bbd44d39df",
-    "tests/test_ncbi_gene_reports.py": "d1ba4b7bbacab0af96f83f87f1805bd5eba72dfd3ec75e16068d3b3cafe94a00",
-    "tests/test_ols_responses.py": "9c78d8a5275671dc0bf6ea2cb1b285a91a8f68b6cbea84e841b3e9347b47649b",
-    "tests/test_onboarding_workflows.py": "3fb7394be08fc2fda0ecf581908b4415958eb060f33fc48ff6a07de6e93900ab",
-    "tests/test_open_citation_graph.py": "0f72c2bde46424e8306fe3a8fd7247449cbfe244c4a001d24db04fd5da1c2678",
-    "tests/test_openalex.py": "9e20cfd46b74dfe88661167fe817ebefbebd867727925301542e8916d5e2ae81",
-    "tests/test_opentargets_assessments.py": "f31bc5c5cdc8ad5b1b5afee1c9449123862d435da4fa28c95874bd70fdfb16b6",
-    "tests/test_opentargets_pair_evidence.py": "e905818a5fdbd7a4eae627e8196a3c4d7709e5abde3b3b4b48bc8c9b391e0893",
-    "tests/test_opentargets_partial.py": "d20dbf096ddcd8946a574d434951da0aefd0253806d6c6cf567e10ef2fade1ee",
-    "tests/test_opentargets_responses.py": "a28d59dddf94876c65e22b9acf67f6578a7885c44692b2d1aa49a12dc4d7dca2",
-    "tests/test_opentargets_variant_evidence.py": "ee4ebf9602e95874739a28b8caf5926d5945045d42e31234e43b988c8b9bb3dc",
-    "tests/test_opentargets_workflows.py": "df89743d27aa8962b760ae61d76ff8834a315d678ebb2ce7b7b0f9f8f316dcb4",
-    "tests/test_output_contracts.py": "f3f9ebd0ff8b115add99a47c9b4f39ca6502f74583185109ea7c6ea808558113",
-    "tests/test_pdb_responses.py": "03f0dbbb2497f9bd2e22c7ca46b22a37a67d1ecb5d6b2b9d913c8b3c91877479",
-    "tests/test_pmc_fulltext_fallback.py": "852f355b5e50ee6a3e873f831c1ceeaacc1209cd97f633156163a2487673493a",
-    "tests/test_provider_availability.py": "f6a4c5c361ca828d7bfb2178e75e32fdc21103616802f0cdfe3e181da2c5081d",
-    "tests/test_provider_pagination.py": "1a1bdc8d573d3669a21b934c12cdd28ababe9316b64278f22bc14185d6d0a991",
-    "tests/test_provider_security.py": "91b9fda2596a313c77e91be9f53c5f613a15565c28ba5e168dc0672a98f3b031",
-    "tests/test_public_examples.py": "d5a181051aaf48bda874c90fa80a5105ddd1549f73651514be3c3d2b917ba738",
-    "tests/test_public_links.py": "aecc05247460e5fb433c7d85cbee8a798a7b1a81a15ddd8c6dcf8be28368eaa3",
-    "tests/test_public_predictor_cache.py": "22bb64789532a0b970d89f97c7e652172cf66bd851271e0a80262f5965fba737",
-    "tests/test_public_snapshot_grants.py": "94b85f11c5bebd14439b6b6e760bf68fef232ead9f100d52cc312941c9529e35",
-    "tests/test_pubmed_search_parity.py": "da1a0e0aa9cc854eb596dea25b6375dc67b40112588a4359344fb65be512fe08",
-    "tests/test_qualified_gene_identity.py": "868ff3b5bbef3fa43c7ba2f3149d6037ba9604edb6779fc19bd4fc13bd3762a7",
-    "tests/test_reactome_contracts.py": "bff73df3d4f631c9f54895de05dc25b474b3d11370523cfe7400af932f564702",
-    "tests/test_reactome_responses.py": "824100bfae9922dd7610c93e3b311d628cf5b207de4aaf8b41bf55d644bff8fd",
-    "tests/test_record_schema_resources.py": "d7a1fb33d83d3482b82ce2c98439a14769601c1a3c58fca1d72c6ae934eaea18",
-    "tests/test_registry_distribution.py": "cace2e3796b0e4bf6ff0d162c7b8f4e47f7d2e5bb201026bf66854c86e45af4e",
-    "tests/test_release_artifacts.py": "5d8c0a00c0ffb34503d60d86bc900aaaa762c489a70f450be87c704ef09c90e9",
-    "tests/test_remote_guest.py": "905413b3df6f71687b3a0497a38eba5b43403e7080e2ea485f355041ddd97cde",
-    "tests/test_removed_source.py": "97ee7060147fabf62f8c2b367538c3bb3e5addc43c81b4f8903f348bd196e1e4",
-    "tests/test_repaired_adapters.py": "7d72a40db3351a3a9f7ed75e72027c850a4ca9d4124f5e3517a56e9efc3033ba",
-    "tests/test_request_credentials.py": "051001fb08c458e5a9393a747294716a0c28fd938b9616ecb5ccc33e7216c60d",
-    "tests/test_request_telemetry.py": "ecd66d9603b64c18b28a1f3bcd2ebb4ad34e5a24782c5591da07785b04bbde92",
-    "tests/test_research_contracts.py": "e678abef85086334c7a6283b3cb640498d40fccd9d4ec91e8cd6fffc543f386e",
-    "tests/test_result_cache.py": "a22db22dcad5005b0f695c1ce1bdb82aa1445e4e5397e9c87bf23c2e4794e2d3",
-    "tests/test_runtime_admission.py": "b52119fb05d3bf9dd4fe65a11576ae8ea3261ef4e6a04359c5ca2ac6cadefdd2",
-    "tests/test_runtime_safety.py": "dff04267f2ab9ec0cf92f097351c0fe5a5f2e0b7d9d3a630d28afd3837aa6339",
-    "tests/test_runtime_telemetry.py": "96c0bc0b6cb4e4e370e73d4ba274c343dc25ab053b86a5d944a15a265eec041b",
-    "tests/test_schema_compaction.py": "9cf1b2376a60a7864a647a12b3aa34ad0fa947552d3371e75418872c4ccff8c5",
-    "tests/test_scientific_workflows.py": "3e8f280ba121fe4af8348d27a8ea2263c2a39ed0ae79f926086b8904ec5df6c6",
-    "tests/test_security_dependencies.py": "6fcbdec5aaf6d71a8ee75f4dba2752fe5798c4ed8236cb60898df49a56e7d4da",
-    "tests/test_security_scan.py": "fb8edc829d0bb376218f8d20cb00fde6039112fa4467af6594e6083709869884",
-    "tests/test_snapshot_compression.py": "ac59b779cd45e11d1fd2e2e2227bd8dd3e6987537d6b27d193357627890fae7f",
-    "tests/test_source69_regressions.py": "ac21bc2c33c4eec770ffebd0bbef6ee96625d569736d3c6b8db4c95c6f3a3e06",
-    "tests/test_source70_regressions.py": "d33157170ea9d9ac80e23883b6bdf7dcb1887b0183f7b1915de237136c82f999",
-    "tests/test_source_batch_permissions.py": "326f5fbc4d6562bcf53163b73a85fa9034f01e340a0bfae310909038c6c6a2fb",
-    "tests/test_source_content_boundary.py": "a9deca4711362c92235c0e33445801857a035c49df1228c8e11d1422249a4a6c",
-    "tests/test_source_licenses.py": "04f75de54f5545ecaca1bef1530933bb87973d7475739b53b90e09beb4d543b3",
-    "tests/test_source_schemas.py": "fdaa216c83e0c9a76ae40bd83f5b5ddde9077cf774fe0a14674b3b12f7c19729",
-    "tests/test_string_network.py": "760b3779ed2bd322353d66bcdf0a309ffbb47037bae7f92f94ce5c14172d1172",
-    "tests/test_study_algorithm_benchmark.py": "3fb533cdcfe67ea0fb8bfaee4f6e00dad6f7c83294505249b0ca44c02766fa0d",
-    "tests/test_study_cache.py": "bdc12b023261376c6344f43cdf878ef5c201763aaab80ebe1162349dc3cfc7b3",
-    "tests/test_study_concurrent_recovery.py": "6f207b0d3ac7d00628ea856d0a3d3cbecec0812d1959a8ea0be0c838aa8d7e65",
-    "tests/test_study_initialization.py": "c9dbb1e31ae30768c03be3e466f54f610222219f973929beb549f9567c5320ef",
-    "tests/test_study_installation.py": "11d1b8918db883766015a1d316dae06d9e6cd7941e2f4a4ddfa636ffa1cf070f",
-    "tests/test_study_metadata_contract.py": "1c6871d0d37a8441edd1ac32612103b6ac2ef8d45ffc36836f509c65d057c9fb",
-    "tests/test_study_missingness.py": "8bc476ff6583f89d092bad1881375dabf0a532562033af4e00cf7edcd8040f1c",
-    "tests/test_study_patient_inference.py": "34511f9aab4c0b13decd4e1ec0b741f66fafe0340ad3c4cf0284cdbefd15fe3a",
-    "tests/test_study_resource_benchmark.py": "4f1a8fdf6aaaea5ae1fe0e28c211fcd1e14e15a5060158f3a98a4187281fd7dd",
-    "tests/test_study_resources.py": "a16b0e66f348b7bb81048d67db0eab9ec895c56b9bb021b38d8aeb2886631dfa",
-    "tests/test_study_statistics_boundaries.py": "0d074cf5793ae81ccdbcb5606888cffe548869e36b2710ceb2239523fb7915ea",
-    "tests/test_study_statistics_reference.py": "657edff3edfbf9cfee1559782a68b2cf61da95e1f09c9efabee7c77245feb01e",
-    "tests/test_surechembl_annotations.py": "e761ea3de0daf7b0ae2f6a47187045ef1cae232308f29e5ef41232b8d1c4d528",
-    "tests/test_surechembl_metadata.py": "d657fcbd57396b812faade7a95da88a95f78c3f0936536dde2802ac322f4f564",
-    "tests/test_surechembl_search.py": "ea58976f51dfef299501c19d172a8496fcc2542f4642479dd9f407c7fa72ce37",
-    "tests/test_transport_failures.py": "37fc8fd0811277f2bb250e8b7bd0688ce5a4d20b3229e78dfbeaf45e4744d0e2",
-    "tests/test_transport_retries.py": "dcc03abe256f0720b68dd94b0c6e0a3396134c428652b9b08423118b0bfd0e88",
-    "tests/test_typed_expression_records.py": "187bc542af64e1f35ca2272d947460222e48065173a46e189d2809dbf23378b7",
-    "tests/test_typed_literature_records.py": "aa0610c6ce0176cb084091beeec36d9f1ce7cbc2bcebcd2a1b6e4b75d2dd8f10",
-    "tests/test_typed_mutation_profile.py": "f7a713339cbeba24d39c41854d8047ec81a3438935e11394d7babedceb1a6373",
-    "tests/test_typed_population_records.py": "ae47de1de55fbabe8b0282ce304490dd4159dae9a1dcdd18faf689775fbbae56",
-    "tests/test_typed_qtl_records.py": "cf086b64a31dc6d90cbe14e3db9da13f35c778776c26d2693ed5f8d6498e76fd",
-    "tests/test_typed_study_derivations.py": "9d961603bf9a3b3f6ee06e0bcd57696f3f2c7413fc39511147572445b77b7cfc",
-    "tests/test_typed_study_records.py": "1cccbcdc8180b143dfc107235913e6bc48eed34334558e339aaf5cef9d00f7c4",
-    "tests/test_typed_trial_records.py": "06dea2fc815567a2f84decb5348abf1e989d519228c31f6c2d6ed27ae3921677",
-    "tests/test_typed_variant_assertions.py": "6aac765ba615b9ed8a9d6a8707951bc8c1d09a739ebf7300c1992803039cee77",
-    "tests/test_uniprot_annotations.py": "6925987ad3ba27845b2cb084eeddab60985e635a135ef9bc93257cb4d722ac25",
-    "tests/test_uniprot_responses.py": "485ced6bb75d67cf9c791ade750101422a2c1ee57a72d230696722ece342efa3",
-    "tests/test_uniprot_unknown_positions.py": "4702ac9a8016a9703e0748740ea8f9160739be69c0c0f526bbe108d63e1f6b56",
-    "tests/test_user_feedback_contracts.py": "38efd957c76f32e1b5b00f6f6a846dfd20510ae51703f50fa6fd539ba7be6fb2",
-    "tests/test_user_query_regressions.py": "60dfe7c4cc81b3065d0bb5e8340dc458d7e0817ea67539bec8ad3317a99dbb03",
-    "tests/test_wheel_distribution.py": "4b9f0292db160fddedca4d995ef56d84fd9b2092e1dac259c1378a165cb8c9dc"
+    "tests/tooling/test_agent_evaluation.py": "8b04ab96b89927581671e90b7e9200d01257d28c1ff8f819d4e3f915a5986d1c",
+    "tests/tooling/test_docker_cleanup.py": "a166d4856fdfe8b328365eb3a4e05bdee3f37f777802ba5c5d9990f01309dfee",
+    "tests/tooling/test_governance.py": "465cfbafeee1e87a2a1dee6bb0d4f7d873570115da436cb1023b98059170f19b",
+    "tests/tooling/test_live_canary.py": "efa6ef9514ecc65a001e7cb4ffd2375c6c0e8cf28c890b0f604bd8033b92faa8",
+    "tests/tooling/test_public_links.py": "c60b9b34d0ad6b9f9a203bec013ffdda143e6cfc44ddd90944a0dbd5b4d03b58",
+    "tests/tooling/test_registry_distribution.py": "a975ce6840f42a50389be1df45af8a8e77a9c2b80923d81f92187fe270ad7c07",
+    "tests/tooling/test_release_artifacts.py": "5267019395625d1406616ff707d8b7269e54702988d7026e8b3322643c9fae5b",
+    "tests/tooling/test_security_dependencies.py": "89719e408e66cbb5d746ed700f5b93572b228eb0144d56729eddc8c38ee51405",
+    "tests/tooling/test_security_scan.py": "1e4fe55c7e0f4783769e1b7b597ab12a7ca58878043dfc6624c1bffc1600b4f2",
+    "tests/tooling/test_study_algorithm_benchmark.py": "9382115b13c41cb0aa43cf918c61312afae1605c9501d3b788c3abffd04f78d5",
+    "tests/tooling/test_study_resource_benchmark.py": "d0de3d8d3b6e0aba1e203d062c89f5245ae2acc7bcf117dfd9b2be5d83035e44",
+    "tests/tooling/test_wheel_distribution.py": "31dd1a40cacfb6b27172ac479282cb038595deaae82173f3f745e9b80dc181f4",
+    "tests/unit/adapters/conftest.py": "52110854b0039891c20cd447863d1451f29121b2f2346b59e81db46f910c454c",
+    "tests/unit/adapters/test_adapter_catalog_cache.py": "ecdd50636bdbcb6eb3e3a290a58d63f0a83e35e127b0aba908c6797e1c13513f",
+    "tests/unit/adapters/test_adapter_inventory.py": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1",
+    "tests/unit/adapters/test_bio_ontology_server.py": "febe8e9b9bc7a5bf5b35052b5f64b8ff66276c7e6b91af1a5e8024d239c805f1",
+    "tests/unit/adapters/test_dailymed_server.py": "be2b04e451da002d59d0d556fa430b0afa650cb92a71a1c58abe7d82563fddb4",
+    "tests/unit/adapters/test_mychem_server.py": "50529f576caef3839b8d7b72e0ffe9b56fe747c1e24fee172eafcf898bd816f6",
+    "tests/unit/adapters/test_mydisease_server.py": "ca8a06e34b5eae0b7d8d6b9241939ecb62e787d692ae707afcc9e80eddb2eb8b",
+    "tests/unit/adapters/test_mygene_server.py": "8a5eda0d3490d736bec5c955fd24c3223b6dfc3f9ed4be7c1cf62f60adcc6118",
+    "tests/unit/adapters/test_opentargets_adapter.py": "c4b5dda080e9f04032153ad38e6c1a80110df58df319cdf4e7206da3ea39b79f",
+    "tests/unit/adapters/test_orange_book_server.py": "1e6f5e6dbda85f7d899e29008cd02e65671c86e50d360d62804db29d18e24d38",
+    "tests/unit/adapters/test_provider_availability.py": "f6a4c5c361ca828d7bfb2178e75e32fdc21103616802f0cdfe3e181da2c5081d",
+    "tests/unit/adapters/test_provider_pagination.py": "1a1bdc8d573d3669a21b934c12cdd28ababe9316b64278f22bc14185d6d0a991",
+    "tests/unit/adapters/test_provider_security.py": "91b9fda2596a313c77e91be9f53c5f613a15565c28ba5e168dc0672a98f3b031",
+    "tests/unit/adapters/test_removed_source.py": "97ee7060147fabf62f8c2b367538c3bb3e5addc43c81b4f8903f348bd196e1e4",
+    "tests/unit/adapters/test_retained_routes.py": "7d72a40db3351a3a9f7ed75e72027c850a4ca9d4124f5e3517a56e9efc3033ba",
+    "tests/unit/catalog/test_boundary_audit.py": "61187eed31b3e1c12cf282da60dfaa03cf635e0e2cac257fbbf965a85ba4307b",
+    "tests/unit/catalog/test_cli_contract.py": "2513c9c00058c3b60dbdd7ec544f7c925e9bd9809db0dd37fdf1b5a8c0f77888",
+    "tests/unit/catalog/test_cli_pagination.py": "8acd7522df5d4f97a1defae8dc9caebc4da151a11b2e119fdd2897854ecf4d9f",
+    "tests/unit/catalog/test_example_requests.py": "0002598663f3d60938099fe8fac16ee530eb0d5655da363646972bf89cf03932",
+    "tests/unit/catalog/test_extensions.py": "5b028157d99494f8199e5a710418ae3b9da6f888f689f8efbf746691dc13e04c",
+    "tests/unit/catalog/test_hybrid_catalog.py": "9db1b8d5e17a283d67412b96ec3adc30593fdaf5b803f7614bff881dd3e73895",
+    "tests/unit/catalog/test_identity_preflight.py": "d33157170ea9d9ac80e23883b6bdf7dcb1887b0183f7b1915de237136c82f999",
+    "tests/unit/catalog/test_onboarding_workflows.py": "b7ea2882a1d14ccc73fc4b6ad4cbacd248adfc47481c06ce320f2e1840f7cf79",
+    "tests/unit/catalog/test_production_shapes.py": "0c99f0a44e8f37b6319792e6436f7aa79f1596ce42ef4792a7e24f44a01e173b",
+    "tests/unit/catalog/test_public_examples.py": "76a8bf55ef5acddfc6cc30d5ec30e890a79e394d6b355add709b48453eaf12b7",
+    "tests/unit/catalog/test_public_tool_contracts.py": "38efd957c76f32e1b5b00f6f6a846dfd20510ae51703f50fa6fd539ba7be6fb2",
+    "tests/unit/catalog/test_research_contracts.py": "e678abef85086334c7a6283b3cb640498d40fccd9d4ec91e8cd6fffc543f386e",
+    "tests/unit/catalog/test_research_requests.py": "b096480e37efadf0f6006027b457e913655c7c5646d51747d7a779be410bac56",
+    "tests/unit/catalog/test_scientific_workflows.py": "3e8f280ba121fe4af8348d27a8ea2263c2a39ed0ae79f926086b8904ec5df6c6",
+    "tests/unit/catalog/test_source_batch_permissions.py": "326f5fbc4d6562bcf53163b73a85fa9034f01e340a0bfae310909038c6c6a2fb",
+    "tests/unit/catalog/test_source_licenses.py": "ae6c7861dfc5211ba275be10137a3ae4099f5e4e8648cdb50142d3954d32c7d3",
+    "tests/unit/records/test_dossier_evidence.py": "73714f7efcd65949a9a095c0c4414713eb67b6273cb53e2ccbde7eebaebc6a33",
+    "tests/unit/records/test_evidence_receipts.py": "0abba8d46ef221bfc8ce9f3d7de385da604184cfe0124333db0547544ab7ed4a",
+    "tests/unit/records/test_evidence_recovery.py": "4b6e5b3c7cbd22368685a88cec436e1914a2d292c31c75f56cc5e1b107f870c3",
+    "tests/unit/records/test_label_metadata.py": "cb81772bce12024b1a6adceb1a0792637d577957b50e649e36b89079de0a57d8",
+    "tests/unit/records/test_native_entities.py": "e69e9ec3193f745bd857e01f3524abea8c929a0044b34ff6134717077f402d78",
+    "tests/unit/records/test_native_literature.py": "cf32b2f7e65f37a0759d19f6fec7c737cf8806a75192e617989eded8960c7ccd",
+    "tests/unit/records/test_native_response_shapes.py": "1b34536df0c80e811c8f82d479d85a09ad9fc90de366cfaf4d5aa7940e61ad5b",
+    "tests/unit/records/test_native_variants.py": "6a043cb955bd78b226b33047b3b9f3d7017213220ac16f969b3df58e0aad9752",
+    "tests/unit/records/test_output_contracts.py": "f3f9ebd0ff8b115add99a47c9b4f39ca6502f74583185109ea7c6ea808558113",
+    "tests/unit/records/test_qualified_gene_identity.py": "868ff3b5bbef3fa43c7ba2f3149d6037ba9604edb6779fc19bd4fc13bd3762a7",
+    "tests/unit/records/test_record_schema_resources.py": "d7a1fb33d83d3482b82ce2c98439a14769601c1a3c58fca1d72c6ae934eaea18",
+    "tests/unit/records/test_schema_compaction.py": "9cf1b2376a60a7864a647a12b3aa34ad0fa947552d3371e75418872c4ccff8c5",
+    "tests/unit/records/test_source_content_boundary.py": "a9deca4711362c92235c0e33445801857a035c49df1228c8e11d1422249a4a6c",
+    "tests/unit/records/test_typed_expression_records.py": "187bc542af64e1f35ca2272d947460222e48065173a46e189d2809dbf23378b7",
+    "tests/unit/records/test_typed_literature_records.py": "aa0610c6ce0176cb084091beeec36d9f1ce7cbc2bcebcd2a1b6e4b75d2dd8f10",
+    "tests/unit/records/test_typed_mutation_profile.py": "f7a713339cbeba24d39c41854d8047ec81a3438935e11394d7babedceb1a6373",
+    "tests/unit/records/test_typed_population_records.py": "ae47de1de55fbabe8b0282ce304490dd4159dae9a1dcdd18faf689775fbbae56",
+    "tests/unit/records/test_typed_qtl_records.py": "cf086b64a31dc6d90cbe14e3db9da13f35c778776c26d2693ed5f8d6498e76fd",
+    "tests/unit/records/test_typed_study_derivations.py": "9d961603bf9a3b3f6ee06e0bcd57696f3f2c7413fc39511147572445b77b7cfc",
+    "tests/unit/records/test_typed_study_records.py": "1cccbcdc8180b143dfc107235913e6bc48eed34334558e339aaf5cef9d00f7c4",
+    "tests/unit/records/test_typed_trial_records.py": "06dea2fc815567a2f84decb5348abf1e989d519228c31f6c2d6ed27ae3921677",
+    "tests/unit/records/test_typed_variant_assertions.py": "6aac765ba615b9ed8a9d6a8707951bc8c1d09a739ebf7300c1992803039cee77",
+    "tests/unit/runtime/test_anonymous_pagination.py": "613c70d510449c8bf2834a3a9fb142b52712c69fd9292cb4832ee588dfc2f8ce",
+    "tests/unit/runtime/test_auth_branding.py": "25fa9aeb09562a31708b5f803d657a425ef826d44ab07a9d813c3563cbdb75e8",
+    "tests/unit/runtime/test_bulk_redaction.py": "f46a8a8d0f8bf017b1ffcead1453c18ab9f4ffda3941e7780a454ddd242ea6d8",
+    "tests/unit/runtime/test_diagnosis.py": "b21e90770c2fa92a1448b3f4eaec50ee2af69150e792b2dd5410ed8e6391580d",
+    "tests/unit/runtime/test_http_contract.py": "b26165d24e06e32714ee7cbe1021e2a1d57759c19b9009a85910ab39af5ad361",
+    "tests/unit/runtime/test_http_security.py": "01b2c9bb086f620ec09bc4dd10f59e41b47c4e8ad8919c946d71741f075bdd09",
+    "tests/unit/runtime/test_http_telemetry.py": "d1d1456d1d732f544f4480a13928ed68dfac1755475a3fbc9ff46e8b73a1164d",
+    "tests/unit/runtime/test_infrastructure_readiness.py": "21ddd478df734e241c7478ed4603c7a6c556b5a8f9c21a712ede504b32604c5e",
+    "tests/unit/runtime/test_ingress_budget.py": "9d215c1998e5c9aa8d5756935d87c4b291b9364b493d7fd5b2fe874904bc0063",
+    "tests/unit/runtime/test_local_boundary.py": "1ad8111b5ebfb22bf2f2f8be05efd34d2de2d2ab6f018b97b25557f5109a0a89",
+    "tests/unit/runtime/test_local_source_keys.py": "fb67b2a743df9ee1772d22e251230349784eb7d296066ec3934a2560b65ee0b9",
+    "tests/unit/runtime/test_local_state.py": "8af8fcaaac8c46cdd923387d432ee5f609ce0fbe7363f08f419f66f7ee36cdad",
+    "tests/unit/runtime/test_public_predictor_cache.py": "22bb64789532a0b970d89f97c7e652172cf66bd851271e0a80262f5965fba737",
+    "tests/unit/runtime/test_public_snapshot_grants.py": "94b85f11c5bebd14439b6b6e760bf68fef232ead9f100d52cc312941c9529e35",
+    "tests/unit/runtime/test_remote_guest.py": "905413b3df6f71687b3a0497a38eba5b43403e7080e2ea485f355041ddd97cde",
+    "tests/unit/runtime/test_request_credentials.py": "051001fb08c458e5a9393a747294716a0c28fd938b9616ecb5ccc33e7216c60d",
+    "tests/unit/runtime/test_request_telemetry.py": "ecd66d9603b64c18b28a1f3bcd2ebb4ad34e5a24782c5591da07785b04bbde92",
+    "tests/unit/runtime/test_result_cache.py": "a22db22dcad5005b0f695c1ce1bdb82aa1445e4e5397e9c87bf23c2e4794e2d3",
+    "tests/unit/runtime/test_runtime_admission.py": "b52119fb05d3bf9dd4fe65a11576ae8ea3261ef4e6a04359c5ca2ac6cadefdd2",
+    "tests/unit/runtime/test_runtime_safety.py": "dff04267f2ab9ec0cf92f097351c0fe5a5f2e0b7d9d3a630d28afd3837aa6339",
+    "tests/unit/runtime/test_runtime_telemetry.py": "96c0bc0b6cb4e4e370e73d4ba274c343dc25ab053b86a5d944a15a265eec041b",
+    "tests/unit/runtime/test_snapshot_compression.py": "ac59b779cd45e11d1fd2e2e2227bd8dd3e6987537d6b27d193357627890fae7f",
+    "tests/unit/runtime/test_transport_failures.py": "37fc8fd0811277f2bb250e8b7bd0688ce5a4d20b3229e78dfbeaf45e4744d0e2",
+    "tests/unit/runtime/test_transport_retries.py": "dcc03abe256f0720b68dd94b0c6e0a3396134c428652b9b08423118b0bfd0e88",
+    "tests/unit/sources/test_alphamissense.py": "b794f5d0f9b68f260e43e6313beeebf7b494b55d81099211e8abf9b28daa0c79",
+    "tests/unit/sources/test_biothings_responses.py": "147d5e24860cf2c63f8125ab1ce6cb86de54a91513819d7b74233dd9d2a0e70e",
+    "tests/unit/sources/test_chembl_properties.py": "5014b193a98e7f85e953575b94c51485a02c75a3b66e50e9117c2c8a190c70c0",
+    "tests/unit/sources/test_civic_responses.py": "456405054b384f1f0ad6abbe2d59b2d7ec0443dadb7971fe87741f689bc3cdbc",
+    "tests/unit/sources/test_clingen_responses.py": "3a8e58714d423820456023823ed4e011ce0971bb653f63404f548fa7d1757a2c",
+    "tests/unit/sources/test_clinical_trials_responses.py": "9238810806ba320e86ba75eef10c93d0c99f5237c112b4ce07e0de846d49c90d",
+    "tests/unit/sources/test_complexportal_responses.py": "85392f451e1fbd91b0d44cdb6280feb65ece5e02f78690724355948b67bf29b1",
+    "tests/unit/sources/test_direct_clinvar.py": "2b54dec86275cb81ba0914d58e52d9bdb58e2309e77fe9e91bf790fe2ef86bde",
+    "tests/unit/sources/test_ensembl_contracts.py": "2c75b235ff2d485e064e34ea7dfe0480de37bb188ae8a7151c2f6b2c6e94396c",
+    "tests/unit/sources/test_ensembl_genome_contracts.py": "7cd78d604ba3650b817828336e042344bf8fdf1d0c3b76405e5f5ffed62be455",
+    "tests/unit/sources/test_eve.py": "47b53ba2bd97ab4c149e7a171e8e8fef301506a30c926196ac72adc830e8f035",
+    "tests/unit/sources/test_fulltext_floating_tables.py": "fcfae11e7fa5ae2d545a0d6cc25514314ee3c69cb4285b2dad22bfc31a669c72",
+    "tests/unit/sources/test_fulltext_range_contract.py": "346db44f08e91955d08674a5e3aa9be029a0c49d5db2454b4b41891265dee778",
+    "tests/unit/sources/test_gencc_responses.py": "d242e05b878cc3a4e2142c51270ad85e1f35073b3fa1c4bf81c5ca2d3c6f08b1",
+    "tests/unit/sources/test_gnomad_responses.py": "225edb3c1d15c57b3491878ebb262b9fbf18e326b5fd6add248753a45cf90dc6",
+    "tests/unit/sources/test_gnomad_source_permissions.py": "d4b3e7796c9572a978ec07c7e40926ce552fa1d601aa678d9dcb66552cd54100",
+    "tests/unit/sources/test_gtex_pagination.py": "8a326eaad29ab6350a75cffb609889abefc701f2678d6e2cd5c9fc5e9b932852",
+    "tests/unit/sources/test_gtex_reference_identity.py": "389776265c52537369bce13f68cbd98c18ab5e3218ce9e5474779dca44569cb3",
+    "tests/unit/sources/test_gtex_responses.py": "9038a00015f31333fb7261592cacaf1e33a5934d3697fcf5b4c206bf08cc5ed7",
+    "tests/unit/sources/test_gwas_responses.py": "892aac13c38db99d51eccd52a6707195f4a5d7eb72bd017aec16e047f227d265",
+    "tests/unit/sources/test_hpa_responses.py": "841abc330abcba1a7b2fcf03c8d4f7ea174e3c321f5df848a5acbaa68c911266",
+    "tests/unit/sources/test_interpro_responses.py": "01a4ef8e54f501509d82773ec294bd017aa97950adfbbdd25c798a5d25b34c6b",
+    "tests/unit/sources/test_monarch_responses.py": "6982170351c287033373adeca08bfded48fe3650c3313ef1d53dc1b18a15910e",
+    "tests/unit/sources/test_myvariant_responses.py": "80e6281393c622d902ceb45fed65110f645449f26d1f1db5749e0fd85d649c20",
+    "tests/unit/sources/test_ncbi_datasets.py": "147c1846dbbbd370aad42fa0fc3193dbc6c057d8f54bc95d3f4958bbd44d39df",
+    "tests/unit/sources/test_ncbi_gene_reports.py": "d1ba4b7bbacab0af96f83f87f1805bd5eba72dfd3ec75e16068d3b3cafe94a00",
+    "tests/unit/sources/test_ols_responses.py": "9c78d8a5275671dc0bf6ea2cb1b285a91a8f68b6cbea84e841b3e9347b47649b",
+    "tests/unit/sources/test_open_citation_graph.py": "0f72c2bde46424e8306fe3a8fd7247449cbfe244c4a001d24db04fd5da1c2678",
+    "tests/unit/sources/test_openalex.py": "9e20cfd46b74dfe88661167fe817ebefbebd867727925301542e8916d5e2ae81",
+    "tests/unit/sources/test_opentargets_assessments.py": "f31bc5c5cdc8ad5b1b5afee1c9449123862d435da4fa28c95874bd70fdfb16b6",
+    "tests/unit/sources/test_opentargets_pair_evidence.py": "533a817b5e037709d79631ec01552a5595402b1f87b1d867e9fc50ed85f246b7",
+    "tests/unit/sources/test_opentargets_partial.py": "d20dbf096ddcd8946a574d434951da0aefd0253806d6c6cf567e10ef2fade1ee",
+    "tests/unit/sources/test_opentargets_responses.py": "a28d59dddf94876c65e22b9acf67f6578a7885c44692b2d1aa49a12dc4d7dca2",
+    "tests/unit/sources/test_opentargets_variant_evidence.py": "a7cd962f4a5774efcedf1d7b7e53153eb077df2a86c47920665b064330e0055c",
+    "tests/unit/sources/test_opentargets_workflows.py": "df89743d27aa8962b760ae61d76ff8834a315d678ebb2ce7b7b0f9f8f316dcb4",
+    "tests/unit/sources/test_pdb_responses.py": "4fc988b850f98e0802048e88ae289d439f89448209ccc6b30cae48aaece73132",
+    "tests/unit/sources/test_pmc_fulltext_fallback.py": "852f355b5e50ee6a3e873f831c1ceeaacc1209cd97f633156163a2487673493a",
+    "tests/unit/sources/test_pubmed_search_parity.py": "da1a0e0aa9cc854eb596dea25b6375dc67b40112588a4359344fb65be512fe08",
+    "tests/unit/sources/test_reactome_contracts.py": "bff73df3d4f631c9f54895de05dc25b474b3d11370523cfe7400af932f564702",
+    "tests/unit/sources/test_reactome_responses.py": "824100bfae9922dd7610c93e3b311d628cf5b207de4aaf8b41bf55d644bff8fd",
+    "tests/unit/sources/test_reactome_trial_serialization.py": "ac21bc2c33c4eec770ffebd0bbef6ee96625d569736d3c6b8db4c95c6f3a3e06",
+    "tests/unit/sources/test_source_schemas.py": "d88b7224a887c5acfc3f4b5e3f486ee45dbfde987c3495984ebd0c5e5f6a2324",
+    "tests/unit/sources/test_string_network.py": "760b3779ed2bd322353d66bcdf0a309ffbb47037bae7f92f94ce5c14172d1172",
+    "tests/unit/sources/test_surechembl_annotations.py": "e761ea3de0daf7b0ae2f6a47187045ef1cae232308f29e5ef41232b8d1c4d528",
+    "tests/unit/sources/test_surechembl_metadata.py": "d657fcbd57396b812faade7a95da88a95f78c3f0936536dde2802ac322f4f564",
+    "tests/unit/sources/test_surechembl_search.py": "ea58976f51dfef299501c19d172a8496fcc2542f4642479dd9f407c7fa72ce37",
+    "tests/unit/sources/test_uniprot_annotations.py": "6925987ad3ba27845b2cb084eeddab60985e635a135ef9bc93257cb4d722ac25",
+    "tests/unit/sources/test_uniprot_responses.py": "fa3751e003b4f0866bb6b445003840a0c4870b4a2d6b06ddde30963d36a3ae4e",
+    "tests/unit/sources/test_uniprot_unknown_positions.py": "21f844434dce1c67f7f320da008bac8d1f5a55cf7e72c16a12b4a2abbc16759f",
+    "tests/unit/studies/test_native_studies.py": "354a1e96eb1a07cbe49981e00dca53030784ea39af9b4d74e90c58861bd2b025",
+    "tests/unit/studies/test_study_cache.py": "bdc12b023261376c6344f43cdf878ef5c201763aaab80ebe1162349dc3cfc7b3",
+    "tests/unit/studies/test_study_concurrent_recovery.py": "6f207b0d3ac7d00628ea856d0a3d3cbecec0812d1959a8ea0be0c838aa8d7e65",
+    "tests/unit/studies/test_study_initialization.py": "c9dbb1e31ae30768c03be3e466f54f610222219f973929beb549f9567c5320ef",
+    "tests/unit/studies/test_study_installation.py": "11d1b8918db883766015a1d316dae06d9e6cd7941e2f4a4ddfa636ffa1cf070f",
+    "tests/unit/studies/test_study_metadata_contract.py": "1c6871d0d37a8441edd1ac32612103b6ac2ef8d45ffc36836f509c65d057c9fb",
+    "tests/unit/studies/test_study_missingness.py": "8bc476ff6583f89d092bad1881375dabf0a532562033af4e00cf7edcd8040f1c",
+    "tests/unit/studies/test_study_patient_inference.py": "34511f9aab4c0b13decd4e1ec0b741f66fafe0340ad3c4cf0284cdbefd15fe3a",
+    "tests/unit/studies/test_study_resources.py": "a16b0e66f348b7bb81048d67db0eab9ec895c56b9bb021b38d8aeb2886631dfa",
+    "tests/unit/studies/test_study_statistics_boundaries.py": "0d074cf5793ae81ccdbcb5606888cffe548869e36b2710ceb2239523fb7915ea",
+    "tests/unit/studies/test_study_statistics_reference.py": "8c16a8e8f7fb5966df7e93d7c1980a6a6a6fe087b03dfa71b6c01c0c869e9055"
   },
-  "runner_sha256": "5a467f14557f51cefde472e551dc509e30e169f64597fcffd41ceaa0bf795cce",
+  "runner_sha256": "e5a12bc9cad3866476fd2dd0f9be7e4fab85607ef826f526f92273fd93637a24",
   "runner": "scripts/qualify-readiness.py executed the full deterministic suite with unchanged code/dependency/test inputs"
 }

@@ -38,7 +38,7 @@ Recovery cannot retrieve records the provider did not return.
 Primary contracts: [Allele Registry](https://reg.clinicalgenome.org/docs/cg-car/),
 [Expert Repository](https://erepo.clinicalgenome.org/docs/cg-erepo/) and
 [Linked Data Hub](https://ldh.clinicalgenome.org/ldh/ui/api-docs).
-The [offline regressions](../tests/test_clingen_responses.py) cover selected
+The [offline regressions](../tests/unit/sources/test_clingen_responses.py) cover selected
 response shapes, aliases and namespaces, conflicting assertions, retries,
 cache provenance and actual MCP resource recovery. These checks do not prove
 current live health, complete provider coverage or model scientific correctness.

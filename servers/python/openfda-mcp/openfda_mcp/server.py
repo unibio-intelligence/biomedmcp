@@ -26,16 +26,6 @@ mcp = FastMCP("openfda")
 BASE_URL = "https://api.fda.gov"
 
 
-def build_search_query(params: dict) -> str:
-    """Build FDA API search query from parameters."""
-    query_parts = []
-    for key, value in params.items():
-        if value and key not in ['limit', 'skip', 'count']:
-            # Handle different field mappings
-            query_parts.append(f"{key}:{value}")
-    return " AND ".join(query_parts) if query_parts else ""
-
-
 async def fda_api_request(endpoint: str, search: Optional[str] = None,
                           count: Optional[str] = None,
                           limit: int = 10, skip: int = 0) -> dict:

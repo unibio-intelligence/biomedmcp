@@ -6,7 +6,7 @@
     },
     ".github/ISSUE_TEMPLATE/bug.yml": {
       "executable": false,
-      "sha256": "b2717046f2f27c64ac9e8a4ef3d2a743ba282b6116fa1ba53e02ca3a1bf2ea88"
+      "sha256": "59b82d69354e87a20cdbf3fdcd8213bafde35475d420e02911a79b98bb1ab0be"
     },
     ".github/ISSUE_TEMPLATE/config.yml": {
       "executable": false,
@@ -38,11 +38,11 @@
     },
     "CHANGELOG.md": {
       "executable": false,
-      "sha256": "f1b87473420337adbcffc4e90f14d929fac859c9e7e02ae2a87d614191047b91"
+      "sha256": "de05ef3ebd2612b978a005aea1451359e844f8b38f9b836f0d8e4852e0097b03"
     },
     "CONTRIBUTING.md": {
       "executable": false,
-      "sha256": "0752ff0577345bc4f6ee103d1a1fce5af472d9b84480e6cca7ba7b5835f02601"
+      "sha256": "7a84c737f79486be0be676f49c5c3ab06f95e336792bd39c3dd62abc020d49c7"
     },
     "Dockerfile": {
       "executable": false,
@@ -54,15 +54,15 @@
     },
     "NOTICE.md": {
       "executable": false,
-      "sha256": "65bcb3c2adc27781b773d9fd897a251a6855e8351155a50d30af5c2c30155fbb"
+      "sha256": "16ac74e08b5b681dc6d4b931166ef562c89ce9d599e380781d4bf0b51ec852d9"
     },
     "README.md": {
       "executable": false,
-      "sha256": "68ba90aceb791b297d322df02a2f0486deeb3b8be16950350839567921c4cfbb"
+      "sha256": "fa19ded8de0a254c1bb14710b01c488c8fcbe1ae16c07dd6a9eb9960348d1f9e"
     },
     "docs/adapter-catalog.json": {
       "executable": false,
-      "sha256": "6ddbce2edad3963243d0e5514d81137c713ef8e77a541a492030c7663c561aea"
+      "sha256": "61f552beb70ce4646c35e42b279c259a12e7d1bffa9d5b86094777bae569260a"
     },
     "docs/agent-evaluation.json": {
       "executable": false,
@@ -74,11 +74,7 @@
     },
     "docs/capability-readiness.json": {
       "executable": false,
-      "sha256": "7aa4056259476de8def355b39daa1576bac43e8843f0f3e0de6eb4da5de572e2"
-    },
-    "docs/ci-governance.md": {
-      "executable": false,
-      "sha256": "f6e5a94f8067b50f663d55f3a8d55c9d35a01ba5584c685ab2c5cc860101995b"
+      "sha256": "8a7742bdcaf1eb9148bbaed8d11781af20ba7d29eaf000188aeea39528bdcf5a"
     },
     "docs/civic-responses.md": {
       "executable": false,
@@ -86,7 +82,7 @@
     },
     "docs/clingen-evidence.md": {
       "executable": false,
-      "sha256": "d20c3744c333a9e15050fb682991adfa1d57b0216ff8c7a6645f4eea9469843a"
+      "sha256": "fc1af983cd7910907be452c478f0fac189e9ea0afdd9866553ffdc922e1c598c"
     },
     "docs/complex-membership.md": {
       "executable": false,
@@ -94,7 +90,39 @@
     },
     "docs/connect.md": {
       "executable": false,
-      "sha256": "5a0a6aed98da0e5e255279d70a339de9f9b9c21e2a36d882c5e3763161b41ad8"
+      "sha256": "be147120eac1a994b9bc011ee7073c8ce295f4e02ddb81ca37afbb5c527e7913"
+    },
+    "docs/development/ci-governance.md": {
+      "executable": false,
+      "sha256": "aa87f41594e832db51c0dbd681c41e0ca93b53cfaaafd84a99263ddd0b255c71"
+    },
+    "docs/development/public-links.md": {
+      "executable": false,
+      "sha256": "41ad03a8ac9a395ddc1822490b78668456477d58326551bc2a452e686f097ecc"
+    },
+    "docs/development/release-attestations.md": {
+      "executable": false,
+      "sha256": "6fa38408318aa7554af2a404abaf766eccc916a223ba9443d81cb0626a0c05f6"
+    },
+    "docs/development/release-recovery.md": {
+      "executable": false,
+      "sha256": "48b2cbd951e21a8ec6b983ef01e25ee7e2b72199c2cd9da3698c9589ffdef1e4"
+    },
+    "docs/development/runtime-observations.md": {
+      "executable": false,
+      "sha256": "e250b82fdbec1238499054b6946cfb501e0363e9242ad6a97c8d5ca7d7732d69"
+    },
+    "docs/development/security-scanning.md": {
+      "executable": false,
+      "sha256": "71360057046caf49395abe35a6f0b2ec6961cced25d74414f8909c1a8ba99bce"
+    },
+    "docs/development/study-algorithm-benchmark.md": {
+      "executable": false,
+      "sha256": "24d09be0aa1641fcac56878d5ce4b8e1cb94ba86fd865f7690caa82960fd22e1"
+    },
+    "docs/development/study-resource-benchmark.md": {
+      "executable": false,
+      "sha256": "bdf248430c46ab817800e293a34887df40d652525ac88e4a9f31e4cea5768001"
     },
     "docs/evidence-resources.md": {
       "executable": false,
@@ -114,39 +142,23 @@
     },
     "docs/gnomad-responses.md": {
       "executable": false,
-      "sha256": "95b25ad1ab4cb158e7194bea0c1358ea4d16d0e717b1f076aba7e6d3d7767523"
+      "sha256": "827e1feee6f70822662152bb9645f2042bf81a4db9959ba0781396617c378b03"
     },
     "docs/gwas-associations.md": {
       "executable": false,
-      "sha256": "f10a75b7002a2b82e901b6311f7104157952ff58b2f90375aad12a647b7d000f"
-    },
-    "docs/http-budgets.md": {
-      "executable": false,
-      "sha256": "d314e84f043dc094f0c40287bb6f5ccac535ccf2a8066e33aaa76cc158b6665b"
+      "sha256": "916e3bea1daf5feb2e2c310f8dc304d02fc2185b7b6c28b62b4d7fdc1c6a1d23"
     },
     "docs/interpro-matches.md": {
       "executable": false,
-      "sha256": "93ad3f1ba10644ca7d766df298f4b915f0a290e848f7034f5fcd21cf3126105d"
+      "sha256": "2486c3143f6e7ffade6f4b401cb964f731af6d1ae9a474078fb28c7b6aaa02fe"
     },
     "docs/investigations.md": {
       "executable": false,
       "sha256": "52b0f8bda2c53af781e08ba05ea6fbbadeb481cc24ddeaccb2adb637bc803fcf"
     },
-    "docs/live-qualification.md": {
-      "executable": false,
-      "sha256": "4a02a7733cf00024cd503145fb4f1bf6f47c50c864629a2f043758364238c902"
-    },
-    "docs/locked-dependencies.json": {
-      "executable": false,
-      "sha256": "66fad957b104cb897b08520c2b4006cff475f68797f1732c24ab282032975634"
-    },
-    "docs/mcp-catalog-budget.json": {
-      "executable": false,
-      "sha256": "934c078b1a83c13b0f868b357553e20e590e62760e2f8bc72ea98d0f2047afeb"
-    },
     "docs/native-python-architecture.md": {
       "executable": false,
-      "sha256": "38ef026a653610cd06f8c3c4a4d49ae1d92afb4d3d6cf3e48225862a22197fa1"
+      "sha256": "a7d356d548376c8b3c759bef61e2b96594c5ab9367d41b4f683e63dfddde7b5c"
     },
     "docs/ncbi-orthologs-virus.md": {
       "executable": false,
@@ -154,19 +166,23 @@
     },
     "docs/ols-phenotypes.md": {
       "executable": false,
-      "sha256": "8258a5c18320aa0d09306886ac81d56dcc39ed63132e6df1e95332a31d480be0"
+      "sha256": "735f4b3369acf05fa6cbd93573c8e3cc5a92734cfbe9115afc521b241ff0ec61"
     },
     "docs/open-evidence.md": {
       "executable": false,
-      "sha256": "de8d05f3ece6bcb90d6dfebd6d1131b0bc26eaaf5b4564726b82e4ea8221e834"
+      "sha256": "9c1aa38dac4ccecf840569ef15e30ab2ff07a547aa7f323900416230b3c51b30"
     },
     "docs/opentargets-evidence.md": {
       "executable": false,
-      "sha256": "280b3b0891f6182afc242cd06b1d897b6348efe302891aec6d7b17753639304d"
+      "sha256": "b0fbf2da44d8db5c548f937661163b964273fc58ae90c62b1799ecffed9f095e"
     },
     "docs/operation-ownership.json": {
       "executable": false,
-      "sha256": "88039eef1f639a9a6c3c50931e1bee853905e9c0f320c05d49bed8cce5f16e11"
+      "sha256": "bb48e0ea63c8229557342a881f0ad3a405fce47b8a6fa42c793cfe499e6d0e33"
+    },
+    "docs/operations.md": {
+      "executable": false,
+      "sha256": "d01d5c610942e2878ce99801cf58d738214cf42fe0aa0bc6c9cb3c96b582bca4"
     },
     "docs/orange-book-contracts.md": {
       "executable": false,
@@ -174,19 +190,15 @@
     },
     "docs/output-contracts.md": {
       "executable": false,
-      "sha256": "43ee277c7116567d50efbbeaa975c09429e8e53f5603fa69f487f7b954311823"
+      "sha256": "64034f1f5d52c2a7a3e457f577da4ddaf1501b197dea9c702b40a7e07956bb26"
     },
     "docs/pdb.md": {
       "executable": false,
-      "sha256": "c2da73894ffa6d981d8ab0d853a2cccfadc44d8ce70b9d51dc82cd1ea0ff3b82"
-    },
-    "docs/public-links.md": {
-      "executable": false,
-      "sha256": "714efda3c277baf64318a1cf8304a1256a5b303f50677ea739c585ef299bd1f5"
+      "sha256": "9c630877171ec4194cc41bf710f78da5cb4306d070b7b6bc0f97147cef356e8d"
     },
     "docs/python-dependency-inventory.json": {
       "executable": false,
-      "sha256": "acdd2be43f074badd73b122a4aafea473d17528921084cb9e232f109438e65f5"
+      "sha256": "6303b887f23e709ec33cbf42de22a087f883d19503fc2b67ebce9185647949af"
     },
     "docs/qtl-records.md": {
       "executable": false,
@@ -194,31 +206,7 @@
     },
     "docs/reactome-contracts.md": {
       "executable": false,
-      "sha256": "9cde5303e380c280df93aa156486a432b4937d5e9c78875fa31c91e5015dc62c"
-    },
-    "docs/release-attestations.md": {
-      "executable": false,
-      "sha256": "0343c8f106922e3c2b9592adac4810e6e09f7a971a07f651ff3b9d61cc5e377c"
-    },
-    "docs/release-recovery.md": {
-      "executable": false,
-      "sha256": "48b2cbd951e21a8ec6b983ef01e25ee7e2b72199c2cd9da3698c9589ffdef1e4"
-    },
-    "docs/retired-adapter-files.json": {
-      "executable": false,
-      "sha256": "768cc6790f3aad741ea2e115f5311652c91d07428b9d1c7011b0b34cff355faf"
-    },
-    "docs/retries.md": {
-      "executable": false,
-      "sha256": "0813604fb0b0fb8978a453662936056b4db17c859349e824f3891f357be0ddb0"
-    },
-    "docs/runtime-observations.md": {
-      "executable": false,
-      "sha256": "e250b82fdbec1238499054b6946cfb501e0363e9242ad6a97c8d5ca7d7732d69"
-    },
-    "docs/security-scanning.md": {
-      "executable": false,
-      "sha256": "71360057046caf49395abe35a6f0b2ec6961cced25d74414f8909c1a8ba99bce"
+      "sha256": "a93c28c4a636f85dbfbceb1cd3bd9c028b41a5ea38dadde0b62026c9ef6644be"
     },
     "docs/source-access.md": {
       "executable": false,
@@ -226,39 +214,31 @@
     },
     "docs/source-licenses.md": {
       "executable": false,
-      "sha256": "29ed6c5b89392c581f9e4680b4192fd9decb37dec08a32eecd2d2bd3efbc30e9"
+      "sha256": "e432bc06f7be1f87e36f7705a86096ad080d06dee2886d90c2f386e30b9e96a0"
     },
     "docs/statistical-methods.md": {
       "executable": false,
-      "sha256": "b55918401e8459af793d060a0cdd5d9ce8c551a749b0993aadabd1471207998a"
+      "sha256": "6a97a57cf6696a7835be5fd96727b8e3d880c9ddf4e3cdf44021da26a4774175"
     },
     "docs/string-network.md": {
       "executable": false,
-      "sha256": "682a84db0d55244aa20762e2de2e972ee7167c681653687c87a1a7fa017921d3"
+      "sha256": "bbd9c465e5b971e2b1200b7010077b624a195889307d4032fa940c7be3a28761"
     },
     "docs/studies.md": {
       "executable": false,
-      "sha256": "2f230e232fac4539e1fd000efb5b74e90f2abc5ad208b398977ce87f699552bc"
-    },
-    "docs/study-algorithm-benchmark.md": {
-      "executable": false,
-      "sha256": "93e08d45f10bbdbca13f658cc6b01fdbcbfa96d24e2d85b6c665cc0529179fee"
+      "sha256": "5d5bd202a6846095c54fdff2f577a6f4f55aa48bfa18fb112c78f60338749fa4"
     },
     "docs/study-derivations.md": {
       "executable": false,
-      "sha256": "0a227ac1a5858c80e9d912ebe00f42a21a511e420f3497b31d5efaaba866b14e"
-    },
-    "docs/study-resource-benchmark.md": {
-      "executable": false,
-      "sha256": "4d42606db779c53c6bb0063decc0dd8347fb63f6e2372929b292a3d7379eac67"
+      "sha256": "cd53bbd2b682728a15ca8e0fd1e6220cf7a5eadc2b7303e243e7be5c36f68956"
     },
     "docs/study-resources.md": {
       "executable": false,
-      "sha256": "9af73560451a1172a2ac5fa9b839bbe04593ef8e290261c098d14e6dde8927dc"
+      "sha256": "cdf6be0fb993df26a1e528d29dd70cf242693a0b35bb679cbb17c07a8ac03f4d"
     },
     "docs/surechembl-metadata.md": {
       "executable": false,
-      "sha256": "f75995acb705fe538b45c447ee3578b42d3a96971aa14f276e77066503958f47"
+      "sha256": "af21e04e6198bf14331eb2dc067450097e79e5d8126dc430b95c63f2c6475171"
     },
     "docs/typed-records.md": {
       "executable": false,
@@ -266,19 +246,23 @@
     },
     "docs/uniprot-responses.md": {
       "executable": false,
-      "sha256": "1f8983f523ad2dce48e7a976ed847e6589522b248e841dde2944a91c5243a1b3"
+      "sha256": "0c41d9f93b71203df90ad093735c241d0e7c6df750a5589a7cea3d66de65307a"
     },
     "docs/variant-population-records.md": {
       "executable": false,
-      "sha256": "19927526b93e3fb7aeee4eac496a6420513490feb871ac7037ab35f467a71946"
+      "sha256": "1fc98a6c8a7254d498e08539482c26b1ddb4323c8bc186310c8851e0ffd4c6b4"
     },
     "pyproject.toml": {
       "executable": false,
-      "sha256": "6e96390e6bd99344044e36a2ee292e3e2ebf59005fe14fb18ee6b74a1f2a510f"
+      "sha256": "7181de0c7db048eecb67e5fac7152d2e314fb9bcec72ca70b038dd28dc1d2c44"
     },
     "scripts/adapter-catalog.py": {
       "executable": true,
       "sha256": "bef117a82f0054e20d6708a4da30e3166ac4fe3a3063df99f3157f831d7a4778"
+    },
+    "scripts/adapter_docs.py": {
+      "executable": false,
+      "sha256": "b3827cef83733c1ac1bad26fc3e81db8115d55146a21cf0714810ad2aa019da1"
     },
     "scripts/benchmark-adapters.py": {
       "executable": true,
@@ -294,11 +278,11 @@
     },
     "scripts/catalog.py": {
       "executable": true,
-      "sha256": "1b6de070b495ddc379bbf3d28d113407882dba5030c710e47e78eee20afb18f5"
+      "sha256": "2f91ea0649ff13daad44e0979613283e4501e7fa106a8846697a28aee87cb650"
     },
     "scripts/check-governance.py": {
       "executable": true,
-      "sha256": "79a765b6c038f9faae07d2551139b3ea6134094e52c54693414ae08754f78e98"
+      "sha256": "609ff54c8549e5ff414b8d49da11d58d0c288cc9c2d7d1c802beb58b529e54ca"
     },
     "scripts/check-public-links.py": {
       "executable": true,
@@ -306,7 +290,7 @@
     },
     "scripts/check-wheel.py": {
       "executable": true,
-      "sha256": "e4a96e46c24e8591e79c58a05631b1bae6b69edebf89ee2e970a1ba3e3c26069"
+      "sha256": "5820913000e04fef5ce34225cd43359791840441f39c135bb534d2d859f5e886"
     },
     "scripts/docker-test-lifecycle.sh": {
       "executable": false,
@@ -328,9 +312,9 @@
       "executable": true,
       "sha256": "b14c9567eb57d346371755e6014023acebe118ba88f45b8a49e9850375a967fb"
     },
-    "scripts/onboarding.py": {
+    "scripts/onboarding_docs.py": {
       "executable": false,
-      "sha256": "7092efc2f314767481c331005b4059378a239c29970f2a2b2ed25ae3f58196d6"
+      "sha256": "86a3fa692c584f25aab568f4ec1c1e454bd22a2c98d7eee8d3bebf9bdbaf461a"
     },
     "scripts/python-inventory.py": {
       "executable": true,
@@ -342,7 +326,7 @@
     },
     "scripts/qualify-readiness.py": {
       "executable": true,
-      "sha256": "5a467f14557f51cefde472e551dc509e30e169f64597fcffd41ceaa0bf795cce"
+      "sha256": "e5a12bc9cad3866476fd2dd0f9be7e4fab85607ef826f526f92273fd93637a24"
     },
     "scripts/reference-statistics.R": {
       "executable": false,
@@ -358,15 +342,11 @@
     },
     "scripts/release-exceptions.json": {
       "executable": false,
-      "sha256": "78bb3d214ac3480d95e3ed29581e7151fafe6beeeadb06f7a8ddff83994029dd"
+      "sha256": "18138aa8bb5a089b68c8f410c4eb7fa7029ad35480b99df467497abd9539cec9"
     },
     "scripts/scan-security.py": {
       "executable": true,
       "sha256": "1c6565e622fc6b9d939e6698958942e57dd7b6e7b949551faba71af974129248"
-    },
-    "scripts/study-manifest.py": {
-      "executable": true,
-      "sha256": "933ee612ba8adc8854752cc787b341b8199d34336e69f5a149c39be1c2645df8"
     },
     "scripts/test-local.sh": {
       "executable": true,
@@ -378,15 +358,11 @@
     },
     "server.json": {
       "executable": false,
-      "sha256": "3ad22a3b57674014885ed3e1f7b87508f473feaba4734f187162f29cbc50ca6c"
-    },
-    "servers/python/antibody-registry/LICENSE": {
-      "executable": false,
-      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      "sha256": "fd0e7a2e5ea259f87d143663ed17788b4e2cb298b49cbe2133abc389fddb425e"
     },
     "servers/python/antibody-registry/README.md": {
       "executable": false,
-      "sha256": "67e2a08201719cd8a82cc114a0a022e52ff2604321b15281451661718cef544a"
+      "sha256": "b41c5fd0a2f2048fe5af6f21161e5c13735e9a60e11e2c50850e193c694e52aa"
     },
     "servers/python/antibody-registry/antibody_registry/__init__.py": {
       "executable": false,
@@ -400,49 +376,21 @@
       "executable": false,
       "sha256": "86f8b9fc9632df656634d33917ef668375f591a67b0552b0cde1d907e8bbaa05"
     },
-    "servers/python/antibody-registry/pyproject.toml": {
-      "executable": false,
-      "sha256": "5b83f81490fa5efaf1f14b0459aa0c2cd2eba2a06fa73e93c9ea956697a59624"
-    },
-    "servers/python/antibody-registry/requirements.txt": {
-      "executable": false,
-      "sha256": "06bb819eabca030b81ddb9de6ca6554137e4d77bbe37e94e7bfbfb5df72b4d79"
-    },
-    "servers/python/bio-ontology-mcp/LICENSE": {
-      "executable": false,
-      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
-    },
     "servers/python/bio-ontology-mcp/README.md": {
       "executable": false,
-      "sha256": "32028747bc52dba96be26c0947a21443e2c07c3c7cb575190b7bdf8ee0f9b0a9"
-    },
-    "servers/python/bio-ontology-mcp/pyproject.toml": {
-      "executable": false,
-      "sha256": "1780c0cbeb49c3f42cab6ce5e160bcd057feb62e2e6ff8b6866861ed7d736102"
+      "sha256": "7325efe6be8c776ae605bb89d7247697bcd44ecf59d18dad48ac9ad4953ff16b"
     },
     "servers/python/bio-ontology-mcp/src/bio_ontology_mcp/__init__.py": {
       "executable": false,
-      "sha256": "17d4668c53d0dc6bb94f2c155ed3869378e75785ff22e99438f90b39ab9a50c0"
-    },
-    "servers/python/bio-ontology-mcp/src/bio_ontology_mcp/__main__.py": {
-      "executable": false,
-      "sha256": "37228d510cc4ebcf89fffb6cc188438e1c2f090ec6f13aee257f2664e031e6bf"
+      "sha256": "17e3abedb5ae9f4d21a581a9a2285da6efa837bf9830af7770ed650b009a393a"
     },
     "servers/python/bio-ontology-mcp/src/bio_ontology_mcp/server.py": {
       "executable": false,
-      "sha256": "5f1c899848e85ab7f597c0531404a2d74691c0cb25eeeca9365457d0da019a80"
-    },
-    "servers/python/bio-ontology-mcp/tests/test_bio_ontology_server.py": {
-      "executable": false,
-      "sha256": "f67ceadb31c9145c398ce5edd89e9443c60315579d8ae2ebac68648b8aba96ec"
-    },
-    "servers/python/chembl-mcp/LICENSE": {
-      "executable": false,
-      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      "sha256": "58eae79a3525ef6c796ff06af60670f4c0b99f691e186b4b9988877c07012bcb"
     },
     "servers/python/chembl-mcp/README.md": {
       "executable": false,
-      "sha256": "19140cea979ec2880854494fcca08681a25f8b5807999d7b731b848a5453a3a9"
+      "sha256": "f5d850492497b4c67125535c5f4ddea18bed3fef34774c103800cd7d8b03ef79"
     },
     "servers/python/chembl-mcp/chembl_mcp/__init__.py": {
       "executable": false,
@@ -456,17 +404,9 @@
       "executable": false,
       "sha256": "765ac30e9d6e5440117a895a9621443cf37b7f9d8d739b97444ad12d79a87469"
     },
-    "servers/python/chembl-mcp/pyproject.toml": {
-      "executable": false,
-      "sha256": "55adde7b41a4762a379fcd8f876f538d5319f240a3d633266edf4afe490ec6e2"
-    },
-    "servers/python/clinical-trials-mcp/LICENSE": {
-      "executable": false,
-      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
-    },
     "servers/python/clinical-trials-mcp/README.md": {
       "executable": false,
-      "sha256": "67a16e1733d35a576757b04ab7fc491204c95fab7ca38115e82b6c0bc7019cea"
+      "sha256": "f1d71ab8d12714917f018d3856f213509a40e61172b4f5689c5b3307dee94324"
     },
     "servers/python/clinical-trials-mcp/clinical_trials_mcp/__init__.py": {
       "executable": false,
@@ -484,14 +424,6 @@
       "executable": false,
       "sha256": "b9fe646b2f4e598fdfdb265c07b99464e19714d48cad67ddd85ad5548bdd0afb"
     },
-    "servers/python/clinical-trials-mcp/pyproject.toml": {
-      "executable": false,
-      "sha256": "74322884a7d77b060f0eaadef9b165b725ceb70469c24bb067a374229d9dc07e"
-    },
-    "servers/python/dailymed-mcp/LICENSE": {
-      "executable": false,
-      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
-    },
     "servers/python/dailymed-mcp/dailymed_mcp/__init__.py": {
       "executable": false,
       "sha256": "6fe1b10a6a8e93310ab2d01ab59b11107ecdb48f77d9e1343782514a76e7745a"
@@ -499,18 +431,6 @@
     "servers/python/dailymed-mcp/dailymed_mcp/server.py": {
       "executable": false,
       "sha256": "8e1620654d4fe66e3a44908c1e17e93d3f7a2640f89a9ac926f27854f6bcad4f"
-    },
-    "servers/python/dailymed-mcp/pyproject.toml": {
-      "executable": false,
-      "sha256": "6c89053a5403fc9dd4b31e95eb18ab2a299a05d64e4c0df7efab15e7417b7668"
-    },
-    "servers/python/dailymed-mcp/tests/test_dailymed_server.py": {
-      "executable": false,
-      "sha256": "be2b04e451da002d59d0d556fa430b0afa650cb92a71a1c58abe7d82563fddb4"
-    },
-    "servers/python/depmap-mcp/LICENSE": {
-      "executable": false,
-      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
     },
     "servers/python/depmap-mcp/depmap_mcp/__init__.py": {
       "executable": false,
@@ -520,17 +440,9 @@
       "executable": false,
       "sha256": "bec1f30d54b7b0793049f85edc09adf88e439dbef28af425345e84c4cf483856"
     },
-    "servers/python/depmap-mcp/pyproject.toml": {
-      "executable": false,
-      "sha256": "c7905bf5f008d046658e08af994ab7189cf118e0ac8b24e8a978ecc5c2a31600"
-    },
-    "servers/python/ensembl-mcp/LICENSE": {
-      "executable": false,
-      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
-    },
     "servers/python/ensembl-mcp/README.md": {
       "executable": false,
-      "sha256": "9e8a688dd32dcbf4672858182095c342c06676c987b2e227881d76d7f9bd1428"
+      "sha256": "af67f0d389f4cfc867364cbade8fb7e3a3424253588639708fdbb07336ff6545"
     },
     "servers/python/ensembl-mcp/ensembl_mcp/__init__.py": {
       "executable": false,
@@ -544,21 +456,9 @@
       "executable": false,
       "sha256": "bd2712fe968d1556a7fe94ce8ae3b9076837a0497436275e885ea48a92551ac9"
     },
-    "servers/python/ensembl-mcp/pyproject.toml": {
-      "executable": false,
-      "sha256": "d9ab945db0c8edd5c7d5d5902526400174cad14d94b2447e40f28b115e01ce5b"
-    },
-    "servers/python/gtex/LICENSE": {
-      "executable": false,
-      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
-    },
     "servers/python/gtex/README.md": {
       "executable": false,
-      "sha256": "bddd998a9dcbd1fd4033b3b85d8cbb47e20563cb92f944fd45f35f31a8a62a30"
-    },
-    "servers/python/gtex/pyproject.toml": {
-      "executable": false,
-      "sha256": "10c30fd4711db68d6145c7b14c71272719b20275e53003adbfb87ec6f06b16db"
+      "sha256": "ec5d0f8bae87031ce89fc3270935656cde59b7affca33e6ae865ab65a176410f"
     },
     "servers/python/gtex/src/gtex_mcp/__init__.py": {
       "executable": false,
@@ -566,7 +466,7 @@
     },
     "servers/python/gtex/src/gtex_mcp/config.py": {
       "executable": false,
-      "sha256": "31e3c4e3ee4b2d9c5712acc17da6281c4676f2ddd6cf268f3dec0a381b4365c8"
+      "sha256": "3f705e846a7f968b6737e0f34cf5a207ad64cf4220f4646fe4a7e4fab56b3f11"
     },
     "servers/python/gtex/src/gtex_mcp/contracts.json": {
       "executable": false,
@@ -596,489 +496,57 @@
       "executable": false,
       "sha256": "fad219b4cfd1fe2906e9f26834838303c1323c892f20a9eb95f638f706b74f15"
     },
-    "servers/python/gtex/test_server.py": {
-      "executable": false,
-      "sha256": "0115912e82be4f9829ffbaf87cf58549b2225833dc66311d0e75fc3d7020f4ae"
-    },
-    "servers/python/gtex/uv.lock": {
-      "executable": false,
-      "sha256": "0b1fd61053d603e633b5e68482b511476f677394fa740f6adad4ec75d39b976f"
-    },
-    "servers/python/mychem/.github/workflows/ci.yml": {
-      "executable": false,
-      "sha256": "2d4589b6af579cdeba46bfe86cb1bac5621ac1d6e691ef0bd9b9e5c5d7afeb16"
-    },
-    "servers/python/mychem/.gitignore": {
-      "executable": false,
-      "sha256": "aa5a307f7ed901e6c2cdd5ffe52ac308fa568bf2136fbe810c6f0a7ec7e04318"
-    },
-    "servers/python/mychem/LICENSE": {
-      "executable": false,
-      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
-    },
     "servers/python/mychem/README.md": {
       "executable": false,
-      "sha256": "c71cd7d44b4e9cdf414c1338168ddafc8e6ae7d051522aa53a7fc5bfe8d5d5a5"
-    },
-    "servers/python/mychem/pyproject.toml": {
-      "executable": false,
-      "sha256": "f596d74f17cffca3ba66110b24c32dbcb2e7b5d521134431ded85a9b6682dcc7"
+      "sha256": "1aeff7deb811761ac4f963f00ee382f7288cf7252618dc16f84245e0e7d13b53"
     },
     "servers/python/mychem/src/mychem_mcp/__init__.py": {
       "executable": false,
-      "sha256": "f9cc11efe3e5d49ccdd75489a14d55289ea33a3c53be41059b927bcffbcb2b8f"
+      "sha256": "24d355133ca3274c6b93bb99ba345b29768534eff0ad4829f729cebe1cda504c"
     },
     "servers/python/mychem/src/mychem_mcp/client.py": {
       "executable": false,
-      "sha256": "094bd987fbf3adb3984170b0677c1b9796cc6d3614c2665a6a1abb8d6ae79397"
+      "sha256": "eb0afacd5cc567273c862adf6650d80ea702b06abcf72cce4afd49a8a811c109"
     },
     "servers/python/mychem/src/mychem_mcp/server.py": {
       "executable": false,
-      "sha256": "02e59f61b4649787b03b09a6fdef479a6b3e688f527582969ac405ae901c3ded"
-    },
-    "servers/python/mychem/src/mychem_mcp/tools/__init__.py": {
-      "executable": false,
-      "sha256": "3cd0a4656cd95fba44e3e5d4b772a8ab691b48b8120b3549e8e9f6c6de5bcdec"
-    },
-    "servers/python/mychem/src/mychem_mcp/tools/admet.py": {
-      "executable": false,
-      "sha256": "b551dd8f893de026e1730fdea1a203ba4f421ed62ee0a0644eb7381d1d2bdc06"
-    },
-    "servers/python/mychem/src/mychem_mcp/tools/annotation.py": {
-      "executable": false,
-      "sha256": "510144877821dac0d6246973a57fadc389134bd3818c4e1491e375913b5e5ebc"
-    },
-    "servers/python/mychem/src/mychem_mcp/tools/batch.py": {
-      "executable": false,
-      "sha256": "4327eb830effc34c85d8586e8bc04523dd506510274c098949568af38963ff48"
-    },
-    "servers/python/mychem/src/mychem_mcp/tools/bioactivity.py": {
-      "executable": false,
-      "sha256": "df109bed3057bf2053484ed50bc6582f87420ccef6bd2bf1525ae2b53f17aca4"
-    },
-    "servers/python/mychem/src/mychem_mcp/tools/biological_context.py": {
-      "executable": false,
-      "sha256": "aa1e3fc8494241c23acc8caf711247f241920d2f9591aa67509a62d0346510a4"
-    },
-    "servers/python/mychem/src/mychem_mcp/tools/clinical.py": {
-      "executable": false,
-      "sha256": "9f6e6a106aa5b49a3d050cad5d29029358ef06ae6b1a3714aa1af9410f24a8c8"
-    },
-    "servers/python/mychem/src/mychem_mcp/tools/drug.py": {
-      "executable": false,
-      "sha256": "3d780c9afcef3e5b554eff8a07ee222e5cecee62ac0fc86ed56e4d4eb9dfcae1"
-    },
-    "servers/python/mychem/src/mychem_mcp/tools/export.py": {
-      "executable": false,
-      "sha256": "e08acde069ca1df3e265d5860d3a05a31b2bdee700489eb8955a3feef3d36c38"
-    },
-    "servers/python/mychem/src/mychem_mcp/tools/mapping.py": {
-      "executable": false,
-      "sha256": "e38291573f713895caadb597f632e3bbc992a3779bbc582ed7ec007fcb477d57"
-    },
-    "servers/python/mychem/src/mychem_mcp/tools/metadata.py": {
-      "executable": false,
-      "sha256": "22de2f97ae0422170cb89b38cc3f1f689fb2ff05bb99ca925d6f3faa1156d5a7"
-    },
-    "servers/python/mychem/src/mychem_mcp/tools/patent.py": {
-      "executable": false,
-      "sha256": "fac32c9d484896fc53f340ad8d267cdf83e3b3baa6e2cf48799872bb519cba3a"
-    },
-    "servers/python/mychem/src/mychem_mcp/tools/query.py": {
-      "executable": false,
-      "sha256": "754afc71fd4940db3820519a42ad582d3f9cbe5129fdfd72fdfed19e2bd75f2b"
-    },
-    "servers/python/mychem/src/mychem_mcp/tools/structure.py": {
-      "executable": false,
-      "sha256": "a6b686a079b98509769306c2330871b7f35e926576759133aa19a75043d62dd8"
-    },
-    "servers/python/mychem/tests/conftest.py": {
-      "executable": false,
-      "sha256": "619ccad4afc4b92c73c03d5c316256e97e6206d909c5c5a47a2b08f992bb3eb1"
-    },
-    "servers/python/mychem/tests/test_admet_tools.py": {
-      "executable": false,
-      "sha256": "da15c2db622985ac2007ca65a9107f7bcacd0e9ae0c337e60ca6f97c6d40139a"
-    },
-    "servers/python/mychem/tests/test_annotation_tools.py": {
-      "executable": false,
-      "sha256": "dc6a29554041b26317072bf74a40a66074c81420ef83539e869b54accb463730"
-    },
-    "servers/python/mychem/tests/test_batch_tools.py": {
-      "executable": false,
-      "sha256": "870ad4df688cffb05b8a54e45b280ab1d0eceb050c5659d14b9fc633b8119013"
-    },
-    "servers/python/mychem/tests/test_bioactivity_tools.py": {
-      "executable": false,
-      "sha256": "fbc12afc3744ac88dbc56b015ce038f6e57dc66f087debc6c726bf9da47a9bf0"
-    },
-    "servers/python/mychem/tests/test_biological_context_tools.py": {
-      "executable": false,
-      "sha256": "973c362c2b71bd9f7fef1f2a0127efc6a5813c69ef6ce44107bfef9d6f69e6c1"
-    },
-    "servers/python/mychem/tests/test_clinical_tools.py": {
-      "executable": false,
-      "sha256": "9191e5d04ab7221dd86e913c94332e699982e539dc0d33f62d4ed4ea08aa95c4"
-    },
-    "servers/python/mychem/tests/test_drug_tools.py": {
-      "executable": false,
-      "sha256": "657dec59153ec0a5198d48a066552a75ff5a074da372d521c2644490935b4a81"
-    },
-    "servers/python/mychem/tests/test_export_tools.py": {
-      "executable": false,
-      "sha256": "2f6a11603517dc5d15739323341d6597417e66fd89fdfbda7c5e18092901c0d0"
-    },
-    "servers/python/mychem/tests/test_mapping_tools.py": {
-      "executable": false,
-      "sha256": "cf674abfb849dfc010a92fb464a29fa359a8ac0f3fa4ad9ab6528616d44b337d"
-    },
-    "servers/python/mychem/tests/test_metadata_tools.py": {
-      "executable": false,
-      "sha256": "e80f7bfb9d273f6f892dbbd1c975b72f45d5a9c301102df0a6c5301ad872aed6"
-    },
-    "servers/python/mychem/tests/test_patent_tools.py": {
-      "executable": false,
-      "sha256": "73e3bf0bee9bd895e8bb4c410870d962b2ea279dbbe7e7929f85273c14839ac8"
-    },
-    "servers/python/mychem/tests/test_query_tools.py": {
-      "executable": false,
-      "sha256": "9044200b73bb92167fc4738c95face2272d7710c50fedb590c795b45abf7b88d"
-    },
-    "servers/python/mychem/tests/test_structure_tools.py": {
-      "executable": false,
-      "sha256": "98de7d020357017e0f14055d03eeba1a42170c53574fe1523fdcbcaa7deb9681"
-    },
-    "servers/python/mydisease/.github/workflows/ci.yml": {
-      "executable": false,
-      "sha256": "2d4589b6af579cdeba46bfe86cb1bac5621ac1d6e691ef0bd9b9e5c5d7afeb16"
-    },
-    "servers/python/mydisease/.gitignore": {
-      "executable": false,
-      "sha256": "c688be9c8124ac44c564f9eefa4f04f184ff9dcdb446aedae26f40388b27306c"
-    },
-    "servers/python/mydisease/LICENSE": {
-      "executable": false,
-      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      "sha256": "d0d341046837a6c194c8f4fada896317a2fcaca256828c40c18f95e5de742336"
     },
     "servers/python/mydisease/README.md": {
       "executable": false,
-      "sha256": "e00de6e877c6faaad2ee654cd83b184793ed42547cf12411395fa809d864610f"
-    },
-    "servers/python/mydisease/pyproject.toml": {
-      "executable": false,
-      "sha256": "1608fa79d34d939f0584cbc6e4f3bd116334aa45ab858a0b863853caefc0beac"
+      "sha256": "63f9922a070dd3214c6c494d20fd362214e08a00e68c54a1adfcd8800ac45dec"
     },
     "servers/python/mydisease/src/mydisease_mcp/__init__.py": {
       "executable": false,
-      "sha256": "019dceb284d20472cadbb6623bc07443a3c548dc4f1aa4021d458ed486e1179d"
+      "sha256": "0428440cc3ada32b4d24c56cf842ff3ba518fad955cf295e1127978c56c7befc"
     },
     "servers/python/mydisease/src/mydisease_mcp/client.py": {
       "executable": false,
-      "sha256": "5a5a1df2a83e0b68127fa401638590c02ffcc9925fe1cf6fd5aadc03e9b0bff7"
+      "sha256": "d0398b313b3232d429f824fd5aca8a76d8330d1a154b9b2cf70f68e5c76acd84"
     },
     "servers/python/mydisease/src/mydisease_mcp/server.py": {
       "executable": false,
-      "sha256": "bbf3ba2efd3b0ff31b887cf42e3e31a22f34952fd38af19bcb338224d847264f"
-    },
-    "servers/python/mydisease/src/mydisease_mcp/tools/__init__.py": {
-      "executable": false,
-      "sha256": "6a436361e4421fbdb73614a8192dfd9f5f528f3ed56bade7c4ec79beeec28aab"
-    },
-    "servers/python/mydisease/src/mydisease_mcp/tools/annotation.py": {
-      "executable": false,
-      "sha256": "68ec92a5485ea9d9e62dd7686cd7bf18354fdb387e3603aa8add9f303041812f"
-    },
-    "servers/python/mydisease/src/mydisease_mcp/tools/batch.py": {
-      "executable": false,
-      "sha256": "315f24e90128816238ba8806119da3555ad0963d0fa157c61ab5d8f2407476af"
-    },
-    "servers/python/mydisease/src/mydisease_mcp/tools/clinical.py": {
-      "executable": false,
-      "sha256": "2dacd3f9ec2c6e09a6ddb2feebeda9fdce56879bdddb10d5d36c9869db0c4a49"
-    },
-    "servers/python/mydisease/src/mydisease_mcp/tools/drug.py": {
-      "executable": false,
-      "sha256": "9d554ec6cc6959c31b68bcb9f199ad870b140df152ccb2ce17300fd8e2f2d9ca"
-    },
-    "servers/python/mydisease/src/mydisease_mcp/tools/epidemiology.py": {
-      "executable": false,
-      "sha256": "d556bfd447787dbe9fe8a83bef82ed77706d21ab64fefef0410c20cdb38e1874"
-    },
-    "servers/python/mydisease/src/mydisease_mcp/tools/export.py": {
-      "executable": false,
-      "sha256": "fdf2979d45ddc72bc402904913b0131947b6fefb1c237e6699bb8e89dd8868ae"
-    },
-    "servers/python/mydisease/src/mydisease_mcp/tools/gene_association.py": {
-      "executable": false,
-      "sha256": "aef88fc0c2220efda10272be87d9f7dc58d5dae5a5b97f9216f3adb53b6d40ee"
-    },
-    "servers/python/mydisease/src/mydisease_mcp/tools/gwas.py": {
-      "executable": false,
-      "sha256": "0cdc35403a4fb6ef65ceb211570aee0249c26d26e0e8f9e01899cfebd22482dd"
-    },
-    "servers/python/mydisease/src/mydisease_mcp/tools/mapping.py": {
-      "executable": false,
-      "sha256": "636d0c92dcf44f9ab2c0953e21e69f61757d4a1536c997798d86bf6bf7e73630"
-    },
-    "servers/python/mydisease/src/mydisease_mcp/tools/metadata.py": {
-      "executable": false,
-      "sha256": "6e22e124b85cc7e980b5a8d0d57154c50479fa6da3bacef52dd103a28209e78e"
-    },
-    "servers/python/mydisease/src/mydisease_mcp/tools/ontology.py": {
-      "executable": false,
-      "sha256": "be3376eb357f50f5a7d20149fb312ece7fe444f9d498eb8913aef8189c3c1664"
-    },
-    "servers/python/mydisease/src/mydisease_mcp/tools/pathway.py": {
-      "executable": false,
-      "sha256": "c0c2e91bfa24ae07e3dde7ad56f3e7f6c1b92e79c119a259faaac102a7dcabbb"
-    },
-    "servers/python/mydisease/src/mydisease_mcp/tools/phenotype.py": {
-      "executable": false,
-      "sha256": "4d52708cf3f29543b9761f82c1d55a037c88835c3c0ea1ae14a3f571698daad5"
-    },
-    "servers/python/mydisease/src/mydisease_mcp/tools/query.py": {
-      "executable": false,
-      "sha256": "8763351b530c668b811870784b81da913d48965d27f566d7ba10e9881b6833d6"
-    },
-    "servers/python/mydisease/src/mydisease_mcp/tools/variant.py": {
-      "executable": false,
-      "sha256": "a878ec899bceac072d86ecfdbf60f0b5410569682ea643791a9fc8ec4a2d0e0d"
-    },
-    "servers/python/mydisease/tests/conftest.py": {
-      "executable": false,
-      "sha256": "e810a92f7906b1a343e7c574aeeb081862b1dedeecb7c7f0b097f2e90942c67e"
-    },
-    "servers/python/mydisease/tests/test_annotation_tools.py": {
-      "executable": false,
-      "sha256": "74bca9976fe3f8bfedfd23380b883235aaf8dda3821a99a79b31fd4f5ad22b5b"
-    },
-    "servers/python/mydisease/tests/test_batch_tools.py": {
-      "executable": false,
-      "sha256": "335bc995effa637a310d17387a1759890ddb11b70d0f7970755e1f55f5ed9544"
-    },
-    "servers/python/mydisease/tests/test_clinical_tools.py": {
-      "executable": false,
-      "sha256": "62fa11882f7273fa788840e7e98e9bc8e24a7f8e21fe62bc61a00570de9c021c"
-    },
-    "servers/python/mydisease/tests/test_drug_tools.py": {
-      "executable": false,
-      "sha256": "36c7e816d7a55882a5416c4851a0f58f5c800a7f5cbe4db743364eb3905b871b"
-    },
-    "servers/python/mydisease/tests/test_epidemiology_tools.py": {
-      "executable": false,
-      "sha256": "a795a3c7569d62fdcfca55aa89ee41b53006d7f20513809f6302be1e2c98448d"
-    },
-    "servers/python/mydisease/tests/test_export_tools.py": {
-      "executable": false,
-      "sha256": "e0376fe99555659ef475bca829fbd262a857f4f40c9f07d2a6ea6e7728b63e82"
-    },
-    "servers/python/mydisease/tests/test_gene_association_tools.py": {
-      "executable": false,
-      "sha256": "cb77ca03c762d323f9cd3d82b41fb0c4d97f7f4edd0d030dcab7b2d3a581d669"
-    },
-    "servers/python/mydisease/tests/test_gwas_tools.py": {
-      "executable": false,
-      "sha256": "1f735f56864cfd0e2052d7f1d9101ca5a4176068a77fc5fce9b4fd3dfc85f6a7"
-    },
-    "servers/python/mydisease/tests/test_mapping_tools.py": {
-      "executable": false,
-      "sha256": "848dbea70608402ed508a14907263e565dcafdfe47202fdd594b8b9abf134fd2"
-    },
-    "servers/python/mydisease/tests/test_metadata_tools.py": {
-      "executable": false,
-      "sha256": "4a5ef4d03aef855aeabe5d38793111e3989a231b46df6cc541771b5f3415c7ac"
-    },
-    "servers/python/mydisease/tests/test_ontology_tools.py": {
-      "executable": false,
-      "sha256": "7b2eaad9f3457c677e2513b775884e1f7d2c7830161975d0df9c6c745e5f5a90"
-    },
-    "servers/python/mydisease/tests/test_pathway_tools.py": {
-      "executable": false,
-      "sha256": "582c2d782149f3c3a6a6d757946f8a45242e7f23a87103460e183fb02337935e"
-    },
-    "servers/python/mydisease/tests/test_phenotype_tools.py": {
-      "executable": false,
-      "sha256": "85720c1699c32ac9acb3ff4a1d18e7dc4048f34145a338d7fd255b6ace6655e8"
-    },
-    "servers/python/mydisease/tests/test_query_tools.py": {
-      "executable": false,
-      "sha256": "bb226a9a709293dd7e9bbeaba844e58e66d7f15c7d92b7a55af9c879b81758d0"
-    },
-    "servers/python/mydisease/tests/test_variant_tools.py": {
-      "executable": false,
-      "sha256": "a760e7c6daa3e082906c93144fea4fd154fe6fa204e0dff12c66dac4bab5208f"
-    },
-    "servers/python/mygene/.github/workflows/ci.yml": {
-      "executable": false,
-      "sha256": "2d4589b6af579cdeba46bfe86cb1bac5621ac1d6e691ef0bd9b9e5c5d7afeb16"
-    },
-    "servers/python/mygene/.gitignore": {
-      "executable": false,
-      "sha256": "aa5a307f7ed901e6c2cdd5ffe52ac308fa568bf2136fbe810c6f0a7ec7e04318"
-    },
-    "servers/python/mygene/CONSOLIDATION_VISUAL.txt": {
-      "executable": false,
-      "sha256": "85154888cd26b174efa4cf0e75e20f904f0b5eb5ca55ba5636e2f5972eb34f52"
-    },
-    "servers/python/mygene/LICENSE": {
-      "executable": false,
-      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      "sha256": "d5f2e549f344d143e011be4389c746ff516783cf4f2b3ecadb1a21fc2ba0c745"
     },
     "servers/python/mygene/README.md": {
       "executable": false,
-      "sha256": "8e7eb7623b63831a977418fff01b2343abdc1dda1f7cff44e54b8e1abac02b01"
-    },
-    "servers/python/mygene/pyproject.toml": {
-      "executable": false,
-      "sha256": "ed7829ea13b5edf1cc48c8503458c69b49d0c659b3d3e8c2190176459ad2ccae"
+      "sha256": "8e3cd00510865c72a427681bc05d53658efcc0f4f9d30035573e9444dff6feeb"
     },
     "servers/python/mygene/src/mygene_mcp/__init__.py": {
       "executable": false,
-      "sha256": "3a15f88508ac94b9b66a43e4192f1bc2c157805d2e94d4dc1968e73855387bb6"
+      "sha256": "d23dd9550f8d86bfc65cabb3ef0deec880885b126b618a11872ea57b38b0fb24"
     },
     "servers/python/mygene/src/mygene_mcp/client.py": {
       "executable": false,
-      "sha256": "61e5fec5cd9d1a629291abacbbfd8b75e476f8cff5ce5548548c0ec0664b3c91"
+      "sha256": "16da2ba293c683ab7c7e2a87b385fbc53052cf12b7492804fc6e2a1e5c5dbe15"
     },
     "servers/python/mygene/src/mygene_mcp/server.py": {
       "executable": false,
-      "sha256": "593dacb5a6155e358e681679be627a02e475da154e0a308e3e1b25fed21ca92d"
-    },
-    "servers/python/mygene/src/mygene_mcp/tools/__init__.py": {
-      "executable": false,
-      "sha256": "61b6fc3afa226186553d6f3d71814f601db1827b311126e736839458f2b73286"
-    },
-    "servers/python/mygene/src/mygene_mcp/tools/advanced.py": {
-      "executable": false,
-      "sha256": "ac7d3379b6c9a2d5ecb953154be0190f98f6b4a01c7d60ea310e8f91f3b1d597"
-    },
-    "servers/python/mygene/src/mygene_mcp/tools/annotation.py": {
-      "executable": false,
-      "sha256": "42f0d59d4e56f2301515718c383ae18ae0cf137b5925c0887b4d64de0d0536eb"
-    },
-    "servers/python/mygene/src/mygene_mcp/tools/batch.py": {
-      "executable": false,
-      "sha256": "ed311233d95fa989cea839200aa09a9418f1b8e2194bdebe025e5fae0b9ac1e5"
-    },
-    "servers/python/mygene/src/mygene_mcp/tools/chemical.py": {
-      "executable": false,
-      "sha256": "003a9dc3ac15e2cde77d79e2ba0673733348ea6856a44d5a19ee7b323bfa44db"
-    },
-    "servers/python/mygene/src/mygene_mcp/tools/disease.py": {
-      "executable": false,
-      "sha256": "cef8006a8ddc61646228e767dd4114d659964925d5bd66205962e44a5fd28c7d"
-    },
-    "servers/python/mygene/src/mygene_mcp/tools/export.py": {
-      "executable": false,
-      "sha256": "1044887fd37c719a3540e501c7fbfdf1b64b1b7701ac5e3464e2abc2be035068"
-    },
-    "servers/python/mygene/src/mygene_mcp/tools/expression.py": {
-      "executable": false,
-      "sha256": "fa9207c51df4af46e5ab8faef1ff38c28f7ce2ed787dc35c2e6e0ca8933f2a99"
-    },
-    "servers/python/mygene/src/mygene_mcp/tools/go.py": {
-      "executable": false,
-      "sha256": "63448eefd45a3e3af8ab99fadc4a4dc5edc1ec4d97c2c28598269df7df4f1a11"
-    },
-    "servers/python/mygene/src/mygene_mcp/tools/homology.py": {
-      "executable": false,
-      "sha256": "b7acc816c8ed8848f4740cdf160695b9616ea6f5ff0dab30f7fbc0a06209b3ed"
-    },
-    "servers/python/mygene/src/mygene_mcp/tools/interval.py": {
-      "executable": false,
-      "sha256": "04449e2d12519da78f6a1d8c8a0b4406c5e5734e113c86f3dd309c91d0ba603b"
-    },
-    "servers/python/mygene/src/mygene_mcp/tools/mapping.py": {
-      "executable": false,
-      "sha256": "fb924c99d1dbc22952e0ce421c6fee52887f44097ad008ee6417c2d1fc779d87"
-    },
-    "servers/python/mygene/src/mygene_mcp/tools/metadata.py": {
-      "executable": false,
-      "sha256": "c615aea4291f6176aafd3a475d6affee7cd7baa443db98ffec9f9598000feb09"
-    },
-    "servers/python/mygene/src/mygene_mcp/tools/pathway.py": {
-      "executable": false,
-      "sha256": "ffeb46b979be5a016163258b08e917bfa31591fece8b963345b4802dc0d2e9c3"
-    },
-    "servers/python/mygene/src/mygene_mcp/tools/query.py": {
-      "executable": false,
-      "sha256": "01cba03754176f5c8a128ddeaf6159c69d1782a0ec9a02d0bb7cfdb5ae4c8a8c"
-    },
-    "servers/python/mygene/src/mygene_mcp/tools/unified.py": {
-      "executable": false,
-      "sha256": "deb988903065dffd45514bae312c6e2913614e7d9e78757523ba230250a990d2"
-    },
-    "servers/python/mygene/src/mygene_mcp/tools/variant.py": {
-      "executable": false,
-      "sha256": "c3a7ae34c92f812cb26a390682c09f3133c1f261fa0d481222d9666dad2a36a1"
-    },
-    "servers/python/mygene/tests/conftest.py": {
-      "executable": false,
-      "sha256": "2e6a58306d4d726acfc5cc20e137fcea570d10ec8a319e5be4c11447d0b07be7"
-    },
-    "servers/python/mygene/tests/test_advanced_tools.py": {
-      "executable": false,
-      "sha256": "4de003500e2e9a5719d77406148f201cbbea58dbb4a8afec389681eb5994e30b"
-    },
-    "servers/python/mygene/tests/test_annotation_tools.py": {
-      "executable": false,
-      "sha256": "d1a38f5efce1155221a5151043ade511e798f64f360f6ecaf33de41e9df44b44"
-    },
-    "servers/python/mygene/tests/test_batch_tools.py": {
-      "executable": false,
-      "sha256": "9594821a7a7e4e355dad4a77179af34d11a703bc60bd0a41932557ff3cd25a26"
-    },
-    "servers/python/mygene/tests/test_chemical_tools.py": {
-      "executable": false,
-      "sha256": "e30886b1299699886e729d6051b17202b9ef72fba31f02164ded4d3706fefb22"
-    },
-    "servers/python/mygene/tests/test_disease_tools.py": {
-      "executable": false,
-      "sha256": "b9112286b738094e78c05a34cc685a23bc506721c8256258d88b1c278f78fcd1"
-    },
-    "servers/python/mygene/tests/test_export_tools.py": {
-      "executable": false,
-      "sha256": "c7c16d28898c9c40525663bfc73320b07104365007804311adf04c32189c5772"
-    },
-    "servers/python/mygene/tests/test_expression_tools.py": {
-      "executable": false,
-      "sha256": "fee407a991986ca4ae90c15c13a4ef097c4c3d81624eec33e33397b3b72c137e"
-    },
-    "servers/python/mygene/tests/test_go_tools.py": {
-      "executable": false,
-      "sha256": "f410e156da9eeac2b5bd9b88f89701f307811fecc21e98ef081f251a91e5ab74"
-    },
-    "servers/python/mygene/tests/test_homology_tools.py": {
-      "executable": false,
-      "sha256": "2a24b9b6d5e1e6a13633e20526278d42112936fd150fdfa0dba25088265b5d44"
-    },
-    "servers/python/mygene/tests/test_interval_tools.py": {
-      "executable": false,
-      "sha256": "f854f85c5592f336041ad1505201eb25ef54e1c9f05574cf1216ffd7ec38ee53"
-    },
-    "servers/python/mygene/tests/test_metadata_tools.py": {
-      "executable": false,
-      "sha256": "f23476e1385fec74d8314aa02bbe5c3d84743346a157f32e5d94e7d7b77209f9"
-    },
-    "servers/python/mygene/tests/test_pathway_tools.py": {
-      "executable": false,
-      "sha256": "a2b862f0ca911129fcea13badc7c7d77f8ec255a76c53d1971093a79956cb4dc"
-    },
-    "servers/python/mygene/tests/test_query_tools.py": {
-      "executable": false,
-      "sha256": "1b0b850c21108f2c54daf1564bb914e8b55fc98ad0514fda5d6fac8b4d50c4ee"
-    },
-    "servers/python/mygene/tests/test_variant_tools.py": {
-      "executable": false,
-      "sha256": "59db128c6f44def77082a922c7d9d2eaea0123d15f87f2ca8409040da2378202"
-    },
-    "servers/python/ncbi-mcp/LICENSE": {
-      "executable": false,
-      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      "sha256": "0ef6dcb4ae6dd78355f5d45d96c3526da4d01a244d282ba03d312a18971c5b5f"
     },
     "servers/python/ncbi-mcp/README.md": {
       "executable": false,
-      "sha256": "3845eb1a993cff39b94315049df6aa3693b33f298806a4b0b713fdb9e6f80776"
+      "sha256": "2fbcc91db3f3dbe02714a73302d3d8b7011953b1040769c247d3b12418133cb8"
     },
     "servers/python/ncbi-mcp/ncbi_mcp/__init__.py": {
       "executable": false,
@@ -1100,14 +568,6 @@
       "executable": false,
       "sha256": "c6ba690cff1274ab91181943ad2000ec3f1bce254a544386582c185f3925a146"
     },
-    "servers/python/ncbi-mcp/pyproject.toml": {
-      "executable": false,
-      "sha256": "b6bbea063190fd380b5a6cfbdd622bb9aa2093c809f156b36eec983825b4f544"
-    },
-    "servers/python/omnipath-mcp/LICENSE": {
-      "executable": false,
-      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
-    },
     "servers/python/omnipath-mcp/omnipath_mcp/__init__.py": {
       "executable": false,
       "sha256": "c7f2481aaea4edae22dbeec29d9f85e026d7f7835d2d289d177189d92f29d62a"
@@ -1116,17 +576,9 @@
       "executable": false,
       "sha256": "1abd18dedd3de577be79cada0c5cad191aad03372c566d1149a90d1c9c8e58da"
     },
-    "servers/python/omnipath-mcp/pyproject.toml": {
-      "executable": false,
-      "sha256": "54e0db014744f4019c64049ee90317d14272dceb2b8c5215ab78938b0f7274ce"
-    },
-    "servers/python/openfda-mcp/LICENSE": {
-      "executable": false,
-      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
-    },
     "servers/python/openfda-mcp/README.md": {
       "executable": false,
-      "sha256": "d45860b04fd2264ffe4000e71d8bb9159ca2fb303e1b4a8c56be69e61d2458cc"
+      "sha256": "a8451e065d2ebf7b5f473a155d1697e343689ce1e04a560b5f213cf7cb2cfc45"
     },
     "servers/python/openfda-mcp/openfda_mcp/__init__.py": {
       "executable": false,
@@ -1138,191 +590,43 @@
     },
     "servers/python/openfda-mcp/openfda_mcp/server.py": {
       "executable": false,
-      "sha256": "2592ffc36aeefe838ee68b0ffb5ba52d96d7d8272a88a73b25a488bf77ff0f0f"
-    },
-    "servers/python/openfda-mcp/pyproject.toml": {
-      "executable": false,
-      "sha256": "d9efbba81bfb4d4de61c5b7aecd0a59e5fcf77463beb005036c1f343635bdac9"
-    },
-    "servers/python/opentargets/.github/workflows/ci.yml": {
-      "executable": false,
-      "sha256": "b6196b8fd95f293f119101b3a632ad582139db70613229751a396b541f6a7de1"
-    },
-    "servers/python/opentargets/.gitignore": {
-      "executable": false,
-      "sha256": "8b5e7dd98dd5b656df1e59cbfd4fe39f54daa7061fd6399216ce21e81efecea0"
-    },
-    "servers/python/opentargets/LICENSE": {
-      "executable": false,
-      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      "sha256": "2eb46d7502f73a4ba4f7ad0c3ba844d220c22978294c5503cd3b923748f96e48"
     },
     "servers/python/opentargets/README.md": {
       "executable": false,
-      "sha256": "103578900daa4ca5128c2c0d08fab53bc59d42ff86af11ed26b94e1da08d870b"
-    },
-    "servers/python/opentargets/examples/disease_to_drug.py": {
-      "executable": false,
-      "sha256": "c15db96b9ff840d95a4372747d529ecbb0a5412fc66f3d1af1c9ec33eac188c5"
-    },
-    "servers/python/opentargets/examples/drug_safety_profile.py": {
-      "executable": false,
-      "sha256": "08913a3d8f0467b199a6ced0d3b9832523b627372139ee20883a14ea2a7b7f8e"
-    },
-    "servers/python/opentargets/examples/genetic_target_prioritization.py": {
-      "executable": false,
-      "sha256": "7164cfbbd1b94bd7ab7030a08cd3169b37de355087393937f0380f295a39959c"
-    },
-    "servers/python/opentargets/examples/react_agent.py": {
-      "executable": false,
-      "sha256": "6b597d5ed3880eb3fc5a1cda0d0c049c40a6a61fb8a854b3e1dce8ccca81b67b"
-    },
-    "servers/python/opentargets/examples/target_validation_profile.py": {
-      "executable": false,
-      "sha256": "7c66ec7da51645e5d27cb1fa298a714bd1d34aa56a49087898cae84e46397efd"
-    },
-    "servers/python/opentargets/pyproject.toml": {
-      "executable": false,
-      "sha256": "eae669597c0cd2b2e5050542d0377fbedbf178980999899b06dd3f60d4d9cee4"
-    },
-    "servers/python/opentargets/run.sh": {
-      "executable": true,
-      "sha256": "76738076a2726b6b475c80fd799bdfa25506858fc1a98a567ad4573d7d9eee0a"
+      "sha256": "24096a8b3a9f53641ddc0d25d05572d0cbe230614cc56c007a7c7efe050034dc"
     },
     "servers/python/opentargets/src/opentargets_mcp/__init__.py": {
       "executable": false,
-      "sha256": "f060bbbaf2d89d0c0a67d5a3da4964537f4dfc5a4622a00a24042ee9de71936e"
+      "sha256": "480daea62baabc06cf98c2bdc2099c546566fa0b1c0af8fdbaba7e080934b2f8"
     },
     "servers/python/opentargets/src/opentargets_mcp/queries.py": {
       "executable": false,
-      "sha256": "b1835816b9b3e23d4b5e89f13c3ffffd664088efb154dbfb248cf181bc454670"
+      "sha256": "e04a9373b57e979a666e5c922b10c0c0c1480017f22d79eae794d0387b387b6b"
     },
     "servers/python/opentargets/src/opentargets_mcp/server.py": {
       "executable": false,
-      "sha256": "09fbdf7e797346fb4bf06038e3f4e9cbb402b4c3c6d50d6e4c6e57ef2253cb90"
+      "sha256": "1cc346f0860bf7322a392355fec12f4ccdb39746b9b8f81c943609c485baffda"
     },
     "servers/python/opentargets/src/opentargets_mcp/tools/__init__.py": {
       "executable": false,
-      "sha256": "e5692444cf06e78786d2637c7ee78a2be2c317b788176d9d73f4b46a5a718887"
+      "sha256": "b29ee0e61e25fc02ac3647d850c2c3e815db36a09ea9078167071758773143e6"
     },
     "servers/python/opentargets/src/opentargets_mcp/tools/composite.py": {
       "executable": false,
-      "sha256": "8f4c53c399ca7ce2ce70936075abb5efa264b77dbf3e0470a6ec13722eb44e42"
-    },
-    "servers/python/opentargets/src/opentargets_mcp/tools/composite.py.bak": {
-      "executable": false,
-      "sha256": "e338272876569259c850b104b13ba8a9d8c6c6ca6157c2a441b8547b617a2f34"
-    },
-    "servers/python/opentargets/src/opentargets_mcp/tools/disease.py": {
-      "executable": false,
-      "sha256": "92fdc1f46a8736c7fa8c4c71b2055deb7ba8118249307149946dcc1ec5897088"
+      "sha256": "1c0394b33b81d77fc1c3a6a31ecc3da21490a13795849ad812154d180172af3e"
     },
     "servers/python/opentargets/src/opentargets_mcp/tools/drug/__init__.py": {
       "executable": false,
-      "sha256": "f0d517d7edfbcc35e360dacc99f463c247ded5a3bd0210499a2a602eb95c06ad"
-    },
-    "servers/python/opentargets/src/opentargets_mcp/tools/drug/associations.py": {
-      "executable": false,
-      "sha256": "01b50d6c6bb4699e39fc516684285c44ff3e961b61d3a2d4a5b08772bfb9b99d"
-    },
-    "servers/python/opentargets/src/opentargets_mcp/tools/drug/identity.py": {
-      "executable": false,
-      "sha256": "d8ffcb91d7aa073b3036c4c9ada56be2026518ea449a8af232418cfc065eca82"
+      "sha256": "7cde176060c18d98d19dbed61966127783023beb5cf3b8c40bd24b785e25e3d8"
     },
     "servers/python/opentargets/src/opentargets_mcp/tools/drug/safety.py": {
       "executable": false,
-      "sha256": "21847be74b6b37c0c920739a5440a56fa64485546edefb96a110dd811f0acd4b"
-    },
-    "servers/python/opentargets/src/opentargets_mcp/tools/evidence.py": {
-      "executable": false,
-      "sha256": "6d4004fe6169db83d84506b25123f98c8b41fc4a28a52aad6de56d49a1b381a3"
-    },
-    "servers/python/opentargets/src/opentargets_mcp/tools/meta.py": {
-      "executable": false,
-      "sha256": "1ced9366b6bf87fb1b66e6d0d1ec6034ef03a6d4b02eb7050a1b87ce1c48f6f6"
-    },
-    "servers/python/opentargets/src/opentargets_mcp/tools/search.py": {
-      "executable": false,
-      "sha256": "0678ba94472559371d69c5dc29a36405cb7f632f3d7676908e1cf9a9e953200a"
-    },
-    "servers/python/opentargets/src/opentargets_mcp/tools/study.py": {
-      "executable": false,
-      "sha256": "9f7fd18a64030b6865aed567f3116fd8d6ee0b0d486682828230dd2f485a7de3"
-    },
-    "servers/python/opentargets/src/opentargets_mcp/tools/target/__init__.py": {
-      "executable": false,
-      "sha256": "b0878ff194849d90ef292c7fc33fc47e575ae2d4ea4ac1a7f49fe18ef401bacf"
-    },
-    "servers/python/opentargets/src/opentargets_mcp/tools/target/associations.py": {
-      "executable": false,
-      "sha256": "d8f9cf7fb029049e37450036643d0089e573a5ace2d499d6725951856024871e"
-    },
-    "servers/python/opentargets/src/opentargets_mcp/tools/target/biology.py": {
-      "executable": false,
-      "sha256": "fbf8751983cd302303cc285d3e1488e7fd93cecd8815537c0b701abbaca7da21"
-    },
-    "servers/python/opentargets/src/opentargets_mcp/tools/target/identity.py": {
-      "executable": false,
-      "sha256": "187b4d9968b328ad136d3e8a428a8843e80fb7654b3caa87dade23c80b176e56"
-    },
-    "servers/python/opentargets/src/opentargets_mcp/tools/target/safety.py": {
-      "executable": false,
-      "sha256": "560da1052977879970f67ea38d5edcb4c691dfbac0e0fc25535605d487ccd0ae"
+      "sha256": "e893c3c15bd6a1631c455b2dc1457372a88faa0972efea5da0d1f4fed3d494eb"
     },
     "servers/python/opentargets/src/opentargets_mcp/tools/unified.py": {
       "executable": false,
-      "sha256": "c6c6e79af7ed3c9055d6ad2d77da46a62083e5cf6ca1f31ee068aac20fd67de5"
-    },
-    "servers/python/opentargets/src/opentargets_mcp/tools/variant.py": {
-      "executable": false,
-      "sha256": "1e242642357838229d1862c76914f48aedc591f93e048be1e1b733f464265fbe"
-    },
-    "servers/python/opentargets/test_composite_tools.py": {
-      "executable": false,
-      "sha256": "3d5afb7a6cd784220833b85e291bcb1712c05e86bad3c1b2a4ed727693985d59"
-    },
-    "servers/python/opentargets/tests/__init__.py": {
-      "executable": false,
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-    },
-    "servers/python/opentargets/tests/conftest.py": {
-      "executable": false,
-      "sha256": "cd925df5e45d6d9365fe6abd8b2c8e61c41adca3de36d4b600b69d3e52cca046"
-    },
-    "servers/python/opentargets/tests/test_disease_tools.py": {
-      "executable": false,
-      "sha256": "9bf752e1b8825d342c461e7cf907ad6fd54899a68d44b2d3bd3ebcd4e8302aea"
-    },
-    "servers/python/opentargets/tests/test_drug_tools.py": {
-      "executable": false,
-      "sha256": "475986766f1f2e1f02c14ffa1c69305364eb3fd99221843844e85c1969b4bdcc"
-    },
-    "servers/python/opentargets/tests/test_evidence_tools.py": {
-      "executable": false,
-      "sha256": "8311ce776a4e1ac102ae4b8b5781561c37d28e78f02f0ba902b906533faa99b0"
-    },
-    "servers/python/opentargets/tests/test_meta_tools.py": {
-      "executable": false,
-      "sha256": "a9378eca1e97e80b42e20a08060da70b9823a09570fa0fea6dbabadb17d9511b"
-    },
-    "servers/python/opentargets/tests/test_search_tools.py": {
-      "executable": false,
-      "sha256": "9a207d81a2aaa7e132ab21180f9dc41e60d45376fa19b12107e59b5f678834bf"
-    },
-    "servers/python/opentargets/tests/test_study_tools.py": {
-      "executable": false,
-      "sha256": "8928291447b82aec23b06202a0b40b52ecc08700168672d795230f457437e19f"
-    },
-    "servers/python/opentargets/tests/test_target_tools.py": {
-      "executable": false,
-      "sha256": "675387651ddf78e057234d5b82e328a62f4ce0e1021624574150bcdc8b17258b"
-    },
-    "servers/python/opentargets/tests/test_variant_tools.py": {
-      "executable": false,
-      "sha256": "d522ae209dd5f452debed034f8755269bca7a0ae997f253565bff4c8a063feb4"
-    },
-    "servers/python/orange-book-mcp/LICENSE": {
-      "executable": false,
-      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      "sha256": "7f85f4ab0d19855acd7648194ea44467e6750a77696c2dfebbe1d74634c6137a"
     },
     "servers/python/orange-book-mcp/orange_book_mcp/__init__.py": {
       "executable": false,
@@ -1336,21 +640,9 @@
       "executable": false,
       "sha256": "3393d0644f400cb5b706ce807170586337c98d39caf54d079d629c088c9e205f"
     },
-    "servers/python/orange-book-mcp/pyproject.toml": {
-      "executable": false,
-      "sha256": "f15197ca3839aacec4f4d2871a6001c5065f62406328aa40a92ecb18f1aa5f88"
-    },
-    "servers/python/orange-book-mcp/tests/test_orange_book_server.py": {
-      "executable": false,
-      "sha256": "a0963ce236ad7248f003aa0b6c05471466d1587513b4a224112b8c5e27973fcb"
-    },
-    "servers/python/pdb-mcp/LICENSE": {
-      "executable": false,
-      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
-    },
     "servers/python/pdb-mcp/README.md": {
       "executable": false,
-      "sha256": "e53973800781a7630598ca181199f06e9165cea28b3c5b881fe66079b17600a1"
+      "sha256": "ace97690a201e7bdb9d78533d6ee9b7c4a20af821355e7f1e8371ac41d7546c8"
     },
     "servers/python/pdb-mcp/pdb_mcp/__init__.py": {
       "executable": false,
@@ -1368,17 +660,9 @@
       "executable": false,
       "sha256": "d677294e95201e148c5fc2ac106283fa9b78d1198ae66622459359f5bf4c6405"
     },
-    "servers/python/pdb-mcp/pyproject.toml": {
-      "executable": false,
-      "sha256": "48b935165df6b943f2c1bf890241b5c0e4b1afa65f27c9d56fff0a3287e85920"
-    },
-    "servers/python/protein-atlas-mcp/LICENSE": {
-      "executable": false,
-      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
-    },
     "servers/python/protein-atlas-mcp/README.md": {
       "executable": false,
-      "sha256": "3fc6c8c1315fa0672365db2d8405a28addd9a0f9a9e3aafb6d8f19b97a7c2d9f"
+      "sha256": "07f8b6209e62d6eeceed346b55a625be761f02f423e113b547b9a3c0dc58889e"
     },
     "servers/python/protein-atlas-mcp/protein_atlas_mcp/__init__.py": {
       "executable": false,
@@ -1388,21 +672,9 @@
       "executable": false,
       "sha256": "d1575ec9b018721188f5eed8ae8dc16f1c1184ef055fa8ac734aa05e582f1d96"
     },
-    "servers/python/protein-atlas-mcp/pyproject.toml": {
-      "executable": false,
-      "sha256": "e4eca75b5040a5a6a19f16597b1464e300b9bc8ffc38ac0fe66906d951b9938e"
-    },
-    "servers/python/reactome-mcp/LICENSE": {
-      "executable": false,
-      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
-    },
     "servers/python/reactome-mcp/README.md": {
       "executable": false,
-      "sha256": "08f46b5202e7f0d4673a2edaaaa400840c48f5cb466a14453499dee6abb77bc6"
-    },
-    "servers/python/reactome-mcp/pyproject.toml": {
-      "executable": false,
-      "sha256": "9cd3b689e9eda8445570b6b66f0ade0790e2f85d002f89b168e0408529100abf"
+      "sha256": "7069eb05855b59eccefe2421a66af7a06defe0b5920c434bc67751e532f56ed4"
     },
     "servers/python/reactome-mcp/reactome_mcp/__init__.py": {
       "executable": false,
@@ -1416,17 +688,9 @@
       "executable": false,
       "sha256": "db89f3c3aa498b17906608d32937d3b762183f1ba7faea690678e460b5472601"
     },
-    "servers/python/surechembl-mcp/LICENSE": {
-      "executable": false,
-      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
-    },
     "servers/python/surechembl-mcp/README.md": {
       "executable": false,
-      "sha256": "432fe98c116ec05d32cf586735768b9c8ace9558fe50def949ef7744fe7bb5f7"
-    },
-    "servers/python/surechembl-mcp/pyproject.toml": {
-      "executable": false,
-      "sha256": "72f34006a27f5eafa7ef7e35beb24e7cebfc8ed8f946571374ac9c35f25210a8"
+      "sha256": "81fd8c341f6599116969bab655215330fca77a36f3aec4c94e7dfed7a57a87d9"
     },
     "servers/python/surechembl-mcp/surechembl_mcp/__init__.py": {
       "executable": false,
@@ -1440,17 +704,9 @@
       "executable": false,
       "sha256": "8672ccf16848aab9a645ab4a293ce4e96b498abf4deffd5d64a7fa553e1449fc"
     },
-    "servers/python/uniprot-mcp/LICENSE": {
-      "executable": false,
-      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
-    },
     "servers/python/uniprot-mcp/README.md": {
       "executable": false,
-      "sha256": "116ad0de36eb0a1309f50e8d21861bf4b2a91c9c288263cf12771dcee1fab60d"
-    },
-    "servers/python/uniprot-mcp/pyproject.toml": {
-      "executable": false,
-      "sha256": "fbfc7ad94e5ecc42a4c7551182faba106c9ce079b4f73077a384c68b00430ce3"
+      "sha256": "d8a6921ced4f2752ffc0e2b032a0f0fe322447b031858f6eac1e03f688a1209c"
     },
     "servers/python/uniprot-mcp/uniprot_mcp/__init__.py": {
       "executable": false,
@@ -1470,7 +726,7 @@
     },
     "src/biomedmcp/__init__.py": {
       "executable": false,
-      "sha256": "51f82d00a38d2f9209c5e59ca8c1955b861a9e2f4115675a81c777cb3ed9c3d5"
+      "sha256": "5fd3cb9fb2f68d81f62208b3f87136d7f6c67429e76729c6233667acc9ba3953"
     },
     "src/biomedmcp/adapters.py": {
       "executable": false,
@@ -1554,7 +810,7 @@
     },
     "src/biomedmcp/domain.py": {
       "executable": false,
-      "sha256": "08e9b02802bb31d2ef0f2f48325fbae3a8ca9705d7b7b6cd50a9922bf3266e6f"
+      "sha256": "3cf1d5c9eaa9123d3ef153617261311fa7c219fe4b7502232ef095f54cfaa7d1"
     },
     "src/biomedmcp/errors.py": {
       "executable": false,
@@ -1566,7 +822,7 @@
     },
     "src/biomedmcp/examples.py": {
       "executable": false,
-      "sha256": "2f0c534d6b72cdf750f350d621ad268a5a17a32cc744f771129dab0ab86fac69"
+      "sha256": "02ad1abcb44c1a288de8aa055f80b9ae80009f63e1322d8f07e3701b34fcc8fb"
     },
     "src/biomedmcp/expression_records.py": {
       "executable": false,
@@ -1614,7 +870,7 @@
     },
     "src/biomedmcp/native/__init__.py": {
       "executable": false,
-      "sha256": "10de0a188855846884cc6f8b1d20122d739ff963c4bbe17e74968cc2d67123d2"
+      "sha256": "ec0b3e7421c1f7b3c618270c82b65487902205d4b504c40e97c25c7f11a590c8"
     },
     "src/biomedmcp/native/alphamissense.py": {
       "executable": false,
@@ -1714,7 +970,7 @@
     },
     "src/biomedmcp/native/opentargets.py": {
       "executable": false,
-      "sha256": "f53af9fac6db7b254e9c71b45217700a4cafbd729014e0104dd37d3ecc3f0eed"
+      "sha256": "e811307f69b3ffbdc4a96ebf394b905c3a7c83e857852de87f064df1229e80fa"
     },
     "src/biomedmcp/native/opentargets_contract.json": {
       "executable": false,
@@ -1774,11 +1030,7 @@
     },
     "src/biomedmcp/offline-qualification.json": {
       "executable": false,
-      "sha256": "6b4b64aa92c5905b27e55abd24ac79ff7dfd210a0ac88d751e6b49f2bedfc00e"
-    },
-    "src/biomedmcp/onboarding.py": {
-      "executable": false,
-      "sha256": "769a6e3e2698dadcfbcec0ee254723f1dd02987557f1960564b4fcef595503a4"
+      "sha256": "02aa067abbea8360eacc5c25adacb9a47d1da64e1227dd236ff2b6b20584a7e1"
     },
     "src/biomedmcp/output_contracts.py": {
       "executable": false,
@@ -1794,11 +1046,11 @@
     },
     "src/biomedmcp/provider_registry.json": {
       "executable": false,
-      "sha256": "ca264777e6fb86875244debf8e3bb89bbe68e09f9ac6cc564705c3c7563d688d"
+      "sha256": "ab57378e7e4b4bdffe8eb65cd80f91542ea77bddb69c453272b31852c4def095"
     },
     "src/biomedmcp/public_catalog.py": {
       "executable": false,
-      "sha256": "f2dbe50928d7de46e7264b8c45b700adb6a7fb0df407a620799d3424288f2dfa"
+      "sha256": "da27ad45677ef8dd7685ca66e41c68a62b9e080d8456e59c3df2d2aedcec5cc4"
     },
     "src/biomedmcp/qtl_records.py": {
       "executable": false,
@@ -1842,7 +1094,7 @@
     },
     "src/biomedmcp/source_licenses.json": {
       "executable": false,
-      "sha256": "ae0e794830eeb80096640f57a1f763d968510a54aa521bbc30a5146458085c99"
+      "sha256": "9d6889c299d8f81363afd5bb0abafd43228b74fec0da2b715ea49bccabe8709c"
     },
     "src/biomedmcp/source_licensing.py": {
       "executable": false,
@@ -1944,10 +1196,6 @@
       "executable": false,
       "sha256": "68621229dcb6b3eb1981133b373fe767474edbb6fcf90a4604784eebf810180f"
     },
-    "tests/fixtures/ensembl-contract-2026-10-12.json": {
-      "executable": false,
-      "sha256": "31f107e1ae3aafcaa23748548a1f75f81ad58031df444a3f203da87aa5234697"
-    },
     "tests/fixtures/gnomad-schema-2026-10-09.json": {
       "executable": false,
       "sha256": "87ba76415f23c5e595f43915b78544f546f79ce274827045ad7c89ba397e345f"
@@ -1959,14 +1207,6 @@
     "tests/fixtures/interpro-contract-2026-10-11.json": {
       "executable": false,
       "sha256": "f1c6bf62ceb0c9cadba2aa5a770be6f11d05f60d231f7e34099cc93427be3957"
-    },
-    "tests/fixtures/ols-contract-2026-10-11.json": {
-      "executable": false,
-      "sha256": "1a8ce796469bd73c2196561012b0dc83742510e857d5d0f9d168d8d70ecc95e0"
-    },
-    "tests/fixtures/opentargets-schema-2026-09-16.json": {
-      "executable": false,
-      "sha256": "f51b2b48dedac4331c79101479f53ca1f64f9ddfe5dc7fce96d1a5a4470c2cbd"
     },
     "tests/fixtures/pdb-entry-4hhb-2026-10-11.json": {
       "executable": false,
@@ -2076,576 +1316,608 @@
       "executable": false,
       "sha256": "cd5af9342b04a6df212be717f968f7d060f66224f3547d893028c0c650b75885"
     },
-    "tests/test_adapter_catalog_cache.py": {
+    "tests/tooling/test_agent_evaluation.py": {
       "executable": false,
-      "sha256": "e79ebf2750f39c09392ab1bfdb4ad7c7f293ed6be07e80f328d7c4f8ceb70dab"
+      "sha256": "8b04ab96b89927581671e90b7e9200d01257d28c1ff8f819d4e3f915a5986d1c"
     },
-    "tests/test_adapter_inventory.py": {
+    "tests/tooling/test_docker_cleanup.py": {
+      "executable": false,
+      "sha256": "a166d4856fdfe8b328365eb3a4e05bdee3f37f777802ba5c5d9990f01309dfee"
+    },
+    "tests/tooling/test_governance.py": {
+      "executable": false,
+      "sha256": "465cfbafeee1e87a2a1dee6bb0d4f7d873570115da436cb1023b98059170f19b"
+    },
+    "tests/tooling/test_live_canary.py": {
+      "executable": false,
+      "sha256": "efa6ef9514ecc65a001e7cb4ffd2375c6c0e8cf28c890b0f604bd8033b92faa8"
+    },
+    "tests/tooling/test_public_links.py": {
+      "executable": false,
+      "sha256": "c60b9b34d0ad6b9f9a203bec013ffdda143e6cfc44ddd90944a0dbd5b4d03b58"
+    },
+    "tests/tooling/test_registry_distribution.py": {
+      "executable": false,
+      "sha256": "a975ce6840f42a50389be1df45af8a8e77a9c2b80923d81f92187fe270ad7c07"
+    },
+    "tests/tooling/test_release_artifacts.py": {
+      "executable": false,
+      "sha256": "5267019395625d1406616ff707d8b7269e54702988d7026e8b3322643c9fae5b"
+    },
+    "tests/tooling/test_security_dependencies.py": {
+      "executable": false,
+      "sha256": "89719e408e66cbb5d746ed700f5b93572b228eb0144d56729eddc8c38ee51405"
+    },
+    "tests/tooling/test_security_scan.py": {
+      "executable": false,
+      "sha256": "1e4fe55c7e0f4783769e1b7b597ab12a7ca58878043dfc6624c1bffc1600b4f2"
+    },
+    "tests/tooling/test_study_algorithm_benchmark.py": {
+      "executable": false,
+      "sha256": "9382115b13c41cb0aa43cf918c61312afae1605c9501d3b788c3abffd04f78d5"
+    },
+    "tests/tooling/test_study_resource_benchmark.py": {
+      "executable": false,
+      "sha256": "d0de3d8d3b6e0aba1e203d062c89f5245ae2acc7bcf117dfd9b2be5d83035e44"
+    },
+    "tests/tooling/test_wheel_distribution.py": {
+      "executable": false,
+      "sha256": "31dd1a40cacfb6b27172ac479282cb038595deaae82173f3f745e9b80dc181f4"
+    },
+    "tests/unit/adapters/conftest.py": {
+      "executable": false,
+      "sha256": "52110854b0039891c20cd447863d1451f29121b2f2346b59e81db46f910c454c"
+    },
+    "tests/unit/adapters/test_adapter_catalog_cache.py": {
+      "executable": false,
+      "sha256": "ecdd50636bdbcb6eb3e3a290a58d63f0a83e35e127b0aba908c6797e1c13513f"
+    },
+    "tests/unit/adapters/test_adapter_inventory.py": {
       "executable": false,
       "sha256": "08f2669cb9b0c2d49c3d1721148dcc09804cdae2b85153281a2580419de934e1"
     },
-    "tests/test_agent_evaluation.py": {
+    "tests/unit/adapters/test_bio_ontology_server.py": {
       "executable": false,
-      "sha256": "5f77f4de94a743e067ad0aaa0d8b29e3373cac7ad32142c0c95a33e47bf0a988"
+      "sha256": "febe8e9b9bc7a5bf5b35052b5f64b8ff66276c7e6b91af1a5e8024d239c805f1"
     },
-    "tests/test_alphamissense.py": {
+    "tests/unit/adapters/test_dailymed_server.py": {
       "executable": false,
-      "sha256": "b794f5d0f9b68f260e43e6313beeebf7b494b55d81099211e8abf9b28daa0c79"
+      "sha256": "be2b04e451da002d59d0d556fa430b0afa650cb92a71a1c58abe7d82563fddb4"
     },
-    "tests/test_anonymous_pagination.py": {
+    "tests/unit/adapters/test_mychem_server.py": {
       "executable": false,
-      "sha256": "613c70d510449c8bf2834a3a9fb142b52712c69fd9292cb4832ee588dfc2f8ce"
+      "sha256": "50529f576caef3839b8d7b72e0ffe9b56fe747c1e24fee172eafcf898bd816f6"
     },
-    "tests/test_audit_regressions.py": {
+    "tests/unit/adapters/test_mydisease_server.py": {
       "executable": false,
-      "sha256": "61187eed31b3e1c12cf282da60dfaa03cf635e0e2cac257fbbf965a85ba4307b"
+      "sha256": "ca8a06e34b5eae0b7d8d6b9241939ecb62e787d692ae707afcc9e80eddb2eb8b"
     },
-    "tests/test_auth_branding.py": {
+    "tests/unit/adapters/test_mygene_server.py": {
       "executable": false,
-      "sha256": "25fa9aeb09562a31708b5f803d657a425ef826d44ab07a9d813c3563cbdb75e8"
+      "sha256": "8a5eda0d3490d736bec5c955fd24c3223b6dfc3f9ed4be7c1cf62f60adcc6118"
     },
-    "tests/test_biothings_responses.py": {
+    "tests/unit/adapters/test_opentargets_adapter.py": {
       "executable": false,
-      "sha256": "147d5e24860cf2c63f8125ab1ce6cb86de54a91513819d7b74233dd9d2a0e70e"
+      "sha256": "c4b5dda080e9f04032153ad38e6c1a80110df58df319cdf4e7206da3ea39b79f"
     },
-    "tests/test_bulk_redaction.py": {
+    "tests/unit/adapters/test_orange_book_server.py": {
       "executable": false,
-      "sha256": "f46a8a8d0f8bf017b1ffcead1453c18ab9f4ffda3941e7780a454ddd242ea6d8"
+      "sha256": "1e6f5e6dbda85f7d899e29008cd02e65671c86e50d360d62804db29d18e24d38"
     },
-    "tests/test_chembl_properties.py": {
-      "executable": false,
-      "sha256": "5014b193a98e7f85e953575b94c51485a02c75a3b66e50e9117c2c8a190c70c0"
-    },
-    "tests/test_civic_responses.py": {
-      "executable": false,
-      "sha256": "e312d30badcdafdca96a5fa4c468cf960d99b55820cb21b4789bb08513ffc8a6"
-    },
-    "tests/test_cli_contract.py": {
-      "executable": false,
-      "sha256": "2513c9c00058c3b60dbdd7ec544f7c925e9bd9809db0dd37fdf1b5a8c0f77888"
-    },
-    "tests/test_cli_pagination.py": {
-      "executable": false,
-      "sha256": "8acd7522df5d4f97a1defae8dc9caebc4da151a11b2e119fdd2897854ecf4d9f"
-    },
-    "tests/test_clingen_responses.py": {
-      "executable": false,
-      "sha256": "3a8e58714d423820456023823ed4e011ce0971bb653f63404f548fa7d1757a2c"
-    },
-    "tests/test_clinical_trials_responses.py": {
-      "executable": false,
-      "sha256": "9238810806ba320e86ba75eef10c93d0c99f5237c112b4ce07e0de846d49c90d"
-    },
-    "tests/test_complexportal_responses.py": {
-      "executable": false,
-      "sha256": "a3e498ee23f96cd0675dcca56f31ffc5deb1c5b1dfebbcecac95fe8cb1c339b7"
-    },
-    "tests/test_diagnosis.py": {
-      "executable": false,
-      "sha256": "a3873daa62db2c446b9ce649dad3d0cd99cef1699f9c504898134ed1f8f46d2f"
-    },
-    "tests/test_direct_clinvar.py": {
-      "executable": false,
-      "sha256": "2b54dec86275cb81ba0914d58e52d9bdb58e2309e77fe9e91bf790fe2ef86bde"
-    },
-    "tests/test_docker_cleanup.py": {
-      "executable": false,
-      "sha256": "d8430d6735452d2e62a9a278c1bc54e7dd8897258be26eb288c900837567824f"
-    },
-    "tests/test_dossier_evidence.py": {
-      "executable": false,
-      "sha256": "73714f7efcd65949a9a095c0c4414713eb67b6273cb53e2ccbde7eebaebc6a33"
-    },
-    "tests/test_ensembl_contracts.py": {
-      "executable": false,
-      "sha256": "2c75b235ff2d485e064e34ea7dfe0480de37bb188ae8a7151c2f6b2c6e94396c"
-    },
-    "tests/test_ensembl_genome_contracts.py": {
-      "executable": false,
-      "sha256": "7cd78d604ba3650b817828336e042344bf8fdf1d0c3b76405e5f5ffed62be455"
-    },
-    "tests/test_eve.py": {
-      "executable": false,
-      "sha256": "47b53ba2bd97ab4c149e7a171e8e8fef301506a30c926196ac72adc830e8f035"
-    },
-    "tests/test_evidence_receipts.py": {
-      "executable": false,
-      "sha256": "0abba8d46ef221bfc8ce9f3d7de385da604184cfe0124333db0547544ab7ed4a"
-    },
-    "tests/test_evidence_recovery.py": {
-      "executable": false,
-      "sha256": "4b6e5b3c7cbd22368685a88cec436e1914a2d292c31c75f56cc5e1b107f870c3"
-    },
-    "tests/test_example_regressions.py": {
-      "executable": false,
-      "sha256": "0002598663f3d60938099fe8fac16ee530eb0d5655da363646972bf89cf03932"
-    },
-    "tests/test_extensions.py": {
-      "executable": false,
-      "sha256": "5b028157d99494f8199e5a710418ae3b9da6f888f689f8efbf746691dc13e04c"
-    },
-    "tests/test_fulltext_floating_tables.py": {
-      "executable": false,
-      "sha256": "fcfae11e7fa5ae2d545a0d6cc25514314ee3c69cb4285b2dad22bfc31a669c72"
-    },
-    "tests/test_fulltext_range_contract.py": {
-      "executable": false,
-      "sha256": "346db44f08e91955d08674a5e3aa9be029a0c49d5db2454b4b41891265dee778"
-    },
-    "tests/test_gencc_responses.py": {
-      "executable": false,
-      "sha256": "d242e05b878cc3a4e2142c51270ad85e1f35073b3fa1c4bf81c5ca2d3c6f08b1"
-    },
-    "tests/test_gnomad_responses.py": {
-      "executable": false,
-      "sha256": "090af410dda569f6970a9a9c7b2f72f14b8293f1a079383ece673f8d5fccffb6"
-    },
-    "tests/test_gnomad_source_permissions.py": {
-      "executable": false,
-      "sha256": "d4b3e7796c9572a978ec07c7e40926ce552fa1d601aa678d9dcb66552cd54100"
-    },
-    "tests/test_governance.py": {
-      "executable": false,
-      "sha256": "4f2f3cf88ef43c634176265ff657d150897e198f15565611eeaeed0744099f09"
-    },
-    "tests/test_gtex_pagination.py": {
-      "executable": false,
-      "sha256": "8a326eaad29ab6350a75cffb609889abefc701f2678d6e2cd5c9fc5e9b932852"
-    },
-    "tests/test_gtex_reference_identity.py": {
-      "executable": false,
-      "sha256": "389776265c52537369bce13f68cbd98c18ab5e3218ce9e5474779dca44569cb3"
-    },
-    "tests/test_gtex_responses.py": {
-      "executable": false,
-      "sha256": "40e567d110003b2fc63ad2ebfdb15c5808f154480882ea8ee92875f40343bd6a"
-    },
-    "tests/test_gwas_responses.py": {
-      "executable": false,
-      "sha256": "20d3eecb6040b6a806b0d658ff7cca72cecc53d671b8112d1a7737f1b18d7ead"
-    },
-    "tests/test_hpa_responses.py": {
-      "executable": false,
-      "sha256": "841abc330abcba1a7b2fcf03c8d4f7ea174e3c321f5df848a5acbaa68c911266"
-    },
-    "tests/test_http_contract.py": {
-      "executable": false,
-      "sha256": "b26165d24e06e32714ee7cbe1021e2a1d57759c19b9009a85910ab39af5ad361"
-    },
-    "tests/test_http_security.py": {
-      "executable": false,
-      "sha256": "01b2c9bb086f620ec09bc4dd10f59e41b47c4e8ad8919c946d71741f075bdd09"
-    },
-    "tests/test_http_telemetry.py": {
-      "executable": false,
-      "sha256": "d1d1456d1d732f544f4480a13928ed68dfac1755475a3fbc9ff46e8b73a1164d"
-    },
-    "tests/test_hybrid_catalog.py": {
-      "executable": false,
-      "sha256": "9db1b8d5e17a283d67412b96ec3adc30593fdaf5b803f7614bff881dd3e73895"
-    },
-    "tests/test_infrastructure_readiness.py": {
-      "executable": false,
-      "sha256": "21ddd478df734e241c7478ed4603c7a6c556b5a8f9c21a712ede504b32604c5e"
-    },
-    "tests/test_ingress_budget.py": {
-      "executable": false,
-      "sha256": "9d215c1998e5c9aa8d5756935d87c4b291b9364b493d7fd5b2fe874904bc0063"
-    },
-    "tests/test_interpro_responses.py": {
-      "executable": false,
-      "sha256": "01a4ef8e54f501509d82773ec294bd017aa97950adfbbdd25c798a5d25b34c6b"
-    },
-    "tests/test_label_metadata.py": {
-      "executable": false,
-      "sha256": "cb81772bce12024b1a6adceb1a0792637d577957b50e649e36b89079de0a57d8"
-    },
-    "tests/test_live_canary.py": {
-      "executable": false,
-      "sha256": "cb3f3bf20d8d75a85b5c7c6a1e26954932e683a4be50e1c116eb45a3801c204f"
-    },
-    "tests/test_live_contract_regressions.py": {
-      "executable": false,
-      "sha256": "0c99f0a44e8f37b6319792e6436f7aa79f1596ce42ef4792a7e24f44a01e173b"
-    },
-    "tests/test_local_boundary.py": {
-      "executable": false,
-      "sha256": "1ad8111b5ebfb22bf2f2f8be05efd34d2de2d2ab6f018b97b25557f5109a0a89"
-    },
-    "tests/test_local_source_keys.py": {
-      "executable": false,
-      "sha256": "fb67b2a743df9ee1772d22e251230349784eb7d296066ec3934a2560b65ee0b9"
-    },
-    "tests/test_local_state.py": {
-      "executable": false,
-      "sha256": "8af8fcaaac8c46cdd923387d432ee5f609ce0fbe7363f08f419f66f7ee36cdad"
-    },
-    "tests/test_monarch_responses.py": {
-      "executable": false,
-      "sha256": "6982170351c287033373adeca08bfded48fe3650c3313ef1d53dc1b18a15910e"
-    },
-    "tests/test_myvariant_responses.py": {
-      "executable": false,
-      "sha256": "80e6281393c622d902ceb45fed65110f645449f26d1f1db5749e0fd85d649c20"
-    },
-    "tests/test_native_entities.py": {
-      "executable": false,
-      "sha256": "e69e9ec3193f745bd857e01f3524abea8c929a0044b34ff6134717077f402d78"
-    },
-    "tests/test_native_literature.py": {
-      "executable": false,
-      "sha256": "cf32b2f7e65f37a0759d19f6fec7c737cf8806a75192e617989eded8960c7ccd"
-    },
-    "tests/test_native_response_shapes.py": {
-      "executable": false,
-      "sha256": "1b34536df0c80e811c8f82d479d85a09ad9fc90de366cfaf4d5aa7940e61ad5b"
-    },
-    "tests/test_native_studies.py": {
-      "executable": false,
-      "sha256": "354a1e96eb1a07cbe49981e00dca53030784ea39af9b4d74e90c58861bd2b025"
-    },
-    "tests/test_native_variants.py": {
-      "executable": false,
-      "sha256": "6a043cb955bd78b226b33047b3b9f3d7017213220ac16f969b3df58e0aad9752"
-    },
-    "tests/test_ncbi_datasets.py": {
-      "executable": false,
-      "sha256": "147c1846dbbbd370aad42fa0fc3193dbc6c057d8f54bc95d3f4958bbd44d39df"
-    },
-    "tests/test_ncbi_gene_reports.py": {
-      "executable": false,
-      "sha256": "d1ba4b7bbacab0af96f83f87f1805bd5eba72dfd3ec75e16068d3b3cafe94a00"
-    },
-    "tests/test_ols_responses.py": {
-      "executable": false,
-      "sha256": "9c78d8a5275671dc0bf6ea2cb1b285a91a8f68b6cbea84e841b3e9347b47649b"
-    },
-    "tests/test_onboarding_workflows.py": {
-      "executable": false,
-      "sha256": "3fb7394be08fc2fda0ecf581908b4415958eb060f33fc48ff6a07de6e93900ab"
-    },
-    "tests/test_open_citation_graph.py": {
-      "executable": false,
-      "sha256": "0f72c2bde46424e8306fe3a8fd7247449cbfe244c4a001d24db04fd5da1c2678"
-    },
-    "tests/test_openalex.py": {
-      "executable": false,
-      "sha256": "9e20cfd46b74dfe88661167fe817ebefbebd867727925301542e8916d5e2ae81"
-    },
-    "tests/test_opentargets_assessments.py": {
-      "executable": false,
-      "sha256": "f31bc5c5cdc8ad5b1b5afee1c9449123862d435da4fa28c95874bd70fdfb16b6"
-    },
-    "tests/test_opentargets_pair_evidence.py": {
-      "executable": false,
-      "sha256": "e905818a5fdbd7a4eae627e8196a3c4d7709e5abde3b3b4b48bc8c9b391e0893"
-    },
-    "tests/test_opentargets_partial.py": {
-      "executable": false,
-      "sha256": "d20dbf096ddcd8946a574d434951da0aefd0253806d6c6cf567e10ef2fade1ee"
-    },
-    "tests/test_opentargets_responses.py": {
-      "executable": false,
-      "sha256": "a28d59dddf94876c65e22b9acf67f6578a7885c44692b2d1aa49a12dc4d7dca2"
-    },
-    "tests/test_opentargets_variant_evidence.py": {
-      "executable": false,
-      "sha256": "ee4ebf9602e95874739a28b8caf5926d5945045d42e31234e43b988c8b9bb3dc"
-    },
-    "tests/test_opentargets_workflows.py": {
-      "executable": false,
-      "sha256": "df89743d27aa8962b760ae61d76ff8834a315d678ebb2ce7b7b0f9f8f316dcb4"
-    },
-    "tests/test_output_contracts.py": {
-      "executable": false,
-      "sha256": "f3f9ebd0ff8b115add99a47c9b4f39ca6502f74583185109ea7c6ea808558113"
-    },
-    "tests/test_pdb_responses.py": {
-      "executable": false,
-      "sha256": "03f0dbbb2497f9bd2e22c7ca46b22a37a67d1ecb5d6b2b9d913c8b3c91877479"
-    },
-    "tests/test_pmc_fulltext_fallback.py": {
-      "executable": false,
-      "sha256": "852f355b5e50ee6a3e873f831c1ceeaacc1209cd97f633156163a2487673493a"
-    },
-    "tests/test_provider_availability.py": {
+    "tests/unit/adapters/test_provider_availability.py": {
       "executable": false,
       "sha256": "f6a4c5c361ca828d7bfb2178e75e32fdc21103616802f0cdfe3e181da2c5081d"
     },
-    "tests/test_provider_pagination.py": {
+    "tests/unit/adapters/test_provider_pagination.py": {
       "executable": false,
       "sha256": "1a1bdc8d573d3669a21b934c12cdd28ababe9316b64278f22bc14185d6d0a991"
     },
-    "tests/test_provider_security.py": {
+    "tests/unit/adapters/test_provider_security.py": {
       "executable": false,
       "sha256": "91b9fda2596a313c77e91be9f53c5f613a15565c28ba5e168dc0672a98f3b031"
     },
-    "tests/test_public_examples.py": {
-      "executable": false,
-      "sha256": "d5a181051aaf48bda874c90fa80a5105ddd1549f73651514be3c3d2b917ba738"
-    },
-    "tests/test_public_links.py": {
-      "executable": false,
-      "sha256": "aecc05247460e5fb433c7d85cbee8a798a7b1a81a15ddd8c6dcf8be28368eaa3"
-    },
-    "tests/test_public_predictor_cache.py": {
-      "executable": false,
-      "sha256": "22bb64789532a0b970d89f97c7e652172cf66bd851271e0a80262f5965fba737"
-    },
-    "tests/test_public_snapshot_grants.py": {
-      "executable": false,
-      "sha256": "94b85f11c5bebd14439b6b6e760bf68fef232ead9f100d52cc312941c9529e35"
-    },
-    "tests/test_pubmed_search_parity.py": {
-      "executable": false,
-      "sha256": "da1a0e0aa9cc854eb596dea25b6375dc67b40112588a4359344fb65be512fe08"
-    },
-    "tests/test_qualified_gene_identity.py": {
-      "executable": false,
-      "sha256": "868ff3b5bbef3fa43c7ba2f3149d6037ba9604edb6779fc19bd4fc13bd3762a7"
-    },
-    "tests/test_reactome_contracts.py": {
-      "executable": false,
-      "sha256": "bff73df3d4f631c9f54895de05dc25b474b3d11370523cfe7400af932f564702"
-    },
-    "tests/test_reactome_responses.py": {
-      "executable": false,
-      "sha256": "824100bfae9922dd7610c93e3b311d628cf5b207de4aaf8b41bf55d644bff8fd"
-    },
-    "tests/test_record_schema_resources.py": {
-      "executable": false,
-      "sha256": "d7a1fb33d83d3482b82ce2c98439a14769601c1a3c58fca1d72c6ae934eaea18"
-    },
-    "tests/test_registry_distribution.py": {
-      "executable": false,
-      "sha256": "cace2e3796b0e4bf6ff0d162c7b8f4e47f7d2e5bb201026bf66854c86e45af4e"
-    },
-    "tests/test_release_artifacts.py": {
-      "executable": false,
-      "sha256": "5d8c0a00c0ffb34503d60d86bc900aaaa762c489a70f450be87c704ef09c90e9"
-    },
-    "tests/test_remote_guest.py": {
-      "executable": false,
-      "sha256": "905413b3df6f71687b3a0497a38eba5b43403e7080e2ea485f355041ddd97cde"
-    },
-    "tests/test_removed_source.py": {
+    "tests/unit/adapters/test_removed_source.py": {
       "executable": false,
       "sha256": "97ee7060147fabf62f8c2b367538c3bb3e5addc43c81b4f8903f348bd196e1e4"
     },
-    "tests/test_repaired_adapters.py": {
+    "tests/unit/adapters/test_retained_routes.py": {
       "executable": false,
       "sha256": "7d72a40db3351a3a9f7ed75e72027c850a4ca9d4124f5e3517a56e9efc3033ba"
     },
-    "tests/test_request_credentials.py": {
+    "tests/unit/catalog/test_boundary_audit.py": {
       "executable": false,
-      "sha256": "051001fb08c458e5a9393a747294716a0c28fd938b9616ecb5ccc33e7216c60d"
+      "sha256": "61187eed31b3e1c12cf282da60dfaa03cf635e0e2cac257fbbf965a85ba4307b"
     },
-    "tests/test_request_telemetry.py": {
+    "tests/unit/catalog/test_cli_contract.py": {
       "executable": false,
-      "sha256": "ecd66d9603b64c18b28a1f3bcd2ebb4ad34e5a24782c5591da07785b04bbde92"
+      "sha256": "2513c9c00058c3b60dbdd7ec544f7c925e9bd9809db0dd37fdf1b5a8c0f77888"
     },
-    "tests/test_research_contracts.py": {
+    "tests/unit/catalog/test_cli_pagination.py": {
       "executable": false,
-      "sha256": "e678abef85086334c7a6283b3cb640498d40fccd9d4ec91e8cd6fffc543f386e"
+      "sha256": "8acd7522df5d4f97a1defae8dc9caebc4da151a11b2e119fdd2897854ecf4d9f"
     },
-    "tests/test_result_cache.py": {
+    "tests/unit/catalog/test_example_requests.py": {
       "executable": false,
-      "sha256": "a22db22dcad5005b0f695c1ce1bdb82aa1445e4e5397e9c87bf23c2e4794e2d3"
+      "sha256": "0002598663f3d60938099fe8fac16ee530eb0d5655da363646972bf89cf03932"
     },
-    "tests/test_runtime_admission.py": {
+    "tests/unit/catalog/test_extensions.py": {
       "executable": false,
-      "sha256": "b52119fb05d3bf9dd4fe65a11576ae8ea3261ef4e6a04359c5ca2ac6cadefdd2"
+      "sha256": "5b028157d99494f8199e5a710418ae3b9da6f888f689f8efbf746691dc13e04c"
     },
-    "tests/test_runtime_safety.py": {
+    "tests/unit/catalog/test_hybrid_catalog.py": {
       "executable": false,
-      "sha256": "dff04267f2ab9ec0cf92f097351c0fe5a5f2e0b7d9d3a630d28afd3837aa6339"
+      "sha256": "9db1b8d5e17a283d67412b96ec3adc30593fdaf5b803f7614bff881dd3e73895"
     },
-    "tests/test_runtime_telemetry.py": {
-      "executable": false,
-      "sha256": "96c0bc0b6cb4e4e370e73d4ba274c343dc25ab053b86a5d944a15a265eec041b"
-    },
-    "tests/test_schema_compaction.py": {
-      "executable": false,
-      "sha256": "9cf1b2376a60a7864a647a12b3aa34ad0fa947552d3371e75418872c4ccff8c5"
-    },
-    "tests/test_scientific_workflows.py": {
-      "executable": false,
-      "sha256": "3e8f280ba121fe4af8348d27a8ea2263c2a39ed0ae79f926086b8904ec5df6c6"
-    },
-    "tests/test_security_dependencies.py": {
-      "executable": false,
-      "sha256": "6fcbdec5aaf6d71a8ee75f4dba2752fe5798c4ed8236cb60898df49a56e7d4da"
-    },
-    "tests/test_security_scan.py": {
-      "executable": false,
-      "sha256": "fb8edc829d0bb376218f8d20cb00fde6039112fa4467af6594e6083709869884"
-    },
-    "tests/test_snapshot_compression.py": {
-      "executable": false,
-      "sha256": "ac59b779cd45e11d1fd2e2e2227bd8dd3e6987537d6b27d193357627890fae7f"
-    },
-    "tests/test_source69_regressions.py": {
-      "executable": false,
-      "sha256": "ac21bc2c33c4eec770ffebd0bbef6ee96625d569736d3c6b8db4c95c6f3a3e06"
-    },
-    "tests/test_source70_regressions.py": {
+    "tests/unit/catalog/test_identity_preflight.py": {
       "executable": false,
       "sha256": "d33157170ea9d9ac80e23883b6bdf7dcb1887b0183f7b1915de237136c82f999"
     },
-    "tests/test_source_batch_permissions.py": {
+    "tests/unit/catalog/test_onboarding_workflows.py": {
       "executable": false,
-      "sha256": "326f5fbc4d6562bcf53163b73a85fa9034f01e340a0bfae310909038c6c6a2fb"
+      "sha256": "b7ea2882a1d14ccc73fc4b6ad4cbacd248adfc47481c06ce320f2e1840f7cf79"
     },
-    "tests/test_source_content_boundary.py": {
+    "tests/unit/catalog/test_production_shapes.py": {
       "executable": false,
-      "sha256": "a9deca4711362c92235c0e33445801857a035c49df1228c8e11d1422249a4a6c"
+      "sha256": "0c99f0a44e8f37b6319792e6436f7aa79f1596ce42ef4792a7e24f44a01e173b"
     },
-    "tests/test_source_licenses.py": {
+    "tests/unit/catalog/test_public_examples.py": {
       "executable": false,
-      "sha256": "04f75de54f5545ecaca1bef1530933bb87973d7475739b53b90e09beb4d543b3"
+      "sha256": "76a8bf55ef5acddfc6cc30d5ec30e890a79e394d6b355add709b48453eaf12b7"
     },
-    "tests/test_source_schemas.py": {
-      "executable": false,
-      "sha256": "fdaa216c83e0c9a76ae40bd83f5b5ddde9077cf774fe0a14674b3b12f7c19729"
-    },
-    "tests/test_string_network.py": {
-      "executable": false,
-      "sha256": "760b3779ed2bd322353d66bcdf0a309ffbb47037bae7f92f94ce5c14172d1172"
-    },
-    "tests/test_study_algorithm_benchmark.py": {
-      "executable": false,
-      "sha256": "3fb533cdcfe67ea0fb8bfaee4f6e00dad6f7c83294505249b0ca44c02766fa0d"
-    },
-    "tests/test_study_cache.py": {
-      "executable": false,
-      "sha256": "bdc12b023261376c6344f43cdf878ef5c201763aaab80ebe1162349dc3cfc7b3"
-    },
-    "tests/test_study_concurrent_recovery.py": {
-      "executable": false,
-      "sha256": "6f207b0d3ac7d00628ea856d0a3d3cbecec0812d1959a8ea0be0c838aa8d7e65"
-    },
-    "tests/test_study_initialization.py": {
-      "executable": false,
-      "sha256": "c9dbb1e31ae30768c03be3e466f54f610222219f973929beb549f9567c5320ef"
-    },
-    "tests/test_study_installation.py": {
-      "executable": false,
-      "sha256": "11d1b8918db883766015a1d316dae06d9e6cd7941e2f4a4ddfa636ffa1cf070f"
-    },
-    "tests/test_study_metadata_contract.py": {
-      "executable": false,
-      "sha256": "1c6871d0d37a8441edd1ac32612103b6ac2ef8d45ffc36836f509c65d057c9fb"
-    },
-    "tests/test_study_missingness.py": {
-      "executable": false,
-      "sha256": "8bc476ff6583f89d092bad1881375dabf0a532562033af4e00cf7edcd8040f1c"
-    },
-    "tests/test_study_patient_inference.py": {
-      "executable": false,
-      "sha256": "34511f9aab4c0b13decd4e1ec0b741f66fafe0340ad3c4cf0284cdbefd15fe3a"
-    },
-    "tests/test_study_resource_benchmark.py": {
-      "executable": false,
-      "sha256": "4f1a8fdf6aaaea5ae1fe0e28c211fcd1e14e15a5060158f3a98a4187281fd7dd"
-    },
-    "tests/test_study_resources.py": {
-      "executable": false,
-      "sha256": "a16b0e66f348b7bb81048d67db0eab9ec895c56b9bb021b38d8aeb2886631dfa"
-    },
-    "tests/test_study_statistics_boundaries.py": {
-      "executable": false,
-      "sha256": "0d074cf5793ae81ccdbcb5606888cffe548869e36b2710ceb2239523fb7915ea"
-    },
-    "tests/test_study_statistics_reference.py": {
-      "executable": false,
-      "sha256": "657edff3edfbf9cfee1559782a68b2cf61da95e1f09c9efabee7c77245feb01e"
-    },
-    "tests/test_surechembl_annotations.py": {
-      "executable": false,
-      "sha256": "e761ea3de0daf7b0ae2f6a47187045ef1cae232308f29e5ef41232b8d1c4d528"
-    },
-    "tests/test_surechembl_metadata.py": {
-      "executable": false,
-      "sha256": "d657fcbd57396b812faade7a95da88a95f78c3f0936536dde2802ac322f4f564"
-    },
-    "tests/test_surechembl_search.py": {
-      "executable": false,
-      "sha256": "ea58976f51dfef299501c19d172a8496fcc2542f4642479dd9f407c7fa72ce37"
-    },
-    "tests/test_transport_failures.py": {
-      "executable": false,
-      "sha256": "37fc8fd0811277f2bb250e8b7bd0688ce5a4d20b3229e78dfbeaf45e4744d0e2"
-    },
-    "tests/test_transport_retries.py": {
-      "executable": false,
-      "sha256": "dcc03abe256f0720b68dd94b0c6e0a3396134c428652b9b08423118b0bfd0e88"
-    },
-    "tests/test_typed_expression_records.py": {
-      "executable": false,
-      "sha256": "187bc542af64e1f35ca2272d947460222e48065173a46e189d2809dbf23378b7"
-    },
-    "tests/test_typed_literature_records.py": {
-      "executable": false,
-      "sha256": "aa0610c6ce0176cb084091beeec36d9f1ce7cbc2bcebcd2a1b6e4b75d2dd8f10"
-    },
-    "tests/test_typed_mutation_profile.py": {
-      "executable": false,
-      "sha256": "f7a713339cbeba24d39c41854d8047ec81a3438935e11394d7babedceb1a6373"
-    },
-    "tests/test_typed_population_records.py": {
-      "executable": false,
-      "sha256": "ae47de1de55fbabe8b0282ce304490dd4159dae9a1dcdd18faf689775fbbae56"
-    },
-    "tests/test_typed_qtl_records.py": {
-      "executable": false,
-      "sha256": "cf086b64a31dc6d90cbe14e3db9da13f35c778776c26d2693ed5f8d6498e76fd"
-    },
-    "tests/test_typed_study_derivations.py": {
-      "executable": false,
-      "sha256": "9d961603bf9a3b3f6ee06e0bcd57696f3f2c7413fc39511147572445b77b7cfc"
-    },
-    "tests/test_typed_study_records.py": {
-      "executable": false,
-      "sha256": "1cccbcdc8180b143dfc107235913e6bc48eed34334558e339aaf5cef9d00f7c4"
-    },
-    "tests/test_typed_trial_records.py": {
-      "executable": false,
-      "sha256": "06dea2fc815567a2f84decb5348abf1e989d519228c31f6c2d6ed27ae3921677"
-    },
-    "tests/test_typed_variant_assertions.py": {
-      "executable": false,
-      "sha256": "6aac765ba615b9ed8a9d6a8707951bc8c1d09a739ebf7300c1992803039cee77"
-    },
-    "tests/test_uniprot_annotations.py": {
-      "executable": false,
-      "sha256": "6925987ad3ba27845b2cb084eeddab60985e635a135ef9bc93257cb4d722ac25"
-    },
-    "tests/test_uniprot_responses.py": {
-      "executable": false,
-      "sha256": "485ced6bb75d67cf9c791ade750101422a2c1ee57a72d230696722ece342efa3"
-    },
-    "tests/test_uniprot_unknown_positions.py": {
-      "executable": false,
-      "sha256": "4702ac9a8016a9703e0748740ea8f9160739be69c0c0f526bbe108d63e1f6b56"
-    },
-    "tests/test_user_feedback_contracts.py": {
+    "tests/unit/catalog/test_public_tool_contracts.py": {
       "executable": false,
       "sha256": "38efd957c76f32e1b5b00f6f6a846dfd20510ae51703f50fa6fd539ba7be6fb2"
     },
-    "tests/test_user_query_regressions.py": {
+    "tests/unit/catalog/test_research_contracts.py": {
       "executable": false,
-      "sha256": "60dfe7c4cc81b3065d0bb5e8340dc458d7e0817ea67539bec8ad3317a99dbb03"
+      "sha256": "e678abef85086334c7a6283b3cb640498d40fccd9d4ec91e8cd6fffc543f386e"
     },
-    "tests/test_wheel_distribution.py": {
+    "tests/unit/catalog/test_research_requests.py": {
       "executable": false,
-      "sha256": "4b9f0292db160fddedca4d995ef56d84fd9b2092e1dac259c1378a165cb8c9dc"
+      "sha256": "b096480e37efadf0f6006027b457e913655c7c5646d51747d7a779be410bac56"
+    },
+    "tests/unit/catalog/test_scientific_workflows.py": {
+      "executable": false,
+      "sha256": "3e8f280ba121fe4af8348d27a8ea2263c2a39ed0ae79f926086b8904ec5df6c6"
+    },
+    "tests/unit/catalog/test_source_batch_permissions.py": {
+      "executable": false,
+      "sha256": "326f5fbc4d6562bcf53163b73a85fa9034f01e340a0bfae310909038c6c6a2fb"
+    },
+    "tests/unit/catalog/test_source_licenses.py": {
+      "executable": false,
+      "sha256": "ae6c7861dfc5211ba275be10137a3ae4099f5e4e8648cdb50142d3954d32c7d3"
+    },
+    "tests/unit/records/test_dossier_evidence.py": {
+      "executable": false,
+      "sha256": "73714f7efcd65949a9a095c0c4414713eb67b6273cb53e2ccbde7eebaebc6a33"
+    },
+    "tests/unit/records/test_evidence_receipts.py": {
+      "executable": false,
+      "sha256": "0abba8d46ef221bfc8ce9f3d7de385da604184cfe0124333db0547544ab7ed4a"
+    },
+    "tests/unit/records/test_evidence_recovery.py": {
+      "executable": false,
+      "sha256": "4b6e5b3c7cbd22368685a88cec436e1914a2d292c31c75f56cc5e1b107f870c3"
+    },
+    "tests/unit/records/test_label_metadata.py": {
+      "executable": false,
+      "sha256": "cb81772bce12024b1a6adceb1a0792637d577957b50e649e36b89079de0a57d8"
+    },
+    "tests/unit/records/test_native_entities.py": {
+      "executable": false,
+      "sha256": "e69e9ec3193f745bd857e01f3524abea8c929a0044b34ff6134717077f402d78"
+    },
+    "tests/unit/records/test_native_literature.py": {
+      "executable": false,
+      "sha256": "cf32b2f7e65f37a0759d19f6fec7c737cf8806a75192e617989eded8960c7ccd"
+    },
+    "tests/unit/records/test_native_response_shapes.py": {
+      "executable": false,
+      "sha256": "1b34536df0c80e811c8f82d479d85a09ad9fc90de366cfaf4d5aa7940e61ad5b"
+    },
+    "tests/unit/records/test_native_variants.py": {
+      "executable": false,
+      "sha256": "6a043cb955bd78b226b33047b3b9f3d7017213220ac16f969b3df58e0aad9752"
+    },
+    "tests/unit/records/test_output_contracts.py": {
+      "executable": false,
+      "sha256": "f3f9ebd0ff8b115add99a47c9b4f39ca6502f74583185109ea7c6ea808558113"
+    },
+    "tests/unit/records/test_qualified_gene_identity.py": {
+      "executable": false,
+      "sha256": "868ff3b5bbef3fa43c7ba2f3149d6037ba9604edb6779fc19bd4fc13bd3762a7"
+    },
+    "tests/unit/records/test_record_schema_resources.py": {
+      "executable": false,
+      "sha256": "d7a1fb33d83d3482b82ce2c98439a14769601c1a3c58fca1d72c6ae934eaea18"
+    },
+    "tests/unit/records/test_schema_compaction.py": {
+      "executable": false,
+      "sha256": "9cf1b2376a60a7864a647a12b3aa34ad0fa947552d3371e75418872c4ccff8c5"
+    },
+    "tests/unit/records/test_source_content_boundary.py": {
+      "executable": false,
+      "sha256": "a9deca4711362c92235c0e33445801857a035c49df1228c8e11d1422249a4a6c"
+    },
+    "tests/unit/records/test_typed_expression_records.py": {
+      "executable": false,
+      "sha256": "187bc542af64e1f35ca2272d947460222e48065173a46e189d2809dbf23378b7"
+    },
+    "tests/unit/records/test_typed_literature_records.py": {
+      "executable": false,
+      "sha256": "aa0610c6ce0176cb084091beeec36d9f1ce7cbc2bcebcd2a1b6e4b75d2dd8f10"
+    },
+    "tests/unit/records/test_typed_mutation_profile.py": {
+      "executable": false,
+      "sha256": "f7a713339cbeba24d39c41854d8047ec81a3438935e11394d7babedceb1a6373"
+    },
+    "tests/unit/records/test_typed_population_records.py": {
+      "executable": false,
+      "sha256": "ae47de1de55fbabe8b0282ce304490dd4159dae9a1dcdd18faf689775fbbae56"
+    },
+    "tests/unit/records/test_typed_qtl_records.py": {
+      "executable": false,
+      "sha256": "cf086b64a31dc6d90cbe14e3db9da13f35c778776c26d2693ed5f8d6498e76fd"
+    },
+    "tests/unit/records/test_typed_study_derivations.py": {
+      "executable": false,
+      "sha256": "9d961603bf9a3b3f6ee06e0bcd57696f3f2c7413fc39511147572445b77b7cfc"
+    },
+    "tests/unit/records/test_typed_study_records.py": {
+      "executable": false,
+      "sha256": "1cccbcdc8180b143dfc107235913e6bc48eed34334558e339aaf5cef9d00f7c4"
+    },
+    "tests/unit/records/test_typed_trial_records.py": {
+      "executable": false,
+      "sha256": "06dea2fc815567a2f84decb5348abf1e989d519228c31f6c2d6ed27ae3921677"
+    },
+    "tests/unit/records/test_typed_variant_assertions.py": {
+      "executable": false,
+      "sha256": "6aac765ba615b9ed8a9d6a8707951bc8c1d09a739ebf7300c1992803039cee77"
+    },
+    "tests/unit/runtime/test_anonymous_pagination.py": {
+      "executable": false,
+      "sha256": "613c70d510449c8bf2834a3a9fb142b52712c69fd9292cb4832ee588dfc2f8ce"
+    },
+    "tests/unit/runtime/test_auth_branding.py": {
+      "executable": false,
+      "sha256": "25fa9aeb09562a31708b5f803d657a425ef826d44ab07a9d813c3563cbdb75e8"
+    },
+    "tests/unit/runtime/test_bulk_redaction.py": {
+      "executable": false,
+      "sha256": "f46a8a8d0f8bf017b1ffcead1453c18ab9f4ffda3941e7780a454ddd242ea6d8"
+    },
+    "tests/unit/runtime/test_diagnosis.py": {
+      "executable": false,
+      "sha256": "b21e90770c2fa92a1448b3f4eaec50ee2af69150e792b2dd5410ed8e6391580d"
+    },
+    "tests/unit/runtime/test_http_contract.py": {
+      "executable": false,
+      "sha256": "b26165d24e06e32714ee7cbe1021e2a1d57759c19b9009a85910ab39af5ad361"
+    },
+    "tests/unit/runtime/test_http_security.py": {
+      "executable": false,
+      "sha256": "01b2c9bb086f620ec09bc4dd10f59e41b47c4e8ad8919c946d71741f075bdd09"
+    },
+    "tests/unit/runtime/test_http_telemetry.py": {
+      "executable": false,
+      "sha256": "d1d1456d1d732f544f4480a13928ed68dfac1755475a3fbc9ff46e8b73a1164d"
+    },
+    "tests/unit/runtime/test_infrastructure_readiness.py": {
+      "executable": false,
+      "sha256": "21ddd478df734e241c7478ed4603c7a6c556b5a8f9c21a712ede504b32604c5e"
+    },
+    "tests/unit/runtime/test_ingress_budget.py": {
+      "executable": false,
+      "sha256": "9d215c1998e5c9aa8d5756935d87c4b291b9364b493d7fd5b2fe874904bc0063"
+    },
+    "tests/unit/runtime/test_local_boundary.py": {
+      "executable": false,
+      "sha256": "1ad8111b5ebfb22bf2f2f8be05efd34d2de2d2ab6f018b97b25557f5109a0a89"
+    },
+    "tests/unit/runtime/test_local_source_keys.py": {
+      "executable": false,
+      "sha256": "fb67b2a743df9ee1772d22e251230349784eb7d296066ec3934a2560b65ee0b9"
+    },
+    "tests/unit/runtime/test_local_state.py": {
+      "executable": false,
+      "sha256": "8af8fcaaac8c46cdd923387d432ee5f609ce0fbe7363f08f419f66f7ee36cdad"
+    },
+    "tests/unit/runtime/test_public_predictor_cache.py": {
+      "executable": false,
+      "sha256": "22bb64789532a0b970d89f97c7e652172cf66bd851271e0a80262f5965fba737"
+    },
+    "tests/unit/runtime/test_public_snapshot_grants.py": {
+      "executable": false,
+      "sha256": "94b85f11c5bebd14439b6b6e760bf68fef232ead9f100d52cc312941c9529e35"
+    },
+    "tests/unit/runtime/test_remote_guest.py": {
+      "executable": false,
+      "sha256": "905413b3df6f71687b3a0497a38eba5b43403e7080e2ea485f355041ddd97cde"
+    },
+    "tests/unit/runtime/test_request_credentials.py": {
+      "executable": false,
+      "sha256": "051001fb08c458e5a9393a747294716a0c28fd938b9616ecb5ccc33e7216c60d"
+    },
+    "tests/unit/runtime/test_request_telemetry.py": {
+      "executable": false,
+      "sha256": "ecd66d9603b64c18b28a1f3bcd2ebb4ad34e5a24782c5591da07785b04bbde92"
+    },
+    "tests/unit/runtime/test_result_cache.py": {
+      "executable": false,
+      "sha256": "a22db22dcad5005b0f695c1ce1bdb82aa1445e4e5397e9c87bf23c2e4794e2d3"
+    },
+    "tests/unit/runtime/test_runtime_admission.py": {
+      "executable": false,
+      "sha256": "b52119fb05d3bf9dd4fe65a11576ae8ea3261ef4e6a04359c5ca2ac6cadefdd2"
+    },
+    "tests/unit/runtime/test_runtime_safety.py": {
+      "executable": false,
+      "sha256": "dff04267f2ab9ec0cf92f097351c0fe5a5f2e0b7d9d3a630d28afd3837aa6339"
+    },
+    "tests/unit/runtime/test_runtime_telemetry.py": {
+      "executable": false,
+      "sha256": "96c0bc0b6cb4e4e370e73d4ba274c343dc25ab053b86a5d944a15a265eec041b"
+    },
+    "tests/unit/runtime/test_snapshot_compression.py": {
+      "executable": false,
+      "sha256": "ac59b779cd45e11d1fd2e2e2227bd8dd3e6987537d6b27d193357627890fae7f"
+    },
+    "tests/unit/runtime/test_transport_failures.py": {
+      "executable": false,
+      "sha256": "37fc8fd0811277f2bb250e8b7bd0688ce5a4d20b3229e78dfbeaf45e4744d0e2"
+    },
+    "tests/unit/runtime/test_transport_retries.py": {
+      "executable": false,
+      "sha256": "dcc03abe256f0720b68dd94b0c6e0a3396134c428652b9b08423118b0bfd0e88"
+    },
+    "tests/unit/sources/test_alphamissense.py": {
+      "executable": false,
+      "sha256": "b794f5d0f9b68f260e43e6313beeebf7b494b55d81099211e8abf9b28daa0c79"
+    },
+    "tests/unit/sources/test_biothings_responses.py": {
+      "executable": false,
+      "sha256": "147d5e24860cf2c63f8125ab1ce6cb86de54a91513819d7b74233dd9d2a0e70e"
+    },
+    "tests/unit/sources/test_chembl_properties.py": {
+      "executable": false,
+      "sha256": "5014b193a98e7f85e953575b94c51485a02c75a3b66e50e9117c2c8a190c70c0"
+    },
+    "tests/unit/sources/test_civic_responses.py": {
+      "executable": false,
+      "sha256": "456405054b384f1f0ad6abbe2d59b2d7ec0443dadb7971fe87741f689bc3cdbc"
+    },
+    "tests/unit/sources/test_clingen_responses.py": {
+      "executable": false,
+      "sha256": "3a8e58714d423820456023823ed4e011ce0971bb653f63404f548fa7d1757a2c"
+    },
+    "tests/unit/sources/test_clinical_trials_responses.py": {
+      "executable": false,
+      "sha256": "9238810806ba320e86ba75eef10c93d0c99f5237c112b4ce07e0de846d49c90d"
+    },
+    "tests/unit/sources/test_complexportal_responses.py": {
+      "executable": false,
+      "sha256": "85392f451e1fbd91b0d44cdb6280feb65ece5e02f78690724355948b67bf29b1"
+    },
+    "tests/unit/sources/test_direct_clinvar.py": {
+      "executable": false,
+      "sha256": "2b54dec86275cb81ba0914d58e52d9bdb58e2309e77fe9e91bf790fe2ef86bde"
+    },
+    "tests/unit/sources/test_ensembl_contracts.py": {
+      "executable": false,
+      "sha256": "2c75b235ff2d485e064e34ea7dfe0480de37bb188ae8a7151c2f6b2c6e94396c"
+    },
+    "tests/unit/sources/test_ensembl_genome_contracts.py": {
+      "executable": false,
+      "sha256": "7cd78d604ba3650b817828336e042344bf8fdf1d0c3b76405e5f5ffed62be455"
+    },
+    "tests/unit/sources/test_eve.py": {
+      "executable": false,
+      "sha256": "47b53ba2bd97ab4c149e7a171e8e8fef301506a30c926196ac72adc830e8f035"
+    },
+    "tests/unit/sources/test_fulltext_floating_tables.py": {
+      "executable": false,
+      "sha256": "fcfae11e7fa5ae2d545a0d6cc25514314ee3c69cb4285b2dad22bfc31a669c72"
+    },
+    "tests/unit/sources/test_fulltext_range_contract.py": {
+      "executable": false,
+      "sha256": "346db44f08e91955d08674a5e3aa9be029a0c49d5db2454b4b41891265dee778"
+    },
+    "tests/unit/sources/test_gencc_responses.py": {
+      "executable": false,
+      "sha256": "d242e05b878cc3a4e2142c51270ad85e1f35073b3fa1c4bf81c5ca2d3c6f08b1"
+    },
+    "tests/unit/sources/test_gnomad_responses.py": {
+      "executable": false,
+      "sha256": "225edb3c1d15c57b3491878ebb262b9fbf18e326b5fd6add248753a45cf90dc6"
+    },
+    "tests/unit/sources/test_gnomad_source_permissions.py": {
+      "executable": false,
+      "sha256": "d4b3e7796c9572a978ec07c7e40926ce552fa1d601aa678d9dcb66552cd54100"
+    },
+    "tests/unit/sources/test_gtex_pagination.py": {
+      "executable": false,
+      "sha256": "8a326eaad29ab6350a75cffb609889abefc701f2678d6e2cd5c9fc5e9b932852"
+    },
+    "tests/unit/sources/test_gtex_reference_identity.py": {
+      "executable": false,
+      "sha256": "389776265c52537369bce13f68cbd98c18ab5e3218ce9e5474779dca44569cb3"
+    },
+    "tests/unit/sources/test_gtex_responses.py": {
+      "executable": false,
+      "sha256": "9038a00015f31333fb7261592cacaf1e33a5934d3697fcf5b4c206bf08cc5ed7"
+    },
+    "tests/unit/sources/test_gwas_responses.py": {
+      "executable": false,
+      "sha256": "892aac13c38db99d51eccd52a6707195f4a5d7eb72bd017aec16e047f227d265"
+    },
+    "tests/unit/sources/test_hpa_responses.py": {
+      "executable": false,
+      "sha256": "841abc330abcba1a7b2fcf03c8d4f7ea174e3c321f5df848a5acbaa68c911266"
+    },
+    "tests/unit/sources/test_interpro_responses.py": {
+      "executable": false,
+      "sha256": "01a4ef8e54f501509d82773ec294bd017aa97950adfbbdd25c798a5d25b34c6b"
+    },
+    "tests/unit/sources/test_monarch_responses.py": {
+      "executable": false,
+      "sha256": "6982170351c287033373adeca08bfded48fe3650c3313ef1d53dc1b18a15910e"
+    },
+    "tests/unit/sources/test_myvariant_responses.py": {
+      "executable": false,
+      "sha256": "80e6281393c622d902ceb45fed65110f645449f26d1f1db5749e0fd85d649c20"
+    },
+    "tests/unit/sources/test_ncbi_datasets.py": {
+      "executable": false,
+      "sha256": "147c1846dbbbd370aad42fa0fc3193dbc6c057d8f54bc95d3f4958bbd44d39df"
+    },
+    "tests/unit/sources/test_ncbi_gene_reports.py": {
+      "executable": false,
+      "sha256": "d1ba4b7bbacab0af96f83f87f1805bd5eba72dfd3ec75e16068d3b3cafe94a00"
+    },
+    "tests/unit/sources/test_ols_responses.py": {
+      "executable": false,
+      "sha256": "9c78d8a5275671dc0bf6ea2cb1b285a91a8f68b6cbea84e841b3e9347b47649b"
+    },
+    "tests/unit/sources/test_open_citation_graph.py": {
+      "executable": false,
+      "sha256": "0f72c2bde46424e8306fe3a8fd7247449cbfe244c4a001d24db04fd5da1c2678"
+    },
+    "tests/unit/sources/test_openalex.py": {
+      "executable": false,
+      "sha256": "9e20cfd46b74dfe88661167fe817ebefbebd867727925301542e8916d5e2ae81"
+    },
+    "tests/unit/sources/test_opentargets_assessments.py": {
+      "executable": false,
+      "sha256": "f31bc5c5cdc8ad5b1b5afee1c9449123862d435da4fa28c95874bd70fdfb16b6"
+    },
+    "tests/unit/sources/test_opentargets_pair_evidence.py": {
+      "executable": false,
+      "sha256": "533a817b5e037709d79631ec01552a5595402b1f87b1d867e9fc50ed85f246b7"
+    },
+    "tests/unit/sources/test_opentargets_partial.py": {
+      "executable": false,
+      "sha256": "d20dbf096ddcd8946a574d434951da0aefd0253806d6c6cf567e10ef2fade1ee"
+    },
+    "tests/unit/sources/test_opentargets_responses.py": {
+      "executable": false,
+      "sha256": "a28d59dddf94876c65e22b9acf67f6578a7885c44692b2d1aa49a12dc4d7dca2"
+    },
+    "tests/unit/sources/test_opentargets_variant_evidence.py": {
+      "executable": false,
+      "sha256": "a7cd962f4a5774efcedf1d7b7e53153eb077df2a86c47920665b064330e0055c"
+    },
+    "tests/unit/sources/test_opentargets_workflows.py": {
+      "executable": false,
+      "sha256": "df89743d27aa8962b760ae61d76ff8834a315d678ebb2ce7b7b0f9f8f316dcb4"
+    },
+    "tests/unit/sources/test_pdb_responses.py": {
+      "executable": false,
+      "sha256": "4fc988b850f98e0802048e88ae289d439f89448209ccc6b30cae48aaece73132"
+    },
+    "tests/unit/sources/test_pmc_fulltext_fallback.py": {
+      "executable": false,
+      "sha256": "852f355b5e50ee6a3e873f831c1ceeaacc1209cd97f633156163a2487673493a"
+    },
+    "tests/unit/sources/test_pubmed_search_parity.py": {
+      "executable": false,
+      "sha256": "da1a0e0aa9cc854eb596dea25b6375dc67b40112588a4359344fb65be512fe08"
+    },
+    "tests/unit/sources/test_reactome_contracts.py": {
+      "executable": false,
+      "sha256": "bff73df3d4f631c9f54895de05dc25b474b3d11370523cfe7400af932f564702"
+    },
+    "tests/unit/sources/test_reactome_responses.py": {
+      "executable": false,
+      "sha256": "824100bfae9922dd7610c93e3b311d628cf5b207de4aaf8b41bf55d644bff8fd"
+    },
+    "tests/unit/sources/test_reactome_trial_serialization.py": {
+      "executable": false,
+      "sha256": "ac21bc2c33c4eec770ffebd0bbef6ee96625d569736d3c6b8db4c95c6f3a3e06"
+    },
+    "tests/unit/sources/test_source_schemas.py": {
+      "executable": false,
+      "sha256": "d88b7224a887c5acfc3f4b5e3f486ee45dbfde987c3495984ebd0c5e5f6a2324"
+    },
+    "tests/unit/sources/test_string_network.py": {
+      "executable": false,
+      "sha256": "760b3779ed2bd322353d66bcdf0a309ffbb47037bae7f92f94ce5c14172d1172"
+    },
+    "tests/unit/sources/test_surechembl_annotations.py": {
+      "executable": false,
+      "sha256": "e761ea3de0daf7b0ae2f6a47187045ef1cae232308f29e5ef41232b8d1c4d528"
+    },
+    "tests/unit/sources/test_surechembl_metadata.py": {
+      "executable": false,
+      "sha256": "d657fcbd57396b812faade7a95da88a95f78c3f0936536dde2802ac322f4f564"
+    },
+    "tests/unit/sources/test_surechembl_search.py": {
+      "executable": false,
+      "sha256": "ea58976f51dfef299501c19d172a8496fcc2542f4642479dd9f407c7fa72ce37"
+    },
+    "tests/unit/sources/test_uniprot_annotations.py": {
+      "executable": false,
+      "sha256": "6925987ad3ba27845b2cb084eeddab60985e635a135ef9bc93257cb4d722ac25"
+    },
+    "tests/unit/sources/test_uniprot_responses.py": {
+      "executable": false,
+      "sha256": "fa3751e003b4f0866bb6b445003840a0c4870b4a2d6b06ddde30963d36a3ae4e"
+    },
+    "tests/unit/sources/test_uniprot_unknown_positions.py": {
+      "executable": false,
+      "sha256": "21f844434dce1c67f7f320da008bac8d1f5a55cf7e72c16a12b4a2abbc16759f"
+    },
+    "tests/unit/studies/test_native_studies.py": {
+      "executable": false,
+      "sha256": "354a1e96eb1a07cbe49981e00dca53030784ea39af9b4d74e90c58861bd2b025"
+    },
+    "tests/unit/studies/test_study_cache.py": {
+      "executable": false,
+      "sha256": "bdc12b023261376c6344f43cdf878ef5c201763aaab80ebe1162349dc3cfc7b3"
+    },
+    "tests/unit/studies/test_study_concurrent_recovery.py": {
+      "executable": false,
+      "sha256": "6f207b0d3ac7d00628ea856d0a3d3cbecec0812d1959a8ea0be0c838aa8d7e65"
+    },
+    "tests/unit/studies/test_study_initialization.py": {
+      "executable": false,
+      "sha256": "c9dbb1e31ae30768c03be3e466f54f610222219f973929beb549f9567c5320ef"
+    },
+    "tests/unit/studies/test_study_installation.py": {
+      "executable": false,
+      "sha256": "11d1b8918db883766015a1d316dae06d9e6cd7941e2f4a4ddfa636ffa1cf070f"
+    },
+    "tests/unit/studies/test_study_metadata_contract.py": {
+      "executable": false,
+      "sha256": "1c6871d0d37a8441edd1ac32612103b6ac2ef8d45ffc36836f509c65d057c9fb"
+    },
+    "tests/unit/studies/test_study_missingness.py": {
+      "executable": false,
+      "sha256": "8bc476ff6583f89d092bad1881375dabf0a532562033af4e00cf7edcd8040f1c"
+    },
+    "tests/unit/studies/test_study_patient_inference.py": {
+      "executable": false,
+      "sha256": "34511f9aab4c0b13decd4e1ec0b741f66fafe0340ad3c4cf0284cdbefd15fe3a"
+    },
+    "tests/unit/studies/test_study_resources.py": {
+      "executable": false,
+      "sha256": "a16b0e66f348b7bb81048d67db0eab9ec895c56b9bb021b38d8aeb2886631dfa"
+    },
+    "tests/unit/studies/test_study_statistics_boundaries.py": {
+      "executable": false,
+      "sha256": "0d074cf5793ae81ccdbcb5606888cffe548869e36b2710ceb2239523fb7915ea"
+    },
+    "tests/unit/studies/test_study_statistics_reference.py": {
+      "executable": false,
+      "sha256": "8c16a8e8f7fb5966df7e93d7c1980a6a6a6fe087b03dfa71b6c01c0c869e9055"
     },
     "uv.lock": {
       "executable": false,
-      "sha256": "d470454995a023bbea5b97baf60bebf52c5508049bdaaf328ac44a321c87a9ad"
+      "sha256": "aea08424d97ba357fe53be332dfb5facadf12dd6a791d257009d208ddbf592ca"
     }
   },
   "format": 1,
   "publication_ready": true,
-  "tree_sha256": "36bdf666c5818e351be3625138e82c7c9ebdce47174c99f8e73302dbae45ae53"
+  "tree_sha256": "481e153f1aa6f7bef3538eae775a0cf0bb045b8e0a437291ae4295d5579a5e61"
 }

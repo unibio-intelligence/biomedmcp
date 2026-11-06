@@ -2,7 +2,7 @@
 
 Call `get_capabilities` with `{"source":"gnomad"}` to inspect the
 `variant_population` field schema. Retrieve measurements through
-`variant_evidence`, for example:
+`get_variant_evidence`, for example:
 
 ```json
 {"id":"chr1:55039974:G:T","assembly":"grch38","sections":["population"]}

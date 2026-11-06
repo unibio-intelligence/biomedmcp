@@ -19,7 +19,7 @@ field configuration. The former `ft_*` selector is rejected by the provider.
 Each JSON projection retains accession identity. Full cross-reference metadata
 uses a bounded full JSON entry instead of the unsupported `xref_*` selector.
 
-Use `capabilities(source="uniprot")` to discover the current advanced operations.
+Use `get_capabilities(source="uniprot")` to discover the current advanced operations.
 `analyze_evolution` now offers `similarity_annotations`, `orthology_references`
 and `phylogeny_references`. Each selects its own UniProt projection: SIMILARITY
 texts, OrthoDB identifiers or PhylomeDB identifiers. Missing annotations retain
@@ -53,8 +53,8 @@ body cannot supply or overwrite that release. Mixed observed releases remain
 per-record with a warning; no aggregate release is invented when a header is
 missing or inputs disagree. Rerunning a request may return newer data. Cached results and continuations from before source53 no longer work.
 
-The source53 additions in `tests/test_uniprot_annotations.py` and the earlier
-`tests/test_uniprot_responses.py` pass native and Docker contract qualification.
+The source53 additions in `tests/unit/sources/test_uniprot_annotations.py` and the earlier
+`tests/unit/sources/test_uniprot_responses.py` pass native and Docker contract qualification.
 The synthetic fixture contains an explicit SIMILARITY annotation where a healthy
 annotation result is asserted. Its dated field fixture records the source URL, hash and
 immutable official model references. Taxonomy, non-JSON exports and all nested

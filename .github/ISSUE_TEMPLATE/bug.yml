@@ -5,7 +5,7 @@ body:
     id: version
     attributes:
       label: biomedmcp version and client
-      placeholder: biomedmcp 0.2.4, Claude Desktop, stdio
+      placeholder: biomedmcp 0.2.5, Claude Desktop, stdio
     validations:
       required: true
   - type: textarea

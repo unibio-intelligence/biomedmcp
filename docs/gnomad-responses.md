@@ -1,6 +1,6 @@
 # gnomAD population and constraint evidence
 
-`variant_evidence` population retrieval uses one GRCh38 allele and the
+`get_variant_evidence` population retrieval uses one GRCh38 allele and the
 `gnomad_r4` browser dataset selector. The response must agree on variant ID,
 reference genome, chromosome, position and both alleles. MyVariant-derived
 SNV mappings require one explicit GRCh38 coordinate annotation; this service
@@ -10,7 +10,7 @@ NCBI ID. Nonhuman, ambiguous or missing identity mappings stop acquisition.
 
 For an explicit GRCh38 single-nucleotide variant, request only `population`
 with `sources: ["gnomad"]`, for example
-`variant_evidence(id="chr1:55039974:G:T", assembly="grch38", sections=["population"], sources=["gnomad"])`.
+`get_variant_evidence(id="chr1:55039974:G:T", assembly="grch38", sections=["population"], sources=["gnomad"])`.
 The provider confirms the supplied coordinates and alleles; no MyVariant
 annotation is acquired. rsIDs, indels and other assemblies still need their
 separately qualified identity/normalization dependencies.

@@ -211,4 +211,4 @@ See the [public runtime README](../../../README.md) for installation, source con
 
 Provider contracts: [NCBI Datasets REST API and dated OpenAPI](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/api/rest-api/), [NCBI annotation BUSCO policy](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/data-processing/policies-annotation/quality/busco/). The packaged contracts.json retains twelve selected qualified paths and their referenced schemas, with the source snapshot SHA-256 and retrieval date.
 
-Licensed under [Apache-2.0](LICENSE). Provider data has its own [terms](../../../docs/source-licenses.md).
+Licensed under [Apache-2.0](../../../LICENSE). Provider data has its own [terms](../../../docs/source-licenses.md).

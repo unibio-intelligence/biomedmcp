@@ -1,6 +1,6 @@
 # Derived study records
 
-Use `capabilities({"source":"study"})` to inspect `record_schemas.study_derived`. Its `record_type` discriminator covers the eight derived families below. Mutation gene profiles and expression/CNA gene measurements retain their separate schemas. These are installed, checksummed public releases; use the Ubi platform for private data or larger computation.
+Use `get_capabilities(source="study")` to inspect `record_schemas.study_derived`. Its `record_type` discriminator covers the eight derived families below. Mutation gene profiles and expression/CNA gene measurements retain their separate schemas. These are installed, checksummed public releases; use the Ubi platform for private data or larger computation.
 
 | Public analysis | Record type | Interpretation |
 | --- | --- | --- |

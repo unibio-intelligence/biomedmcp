@@ -42,7 +42,7 @@ Connect to `http://127.0.0.1:8000/mcp`. This server is unauthenticated and liste
 
 ## Installed Python package
 
-In a Python 3.13+ virtual environment, run `python -m pip install biomedmcp==0.2.4`.
+In a Python 3.13+ virtual environment, run `python -m pip install biomedmcp==0.2.5`.
 For a stdio client, the package command is:
 
 ```sh
@@ -50,20 +50,20 @@ UBI_PROFILE=local biomedmcp mcp --transport stdio
 ```
 
 The `biomedmcp-server` command accepts the same server options. A client with uvx
-can use `uvx --from biomedmcp==0.2.4 biomedmcp mcp --transport stdio`.
+can use `uvx --from biomedmcp==0.2.5 biomedmcp mcp --transport stdio`.
 
 ## Container
 
 A stdio client can run the versioned container:
 
 ```sh
-docker run --rm -i --no-healthcheck ghcr.io/unibio-intelligence/biomedmcp:0.2.4 biomedmcp-server --transport stdio
+docker run --rm -i --no-healthcheck ghcr.io/unibio-intelligence/biomedmcp:0.2.5 biomedmcp-server --transport stdio
 ```
 
 For local HTTP, publish port 8000 on loopback only:
 
 ```sh
-docker run --rm -p 127.0.0.1:8000:8000 ghcr.io/unibio-intelligence/biomedmcp:0.2.4
+docker run --rm -p 127.0.0.1:8000:8000 ghcr.io/unibio-intelligence/biomedmcp:0.2.5
 ```
 
 ## Use the CLI with a server

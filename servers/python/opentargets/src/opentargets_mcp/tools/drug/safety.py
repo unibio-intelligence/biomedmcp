@@ -1,89 +1,26 @@
-# src/opentargets_mcp/tools/drug/safety.py
-"""
-Defines API methods and MCP tools related to drug safety and pharmacovigilance.
-"""
-from typing import Any, Dict
-from ...queries import OpenTargetsClient
+"""Drug safety and cross-reference relations."""
+
+from ...queries import relation
+
+DRUG_ADVERSE_EVENTS = (
+    "query DrugAdverseEvents($chemblId:String!,$size:Int!){drug(chemblId:$chemblId){id "
+    "adverseEvents(page:{index:0,size:$size}){count criticalValue rows{name meddraCode count logLR}}}}"
+)
+DRUG_CROSS_REFERENCES = (
+    "query DrugCrossReferences($chemblId:String!){drug(chemblId:$chemblId){id crossReferences{source ids}}}"
+)
+
+
+WINDOW = 25
+
 
 class DrugSafetyApi:
-    """
-    Contains methods to query drug safety, warnings, and adverse events.
-    """
-    async def get_drug_adverse_events(self, client: OpenTargetsClient, chembl_id: str, page_index: int = 0, page_size: int = 10) -> Dict[str, Any]:
-        """Get adverse event information for a drug from FAERS and MedDRA."""
-        graphql_query = """
-        query DrugAdverseEvents($chemblId: String!, $pageIndex: Int!, $pageSize: Int!) {
-            drug(chemblId: $chemblId) {
-                id
-                name
-                adverseEvents(page: {index: $pageIndex, size: $pageSize}) {
-                    count
-                    criticalValue
-                    rows {
-                        meddraCode
-                        name
-                        count
-                        logLR
-                    }
-                }
-            }
-        }
-        """
-        return await client._query(graphql_query, {"chemblId": chembl_id, "pageIndex": page_index, "pageSize": page_size})
+    async def get_drug_adverse_events(self, client, chembl_id):
+        """FAERS-derived adverse event signals (log likelihood ratios), not incidence rates."""
+        data = await client._query(DRUG_ADVERSE_EVENTS, {"chemblId": chembl_id, "size": WINDOW})
+        return {"drug_id": chembl_id, "adverseEvents": relation(data, "drug", "adverseEvents")}
 
-    async def get_drug_pharmacovigilance(self, client: OpenTargetsClient, chembl_id: str) -> Dict[str, Any]:
-        """
-        Get pharmacovigilance data for a drug, including adverse events and withdrawal information.
-        """
-        graphql_query = """
-        query DrugPharmacovigilance($chemblId: String!) {
-            drug(chemblId: $chemblId) {
-                id
-                name
-
-
-
-                adverseEvents(page: {index: 0, size: 20}) {
-                     count
-                     criticalValue
-                     rows {
-                         meddraCode,
-                         name,
-                         count,
-                         logLR
-                     }
-                }
-            }
-        }
-        """
-        return await client._query(graphql_query, {"chemblId": chembl_id})
-
-    async def get_drug_warnings(self, client: OpenTargetsClient, chembl_id: str) -> Dict[str, Any]:
-        """Get detailed drug warnings including withdrawals and black box warnings."""
-        graphql_query = """
-        query DrugWarnings($chemblId: String!) {
-            drug(chemblId: $chemblId) {
-                id
-                name
-
-
-                drugWarnings {
-                    warningType
-                    description
-                    toxicityClass
-                    country
-                    year
-                    efoId
-                    efoTerm
-                    efoIdForWarningClass
-                    references {
-                        id
-                        source
-                        url
-                    }
-                    chemblIds
-                }
-            }
-        }
-        """
-        return await client._query(graphql_query, {"chemblId": chembl_id})
+    async def get_drug_cross_references(self, client, chembl_id):
+        """External database identifiers recorded for the drug."""
+        data = await client._query(DRUG_CROSS_REFERENCES, {"chemblId": chembl_id})
+        return {"drug_id": chembl_id, "crossReferences": relation(data, "drug", "crossReferences")}
