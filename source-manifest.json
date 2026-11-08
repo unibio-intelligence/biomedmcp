@@ -38,7 +38,7 @@
     },
     "CHANGELOG.md": {
       "executable": false,
-      "sha256": "0e46ad0532c888407cb95f754aab314419e53e19f4ce4d56816274b09d0a9c14"
+      "sha256": "f25e500400a7a7acdb6dbe1ef012068a4f5e521e850abf926f5e8944053b51c3"
     },
     "CONTRIBUTING.md": {
       "executable": false,
@@ -58,7 +58,7 @@
     },
     "README.md": {
       "executable": false,
-      "sha256": "3887502387169f37ff18c2dadeb03883c34919b5e40cca762d075b312daf2bb2"
+      "sha256": "108f67b2520d1ff2a0be967caf387da5015b92ee28182b574817577c4d77d53b"
     },
     "docs/adapter-catalog.json": {
       "executable": false,
@@ -90,7 +90,7 @@
     },
     "docs/connect.md": {
       "executable": false,
-      "sha256": "c969fcf4ae11b0c26e1e59a8a4b20d0b16824de15dec7273965a0b9e64f9e4dd"
+      "sha256": "c987ac4272e2fe8b328804b4b6e3b96432bf62a2c72b20a7c9730c950bb9bbe8"
     },
     "docs/development/ci-governance.md": {
       "executable": false,
@@ -1919,5 +1919,5 @@
   },
   "format": 1,
   "publication_ready": true,
-  "tree_sha256": "9f93b5080eec6917a4881668a744a6af75304e401d66c70916c2a217b06a914c"
+  "tree_sha256": "4067eae97faeedff3d7b04ed1cff0e57461a0a4b0d559e3cb975ab6f81bbcd26"
 }
