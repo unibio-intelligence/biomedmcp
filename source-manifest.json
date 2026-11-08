@@ -38,7 +38,7 @@
     },
     "CHANGELOG.md": {
       "executable": false,
-      "sha256": "728444f7bf83585c01655fd672d8f46d935e39dfbd2544b1f02a59b98c669e96"
+      "sha256": "47f4c60fb923047a6e8a5d376c913c02cf8a4a4a3bfa4ec42606fac688e8a818"
     },
     "CONTRIBUTING.md": {
       "executable": false,
@@ -866,7 +866,7 @@
     },
     "src/biomedmcp/mcp/server.py": {
       "executable": false,
-      "sha256": "f6dda55b9e1ddb5819da2b04f9ff4413c31a358963e318d970ef73a6a73723f4"
+      "sha256": "0672e8492a2b4a81df7d2e9300e02ecbd6d8b560e1650de19c5b8a419b77a496"
     },
     "src/biomedmcp/native/__init__.py": {
       "executable": false,
@@ -1030,7 +1030,7 @@
     },
     "src/biomedmcp/offline-qualification.json": {
       "executable": false,
-      "sha256": "392a537783398fc632ad94499d9561dad43416e2ce206ecf8f716469a3993e6b"
+      "sha256": "e2894b33f68884828d123dc656fdf84ee1b53c78e57500a97a49a41832a1acb8"
     },
     "src/biomedmcp/output_contracts.py": {
       "executable": false,
@@ -1430,7 +1430,7 @@
     },
     "tests/unit/catalog/test_cli_contract.py": {
       "executable": false,
-      "sha256": "2513c9c00058c3b60dbdd7ec544f7c925e9bd9809db0dd37fdf1b5a8c0f77888"
+      "sha256": "a7fc599dd72a2d0636d4cee38da7f9a16afc6ab1d49e783b7069c74ed661f103"
     },
     "tests/unit/catalog/test_cli_pagination.py": {
       "executable": false,
@@ -1919,5 +1919,5 @@
   },
   "format": 1,
   "publication_ready": true,
-  "tree_sha256": "1b5b1b0694edd351d3a3a6e83a853346165c1d2db7645a794559cb32d8acef2c"
+  "tree_sha256": "5de97909d40d4c0d14c245f21bbae09071e7412efa12c1ffaee4da0ba76c9b05"
 }
