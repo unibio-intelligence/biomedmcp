@@ -10,6 +10,7 @@ import sys
 import threading
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from urllib.parse import urlsplit
 
 import pytest
 import yaml
@@ -575,3 +576,30 @@ def test_listed_host_only_observed_bot_refusals_are_unverified(checker, status):
              "chain": [{"http_status": status}]}
     result = checker.classify(value, {"blocked.example.org": "Refuses automated requests with HTTP 403."})
     assert result["status"] == ("unverified_host_blocks_automation" if status == 403 else "http_failure")
+
+
+@pytest.mark.parametrize("origin,destination,redirect_status,listed,unverified", [
+    ("https://www.fda.gov/drugs/orange-book", "https://www.fda.gov/apology_objects/abuse-detection-apology.html", 302, True, True),
+    ("https://www.fda.gov/drugs/orange-book", "https://www.fda.gov/apology_objects/abuse-detection-apology.html", 302, False, False),
+    ("https://www.fda.gov/drugs/orange-book", "https://www.fda.gov/missing", 302, True, False),
+    ("https://www.fda.gov/drugs/orange-book", "https://www.fda.gov/apology_objects/abuse-detection-apology.html", 404, True, False),
+    ("https://other.example.org/page", "https://www.fda.gov/apology_objects/abuse-detection-apology.html", 302, True, False),
+    ("https://www.fda.gov/drugs/orange-book", "https://other.example.org/apology_objects/abuse-detection-apology.html", 302, True, False),
+])
+def test_fda_apology_redirect_preserves_observation_without_excusing_broken_links(
+    checker, origin, destination, redirect_status, listed, unverified
+):
+    value = {"url": origin, "status": "http_failure", "chain": [
+        {"url": origin, "http_status": redirect_status},
+        {"url": destination, "http_status": 404},
+    ]}
+    hosts = {urlsplit(origin).hostname: "Reviewed automation refusal."} if listed else {}
+    result = checker.classify(value, hosts)
+    assert result["status"] == ("unverified_host_blocks_automation" if unverified else "http_failure")
+    assert result["chain"] == value["chain"]
+
+
+def test_direct_fda_apology_404_still_fails(checker):
+    url = "https://www.fda.gov/apology_objects/abuse-detection-apology.html"
+    value = {"url": url, "status": "http_failure", "chain": [{"url": url, "http_status": 404}]}
+    assert checker.classify(value, {"www.fda.gov": "Reviewed automation refusal."}) == value

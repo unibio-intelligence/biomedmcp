@@ -303,7 +303,18 @@ def classify(result, hosts):
     host = (urlsplit(result["url"]).hostname or "").lower()
     listed = next((h for h in hosts if host == h or host.endswith("." + h)), None)
     chain = result.get("chain") or []
-    if listed and result["status"] == "http_failure" and chain and chain[-1]["http_status"] == 403:
+    # FDA's reviewed bot refusal can redirect to an apology endpoint that itself
+    # returns 404. Only that exact observed redirect is a refusal, not a missing page.
+    fda_refusal = (
+        host == "www.fda.gov" and len(chain) > 1
+        and urlsplit(chain[-2].get("url", "")).hostname == "www.fda.gov"
+        and chain[-2]["http_status"] in {301, 302, 303, 307, 308}
+        and chain[-1].get("url") == "https://www.fda.gov/apology_objects/abuse-detection-apology.html"
+        and chain[-1]["http_status"] == 404
+    )
+    if listed and result["status"] == "http_failure" and chain and (
+        chain[-1]["http_status"] == 403 or fda_refusal
+    ):
         return {**result, "status": "unverified_host_blocks_automation", "exception": hosts[listed]}
     if provider_outage(result):
         return {**result, "status": "unverified_provider_unavailable", "observed_status": result["status"]}
