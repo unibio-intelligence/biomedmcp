@@ -1,6 +1,6 @@
 # Release notes
 
-## 0.2.7
+## Unreleased
 
 - Link to the BioMed MCP overview on the UniBio Intelligence docs site from the
   package metadata and README.
