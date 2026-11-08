@@ -1,18 +1,19 @@
 # gnomAD population and constraint evidence
 
-`get_variant_evidence` population retrieval uses one GRCh38 allele and the
+`get_variant_evidence` population retrieval from the Genome Aggregation Database
+(gnomAD) uses one GRCh38 allele and the
 `gnomad_r4` browser dataset selector. The response must agree on variant ID,
 reference genome, chromosome, position and both alleles. MyVariant-derived
-SNV mappings require one explicit GRCh38 coordinate annotation; this service
+single-nucleotide variant (SNV) mappings require one explicit GRCh38 coordinate annotation; this service
 does not perform a lift-over. Gene constraint uses one qualified Ensembl gene
 ID and checks the returned gene ID, symbol, reference genome and available
-NCBI ID. Nonhuman, ambiguous or missing identity mappings stop acquisition.
+National Center for Biotechnology Information (NCBI) ID. Nonhuman, ambiguous or missing identity mappings stop acquisition.
 
 For an explicit GRCh38 single-nucleotide variant, request only `population`
 with `sources: ["gnomad"]`, for example
 `get_variant_evidence(id="chr1:55039974:G:T", assembly="grch38", sections=["population"], sources=["gnomad"])`.
 The provider confirms the supplied coordinates and alleles; no MyVariant
-annotation is acquired. rsIDs, indels and other assemblies still need their
+annotation is acquired. rsIDs, indels and other assemblies still require their
 separately qualified identity/normalization dependencies.
 
 The [source policy](source-licenses.md) covers only the fixed primary-data
@@ -45,10 +46,11 @@ Repeated nonempty source IDs retain every row with `id_status: "ambiguous"`
 and partial modality status. Row pointers distinguish the original measurements;
 the service neither merges them nor infers which cohorts they represent.
 
-Constraint pLI is a probability, LOEUF is a nonnegative observed/expected
-upper bound, and signed z-scores may be negative. Unknown metrics and missing
+The constraint metric pLI (probability of being loss-of-function intolerant) is a
+probability, LOEUF (loss-of-function observed/expected upper bound fraction) is a
+nonnegative observed/expected upper bound, and signed z-scores may be negative. Unknown metrics and missing
 transcript attribution remain explicit. The preferred constraint transcript is
-inferred from the dated provider annotation policy: MANE Select when available,
+inferred from the dated provider annotation policy: Matched Annotation from NCBI and EMBL-EBI (MANE) Select when available,
 otherwise the canonical transcript. Returned MANE/RefSeq versions are preserved;
 missing versions are not invented. The response labels this association as an
 inference because the constraint record has no explicit transcript field.
@@ -63,7 +65,7 @@ null. Provenance preserves retrieval time and content hashes without inventing
 a source version. The official [changelog](https://gnomad.broadinstitute.org/news/changelog/)
 documents updates within version families.
 
-The checked-in official SDL/resolver fixture retains its upstream MIT license.
+The checked-in official schema definition language (SDL) and resolver fixture retains its upstream MIT license.
 Offline tests cover the selected fields, identity and denominator semantics,
-HTTP failures, and actual MCP cache/composition behavior. They do not cover
+HTTP failures, and Model Context Protocol (MCP) cache and composition behavior. They do not cover
 every gnomAD field, live provider health or clinical interpretation.

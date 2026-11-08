@@ -1,11 +1,12 @@
 # Public alternatives to held source projections
 
-Core ClinVar assertions use NCBI directly. They do not request MyVariant's mixed
+Core ClinVar assertions are retrieved directly from the National Center for
+Biotechnology Information (NCBI). They do not request MyVariant's mixed
 annotation bundle, dbNSFP, CADD, COSMIC or SNPedia fields. The
 [ClinVar data-use policy](https://www.ncbi.nlm.nih.gov/clinvar/docs/maintenance_use/)
 describes copying with attribution and the public E-utilities interface.
 Preserve the accession version and independent germline, clinical-impact and
-oncogenicity classifications. NIH does not independently verify submitted
+oncogenicity classifications. The National Institutes of Health (NIH) does not independently verify submitted
 assertions; missing classifications are unknown.
 
 ```json
@@ -15,22 +16,23 @@ assertions; missing classifications are unknown.
 An explicit allele is preferable when an rsID or protein change maps to multiple
 alleles. Discovery is bounded to 25 ClinVar candidates; mismatched or ambiguous
 identities produce an error rather than substituted evidence. Coordinates check
-chromosome, assembly, position, reference and alternate using one allele's SPDI
-and assembly-specific location. A coordinate lookup fails closed if the summary
+chromosome, assembly, position, reference and alternate using one allele's Sequence Position Deletion Insertion (SPDI)
+notation and assembly-specific location. A coordinate lookup returns an error if the summary
 only supplies allele bases qualified for another assembly; use an exact
-transcript HGVS or an allele in the qualified assembly. Indels require qualified HGVS rather than
+transcript Human Genome Variation Society (HGVS) expression or an allele in the qualified assembly. Indels require qualified HGVS rather than
 unnormalized coordinates.
 
 ```json
 {"tool":"get_variant_evidence","arguments":{"id":"chr1:55039974:G:T","assembly":"grch38","sections":["clinvar","population","civic"]}}
 ```
 
-Population and CIViC are separate sources with their own checks. Population
+Population and Clinical Interpretation of Variants in Cancer (CIViC) sections are separate sources with their own checks. Population
 lookups from a protein identifier may need an aggregator that is not released.
 
 Article citations and references use
 [Europe PMC's public REST service](https://europepmc.org/RestfulWebService)
-for PMID, PMCID and exact DOI inputs. The bounded bibliography includes
+for PubMed identifier (PMID), PubMed Central identifier (PMCID) and exact
+digital object identifier (DOI) inputs. The bounded bibliography includes
 identifiers, titles, authors, publication dates and journal facts. It excludes
 publisher abstracts/full text, citation contexts and recommendation scores.
 Europe PMC and contributor terms remain attached; this is not a blanket
@@ -46,7 +48,7 @@ exhaustive graph. Unlinked bibliography entries remain unresolved references,
 without invented article identifiers. A missing link does not mean no citation
 exists, and a citation does not mean the papers agree.
 
-Author search and records now use [OpenAlex](https://help.openalex.org/api/), with
+Author search and author records use [OpenAlex](https://help.openalex.org/api/), with
 source-qualified `openalex:A…` identifiers. Author `articles` relations return the
 first bounded work window; name matches are candidates, not verified people.
 Article `recommendations` accepts PMID, PMCID, DOI or `openalex:W…` and projects
@@ -54,7 +56,7 @@ OpenAlex's `related_works` metadata in source order. These are topic-based disco
 suggestions, not summaries or scientific support.
 PMCID inputs are first matched to a DOI or PMID through Europe PMC.
 Bibliographic OpenAlex metadata is CC0; abstracts, full text and downloads are not
-included. Basic calls need no key. An optional `OPENALEX_API_KEY`, set on the
+included. Basic calls require no key. An optional `OPENALEX_API_KEY`, set on the
 server, gives more provider capacity; it is never a tool parameter.
 
 ```json
@@ -63,19 +65,20 @@ server, gives more provider capacity; it is never a tool parameter.
 {"tool":"find_related","arguments":{"entity":"article","id":"10.7717/peerj.4375","relation":"recommendations","limit":3}}
 ```
 
-Drug `label` reads return SPL identifiers, version/effective date, product metadata,
+Drug `label` reads return Structured Product Labeling (SPL) identifiers, version/effective date, product metadata,
 manufacturer-submitted label prose (including indications, warnings and dosage),
 and an official label link. The first view shows one matching SPL record; it is
 not necessarily the latest label or the only manufacturer's label. Full text can be
 recovered through evidence resources. HTML tables, images and attachments are not
-included. A label listing does not confirm FDA approval, current labeling or
+included. A label listing does not confirm U.S. Food and Drug Administration (FDA) approval, current labeling or
 suitability for a patient.
 
-`get_variant_evidence` with `sections=["predictions"]` now returns **AlphaMissense**
+`get_variant_evidence` with `sections=["predictions"]` returns **AlphaMissense**
 precomputed predictions under CC BY 4.0. Gene/protein-change inputs use an exact
 reviewed human UniProt sequence matched to the official AlphaFold DB score file;
 the response retains the sequence version and score-file hash. Genomic, rsID and
-accession HGVS inputs use Ensembl VEP's AlphaMissense projection, preserving each
+accession HGVS inputs use the AlphaMissense projection of the Ensembl Variant Effect
+Predictor (VEP), preserving each
 allele/transcript context and the observed Ensembl service release. An rsID can
 identify several alternate alleles; scores are not averaged across them. VEP does
 not report the exact AlphaMissense dataset release. Scores are research

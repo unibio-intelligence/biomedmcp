@@ -20,7 +20,7 @@ Each JSON projection retains accession identity. Full cross-reference metadata
 uses a bounded full JSON entry instead of the unsupported `xref_*` selector.
 
 Use `get_capabilities(source="uniprot")` to discover the current advanced operations.
-`analyze_evolution` now offers `similarity_annotations`, `orthology_references`
+`analyze_evolution` offers `similarity_annotations`, `orthology_references`
 and `phylogeny_references`. Each selects its own UniProt projection: SIMILARITY
 texts, OrthoDB identifiers or PhylomeDB identifiers. Missing annotations retain
 the protein record with partial status and `not_reported`; they do not establish
@@ -43,17 +43,17 @@ not establish biological divergence.
 Every requested pair has a status. Missing annotations, failed retrievals and
 different accessions resolving to one primary identity make the affected pair
 unavailable, with the successful source records retained. Partial comparisons
-cannot become healthy-result cache entries. The next call can retry retrieval.
+are not cached as successful results. The next call can retry retrieval.
 Invalid source shapes and transport failures carry safe error codes without raw
 response or exception text. FUNCTION/SIMILARITY text and evidence shapes are
-validated before extraction; valid ECO-only evidence remains supported.
+validated before extraction; evidence with only Evidence and Conclusion Ontology (ECO) codes remains supported.
 
 Exact-entry responses retain the observed `x-uniprot-release` header. The source
 body cannot supply or overwrite that release. Mixed observed releases remain
 per-record with a warning; no aggregate release is invented when a header is
-missing or inputs disagree. Rerunning a request may return newer data. Cached results and continuations from before source53 no longer work.
+missing or inputs disagree. Rerunning a request may return newer data. Cached results and continuations created before these annotation changes no longer work.
 
-The source53 additions in `tests/unit/sources/test_uniprot_annotations.py` and the earlier
+The annotation additions in `tests/unit/sources/test_uniprot_annotations.py` and the earlier
 `tests/unit/sources/test_uniprot_responses.py` pass native and Docker contract qualification.
 The synthetic fixture contains an explicit SIMILARITY annotation where a healthy
 annotation result is asserted. Its dated field fixture records the source URL, hash and

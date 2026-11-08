@@ -89,8 +89,11 @@ async def test_class_uri_is_percent_encoded_and_include_forwarded(mock_http):
 
 
 async def test_provider_paged_classes_and_mappings(mock_http):
-    page = {"collection": [MAPPING], "page": 3, "pageCount": 3}
-    seen = mock_http(lambda request: httpx.Response(200, json=page))
+    def reply(request):
+        row = {"@id": CLASS, "prefLabel": "Seven"} if request.url.path.endswith("/classes") else MAPPING
+        return httpx.Response(200, json={"collection": [row], "page": 3, "pageCount": 3})
+
+    seen = mock_http(reply)
     classes = await call("get_ontology_classes", ontology="GO", page=3, pagesize=5)
     assert seen[0].url.params["page"] == "3" and seen[0].url.params["pagesize"] == "5"
     assert classes["page_count"] == 3 and classes["next_page"] is None
@@ -134,3 +137,87 @@ async def test_http_failures_are_classified_without_echoing_the_body(mock_http, 
         await call("get_class_info", ontology="GO", class_id=CLASS)
     error = json.loads(str(caught.value))
     assert error["code"] == code and KEY not in str(caught.value)
+
+
+@pytest.mark.parametrize(
+    "payload",
+    [
+        {"@id": "http://example.org/foreign", "prefLabel": "Foreign"},
+        {"@id": CLASS},
+        {"@id": None, "prefLabel": "Seven"},
+    ],
+)
+async def test_class_identity_and_label_are_required(mock_http, payload):
+    mock_http(lambda request: httpx.Response(200, json=payload))
+    with pytest.raises(ToolError) as caught:
+        await call("get_class_info", ontology="GO", class_id=CLASS, include="definition")
+    assert json.loads(str(caught.value))["code"] == "invalid_source_response"
+
+
+@pytest.mark.parametrize(
+    "payload",
+    [
+        {"collection": [], "page": 1, "pageCount": 2},
+        {"collection": [], "page": 2},
+        {"collection": [], "page": 2, "pageCount": True},
+        {"collection": [], "page": 2, "pageCount": -1},
+        {"collection": [{"@id": CLASS, "prefLabel": "Seven"}], "page": 2, "pageCount": 1},
+        {"collection": [{"@id": CLASS}], "page": 2, "pageCount": 2},
+        {"collection": [{"@id": CLASS, "prefLabel": "Seven"}] * 2, "page": 2, "pageCount": 2},
+    ],
+)
+async def test_class_pages_preserve_identity_and_requested_window(mock_http, payload):
+    mock_http(lambda request: httpx.Response(200, json=payload))
+    with pytest.raises(ToolError) as caught:
+        await call("get_ontology_classes", ontology="GO", page=2, pagesize=1)
+    assert json.loads(str(caught.value))["code"] == "invalid_source_response"
+
+
+@pytest.mark.parametrize(
+    "row",
+    [
+        {"classes": []},
+        {**MAPPING, "classes": [{"@id": CLASS}, {}]},
+        {**MAPPING, "source": None},
+        {**MAPPING, "process": 7},
+    ],
+)
+@pytest.mark.parametrize("class_id", [None, CLASS])
+async def test_mapping_identity_and_attribution_are_required(mock_http, row, class_id):
+    payload = [row] if class_id else {"collection": [row], "page": 1, "pageCount": 1}
+    mock_http(lambda request: httpx.Response(200, json=payload))
+    with pytest.raises(ToolError) as caught:
+        await call("get_mappings", ontology="GO", class_id=class_id)
+    assert json.loads(str(caught.value))["code"] == "invalid_source_response"
+
+
+@pytest.mark.parametrize(
+    "include,expected",
+    [("all", "all"), ("definition", "definition,prefLabel"), ("prefLabel,definition", "prefLabel,definition")],
+)
+async def test_class_include_preserves_all_and_requests_one_label(mock_http, include, expected):
+    seen = mock_http(lambda request: httpx.Response(200, json={"@id": CLASS, "prefLabel": "Seven"}))
+    await call("get_class_info", ontology="GO", class_id=CLASS, include=include)
+    assert seen[0].url.params["include"] == expected
+
+
+async def test_empty_out_of_range_class_page_is_exhausted(mock_http):
+    mock_http(lambda request: httpx.Response(200, json={"collection": [], "page": 2, "pageCount": 1}))
+    result = await call("get_ontology_classes", ontology="GO", page=2)
+    assert result["collection"] == [] and result["next_page"] is None
+
+
+@pytest.mark.parametrize("row", [{}, {"acronym": "GO"}, {"acronym": None, "name": "Gene Ontology"}])
+async def test_invalid_inventory_is_rejected_before_filtering(mock_http, row):
+    mock_http(lambda request: httpx.Response(200, json=[row]))
+    with pytest.raises(ToolError) as caught:
+        await call("search_ontologies", query="unmatched")
+    assert json.loads(str(caught.value))["code"] == "invalid_source_response"
+
+
+async def test_class_mappings_must_reference_the_requested_class(mock_http):
+    unrelated = {**MAPPING, "classes": [{"@id": "http://example.org/A"}, {"@id": "http://example.org/B"}]}
+    mock_http(lambda request: httpx.Response(200, json=[MAPPING, unrelated]))
+    with pytest.raises(ToolError) as caught:
+        await call("get_mappings", ontology="GO", class_id=CLASS, pagesize=1)
+    assert json.loads(str(caught.value))["code"] == "invalid_source_response"

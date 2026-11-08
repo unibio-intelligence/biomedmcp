@@ -1,6 +1,6 @@
 # Contributing
 
-Contributions are welcome: bug reports, fixes, documentation, new data sources and better tool descriptions.
+We accept bug reports, fixes, documentation, new data sources and improved tool descriptions.
 
 ## How to contribute
 
@@ -22,8 +22,8 @@ uv run --frozen pytest tests -q
 
 Docker is required for the last command, which checks the container build and Redis integration. Use synthetic fixtures for repeatable tests; keep live provider checks separate.
 
-For deeper reference, see [CI checks](docs/development/ci-governance.md), [live checks](docs/operations.md#qualification-and-live-observations), [runtime settings](docs/development/runtime-observations.md), [request limits](docs/operations.md#http-request-budgets), [retries](docs/operations.md#public-provider-retry-and-infrastructure-policy) and [release recovery](docs/development/release-recovery.md).
+For further detail, see [CI checks](docs/development/ci-governance.md), [live checks](docs/operations.md#qualification-and-live-observations), [runtime observations](docs/development/runtime-observations.md), [request limits](docs/operations.md#http-request-budgets), [retries](docs/operations.md#public-provider-retry-and-infrastructure-policy) and [release recovery](docs/development/release-recovery.md).
 
-Local CLI state is stored under `$XDG_STATE_HOME/biomedmcp` (default `~/.local/state/biomedmcp`). Choose another private directory with `UBI_LOCAL_STATE_DIR` or `--state-dir`; use directory mode `0700` and file mode `0600`. Restart a query after cursor expiry or a state reset.
+State for the local command-line interface (CLI) is stored under `$XDG_STATE_HOME/biomedmcp` (default `~/.local/state/biomedmcp`). Choose another private directory with `UBI_LOCAL_STATE_DIR` or `--state-dir`; use directory mode `0700` and file mode `0600`. Restart a query after cursor expiry or a state reset.
 
 HTTP clients use localhost by default. For proxies or browser clients, set explicit `UBI_HTTP_ALLOWED_HOSTS` and `UBI_HTTP_ALLOWED_ORIGINS` values. Wildcards are not accepted, forwarded headers are not trusted, and these settings do not configure CORS. Provider keys belong in environment variables or secret storage.

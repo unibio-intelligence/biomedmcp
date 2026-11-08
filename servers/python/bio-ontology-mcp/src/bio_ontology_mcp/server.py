@@ -85,14 +85,38 @@ def _rows(value: Any) -> list[dict]:
     return value
 
 
-def _paged(value: Any, page: int) -> dict:
+def _class_record(row: dict) -> None:
+    if any(not isinstance(row.get(key), str) or not row[key] for key in ("@id", "prefLabel")):
+        raise _invalid()
+
+
+def _mapping_record(row: dict) -> None:
+    classes = row.get("classes")
+    if not isinstance(classes, list) or len(classes) != 2 or any(
+        not isinstance(item, dict) or not isinstance(item.get("@id"), str) or not item["@id"]
+        for item in classes
+    ):
+        raise _invalid()
+    if not isinstance(row.get("source"), str) or not row["source"]:
+        raise _invalid()
+    if row.get("process") is not None and not isinstance(row["process"], (dict, str)):
+        raise _invalid()
+
+
+def _paged(value: Any, page: int, pagesize: int, validate_row) -> dict:
     if not isinstance(value, dict) or value.get("error") or "collection" not in value:
         raise _invalid()
     rows = _rows(value["collection"])
     page_count = value.get("pageCount")
-    if page_count is not None and not isinstance(page_count, int):
+    if (
+        type(value.get("page")) is not int or value["page"] != page
+        or type(page_count) is not int or page_count < 0 or len(rows) > pagesize
+        or (rows and page > page_count)
+    ):
         raise _invalid()
-    more = page_count is not None and page < page_count
+    for row in rows:
+        validate_row(row)
+    more = page < page_count
     return {
         "collection": rows,
         "page": page,
@@ -135,6 +159,9 @@ async def search_ontologies(
     """
     params = {"include_views": "true"} if include_views else {}
     rows = _rows(await make_request("/ontologies", params))
+    for row in rows:
+        if any(not isinstance(row.get(key), str) or not row[key] for key in ("acronym", "name")):
+            raise _invalid()
     if query:
         needle = query.lower()
         rows = [
@@ -162,7 +189,7 @@ async def get_ontology_classes(ontology: Acronym, page: Page = 1, pagesize: Page
     the ordering, so continue with `next_page` rather than re-sorting.
     """
     value = await make_request(f"/ontologies/{ontology}/classes", {"page": page, "pagesize": pagesize})
-    return {"ontology": ontology, **_paged(value, page)}
+    return {"ontology": ontology, **_paged(value, page, pagesize, _class_record)}
 
 
 @mcp.tool(annotations=READ_ONLY_ANNOTATIONS)
@@ -187,9 +214,14 @@ async def get_class_info(
     The URI is percent-encoded into the request path; the returned record is
     the provider's own representation, including `@id`.
     """
+    if include and include != "all":
+        include = ",".join(dict.fromkeys([*include.split(","), "prefLabel"]))
     params = {"include": include} if include else {}
     value = await make_request(_class_path(ontology, class_id), params)
-    if not isinstance(value, dict) or value.get("error") or "@id" not in value:
+    if not isinstance(value, dict) or value.get("error"):
+        raise _invalid()
+    _class_record(value)
+    if value["@id"] != class_id:
         raise _invalid()
     return value
 
@@ -216,15 +248,16 @@ async def get_mappings(
     tells how many returned rows lack a generating process.
     """
     if class_id:
-        rows, next_page = _slice(
-            _rows(await make_request(_class_path(ontology, class_id) + "/mappings")), page, pagesize
-        )
+        collection = _rows(await make_request(_class_path(ontology, class_id) + "/mappings"))
+        for row in collection:
+            _mapping_record(row)
+            if not any(item["@id"] == class_id for item in row["classes"]):
+                raise _invalid()
+        rows, next_page = _slice(collection, page, pagesize)
         result = {"collection": rows, "page": page, "page_count": None, "next_page": next_page}
     else:
         value = await make_request(f"/ontologies/{ontology}/mappings", {"page": page, "pagesize": pagesize})
-        result = _paged(value, page)
-    if not all(isinstance(row.get("classes"), list) for row in result["collection"]):
-        raise _invalid()
+        result = _paged(value, page, pagesize, _mapping_record)
     return {
         "ontology": ontology,
         "class_id": class_id,

@@ -10,7 +10,7 @@ UBI_PROFILE=local biomedmcp get_record '{"entity":"gene","id":"LDLR","species":9
 UBI_PROFILE=local biomedmcp get_record '{"entity":"gene","id":"LDLR","species":9606,"sections":["eqtl"],"section_parameters":{"eqtl":{"tissue_id":"Liver"}}}'
 ```
 
-Check the gene and allele identity, the expression units, tissue and release, the direction of each association, and whether each section succeeded. Keep posterior probabilities, p-values and standard errors apart, and don't assume a participant count that is not reported. Run get_capabilities for source=gtex to see the expression and QTL record fields. Expression and QTL associations are observational: they do not validate a target. If a section is missing, the conclusion is incomplete.
+Check the gene and allele identity, the expression units, tissue and release, the direction of each association, and whether each section succeeded. Keep posterior probabilities, p-values and standard errors apart, and do not assume a participant count that is not reported. Run get_capabilities for source=gtex to see the expression and QTL record fields. Expression and QTL associations are observational: they do not validate a target. If a section is missing, the conclusion is incomplete.
 
 Save the JSON results, evidence IDs and source releases with your answer. If a call fails or returns partial results, continue it, try another source, or state the gap.
 
@@ -34,6 +34,6 @@ UBI_PROFILE=local biomedmcp analyze_study '{"analysis":"survival","study":"ubi_s
 UBI_PROFILE=local biomedmcp analyze_study '{"analysis":"co_occurrence","study":"ubi_synthetic","genes":["TP53","KRAS"]}'
 ```
 
-Count study samples, mutation-tested samples, mutated samples and mutation events separately. Use the tested samples as the denominator, keep the inputs, exclusions and patient grouping, and don't count a missing measurement as a negative result. Run get_capabilities for source=study to see the record fields. The request's default species does not tell you the study's species or genome assembly. The demo data is synthetic: it shows how the tools work, not real clinical findings.
+Count study samples, mutation-tested samples, mutated samples and mutation events separately. Use the tested samples as the denominator, keep the inputs, exclusions and patient grouping, and do not count a missing measurement as a negative result. Run get_capabilities for source=study to see the record fields. The request's default species does not tell you the study's species or genome assembly. The demo data is synthetic: it shows how the tools work, not real clinical findings.
 
 Save the JSON results, evidence IDs and source releases with your answer. If a call fails or returns partial results, continue it, try another source, or state the gap.

@@ -10,7 +10,7 @@ INVESTIGATIONS = (
         "id": "target",
         "question": "Which observations belong in an LDL-receptor evidence notebook?",
         "steps": ["target-dossier", "gene-tissue", "gene-eqtl"],
-        "interpretation": "Check the gene and allele identity, the expression units, tissue and release, the direction of each association, and whether each section succeeded. Keep posterior probabilities, p-values and standard errors apart, and don't assume a participant count that is not reported. Run get_capabilities for source=gtex to see the expression and QTL record fields. Expression and QTL associations are observational: they do not validate a target. If a section is missing, the conclusion is incomplete.",
+        "interpretation": "Check the gene and allele identity, the expression units, tissue and release, the direction of each association, and whether each section succeeded. Keep posterior probabilities, p-values and standard errors apart, and do not assume a participant count that is not reported. Run get_capabilities for source=gtex to see the expression and QTL record fields. Expression and QTL associations are observational: they do not validate a target. If a section is missing, the conclusion is incomplete.",
     },
     {
         "id": "variant",
@@ -22,7 +22,7 @@ INVESTIGATIONS = (
         "id": "study",
         "question": "Can I reproduce the analysis before using my own study?",
         "steps": ["study-profile", "study-survival", "study-cooccurrence"],
-        "interpretation": "Count study samples, mutation-tested samples, mutated samples and mutation events separately. Use the tested samples as the denominator, keep the inputs, exclusions and patient grouping, and don't count a missing measurement as a negative result. Run get_capabilities for source=study to see the record fields. The request's default species does not tell you the study's species or genome assembly. The demo data is synthetic: it shows how the tools work, not real clinical findings.",
+        "interpretation": "Count study samples, mutation-tested samples, mutated samples and mutation events separately. Use the tested samples as the denominator, keep the inputs, exclusions and patient grouping, and do not count a missing measurement as a negative result. Run get_capabilities for source=study to see the record fields. The request's default species does not tell you the study's species or genome assembly. The demo data is synthetic: it shows how the tools work, not real clinical findings.",
     },
 )
 

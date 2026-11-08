@@ -4,7 +4,7 @@ Examples use the public BioMedMCP tools and their typed JSON arguments.
 
 Connect to the biomedmcp server and use its tools. This package runs inside that server; it is not a separate MCP server.
 
-Human gene expression, eQTL/sQTL evidence and transcript/exon annotations use the canonical get tool with explicit gene sections. Metadata and public sample records use query_source. Gene identity is qualified against the selected dataset's GENCODE release; stable identifiers are not treated as symbols.
+Human gene expression, expression and splicing quantitative trait locus (eQTL/sQTL) evidence and transcript/exon annotations use the canonical get tool with explicit gene sections. Metadata and public sample records use query_source. Gene identity is qualified against the selected dataset's GENCODE release; stable identifiers are not treated as symbols.
 
 Advanced operations: `get_metadata`, `get_sample`.
 

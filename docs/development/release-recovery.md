@@ -59,8 +59,8 @@ The [dependency/image advisory gate](security-scanning.md) precedes artifact
 building and publication and retains its reports and CycloneDX inventories in
 CI, including failed runs. Unresolved blocking findings stop publication.
 The public integration code uses the owner-selected Apache-2.0 license.
-[Artifact attestation](release-attestations.md) now binds the published archive
-and receipt to the reviewed source and workflow; the signed wheel SBOM contains
+[Artifact attestation](release-attestations.md) binds the published archive
+and receipt to the reviewed source and workflow; the signed wheel software bill of materials (SBOM) contains
 exact member hashes. The publisher verifies this evidence before every remote
 mutation. Live signing/protected-environment qualification, actual publication
 and unresolved advisory remediation require separate qualification.

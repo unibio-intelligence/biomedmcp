@@ -1,5 +1,16 @@
 # Release notes
 
+## 0.2.6
+
+- Update the container zlib package to 1.4.
+
+- Require exact BioPortal class identities, valid mapping attribution and consistent
+  provider page metadata before returning ontology records.
+- Reject malformed ontology inventory rows and mappings unrelated to the requested class.
+- Report missing public documentation links as failures on hosts with automated
+  access restrictions; observed HTTP 403 refusals remain explicitly unverified.
+- Clarify source evidence limits and installation guidance.
+
 ## 0.2.5
 
 - Remove the `build_dossier` workflows `literature_review`,

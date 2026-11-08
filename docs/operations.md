@@ -1,22 +1,22 @@
 # Operations
 
-How to check that a deployment works, what request limits the HTTP apps enforce, and how provider requests are retried.
+This document describes how to check that a deployment works, which request limits the HTTP applications enforce, and how provider requests are retried.
 
 ## Qualification and live observations
 
-Being configured, loading correctly, passing offline tests and working live are separate checks. `biomedmcp diagnose` reports those states independently without contacting providers. `get_capabilities` continues to report `health: "not_probed"`. Passing one check does not imply the others.
+Being configured, loading correctly, passing offline tests and working live are separate checks. `biomedmcp diagnose` reports those states independently without contacting providers. `get_capabilities` reports `health: "not_probed"`. Passing one check does not imply the others.
 
 The distributed public test suite covers canonical dispatch, provider failure handling, identity, provenance, pagination, study missingness and example execution with synthetic evidence. [Adapter inventory tests](../tests/unit/adapters/test_adapter_inventory.py) check retained imports and every declared advanced operation. Endpoint-specific fixtures cover selected scientific provider contracts. Their exact scope is reported in the bundled offline qualification evidence when that evidence matches the installed implementation and dependencies. Missing or stale evidence is reported explicitly.
 
 This release does not claim that every provider route currently works live, or that it is ready for every model or client. The [capability matrix](capability-readiness.json) retains those limitations and references only files supplied in the public export.
 
-Live canaries are a separate operator-authorized activity: `UBI_PROFILE=local uv run --frozen python scripts/live-canary.py --output /tmp/ubi-live.json`. `--validate-only` checks definitions without provider reads and never qualifies live health. Reports identify implementation, retrieval time, declared/participating sources, status and result/provenance hashes. A failed probe does not mean the evidence is absent. Review provider terms and configuration before running live checks.
+Live canary checks run separately and require operator authorization: `UBI_PROFILE=local uv run --frozen python scripts/live-canary.py --output /tmp/ubi-live.json`. `--validate-only` checks definitions without provider reads and never qualifies live health. Reports identify implementation, retrieval time, declared/participating sources, status and result/provenance hashes. A failed probe does not mean the evidence is absent. Review provider terms and configuration before running live checks.
 
 An operator may point `UBI_PUBLIC_LIVE_QUALIFICATION` at a sanitized canary report. Diagnosis reads that receipt without running a probe. Only matching current definitions/implementation, successful executed source observations and timestamps within 24 hours qualify a recent observation. Stale, malformed, definition-only, mismatched or failed receipts remain distinct. The receipt is a point-in-time snapshot, not proof of current health.
 
 ## HTTP request budgets
 
-Local and hosted HTTP apps enforce the same limits before MCP JSON parsing:
+Local and hosted HTTP applications enforce the same limits before Model Context Protocol (MCP) JSON parsing:
 
 | Limit | Value | Failure |
 | --- | --- | --- |
@@ -40,7 +40,7 @@ by the pinned SDK, including surrounding whitespace and comma-separated values,
 receive the same nesting guard. Structural characters inside quoted JSON
 strings are not nesting.
 
-Admission is fail-fast: excess requests do not wait in a body-buffer queue.
+Admission fails immediately when capacity is exhausted: excess requests do not wait in a body-buffer queue.
 Admission remains held until the application response finishes and is released
 on disconnect, cancellation or failure. The body deadline covers upload only;
 scientific operations keep their separate end-to-end deadlines. At most 32
@@ -49,7 +49,7 @@ worker. SDK objects, response data, transport buffers and kernel memory have
 their own allocations; 2 MiB is not a whole-process memory cap.
 
 The built-in local and private hosted runners enforce at most 128 concurrent
-connections/tasks; a supplied lower limit is honored. A custom ASGI host or
+connections/tasks; a supplied lower limit is honored. A custom Asynchronous Server Gateway Interface (ASGI) host or
 reverse proxy must configure its own connection/task bounds, body-size ceiling
 at most 65,536 bytes, and upload deadline at most 10 seconds. Avoid unlimited
 request queues or full buffering before forwarding. Review proxy trust and
@@ -71,9 +71,9 @@ requires a complete HTTP rejection response even if the peer later resets the
 connection.
 
 The report binds unchanged code/fixture/lockfile inputs, hardware/runtime,
-concurrency, transmitted bytes, server RSS and traced heap, and fixed 32 MiB RSS
+concurrency, transmitted bytes, server resident set size (RSS) and traced heap, and fixed 32 MiB RSS
 and 24 MiB heap growth thresholds. Measurements qualify those workloads on that
-worker, not arbitrary ASGI/proxy configurations or production latency SLOs.
+worker, not arbitrary ASGI/proxy configurations or production latency service-level objectives (SLOs).
 
 ## Public provider retry and infrastructure policy
 
@@ -92,7 +92,7 @@ OAuth grants, jobs, unqualified GraphQL/analysis POSTs and write methods have no
 
 Automatic retry conditions are HTTP 429/502/503/504, connection failures/timeouts, header-read timeouts and remote protocol failures before response delivery. A provider `Retry-After` is a minimum delay: both non-negative integer seconds and HTTP dates are honored as defined in [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html#name-retry-after). Absent headers use 250–500 ms jitter, followed by provider pacing. Invalid or unaffordable delays return the classified failure promptly, without an early retry. HTTP 400/401/403/404/422/500/501, invalid arguments, malformed JSON/application-error payloads, pool contention, DNS/TLS policy rejection and partially delivered response bodies are not automatically retried. Final HTTP failures preserve authentication/access/not-found/rate-limit/outage classifications. DNS/TLS rejection is `source_connection_rejected`, with `retryable: false`.
 
-Failed responses close before backoff. Repeated failures cannot exceed two attempts per eligible request; existing bounded source/global worker and pending-request limits still apply. All DNS addresses are checked before any TCP connection. Up to four validated public IPs may be tried within one DNS/TCP budget, without another DNS lookup. HTTP Host and TLS server hostname retain the original provider name. Mixed private/public DNS answers and certificate verification failures fail closed.
+Failed responses close before backoff. Repeated failures cannot exceed two attempts per eligible request; existing bounded source/global worker and pending-request limits still apply. All DNS addresses are checked before any TCP connection. Up to four validated public IPs may be tried within one DNS/TCP budget, without another DNS lookup. HTTP Host and TLS server hostname retain the original provider name. Mixed private/public DNS answers and certificate verification failures are rejected.
 
 | Infrastructure failure | Explicit behavior |
 | --- | --- |

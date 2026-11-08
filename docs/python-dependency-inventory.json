@@ -1,5 +1,5 @@
 {
-  "uv_lock_sha256": "aea08424d97ba357fe53be332dfb5facadf12dd6a791d257009d208ddbf592ca",
+  "uv_lock_sha256": "c69c072303ad09bef48dfcdaf4997a5a74ca2dfa4d8833071cd32365a52dd2e2",
   "packages": [
     {
       "name": "aiofile",
@@ -52,7 +52,7 @@
     },
     {
       "name": "biomedmcp",
-      "version": "0.2.5",
+      "version": "0.2.6",
       "license": "Apache-2.0",
       "license_files": [
         "LICENSE",

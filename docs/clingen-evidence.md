@@ -1,23 +1,23 @@
 # ClinGen identities, assertions and references
 
-Use `get_record` for a species-qualified gene with `sections: ["clingen"]`, or
+To retrieve Clinical Genome Resource (ClinGen) evidence, use `get_record` for a species-qualified gene with `sections: ["clingen"]`, or
 `query_source` with `source: "clingen"` and one of `normalize`, `assertions`,
 `specifications` or `linked_data`. These operations provide different kinds of
 evidence; the `record_type` and request identity identify their meaning.
 
-Gene autocomplete records are matched by the qualified HGNC identifier, keeping
+Gene autocomplete records are matched by the qualified HUGO Gene Nomenclature Committee (HGNC) identifier, keeping
 reported aliases. They establish indexed identity, not gene-disease validity.
 Allele Registry normalization preserves canonical CA nucleotide and PA protein
-identifiers, including leading zeros, and their reported HGVS representations.
-A protein allele does not establish a unique genomic allele. No independent
-cross-build conversion or clinical classification is performed here.
+identifiers, including leading zeros, and their reported Human Genome Variation Society (HGVS) representations.
+A protein allele does not establish a unique genomic allele. The service performs no independent
+cross-build conversion or clinical classification.
 
 Expert Repository assertions retain their allele identity, panel, document
 version, classification and reported retraction independently. Conflicting
 assertions are not collapsed into a new classification. The current request
 selects the first page of up to 25 assertions; coverage explicitly says this is
-not exhaustive. Low-detail CSpec records are specification references rather
-than extracted criteria or applied classifications. LDH records preserve their
+not exhaustive. Low-detail Criteria Specification (CSpec) records are specification references rather
+than extracted criteria or applied classifications. Linked Data Hub (LDH) records preserve their
 link type, entity type, source identifiers and any reported source version. A
 link does not establish identity equivalence or a measured frequency.
 
@@ -40,5 +40,5 @@ Primary contracts: [Allele Registry](https://reg.clinicalgenome.org/docs/cg-car/
 [Linked Data Hub](https://ldh.clinicalgenome.org/ldh/ui/api-docs).
 The [offline regressions](../tests/unit/sources/test_clingen_responses.py) cover selected
 response shapes, aliases and namespaces, conflicting assertions, retries,
-cache provenance and actual MCP resource recovery. These checks do not prove
+cache provenance and Model Context Protocol (MCP) resource recovery. These checks do not prove
 current live health, complete provider coverage or model scientific correctness.

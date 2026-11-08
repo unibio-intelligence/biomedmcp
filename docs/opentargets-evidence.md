@@ -18,7 +18,7 @@ when the original query did not select it.
 
 An empty association list is a valid result for this request; it does not
 prove no association exists. A null entity or malformed response is an error
-with no scientific evidence ID. Other successful gene sections survive it.
+with no scientific evidence ID. Other successful gene sections are retained.
 Failed results retry on the next request; successful cache results retain their
 evidence identity. More returned records than the display bound produce exact
 omission locators and scoped recovery resources. Recovery returns already
@@ -38,7 +38,7 @@ liabilities are source annotations; they do not show physical binding,
 causality, clinical efficacy or the absence of risk. Nullable expression values
 stay unreported rather than becoming zero. Live results may change over time.
 
-The current provider schema omits ProbeMiner scores and TEP records. Chemical
+The current provider schema omits ProbeMiner scores and Target Enabling Package (TEP) records. Chemical
 probe responses retain the separately reported `probesDrugsScore` without
 renaming it as ProbeMiner evidence. TEP requests report source unavailability
 before outbound access.
@@ -74,13 +74,14 @@ an entire page does not remove its provider continuation. A final continuation
 page is not claimed to be the complete result of earlier pages.
 
 Target comparisons accept 2–10 distinct human Ensembl identifiers and closed
-comparison aspects. Requested disease associations are actually acquired,
+comparison aspects. Requested disease associations are acquired,
 limited to each target's first ten records. A failed peer retains successful
 targets and marks the result partial; partial results are not cached as healthy
-evidence. If all targets fail, no scientific evidence identifier is minted.
+evidence. If all targets fail, no scientific evidence identifier is issued.
 
 Gene `genetics` retains acquired study-locus records, nullable study/variant
-metadata, separately reported GWAS/QTL types, fine-mapping method and source
+metadata, separately reported genome-wide association study (GWAS) and
+quantitative trait locus (QTL) types, fine-mapping method and source
 p-value mantissa/exponent. The provider's
 [target-to-credible-set relation](https://github.com/opentargets/platform-api/blob/master/app/models/gql/Objects.scala)
 is a source linkage; it does not establish a causal gene assignment or imply
@@ -134,7 +135,7 @@ Its `evidence_cursor` is a service-signed, account-scoped continuation. Provider
 tokens stay in expiring runtime state and cannot be submitted directly. The
 action binds every original selector and flag, page size and implementation
 revision. State loss, expiry, tampering or a changed account/request fail before
-provider access. Local CLI processes and distributed replicas need their
+provider access. Local command-line interface (CLI) processes and distributed replicas need their
 configured shared cursor state and signing key.
 
 An empty nonterminal evidence window keeps its continuation. Source cycles,
@@ -157,7 +158,7 @@ The [selected offline regressions](../tests/unit/sources/test_opentargets_respon
 and [assessment regressions](../tests/unit/sources/test_opentargets_assessments.py), alongside
 [partial acquisition regressions](../tests/unit/sources/test_opentargets_partial.py), exercise
 acquisition types, scientific counts/scores, qualified identity, selected
-assessment/comparison semantics, cache/retry, actual MCP continuation and
+assessment/comparison semantics, cache/retry, Model Context Protocol (MCP) continuation and
 recovery. They do not cover every advanced analysis, live provider health or clinical target validation.
 
 Variant credible-set windows also expose an executable `query_source` next action.

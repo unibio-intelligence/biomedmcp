@@ -1,6 +1,6 @@
 # Dependency and runtime image advisory gate
 
-Both CI workflows and the protected manual public release workflow run
+Both continuous integration (CI) workflows and the protected manual public release workflow run
 `scripts/scan-security.py` after container qualification. A failed scan stops
 publication. Reports, CycloneDX inventories and their receipt are retained as
 CI artifacts on success or failure; a missing report fails artifact collection.
@@ -82,8 +82,8 @@ peer scans are preserved when a later phase fails.
 
 `security-receipt.json` binds the source revision where available, export
 manifest identity where supplied, lock/project/scanner hashes, exact local
-image and archive/config identities, database provenance and report/SBOM/log
-hashes. This is unsigned execution evidence. Signed release attestation and
+image and archive/config identities, database provenance and report, software
+bill of materials (SBOM) and log hashes. This is unsigned execution evidence. Signed release attestation and
 durable association of SBOMs with published wheel artifacts remain separate
 release work. A passing advisory scan is not proof of vulnerability absence,
 exhaustive native-library detection, source-code security or provider readiness.
@@ -92,24 +92,24 @@ exhaustive native-library detection, source-code security or provider readiness.
 Both public and hosted Dockerfiles use the same digest-pinned official Python
 3.13.18 Alpine 3.23 base, with `sqlite-libs` 3.54.1 from Alpine edge until
 Alpine 3.23 ships a patched SQLite. Edge keeps only its latest build, so a later
-rebuild may need that pin updated. Its musl C library differs from the prior slim Trixie
+rebuild may need that pin updated. On 2026-11-07, the Alpine `v3.23/main` index listed `sqlite-libs` 3.53.4-r0 and the `edge/main` index listed 3.54.1-r0. Its musl C library differs from the prior slim Trixie
 base, so scientific numerical/reference tests, transport, public Redis and
 reviewed hosted-auth contracts must qualify the built images. Zlib is pinned to
-Alpine's patched `1.3.2-r1` package; test-only Git and procps-ng are pinned
+Alpine's patched `1.4-r0` package; test-only Git and procps-ng are pinned
 separately. They are not installed in the runtime stage. Non-root UID 10001,
 health checks, entry points, frozen Python dependencies and source restrictions
 remain explicit in both Dockerfiles.
 
-The [official image definition](https://github.com/docker-library/python/blob/d2a898cb88e46203577eabc62cdcf6e92aaee176/3.13/alpine3.23/Dockerfile)
-and [Python maintenance release](https://www.python.org/downloads/release/python-31316/)
-identify upstream source. Base refreshes require complete deterministic,
+The [Python 3.13.18 maintenance release](https://www.python.org/downloads/release/python-31318/)
+describes its upstream security fixes. The Dockerfile digest and installed runtime
+inventory identify the selected image bytes. Base refreshes require complete deterministic,
 exported-container and reviewed hosted-auth qualification plus fresh exact-image
 scans. A newer base does not itself establish a passing scan. Qualification
 receipts retain built image identities, package versions and earlier failing
 observations; the prior Trixie findings remain historical evidence.
 
 The pinned Grype version emits an empty fix-state string for some Alpine APK
-NVD/CPE matches. Only this observed combination—Alpine distro, Alpine APK purl,
+National Vulnerability Database (NVD) and Common Platform Enumeration (CPE) matches. Only this observed combination—Alpine distro, Alpine APK purl,
 NVD/CPE namespace, empty state and no fix versions—is represented as unknown
 remediation metadata. `reported_fix_state` retains the original empty string.
 No advisory is removed: High, Critical and Unknown severity still block, while

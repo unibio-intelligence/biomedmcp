@@ -1,7 +1,7 @@
 # NCBI ortholog and virus reports
 
-Check the NCBI release status in [source licenses](source-licenses.md); an API key
-does not change it. This guide documents how the routes behave in tests; it does not
+Check the release status of the National Center for Biotechnology Information (NCBI)
+source in [source licenses](source-licenses.md); an API key does not change it. This guide documents how the routes behave in tests; it does not
 grant permission to retrieve or reuse NCBI records.
 
 `query_source(source="ncbi", operation="find_orthologs")` selects one numeric
@@ -35,8 +35,8 @@ operations used routes absent from the current provider specification and are no
 longer advertised. The private SDK's first-hit gene lookup is also removed. Generic
 NCBI search supports its qualified assembly/taxonomy modes only. Ordinary gene
 search_records/get_record retain their canonical owner and permission checks; this change does not
-introduce a second common lookup route. Actual alignment/tree computation requires
-its own qualified workflow and appropriate modeling owner.
+introduce a second common lookup route. Alignment and tree computation require
+their own qualified workflow and an appropriate modeling owner.
 
 The packaged `contracts.json` retains twelve selected REST paths and referenced
 schemas, bound to the exact current

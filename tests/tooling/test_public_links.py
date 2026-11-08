@@ -567,3 +567,11 @@ def test_report_passes_through_an_outage_but_not_a_broken_link(checker, tmp_path
     report = checker.qualify(tmp_path, run=lambda url, timeout: checker.check_url(
         url, request=response(503 if "down" in url else 404)))
     assert report["result"] == "failed"
+
+
+@pytest.mark.parametrize("status", [403, 404, 410])
+def test_listed_host_only_observed_bot_refusals_are_unverified(checker, status):
+    value = {"url": "https://blocked.example.org/gone", "status": "http_failure",
+             "chain": [{"http_status": status}]}
+    result = checker.classify(value, {"blocked.example.org": "Refuses automated requests with HTTP 403."})
+    assert result["status"] == ("unverified_host_blocks_automation" if status == 403 else "http_failure")
