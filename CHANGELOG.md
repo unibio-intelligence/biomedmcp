@@ -1,5 +1,10 @@
 # Release notes
 
+## 0.2.7
+
+- Link to the BioMed MCP overview on the UniBio Intelligence docs site from the
+  package metadata and README.
+
 ## 0.2.6
 
 - Update the container zlib package to 1.4.

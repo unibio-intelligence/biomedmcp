@@ -38,7 +38,7 @@
     },
     "CHANGELOG.md": {
       "executable": false,
-      "sha256": "47f4c60fb923047a6e8a5d376c913c02cf8a4a4a3bfa4ec42606fac688e8a818"
+      "sha256": "0e46ad0532c888407cb95f754aab314419e53e19f4ce4d56816274b09d0a9c14"
     },
     "CONTRIBUTING.md": {
       "executable": false,
@@ -58,7 +58,7 @@
     },
     "README.md": {
       "executable": false,
-      "sha256": "92ef84eb33e6e634f7b4e478a008dca754bed06ce2c3854385d861a967c1857d"
+      "sha256": "3887502387169f37ff18c2dadeb03883c34919b5e40cca762d075b312daf2bb2"
     },
     "docs/adapter-catalog.json": {
       "executable": false,
@@ -74,7 +74,7 @@
     },
     "docs/capability-readiness.json": {
       "executable": false,
-      "sha256": "842f573f6966976d7174aad3581e1b5babbfa5aeebf6ff2ac076abc9600e2081"
+      "sha256": "aae9a70e7f78c0d28cb1b4b562595a42940c0bedefc7da2de940826bce8647ff"
     },
     "docs/civic-responses.md": {
       "executable": false,
@@ -90,7 +90,7 @@
     },
     "docs/connect.md": {
       "executable": false,
-      "sha256": "c987ac4272e2fe8b328804b4b6e3b96432bf62a2c72b20a7c9730c950bb9bbe8"
+      "sha256": "c969fcf4ae11b0c26e1e59a8a4b20d0b16824de15dec7273965a0b9e64f9e4dd"
     },
     "docs/development/ci-governance.md": {
       "executable": false,
@@ -198,7 +198,7 @@
     },
     "docs/python-dependency-inventory.json": {
       "executable": false,
-      "sha256": "d52275bf50225d1667c7f55f7d0ff941ec1d7e85d956389a4e753e4cdd847a53"
+      "sha256": "4e82e5f96c99bcf59e2cc88d814ecc87ededaa3a87bc46ce0636065c1d0a4c55"
     },
     "docs/qtl-records.md": {
       "executable": false,
@@ -254,7 +254,7 @@
     },
     "pyproject.toml": {
       "executable": false,
-      "sha256": "2e1379e5c03aa1f8e460f80378e2084daebedab6f1f2a372a28fdf5bbdd6d676"
+      "sha256": "3a86be641b7e076ffd5bd696bffbc6d27d69a5091bec0ee4d11d8dcc525e45a8"
     },
     "scripts/adapter-catalog.py": {
       "executable": true,
@@ -358,7 +358,7 @@
     },
     "server.json": {
       "executable": false,
-      "sha256": "376e0cb0d3d4c08bf00959d87f39797edb608c800843ad0075e506c52bef9a5b"
+      "sha256": "2f2381e3d8bd9c7e6e17f8fac5e6008062b04836a6de6ae76b1a2a5cb5aec2c6"
     },
     "servers/python/antibody-registry/README.md": {
       "executable": false,
@@ -726,7 +726,7 @@
     },
     "src/biomedmcp/__init__.py": {
       "executable": false,
-      "sha256": "ea4f7c99912c773a88bb2f4b02c4306c2c02efd6ca229f0d66db43d0c4af5258"
+      "sha256": "076ccf7ded9c607d827d4dd6ee7ef2b1a2d608459e53ff3e67c6234630fbc036"
     },
     "src/biomedmcp/adapters.py": {
       "executable": false,
@@ -870,7 +870,7 @@
     },
     "src/biomedmcp/native/__init__.py": {
       "executable": false,
-      "sha256": "353a30802117f3de7f9cf71ef4459c83ed0680e40126cc6571590b5acd8754d0"
+      "sha256": "4ff5e1d4c5c538880c83c2c8a6100507f64498f57b2aaf674680c4ab71bb1cc1"
     },
     "src/biomedmcp/native/alphamissense.py": {
       "executable": false,
@@ -1030,7 +1030,7 @@
     },
     "src/biomedmcp/offline-qualification.json": {
       "executable": false,
-      "sha256": "e2894b33f68884828d123dc656fdf84ee1b53c78e57500a97a49a41832a1acb8"
+      "sha256": "de7f9040dda995cb065496d8daa69015cc95174111b855653d4958ad9fbcaae9"
     },
     "src/biomedmcp/output_contracts.py": {
       "executable": false,
@@ -1914,10 +1914,10 @@
     },
     "uv.lock": {
       "executable": false,
-      "sha256": "c69c072303ad09bef48dfcdaf4997a5a74ca2dfa4d8833071cd32365a52dd2e2"
+      "sha256": "360f780dd531836bc703d05647fa8d60b6ad060c051865424ea672a8353ad913"
     }
   },
   "format": 1,
   "publication_ready": true,
-  "tree_sha256": "5de97909d40d4c0d14c245f21bbae09071e7412efa12c1ffaee4da0ba76c9b05"
+  "tree_sha256": "9f93b5080eec6917a4881668a744a6af75304e401d66c70916c2a217b06a914c"
 }

@@ -1,6 +1,6 @@
 [project]
 name = "biomedmcp"
-version = "0.2.6"
+version = "0.2.7"
 description = "biomedmcp biomedical research MCP and CLI"
 readme = "README.md"
 authors = [{name = "UniBio Intelligence"}]
@@ -33,6 +33,7 @@ biomedmcp = "biomedmcp.cli:main"
 biomedmcp-server = "biomedmcp.mcp.server:main"
 
 [project.urls]
+Documentation = "https://docs.unibiointelligence.com/ubi-mcp-servers/servers"
 Repository = "https://github.com/unibio-intelligence/biomedmcp"
 
 [build-system]
