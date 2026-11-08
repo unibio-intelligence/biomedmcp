@@ -7,6 +7,9 @@ its source records, so an AI agent's answers can be checked against them.
 
 <!-- mcp-name: io.github.unibio-intelligence/biomedmcp -->
 
+See the [BioMed MCP overview](https://docs.unibiointelligence.com/ubi-mcp-servers/servers)
+for supported tools and access options.
+
 ## Start with a research question
 
 The following request can be sent from an MCP client:
@@ -25,7 +28,7 @@ Python distribution, run the Docker image below, or build from this checkout; se
 Use Python 3.13+ in an activated virtual environment:
 
 ```sh
-python -m pip install biomedmcp==0.2.6
+python -m pip install biomedmcp==0.2.7
 UBI_PROFILE=local biomedmcp build_dossier '{"workflow":"target_dossier","focus":"LDLR","species":9606}'
 ```
 
@@ -69,13 +72,13 @@ The versioned image is published to GitHub Container Registry for Linux AMD64.
 Start a local HTTP server with Docker:
 
 ```sh
-docker run --rm --platform linux/amd64 -p 127.0.0.1:8000:8000 ghcr.io/unibio-intelligence/biomedmcp:0.2.6
+docker run --rm --platform linux/amd64 -p 127.0.0.1:8000:8000 ghcr.io/unibio-intelligence/biomedmcp:0.2.7
 ```
 
 For an MCP client that starts its server over stdio:
 
 ```sh
-docker run --rm -i --platform linux/amd64 --no-healthcheck ghcr.io/unibio-intelligence/biomedmcp:0.2.6 biomedmcp-server --transport stdio
+docker run --rm -i --platform linux/amd64 --no-healthcheck ghcr.io/unibio-intelligence/biomedmcp:0.2.7 biomedmcp-server --transport stdio
 ```
 
 Use `http://127.0.0.1:8000/mcp`, or configure a stdio client using the
