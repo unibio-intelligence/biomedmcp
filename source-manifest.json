@@ -286,7 +286,7 @@
     },
     "scripts/check-public-links.py": {
       "executable": true,
-      "sha256": "4199ffb6a28eef93b8d9ac082d51677073df3eb68cf6c24f42a0bd388a9c8148"
+      "sha256": "2a254b6022a5dad655d77bdb598e9d9a39288b01387d59cf6bb63d1d09edba3b"
     },
     "scripts/check-wheel.py": {
       "executable": true,
@@ -1334,7 +1334,7 @@
     },
     "tests/tooling/test_public_links.py": {
       "executable": false,
-      "sha256": "48acb50406974eefc36404dafc439cfc532dd3492cd0defa225c930b7abc931c"
+      "sha256": "404938c43c4c2d9ffbe83abe8f4702efbc07fe1686714138387f76fcaf9c1e9e"
     },
     "tests/tooling/test_registry_distribution.py": {
       "executable": false,
@@ -1919,5 +1919,5 @@
   },
   "format": 1,
   "publication_ready": true,
-  "tree_sha256": "5c4688c505ca98464a3c70e59e3acdfa89b6c4e2b632752917f4afba0fd651ed"
+  "tree_sha256": "1b5b1b0694edd351d3a3a6e83a853346165c1d2db7645a794559cb32d8acef2c"
 }
