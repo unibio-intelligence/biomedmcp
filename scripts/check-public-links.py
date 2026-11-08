@@ -302,7 +302,8 @@ def classify(result, hosts):
     """Report listed-host refusals and provider outages as unverified; broken links still fail."""
     host = (urlsplit(result["url"]).hostname or "").lower()
     listed = next((h for h in hosts if host == h or host.endswith("." + h)), None)
-    if listed and result["status"] == "http_failure":
+    chain = result.get("chain") or []
+    if listed and result["status"] == "http_failure" and chain and chain[-1]["http_status"] == 403:
         return {**result, "status": "unverified_host_blocks_automation", "exception": hosts[listed]}
     if provider_outage(result):
         return {**result, "status": "unverified_provider_unavailable", "observed_status": result["status"]}

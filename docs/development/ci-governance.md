@@ -5,7 +5,7 @@
 checks precede deterministic contracts and the separate required Redis suite.
 They use uv's `--no-sync` against the frozen, preinstalled test-image environment,
 so checking evidence does not trigger dependency resolution or workspace builds.
-The public CI workflow uses this qualifier. No provider credentials or live canaries are required.
+The public continuous integration (CI) workflow uses this qualifier. No provider credentials or live canaries are required.
 
 The check compares the actual 13-tool in-process MCP catalog, ownership map,
 adapter schemas, generated examples and onboarding documents against their
@@ -30,7 +30,7 @@ The full adapter import/operation contract tests remain mandatory.
 The [installed metadata inventory](../python-dependency-inventory.json) records a
 point-in-time installed subset with versions and available license metadata;
 it must be bound to the current lock and contain no unknown or duplicate
-distributions. Neither inventory is a vulnerability scan, SBOM attestation or
+distributions. Neither inventory is a vulnerability scan, software bill of materials (SBOM) attestation or
 an integration-license decision.
 
 After a reviewed source or dependency change, refresh generated documents:

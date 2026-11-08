@@ -1,7 +1,7 @@
 # Variant population measurements
 
-Call `get_capabilities` with `{"source":"gnomad"}` to inspect the
-`variant_population` field schema. Retrieve measurements through
+Call `get_capabilities` with `{"source":"gnomad"}` to inspect the Genome Aggregation
+Database (gnomAD) `variant_population` field schema. Retrieve measurements through
 `get_variant_evidence`, for example:
 
 ```json
@@ -15,7 +15,7 @@ measurements remain independent. Joint counts come from the provider; do not
 sum the other modalities or ancestry groups.
 
 Each frequency has unit `proportion`, denominator unit `observed alleles`,
-the retained AC and AN inputs, and the explicit method `AC / AN` when AC is
+the retained allele count (AC) and allele number (AN) inputs, and the explicit method `AC / AN` when AC is
 supplied and AN is positive. AC=0 with AN>0 is measured zero. A missing AC,
 missing AN or AN=0 leaves frequency null with its own missingness reason.
 An unindexed variant or missing modality remains unavailable. Allele numbers

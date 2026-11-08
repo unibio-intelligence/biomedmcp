@@ -1,6 +1,8 @@
 # CIViC evidence scope and continuation
 
-Select `civic` on human gene/drug/disease `get_record` requests or `get_variant_evidence`.
+Select the `civic` section, from the Clinical Interpretation of Variants in Cancer
+(CIViC) knowledgebase, on human gene/drug/disease `get_record` requests or in
+`get_variant_evidence`.
 The section accepts `limit` (1–25, default 10), an optional `collection`
 (`evidenceItems` or `assertions`), and a signed `cursor` returned in an action.
 A cursor requires the original collection and page limit. Execute the returned
@@ -8,7 +10,7 @@ action rather than constructing a provider cursor or changing the focus.
 
 The request and selected response fields are checked against the dated official
 [CIViC GraphQL schema](https://github.com/griffithlab/civic-v2/blob/0488d61aeb0a5c45d2a1a7edc114ac085942939f/client/src/app/generated/server.schema.json).
-This snapshot qualifies those fields, not current production health. Required
+This snapshot validates those fields; it does not establish current production health. Required
 connections, nested scientific fields, selected enums and paging metadata must
 be present with valid types. Application errors or partial responses fail
 safely and cannot become cached empty evidence. Explicit valid empty
@@ -34,5 +36,5 @@ runtime cache and signing key. The 1000-candidate scan bound or unavailable
 continuation storage leaves evidence explicitly partial. Source restrictions
 also apply to naming/identity dependencies.
 
-The offline tests cover these selected cases and actual MCP actions, not
-every provider record, live clients or clinical correctness.
+The offline tests cover these selected cases and Model Context Protocol (MCP)
+actions. They do not cover every provider record, live clients or clinical correctness.

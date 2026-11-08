@@ -7,8 +7,8 @@ does not enforce review. Keep publication disabled until that protection is veri
 The protected, manually invoked public release workflow qualifies the source,
 containers, documentation and vulnerability gate before building wheels. Its
 pinned GitHub attestation action then signs build provenance for the exact
-`public-wheels.tar.gz` and `release-receipt.json` files, plus a CycloneDX 1.6 SBOM
-attestation whose subject is the wheel archive. Publishing verifies all three
+`public-wheels.tar.gz` and `release-receipt.json` files, plus a CycloneDX 1.6 software bill of
+materials (SBOM) attestation whose subject is the wheel archive. Publishing verifies all three
 attestations before observing or mutating release state, including retries.
 
 Verification fixes the public repository, `.github/workflows/release.yml`, both
@@ -40,7 +40,7 @@ gh attestation verify public-wheels.tar.gz --repo unibio-intelligence/biomedmcp 
 
 Replace `COMMIT` with the independently reviewed public commit. The local
 publisher additionally checks that the verified SBOM equals the exact archive
-projection. Live OIDC signing, transparency-log and protected-environment
+projection. Live OpenID Connect (OIDC) signing, transparency-log and protected-environment
 behavior require qualification in the approved repository; local synthetic CLI
 tests cannot establish those properties. The integration-code license and
 security gates must pass before a release workflow can reach signing.

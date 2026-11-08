@@ -4,7 +4,7 @@ Examples use the public BioMedMCP tools and their typed JSON arguments.
 
 Connect to the biomedmcp server and use its tools. This package runs inside that server; it is not a separate MCP server.
 
-Use query_source with query_antibody and query_type search or details. Detail lookup accepts a numeric registry ID, AB_ identifier or qualified RRID; search preserves bounded page, totalElements and next_page.
+Use query_source with query_antibody and query_type search or details. Detail lookup accepts a numeric registry ID, AB_ identifier or qualified Research Resource Identifier (RRID); search preserves bounded page, totalElements and next_page.
 
 Advanced operations: `query_antibody`.
 

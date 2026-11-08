@@ -2,7 +2,7 @@
 
 ## Hosted service
 
-Add `https://biomedmcp.unibiointelligence.com/mcp` as a **Streamable HTTP** server in your MCP client. Use the same URL when signing in. Anonymous access and limits depend on the operator; clients that support OAuth can sign in when prompted.
+Add `https://biomedmcp.unibiointelligence.com/mcp` as a **Streamable HTTP** server in your Model Context Protocol (MCP) client. Use the same URL when signing in. Anonymous access and limits depend on the operator; clients that support OAuth can sign in when prompted.
 
 The hosted service may run a different version from this source package.
 
@@ -42,7 +42,7 @@ Connect to `http://127.0.0.1:8000/mcp`. This server is unauthenticated and liste
 
 ## Installed Python package
 
-In a Python 3.13+ virtual environment, run `python -m pip install biomedmcp==0.2.5`.
+In a Python 3.13+ virtual environment, run `python -m pip install biomedmcp==0.2.6`.
 For a stdio client, the package command is:
 
 ```sh
@@ -50,23 +50,25 @@ UBI_PROFILE=local biomedmcp mcp --transport stdio
 ```
 
 The `biomedmcp-server` command accepts the same server options. A client with uvx
-can use `uvx --from biomedmcp==0.2.5 biomedmcp mcp --transport stdio`.
+can use `uvx --from biomedmcp==0.2.6 biomedmcp mcp --transport stdio`.
 
 ## Container
 
 A stdio client can run the versioned container:
 
 ```sh
-docker run --rm -i --no-healthcheck ghcr.io/unibio-intelligence/biomedmcp:0.2.5 biomedmcp-server --transport stdio
+docker run --rm -i --no-healthcheck ghcr.io/unibio-intelligence/biomedmcp:0.2.6 biomedmcp-server --transport stdio
 ```
 
 For local HTTP, publish port 8000 on loopback only:
 
 ```sh
-docker run --rm -p 127.0.0.1:8000:8000 ghcr.io/unibio-intelligence/biomedmcp:0.2.5
+docker run --rm -p 127.0.0.1:8000:8000 ghcr.io/unibio-intelligence/biomedmcp:0.2.6
 ```
 
 ## Use the CLI with a server
+
+The command-line interface (CLI) can call a remote server:
 
 ```sh
 uv run --frozen biomedmcp tools --url https://biomedmcp.unibiointelligence.com/mcp

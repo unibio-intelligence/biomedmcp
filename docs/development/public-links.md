@@ -1,6 +1,6 @@
 # Public documentation HTTP qualification
 
-The CI and protected manual release workflows run `scripts/check-public-links.py`
+The continuous integration (CI) and protected manual release workflows run `scripts/check-public-links.py`
 after offline container qualification. CI treats external-link failures as
 advisory: it emits a warning and preserves the failed observations, then requires
 the security scan to pass. All deterministic/container tests and artifact
@@ -50,7 +50,7 @@ Symlink documents, oversized documents and links with credentials are rejected.
 Every request and redirect must resolve only to public unicast IP addresses.
 Multicast and obsolete IPv6 site-local addresses are explicitly rejected even
 when the standard library labels them global. Connections
-use the vetted addresses without resolving again; HTTPS verifies the original
+use the validated addresses without resolving again; HTTPS verifies the original
 hostname. Private addresses, credential query parameters, redirect cycles and
 HTTPS downgrades fail. Requests use no cookies, authorization or environment
 proxies; response bodies and raw transport exceptions are never retained.

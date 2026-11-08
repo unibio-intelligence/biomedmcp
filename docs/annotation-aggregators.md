@@ -11,26 +11,27 @@ strings are excluded from errors. Invalid cached envelopes are evicted and fail
 without becoming empty scientific results.
 
 Bulk identifier mapping uses the documented form-encoded `q`/`scopes` request.
-Every requested identifier needs a source outcome; unknown response queries and
+Every requested identifier requires a source outcome; unknown response queries and
 contradictory missingness fail. All matching records remain candidates. Duplicate
 inputs are reported separately from unique inputs. Missing target annotations are
-null. Names belong in ordinary search; literal mapping inputs cannot contain the
-provider's batch separators. Source candidates still require independent identity,
-namespace and species qualification before joining scientific evidence.
+null. Use ordinary search for names. Literal mapping inputs cannot contain the
+provider's batch separators. Source candidates still require independent verification
+of identity, namespace and species before they are joined with scientific evidence.
 
-Chemical conversion, structural similarity, substructure matching and a similarity
-matrix are no longer advertised by the MyChem adapter: their former methods did
+The MyChem adapter no longer advertises chemical conversion, structural similarity,
+substructure matching or a similarity matrix, because the former methods did
 not perform those computations. Existing drug structure retrieval preserves source
-representations. Actual cheminformatics computation belongs in a separately
+representations. Cheminformatics computation requires a separately
 qualified workflow with licensed data and an explicit algorithm.
 
 `get_admet_properties` returns reported source annotations, with unavailable
-modalities marked explicitly. Physicochemical properties are not ADMET predictions.
+modalities marked explicitly. Physicochemical properties are not predictions of absorption, distribution,
+metabolism, excretion and toxicity (ADMET).
 `get_gene_disease_evidence` replaces the former score operation and retains source
-assertions without invented confidence, causality or an aggregate score. Symbol
-matches do not qualify a gene's species or namespace.
+assertions without an added confidence value, causality claim or aggregate score.
+Symbol matches do not establish a gene's species or namespace.
 
-Phenotype similarity is Jaccard or Dice **annotation-set overlap** for exact HPO
+Phenotype similarity is Jaccard or Dice **annotation-set overlap** for exact Human Phenotype Ontology (HPO)
 identifiers, within a single 100-record source window. It exposes the numerator,
 denominator, source total, omitted windows and unavailable annotations. It is not a
 clinical similarity or diagnosis, and its result remains partial. Phenotype

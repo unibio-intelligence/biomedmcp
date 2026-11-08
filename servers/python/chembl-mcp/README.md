@@ -10,7 +10,7 @@ Advanced operations: `advanced_property_search`, `analyze_compound_properties`, 
 
 Run get_capabilities for this source to see its current parameters. A batch uses the public batch tool and repeats canonical query_source calls; it does not expose the retained batch_compound_lookup alias.
 
-The examples are tested through MCP against mock responses; live results may differ. Bioactivities retain assay identity, relation, units and target; values from different assays are not automatically comparable. Rule-of-five checks describe physicochemical heuristics and do not establish efficacy, safety, ADMET or clinical suitability.
+The examples are tested through MCP against mock responses; live results may differ. Bioactivities retain assay identity, relation, units and target; values from different assays are not automatically comparable. Rule-of-five checks describe physicochemical heuristics and do not establish efficacy, safety, absorption, distribution, metabolism, excretion and toxicity (ADMET) properties or clinical suitability.
 
 To get more results, follow the continuation in the response. If a result includes an evidence recovery URI, use it to read data left out of the preview; see [evidence recovery](../../../docs/evidence-resources.md). Recovered data expires and is subject to the source's terms.
 

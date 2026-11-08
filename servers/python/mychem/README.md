@@ -4,7 +4,7 @@ Examples use the public BioMedMCP tools and their typed JSON arguments.
 
 Connect to the biomedmcp server and use its tools. This package runs inside that server; it is not a separate MCP server.
 
-Discover drug identities with search_records(entity=drug), then retrieve a provider-stable record using get_record(entity=drug). Inspect identifier mapping and reported ADMET annotation schemas through get_capabilities; chemical computations are not advertised.
+Discover drug identities with search_records(entity=drug), then retrieve a provider-stable record using get_record(entity=drug). Inspect identifier mapping and reported absorption, distribution, metabolism, excretion and toxicity (ADMET) annotation schemas through get_capabilities; chemical computations are not advertised.
 
 Advanced operations: `get_admet_properties`, `map_identifiers`.
 
