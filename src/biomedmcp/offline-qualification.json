@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0",
   "implementation": "biomedmcp/0.2.6",
-  "qualified_at": "2026-11-08T18:22:17.353755+00:00",
-  "junit_sha256": "59bae37def6aebfa0dfef186943e9939396d22debf4de3ac396cffa590ff4101",
-  "core_sha256": "d72bab2ae8d874c2d51b3b5b12a1090c19dc7130372d5b79e16d497f6e72d280",
+  "qualified_at": "2026-11-08T19:23:29.614129+00:00",
+  "junit_sha256": "5ff39c30addb37c65ac70a2c8bb324a50573da2094f28cc79ad095cde3c0bba0",
+  "core_sha256": "30b341c4ec6ea55c576bf7885fbf6c0b5152e24ee5680128eb6244baa4277c39",
   "dependencies": {
     "fastmcp": "4.1.2",
     "pydantic": "2.13.5",
@@ -13,7 +13,7 @@
   "sources": {
     "alphamissense": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "d72bab2ae8d874c2d51b3b5b12a1090c19dc7130372d5b79e16d497f6e72d280",
+      "implementation_sha256": "30b341c4ec6ea55c576bf7885fbf6c0b5152e24ee5680128eb6244baa4277c39",
       "scope": "Native provider response contracts; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 53,
       "evidence": [
@@ -67,7 +67,7 @@
     },
     "civic": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "d72bab2ae8d874c2d51b3b5b12a1090c19dc7130372d5b79e16d497f6e72d280",
+      "implementation_sha256": "30b341c4ec6ea55c576bf7885fbf6c0b5152e24ee5680128eb6244baa4277c39",
       "scope": "Native provider response contracts; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 97,
       "evidence": [
@@ -79,7 +79,7 @@
     },
     "clingen": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "d72bab2ae8d874c2d51b3b5b12a1090c19dc7130372d5b79e16d497f6e72d280",
+      "implementation_sha256": "30b341c4ec6ea55c576bf7885fbf6c0b5152e24ee5680128eb6244baa4277c39",
       "scope": "Native provider response contracts; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 111,
       "evidence": [
@@ -109,7 +109,7 @@
     },
     "complexportal": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "d72bab2ae8d874c2d51b3b5b12a1090c19dc7130372d5b79e16d497f6e72d280",
+      "implementation_sha256": "30b341c4ec6ea55c576bf7885fbf6c0b5152e24ee5680128eb6244baa4277c39",
       "scope": "Native provider response contracts; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 87,
       "evidence": [
@@ -161,7 +161,7 @@
     },
     "europepmc": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "d72bab2ae8d874c2d51b3b5b12a1090c19dc7130372d5b79e16d497f6e72d280",
+      "implementation_sha256": "30b341c4ec6ea55c576bf7885fbf6c0b5152e24ee5680128eb6244baa4277c39",
       "scope": "Native provider response contracts; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 125,
       "evidence": [
@@ -179,7 +179,7 @@
     },
     "eve": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "d72bab2ae8d874c2d51b3b5b12a1090c19dc7130372d5b79e16d497f6e72d280",
+      "implementation_sha256": "30b341c4ec6ea55c576bf7885fbf6c0b5152e24ee5680128eb6244baa4277c39",
       "scope": "Native provider response contracts; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 30,
       "evidence": [
@@ -191,7 +191,7 @@
     },
     "gencc": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "d72bab2ae8d874c2d51b3b5b12a1090c19dc7130372d5b79e16d497f6e72d280",
+      "implementation_sha256": "30b341c4ec6ea55c576bf7885fbf6c0b5152e24ee5680128eb6244baa4277c39",
       "scope": "Native provider response contracts; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 58,
       "evidence": [
@@ -203,7 +203,7 @@
     },
     "gnomad": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "d72bab2ae8d874c2d51b3b5b12a1090c19dc7130372d5b79e16d497f6e72d280",
+      "implementation_sha256": "30b341c4ec6ea55c576bf7885fbf6c0b5152e24ee5680128eb6244baa4277c39",
       "scope": "Native provider response contracts; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 130,
       "evidence": [
@@ -239,7 +239,7 @@
     },
     "gwas": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "d72bab2ae8d874c2d51b3b5b12a1090c19dc7130372d5b79e16d497f6e72d280",
+      "implementation_sha256": "30b341c4ec6ea55c576bf7885fbf6c0b5152e24ee5680128eb6244baa4277c39",
       "scope": "Native provider response contracts; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 95,
       "evidence": [
@@ -251,7 +251,7 @@
     },
     "interpro": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "d72bab2ae8d874c2d51b3b5b12a1090c19dc7130372d5b79e16d497f6e72d280",
+      "implementation_sha256": "30b341c4ec6ea55c576bf7885fbf6c0b5152e24ee5680128eb6244baa4277c39",
       "scope": "Native provider response contracts; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 102,
       "evidence": [
@@ -263,7 +263,7 @@
     },
     "monarch": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "d72bab2ae8d874c2d51b3b5b12a1090c19dc7130372d5b79e16d497f6e72d280",
+      "implementation_sha256": "30b341c4ec6ea55c576bf7885fbf6c0b5152e24ee5680128eb6244baa4277c39",
       "scope": "Native provider response contracts; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 19,
       "evidence": [
@@ -319,7 +319,7 @@
     },
     "myvariant": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "d72bab2ae8d874c2d51b3b5b12a1090c19dc7130372d5b79e16d497f6e72d280",
+      "implementation_sha256": "30b341c4ec6ea55c576bf7885fbf6c0b5152e24ee5680128eb6244baa4277c39",
       "scope": "Native provider response contracts; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 118,
       "evidence": [
@@ -349,7 +349,7 @@
     },
     "ols": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "d72bab2ae8d874c2d51b3b5b12a1090c19dc7130372d5b79e16d497f6e72d280",
+      "implementation_sha256": "30b341c4ec6ea55c576bf7885fbf6c0b5152e24ee5680128eb6244baa4277c39",
       "scope": "Native provider response contracts; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 107,
       "evidence": [
@@ -373,7 +373,7 @@
     },
     "openalex": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "d72bab2ae8d874c2d51b3b5b12a1090c19dc7130372d5b79e16d497f6e72d280",
+      "implementation_sha256": "30b341c4ec6ea55c576bf7885fbf6c0b5152e24ee5680128eb6244baa4277c39",
       "scope": "Native provider response contracts; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 25,
       "evidence": [
@@ -449,7 +449,7 @@
     },
     "pmc": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "d72bab2ae8d874c2d51b3b5b12a1090c19dc7130372d5b79e16d497f6e72d280",
+      "implementation_sha256": "30b341c4ec6ea55c576bf7885fbf6c0b5152e24ee5680128eb6244baa4277c39",
       "scope": "Native provider response contracts; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 46,
       "evidence": [
@@ -493,7 +493,7 @@
     },
     "string": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "d72bab2ae8d874c2d51b3b5b12a1090c19dc7130372d5b79e16d497f6e72d280",
+      "implementation_sha256": "30b341c4ec6ea55c576bf7885fbf6c0b5152e24ee5680128eb6244baa4277c39",
       "scope": "Native provider response contracts; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 80,
       "evidence": [
@@ -505,7 +505,7 @@
     },
     "study": {
       "kind": "endpoint_contract",
-      "implementation_sha256": "d72bab2ae8d874c2d51b3b5b12a1090c19dc7130372d5b79e16d497f6e72d280",
+      "implementation_sha256": "30b341c4ec6ea55c576bf7885fbf6c0b5152e24ee5680128eb6244baa4277c39",
       "scope": "Checksummed public study fixtures; selected response/identity fixtures (not exhaustive provider qualification)",
       "test_count": 334,
       "evidence": [
@@ -627,7 +627,7 @@
     "tests/tooling/test_docker_cleanup.py": "a166d4856fdfe8b328365eb3a4e05bdee3f37f777802ba5c5d9990f01309dfee",
     "tests/tooling/test_governance.py": "465cfbafeee1e87a2a1dee6bb0d4f7d873570115da436cb1023b98059170f19b",
     "tests/tooling/test_live_canary.py": "efa6ef9514ecc65a001e7cb4ffd2375c6c0e8cf28c890b0f604bd8033b92faa8",
-    "tests/tooling/test_public_links.py": "48acb50406974eefc36404dafc439cfc532dd3492cd0defa225c930b7abc931c",
+    "tests/tooling/test_public_links.py": "404938c43c4c2d9ffbe83abe8f4702efbc07fe1686714138387f76fcaf9c1e9e",
     "tests/tooling/test_registry_distribution.py": "a975ce6840f42a50389be1df45af8a8e77a9c2b80923d81f92187fe270ad7c07",
     "tests/tooling/test_release_artifacts.py": "5267019395625d1406616ff707d8b7269e54702988d7026e8b3322643c9fae5b",
     "tests/tooling/test_security_dependencies.py": "89719e408e66cbb5d746ed700f5b93572b228eb0144d56729eddc8c38ee51405",
@@ -651,7 +651,7 @@
     "tests/unit/adapters/test_removed_source.py": "97ee7060147fabf62f8c2b367538c3bb3e5addc43c81b4f8903f348bd196e1e4",
     "tests/unit/adapters/test_retained_routes.py": "7d72a40db3351a3a9f7ed75e72027c850a4ca9d4124f5e3517a56e9efc3033ba",
     "tests/unit/catalog/test_boundary_audit.py": "61187eed31b3e1c12cf282da60dfaa03cf635e0e2cac257fbbf965a85ba4307b",
-    "tests/unit/catalog/test_cli_contract.py": "2513c9c00058c3b60dbdd7ec544f7c925e9bd9809db0dd37fdf1b5a8c0f77888",
+    "tests/unit/catalog/test_cli_contract.py": "a7fc599dd72a2d0636d4cee38da7f9a16afc6ab1d49e783b7069c74ed661f103",
     "tests/unit/catalog/test_cli_pagination.py": "8acd7522df5d4f97a1defae8dc9caebc4da151a11b2e119fdd2897854ecf4d9f",
     "tests/unit/catalog/test_example_requests.py": "0002598663f3d60938099fe8fac16ee530eb0d5655da363646972bf89cf03932",
     "tests/unit/catalog/test_extensions.py": "5b028157d99494f8199e5a710418ae3b9da6f888f689f8efbf746691dc13e04c",

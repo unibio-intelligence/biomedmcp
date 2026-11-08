@@ -8,7 +8,9 @@
   provider page metadata before returning ontology records.
 - Reject malformed ontology inventory rows and mappings unrelated to the requested class.
 - Report missing public documentation links as failures on hosts with automated
-  access restrictions; observed HTTP 403 refusals remain explicitly unverified.
+  access restrictions; observed HTTP 403 refusals and the reviewed FDA
+  abuse-detection redirect remain explicitly unverified.
+- Report the installed package version during MCP initialization.
 - Clarify source evidence limits and installation guidance.
 
 ## 0.2.5

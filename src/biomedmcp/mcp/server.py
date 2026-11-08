@@ -12,7 +12,7 @@ from mcp.types import Icon, ToolAnnotations
 from pydantic import BaseModel
 from starlette.responses import JSONResponse
 
-from .. import local_boundary
+from .. import __version__, local_boundary
 from ..auth_branding import DISPLAY_NAME, LOGO_URL
 from ..content_boundary import SOURCE_POLICY
 from ..dispatch import execute as dispatch
@@ -100,7 +100,7 @@ def create_server(*, service=None, settings=None, ledger=None, boundary=None, cr
     server = PublicMCP(
         DISPLAY_NAME,
         icons=[Icon(src=LOGO_URL, mime_type="image/svg+xml")],
-        version="0.2.1",
+        version=__version__,
         dereference_schemas=False,
         auth=build_auth(settings),
         lifespan=lifespan,

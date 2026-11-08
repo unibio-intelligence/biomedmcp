@@ -26,6 +26,15 @@ def test_installed_package_and_commands_use_biomedmcp():
 
 
 @pytest.mark.asyncio
+async def test_mcp_initialization_reports_installed_distribution_version(monkeypatch):
+    from importlib.metadata import version
+
+    monkeypatch.setenv("UBI_PROFILE", "local")
+    async with Client(create_server(service=ResearchService(adapters=Adapters())), mode="legacy") as client:
+        assert client.initialize_result.server_info.version == version("biomedmcp")
+
+
+@pytest.mark.asyncio
 async def test_cli_and_mcp_preserve_gene_identity_sections_and_provenance(monkeypatch):
     monkeypatch.setenv("UBI_PROFILE", "local")
     monkeypatch.setattr(
